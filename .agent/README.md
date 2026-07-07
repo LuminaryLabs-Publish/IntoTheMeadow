@@ -4,13 +4,13 @@ This folder contains internal project breakdowns for `LuminaryLabs-Publish/IntoT
 
 ## Current project read
 
-`IntoTheMeadow` is a publishable DSK-composed meadow exploration game repo. It owns game-specific composition, story, progression, content, validation, and deployment while consuming reusable meadow infrastructure from `NexusRealtime-ProtoKits` and Nexus Engine runtime contracts.
+`IntoTheMeadow` is a publishable DSK-composed meadow exploration game repo. It owns the product route, browser host, game factory, deterministic state root, local DSK descriptors, arrival-meadow content, objective/story descriptors, diagnostics, validation scripts, and deployment surface while consuming reusable meadow infrastructure from `NexusRealtime-ProtoKits`.
 
-The repo is currently a strong v0.1 DSK scaffold and browser proof. It has external meadow kit imports, deterministic state snapshots, local DSK descriptors, diagnostics, static validation, and render-plan enhancement, but the playable movement, interaction, story, and objective loop still needs executable runtime behavior.
+The repo is still a strong v0.1 DSK scaffold and browser proof. It has external meadow kit imports, deterministic snapshots, local DSK descriptors, render-plan enhancement, diagnostics, and static validation. The missing layer is executable play: input, movement, path progress, tree inspection, story triggers, objective completion, and arrival completion state.
 
 ## Latest tracker
 
-- `trackers/2026-07-07T04-41-22-04-00/project-breakdown.md`
+- `trackers/2026-07-07T05-50-01-04-00/project-breakdown.md`
 
 ## Kit registry
 
@@ -18,6 +18,7 @@ The repo is currently a strong v0.1 DSK scaffold and browser proof. It has exter
 
 ## Previous trackers
 
+- `trackers/2026-07-07T04-41-22-04-00/project-breakdown.md`
 - `trackers/2026-07-07T03-28-26-04-00/project-breakdown.md`
 
 ## Core loop snapshot
@@ -34,26 +35,40 @@ Current loop:
 Target playable loop:
 
 1. Player spawns at the arrival path.
-2. Player walks the meadow path through normalized input.
-3. `path-corridor-dsk` samples path progress.
-4. `meadow-story-dsk` triggers the path discovery story beat.
-5. `meadow-interaction-dsk` exposes the old tree inspection affordance.
-6. `meadow-objective-dsk` completes `walk-the-path` and `inspect-tree`.
-7. `meadow-save-dsk` records arrival meadow completion.
-8. The game moves toward the next meadow area or story scene.
+2. Host input is normalized through `meadow-input-dsk`.
+3. `meadow-player-dsk` updates position, yaw, pitch, and path progress.
+4. `path-corridor-dsk` samples path progress against the configured arrival path.
+5. `meadow-story-dsk` triggers `path-discovery` after path progress crosses `0.25`.
+6. `meadow-interaction-dsk` exposes the old tree inspection affordance.
+7. `meadow-objective-dsk` completes `walk-the-path` and `inspect-tree`.
+8. `meadow-save-dsk` records arrival meadow completion after deterministic gameplay state is stable.
 
 ## Active next direction
 
-The best next slice is the **Arrival Meadow Playable Loop Cutover**:
+The best next slice is the **IntoTheMeadow Runtime Loop Evaluation Cutover**:
 
-- Add host-level input collection and `meadow-input-dsk` action normalization.
-- Expand `advanceGameState()` into a service-composed reducer.
+- Add host-level input collection in `src/hosts/web-host.js`.
+- Pass normalized action frames into `game.tick({ time, dt, actions })`.
+- Expand `advanceGameState()` into service-composed reducers.
 - Add `meadow-player-dsk` movement and path-progress sampling.
 - Add `meadow-camera-dsk` camera state and render-plan metadata.
-- Convert interaction targets into proximity, view, and inspect affordances.
-- Convert static objectives into live completion checks.
-- Convert story beats into one-shot trigger evaluation.
+- Convert `ARRIVAL_INTERACTION_TARGETS` into proximity, facing, and inspect affordances.
+- Convert `STORY_BEATS` into one-shot trigger evaluation.
+- Convert `ARRIVAL_OBJECTIVES` into live completion checks.
 - Preserve `window.GameHost.getState()`, `getSnapshot()`, and `getDiagnostics()` for smoke validation.
+
+## Runtime cutover kits
+
+```txt
+meadow-input-runtime-kit
+meadow-player-runtime-kit
+path-progress-runtime-kit
+focal-tree-interaction-runtime-kit
+story-trigger-runtime-kit
+objective-completion-runtime-kit
+arrival-completion-save-kit
+playable-loop-smoke-kit
+```
 
 ## Rules for future agents
 

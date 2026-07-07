@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Into The Meadow - a DSK-composed meadow exploration game." />
+  <link rel="icon" href="data:," />
+  <title>Into The Meadow</title>
+  <style>
+    :root{color-scheme:dark;--cream:#fff4d0;--glass:rgba(20,24,15,.44)}
+    html,body{margin:0;width:100%;height:100%;overflow:hidden;background:#11150d;color:var(--cream);font-family:Georgia,serif}
+    main,canvas{position:fixed;inset:0;width:100%;height:100%;display:block}
+    canvas{z-index:0}
+    main::before{content:"";position:fixed;inset:0;z-index:1;pointer-events:none;background:radial-gradient(circle at 25% 24%,rgba(255,225,140,.34),transparent 34%),linear-gradient(180deg,rgba(255,220,140,.16),transparent 40%,rgba(54,70,28,.16));mix-blend-mode:soft-light}
+    #hud{position:fixed;left:18px;top:18px;z-index:2;max-width:min(560px,calc(100vw - 36px));padding:12px 14px;border:1px solid rgba(255,244,208,.18);border-radius:18px;background:var(--glass);box-shadow:0 18px 70px rgba(0,0,0,.22);backdrop-filter:blur(14px);text-shadow:0 2px 12px #000}
+    #hud[hidden]{display:none}#hud strong{letter-spacing:.08em;text-transform:uppercase}#status{margin-top:6px;color:#d8e2bd;font:13px/1.35 ui-monospace,Menlo,monospace}
+    #loading{position:fixed;inset:auto 24px 24px 24px;z-index:2;color:#eadca7;font:13px/1.35 ui-monospace,Menlo,monospace;text-shadow:0 2px 12px #000}
+  </style>
+</head>
+<body>
+  <main aria-label="Into The Meadow game">
+    <canvas id="scene" role="img" aria-label="A meadow path with grass, stones, flowers, and a focal tree"></canvas>
+    <aside id="hud" hidden><strong>Into The Meadow</strong><div id="status">booting DSK stack...</div></aside>
+    <div id="loading">loading IntoTheMeadow...</div>
+  </main>
+  <script type="module" src="./src/boot/boot-game.js"></script>
+</body>
+</html>

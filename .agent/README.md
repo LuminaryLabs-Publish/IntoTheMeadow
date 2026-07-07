@@ -6,13 +6,13 @@ This folder contains internal project breakdowns for `LuminaryLabs-Publish/IntoT
 
 `IntoTheMeadow` is a publishable DSK-composed meadow exploration game repo. It owns the product route, browser host, game factory, deterministic state root, local DSK descriptors, arrival-meadow content, objective/story/interaction descriptors, diagnostics, validation scripts, and deployment surface while consuming reusable meadow infrastructure from `NexusRealtime-ProtoKits`.
 
-The repo remains a strong v0.1 DSK scaffold and browser proof. The missing layer is still executable gameplay authority. `src/hosts/web-host.js` calls `game.tick({ time, dt })`, `src/game/game-state.js` advances only `frame` and `lastTick`, and `src/game/game-snapshot.js` has no dedicated `snapshot.gameplay` contract. The content needed for the first playable loop already exists: six path points, the `walk-the-path` objective at `pathProgress >= 0.35`, the `inspect-tree` objective, and the `focal-tree` interaction target with radius `4.5`.
+The repo remains a strong v0.1 DSK scaffold and browser proof. The active missing layer is still executable gameplay authority. `src/hosts/web-host.js` calls `game.tick({ time, dt })`, `src/game/game-state.js` advances only `frame` and `lastTick`, and `src/game/game-snapshot.js` has no dedicated `snapshot.gameplay` contract. The content needed for the first playable loop already exists: six path points, the `walk-the-path` objective at `pathProgress >= 0.35`, the `inspect-tree` objective, and the `focal-tree` interaction target with radius `4.5`.
 
-This pass narrows the next cut into **GameplaySnapshot fixture contract + Action Reducer source lock**. Build `ActionFrame`, `ActionBatch`, `ActionJournal`, `ReducerResult`, path progress, inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before renderer extraction, save persistence, pointer-lock polish, audio, or external ProtoKit promotion.
+This pass narrows the next cut into **ActionFrame Fixture Seed + Snapshot.Gameplay Source Gate**. Build `ActionFrame`, `ActionBatch`, `ActionJournal`, `ReducerResult`, path progress, inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before renderer extraction, save persistence, pointer-lock polish, audio, or external ProtoKit promotion.
 
 ## Latest tracker
 
-- `trackers/2026-07-07T18-19-15-04-00/project-breakdown.md`
+- `trackers/2026-07-07T19-42-05-04-00/project-breakdown.md`
 
 ## Kit registry
 
@@ -20,6 +20,7 @@ This pass narrows the next cut into **GameplaySnapshot fixture contract + Action
 
 ## Previous trackers
 
+- `trackers/2026-07-07T18-19-15-04-00/project-breakdown.md`
 - `trackers/2026-07-07T16-58-09-04-00/project-breakdown.md`
 - `trackers/2026-07-07T15-49-14-04-00/project-breakdown.md`
 - `trackers/2026-07-07T14-28-17-04-00/project-breakdown.md`
@@ -67,7 +68,7 @@ Target playable loop:
 
 ## Active next direction
 
-The best next slice is the **IntoTheMeadow GameplaySnapshot Fixture Contract + Action Reducer Source Lock**:
+The best next slice is **IntoTheMeadow ActionFrame Fixture Seed + Snapshot.Gameplay Source Gate**:
 
 - Keep `index.html`, `src/boot/boot-game.js`, current render behavior, and GameHost compatibility intact.
 - Keep `game.tick({ time, dt })` compatible for existing runtime and tests.
@@ -79,12 +80,12 @@ The best next slice is the **IntoTheMeadow GameplaySnapshot Fixture Contract + A
 - Add `meadow-reducer-result-contract-kit` before concrete reducers.
 - Require every reducer to return `{ state, events, acceptedActions, rejectedActions, diagnostics }`.
 - Add `meadow-reducer-result-journal-kit` for reducer order and state-diff diagnostics.
-- Add `meadow-reducer-seed-fixture-kit` to prove accepted/rejected/no-op reducer result shape without movement math.
+- Add `meadow-reducer-seed-fixture-kit` to prove accepted/rejected/no-op reducer result shape before movement math.
 - Add `path-progress-runtime-kit` against `ARRIVAL_MEADOW_CONFIG.features.path.points`.
 - Add `path-threshold-event-kit` so threshold events fire once and replay deterministically.
 - Complete `walk-the-path` at `pathProgress >= 0.35`.
 - Add `focal-tree-affordance-kit` using the `ARRIVAL_INTERACTION_TARGETS` focal-tree radius of `4.5`.
-- Add `inspect-result-reducer-kit` so out-of-range, wrong-target, duplicate, and accepted inspect paths are all explicit.
+- Add `inspect-result-reducer-kit` so out-of-range, wrong-target, duplicate, no-effect, unsupported, invalid-payload, and accepted inspect paths are all explicit.
 - Trigger the `focal-tree` story beat and complete `inspect-tree` after valid inspect.
 - Derive arrival completion after both existing objectives complete.
 - Add `meadow-gameplay-snapshot-kit` so `window.GameHost.getSnapshot().gameplay` exposes player, actions, reducers, events, story, objectives, interaction, completion, and render metadata.

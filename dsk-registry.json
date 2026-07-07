@@ -1,6 +1,6 @@
 {
   "id": "into-the-meadow-dsk-registry",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "rule": "Game-specific DSKs live here; reusable meadow infrastructure stays in ProtoKits.",
   "external": ["meadow-area-kit", "meadow-webgl-render-kit"],
   "local": [
@@ -29,6 +29,13 @@
     "meadow-diagnostics-dsk",
     "meadow-performance-dsk",
     "meadow-render-host-dsk",
+    "post-process-stack-dsk",
+    "render-target-kit",
+    "sobel-outline-pass-kit",
+    "color-grade-pass-kit",
+    "depth-fog-pass-kit",
+    "vignette-pass-kit",
+    "final-composite-pass-kit",
     "static-pages-deploy-dsk"
   ],
   "requiredForV01": [
@@ -38,10 +45,12 @@
     "meadow-area-bridge-dsk",
     "meadow-render-host-dsk",
     "meadow-diagnostics-dsk",
+    "meadow-performance-dsk",
+    "post-process-stack-dsk",
     "static-pages-deploy-dsk"
   ],
   "phases": {
-    "v0.1": "bootable DSK scaffold and browser meadow proof",
+    "v0.1": "bootable DSK scaffold, browser meadow proof, post-process pass graph, and render-plan enhancement",
     "v0.2": "first-person exploration, camera, input, interaction, story, objectives",
     "v0.3": "grass patches, shader wind, terrain texture extraction, performance profiles"
   }

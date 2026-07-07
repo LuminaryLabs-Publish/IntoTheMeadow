@@ -8,11 +8,11 @@ This folder contains internal project breakdowns for `LuminaryLabs-Publish/IntoT
 
 The repo remains a strong v0.1 DSK scaffold and browser proof. The missing layer is still executable gameplay authority. `src/hosts/web-host.js` calls `game.tick({ time, dt })`, `src/game/game-state.js` advances only `frame` and `lastTick`, and `src/game/game-snapshot.js` has no dedicated `snapshot.gameplay` contract. The content needed for the first playable loop already exists: six path points, the `walk-the-path` objective at `pathProgress >= 0.35`, the `inspect-tree` objective, and the `focal-tree` interaction target with radius `4.5`.
 
-This pass narrows the next cut into **ObjectiveState authority + Inspect Affordance replay gate**. Build `ActionFrame`, `ActionJournal`, `ReducerResult`, objective state authority, inspect result reducers, and `snapshot.gameplay` first so the first playable loop can be proven by DOM-free replay before renderer extraction, save persistence, pointer-lock polish, audio, or external ProtoKit promotion.
+This pass narrows the next cut into **GameplaySnapshot fixture contract + Action Reducer source lock**. Build `ActionFrame`, `ActionBatch`, `ActionJournal`, `ReducerResult`, path progress, inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before renderer extraction, save persistence, pointer-lock polish, audio, or external ProtoKit promotion.
 
 ## Latest tracker
 
-- `trackers/2026-07-07T16-58-09-04-00/project-breakdown.md`
+- `trackers/2026-07-07T18-19-15-04-00/project-breakdown.md`
 
 ## Kit registry
 
@@ -20,6 +20,7 @@ This pass narrows the next cut into **ObjectiveState authority + Inspect Afforda
 
 ## Previous trackers
 
+- `trackers/2026-07-07T16-58-09-04-00/project-breakdown.md`
 - `trackers/2026-07-07T15-49-14-04-00/project-breakdown.md`
 - `trackers/2026-07-07T14-28-17-04-00/project-breakdown.md`
 - `trackers/2026-07-07T13-21-30-04-00/project-breakdown.md`
@@ -57,16 +58,16 @@ Target playable loop:
 8. `path-progress-runtime-kit` samples `ARRIVAL_MEADOW_CONFIG.features.path.points`.
 9. `path-threshold-event-kit` emits one-shot path threshold events.
 10. `objective-state-authority-kit` completes `walk-the-path` at `pathProgress >= 0.35`.
-11. `focal-tree-affordance-kit` evaluates the old-tree inspect affordance.
+11. `focal-tree-affordance-kit` evaluates the old-tree inspect affordance with the `4.5` radius target.
 12. `inspect-result-reducer-kit` accepts or rejects inspect actions with stable reasons.
 13. `objective-completion-runtime-kit` completes `inspect-tree` from accepted `inspect:focal-tree`.
 14. `arrival-completion-runtime-kit` records deterministic arrival meadow completion.
 15. `meadow-gameplay-snapshot-kit` exposes stable gameplay snapshots through `window.GameHost`.
-16. `replay-parity-smoke-kit` proves path walk, invalid inspect, valid inspect, and objective completion without DOM input.
+16. `replay-parity-smoke-kit` proves no-op tick, path walk, invalid inspect, valid inspect, and objective completion without DOM input.
 
 ## Active next direction
 
-The best next slice is the **IntoTheMeadow ObjectiveState Authority + Inspect Affordance Replay Gate**:
+The best next slice is the **IntoTheMeadow GameplaySnapshot Fixture Contract + Action Reducer Source Lock**:
 
 - Keep `index.html`, `src/boot/boot-game.js`, current render behavior, and GameHost compatibility intact.
 - Keep `game.tick({ time, dt })` compatible for existing runtime and tests.
@@ -87,7 +88,7 @@ The best next slice is the **IntoTheMeadow ObjectiveState Authority + Inspect Af
 - Trigger the `focal-tree` story beat and complete `inspect-tree` after valid inspect.
 - Derive arrival completion after both existing objectives complete.
 - Add `meadow-gameplay-snapshot-kit` so `window.GameHost.getSnapshot().gameplay` exposes player, actions, reducers, events, story, objectives, interaction, completion, and render metadata.
-- Add scripted fixtures for action journal, reducer result shape, path walk, invalid inspect, valid inspect, objective completion, and replay parity.
+- Add scripted fixtures for no-op tick, action journal, reducer result shape, path walk, invalid inspect, valid inspect, objective completion, and replay parity.
 
 ## Runtime cutover kits
 
@@ -98,6 +99,7 @@ meadow-action-journal-kit
 meadow-input-runtime-kit
 meadow-action-acceptance-kit
 meadow-action-rejection-reason-kit
+meadow-action-source-fixture-kit
 meadow-reducer-contract-kit
 meadow-reducer-result-contract-kit
 meadow-reducer-result-journal-kit
@@ -116,6 +118,7 @@ objective-state-authority-kit
 objective-completion-runtime-kit
 arrival-completion-runtime-kit
 meadow-gameplay-snapshot-kit
+gameplay-snapshot-fixture-kit
 gamehost-gameplay-diagnostics-kit
 meadow-gameplay-fixture-kit
 replay-parity-smoke-kit

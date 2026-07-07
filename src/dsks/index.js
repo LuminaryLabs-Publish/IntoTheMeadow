@@ -26,6 +26,13 @@ const DOMAIN_LABELS = Object.freeze({
   "meadow-diagnostics-dsk": "Diagnostics",
   "meadow-performance-dsk": "Performance",
   "meadow-render-host-dsk": "Render Host",
+  "post-process-stack-dsk": "Post Process Stack",
+  "render-target-kit": "Render Target",
+  "sobel-outline-pass-kit": "Sobel Outline Pass",
+  "color-grade-pass-kit": "Color Grade Pass",
+  "depth-fog-pass-kit": "Depth Fog Pass",
+  "vignette-pass-kit": "Vignette Pass",
+  "final-composite-pass-kit": "Final Composite Pass",
   "static-pages-deploy-dsk": "Deploy"
 });
 
@@ -55,11 +62,18 @@ const SERVICES = Object.freeze({
   "meadow-diagnostics-dsk": ["runtime-health", "render-health", "determinism-checks", "smoke-tests", "diagnostics-report"],
   "meadow-performance-dsk": ["quality-profile", "budget-policy", "lod-policy", "adaptive-scaling", "performance-validation"],
   "meadow-render-host-dsk": ["renderer-selection", "render-plan-ingest", "pass-order", "renderer-state", "renderer-validation"],
+  "post-process-stack-dsk": ["pass-registry", "render-target-system", "sobel-outline-pass", "color-grade-pass", "post-validation"],
+  "render-target-kit": ["scene-color-texture", "depth-texture", "normal-texture", "ping-pong-buffer", "resize-policy"],
+  "sobel-outline-pass-kit": ["color-edge-threshold", "depth-edge-threshold", "normal-edge-threshold", "outline-color", "object-mask"],
+  "color-grade-pass-kit": ["warmth", "contrast", "saturation", "shadow-tint", "highlight-tint"],
+  "depth-fog-pass-kit": ["fog-near", "fog-far", "fog-color", "distance-curve", "horizon-haze"],
+  "vignette-pass-kit": ["radius", "softness", "strength", "center", "quality-tier"],
+  "final-composite-pass-kit": ["scene-input", "post-input", "output-target", "debug-overlay", "fallback-composite"],
   "static-pages-deploy-dsk": ["build-config", "github-pages-workflow", "release-artifacts", "cache-invalidation", "deploy-validation"]
 });
 
 function toDomain(id) {
-  return id.replace(/-dsk$/, "");
+  return id.replace(/-dsk$/, "").replace(/-kit$/, "");
 }
 
 export function createDskDescriptor(id) {
@@ -83,7 +97,7 @@ export function createDskDescriptor(id) {
     },
     validate() {
       const failures = [];
-      if (!id.endsWith("-dsk")) failures.push("id must end with -dsk");
+      if (!id.endsWith("-dsk") && !id.endsWith("-kit")) failures.push("id must end with -dsk or -kit");
       if (subdomains.length < 5) failures.push("expected five subdomain services");
       return { passed: failures.length === 0, failures };
     }

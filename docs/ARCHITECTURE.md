@@ -22,7 +22,42 @@ IntoTheMeadow
 ├─ meadow-area-bridge-dsk
 ├─ meadow-render-host-dsk
 ├─ meadow-diagnostics-dsk
+├─ meadow-performance-dsk
+├─ post-process-stack-dsk
 └─ static-pages-deploy-dsk
+```
+
+## Active visual upgrade pass
+
+```txt
+render-plan-enhancement
+├─ tree-object-dsk
+│  ├─ better focal-tree descriptor
+│  ├─ softer hero outline policy
+│  ├─ increased roots/branches/crown clusters
+│  └─ tree validation surface
+├─ grass-patch-dsk
+│  ├─ patch descriptor generation
+│  ├─ density and item budget
+│  ├─ LOD intent
+│  └─ wind weight metadata
+├─ gpu-grass-render-dsk
+│  ├─ instance layout contract
+│  ├─ shader wind contract
+│  ├─ LOD render contract
+│  └─ future WebGL/WebGPU split
+├─ wind-field-dsk
+│  ├─ direction
+│  ├─ strength
+│  ├─ gust
+│  └─ sampler surface
+└─ post-process-stack-dsk
+   ├─ render-target
+   ├─ depth-fog
+   ├─ color-grade
+   ├─ edge-outline
+   ├─ vignette
+   └─ final-composite
 ```
 
 ## Planned domain stack
@@ -49,6 +84,13 @@ meadow-audio-dsk
 meadow-ui-dsk
 meadow-save-dsk
 meadow-performance-dsk
+post-process-stack-dsk
+render-target-kit
+sobel-outline-pass-kit
+color-grade-pass-kit
+depth-fog-pass-kit
+vignette-pass-kit
+final-composite-pass-kit
 ```
 
 ## External kit boundary
@@ -62,4 +104,4 @@ meadow-webgl-render-kit
 
 ## Promotion rule
 
-Game-specific composition stays here. Generic terrain texturing, grass patches, shader wind, and path surface systems should be extracted to ProtoKits once proven across more than one scene.
+Game-specific composition stays here. Generic terrain texturing, grass patches, shader wind, post-process passes, and path surface systems should be extracted to ProtoKits once proven across more than one scene.

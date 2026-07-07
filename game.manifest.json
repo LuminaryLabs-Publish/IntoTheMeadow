@@ -1,0 +1,27 @@
+{
+  "id": "into-the-meadow",
+  "title": "Into The Meadow",
+  "version": "0.1.0",
+  "build": "0.1.0-dsk-scaffold",
+  "route": "./index.html",
+  "publicUrl": "https://luminarylabs-publish.github.io/IntoTheMeadow/",
+  "role": "publishable-game-repo",
+  "defaultScene": "arrival-meadow",
+  "externalKits": [
+    {
+      "id": "meadow-area-kit",
+      "url": "https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-area-kit/index.js",
+      "provides": ["environment:meadow-area", "render:meadow-area-plan"]
+    },
+    {
+      "id": "meadow-webgl-render-kit",
+      "url": "https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-webgl-render-kit/index.js",
+      "provides": ["renderer:meadow-webgl", "terrain:meadow-surface-renderer"]
+    }
+  ],
+  "validation": {
+    "requiredGlobal": "GameHost",
+    "requiredScripts": ["npm run check"],
+    "snapshotRequired": true
+  }
+}

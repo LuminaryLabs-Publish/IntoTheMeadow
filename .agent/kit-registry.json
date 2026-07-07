@@ -1,18 +1,20 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-07T05:50:01-04:00",
-  "status": "runtime-loop-cutover-documented",
+  "generatedAt": "2026-07-07T06:58:36-04:00",
+  "status": "action-contract-objective-smoke-documented",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
-    "reason": "Oldest eligible repo in the tracked Publish rotation after the latest PrehistoricRush ledger pass."
+    "reason": "Oldest eligible tracked repo in the Publish rotation after the latest PrehistoricRush ledger pass at 2026-07-07T06:50:26-04:00."
   },
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "gameFactory": "src/game/create-into-the-meadow-game.js",
     "state": "src/game/game-state.js",
+    "snapshot": "src/game/game-snapshot.js",
+    "renderEnhancement": "src/game/enhance-render-plan.js",
     "dskInstaller": "src/boot/install-dsks.js",
     "dskDescriptors": "src/dsks/index.js",
     "manifest": "src/content/game-manifest.js",
@@ -30,8 +32,8 @@
   "interactionLoop": {
     "current": [
       "Browser loads index.html.",
-      "boot-game.js locates DOM host nodes.",
-      "web-host.js imports meadow-area-kit and meadow-webgl-render-kit from the manifest.",
+      "boot-game.js starts the web host.",
+      "web-host.js imports meadow-area-kit and meadow-webgl-render-kit from GAME_MANIFEST.",
       "createIntoTheMeadowGame installs local DSK descriptors and creates the arrival meadow area.",
       "requestAnimationFrame calls game.tick({ time, dt }).",
       "advanceGameState increments frame and records lastTick.",
@@ -42,13 +44,14 @@
     ],
     "target": [
       "Collect host input.",
-      "Normalize input through meadow-input-dsk.",
-      "Move player through meadow-player-dsk.",
-      "Sample path progress through path-corridor-dsk.",
-      "Evaluate focal-tree inspect affordance through meadow-interaction-dsk.",
-      "Evaluate story triggers through meadow-story-dsk.",
-      "Complete walk-the-path and inspect-tree through meadow-objective-dsk.",
-      "Record arrival completion through meadow-save-dsk."
+      "Normalize input through meadow-action-contract-kit and meadow-input-runtime-kit.",
+      "Move player through meadow-player-runtime-kit.",
+      "Sample path progress through path-progress-runtime-kit.",
+      "Expose focal-tree inspect affordance through focal-tree-interaction-runtime-kit.",
+      "Evaluate one-shot story triggers through story-trigger-runtime-kit.",
+      "Complete walk-the-path and inspect-tree through objective-completion-runtime-kit.",
+      "Record arrival completion through arrival-completion-save-kit.",
+      "Expose objective, story, interaction, and completion state through GameHost and diagnostics."
     ]
   },
   "externalKits": [
@@ -67,7 +70,7 @@
         "src/hosts/web-host.js",
         "src/game/create-into-the-meadow-game.js"
       ],
-      "next": "Keep reusable meadow render-plan generation external and feed only generic player/camera metadata back through render-plan enhancement."
+      "next": "Keep reusable meadow render-plan generation external. Feed only generic player/camera metadata back through render-plan enhancement."
     },
     {
       "id": "meadow-webgl-render-kit",
@@ -82,7 +85,7 @@
       "usedBy": [
         "src/hosts/web-host.js"
       ],
-      "next": "Keep renderer kit reusable. Do not place product-specific objectives or story logic in renderer code."
+      "next": "Keep renderer kit reusable. Do not place product-specific objectives, story, or interaction logic in renderer code."
     }
   ],
   "requiredV01Dsks": [
@@ -103,7 +106,7 @@
       "status": "active-v0.1",
       "provides": ["game-manifest", "kit-stack-registry", "game-state-root", "boot-sequence", "game-snapshot"],
       "source": ["src/content/game-manifest.js", "src/game/create-into-the-meadow-game.js", "src/game/game-snapshot.js"],
-      "next": "Own product composition and orchestrate gameplay reducers without becoming a reusable ProtoKit."
+      "next": "Own product composition and route gameplay reducers without becoming a reusable ProtoKit."
     },
     {
       "id": "web-host-dsk",
@@ -119,7 +122,7 @@
       "status": "active-v0.1",
       "provides": ["dsk-registry", "scene-composition", "render-composition", "simulation-composition", "composition-validation"],
       "source": ["src/boot/install-dsks.js", "src/dsks/index.js", "src/game/enhance-render-plan.js"],
-      "next": "Split simulation into composed service calls instead of growing game-state.js as a monolith."
+      "next": "Split simulation into composed reducer services and validate reducer order."
     },
     {
       "id": "meadow-area-bridge-dsk",
@@ -135,7 +138,7 @@
       "status": "planned-runtime-needed",
       "provides": ["path-curve-model", "walkable-corridor", "path-surface-detail", "path-progression", "path-validation"],
       "source": ["src/content/meadow-areas/arrival-meadow.js", "src/content/objectives/arrival-objectives.js"],
-      "next": "Implement deterministic path progress sampling for walk-the-path."
+      "next": "Implement deterministic path progress sampling for walk-the-path and path-discovery."
     },
     {
       "id": "tree-object-dsk",
@@ -151,7 +154,7 @@
       "status": "planned-runtime-needed",
       "provides": ["player-state", "movement-profile", "terrain-contact", "player-actions", "player-validation"],
       "source": ["src/game/game-state.js"],
-      "next": "Update player position, yaw, pitch, and pathProgress from normalized input."
+      "next": "Update player position, yaw, pitch, and pathProgress from normalized actions."
     },
     {
       "id": "meadow-camera-dsk",
@@ -175,7 +178,7 @@
       "status": "planned-runtime-needed",
       "provides": ["interactable-registry", "affordance-rules", "inspect-state", "interaction-events", "interaction-validation"],
       "source": ["src/content/interaction-targets/arrival-targets.js"],
-      "next": "Resolve focal-tree proximity, facing, and inspect affordance."
+      "next": "Resolve focal-tree proximity, facing, inspect affordance, and inspect event emission."
     },
     {
       "id": "meadow-story-dsk",
@@ -199,7 +202,7 @@
       "status": "planned",
       "provides": ["save-model", "save-slots", "persistence-adapter", "migration", "save-validation"],
       "source": ["src/dsks/index.js"],
-      "next": "Record arrival meadow completion after gameplay state is deterministic."
+      "next": "Record deterministic arrival meadow completion before localStorage persistence."
     },
     {
       "id": "meadow-diagnostics-dsk",
@@ -207,7 +210,7 @@
       "status": "active-v0.1",
       "provides": ["runtime-health", "render-health", "determinism-checks", "smoke-tests", "diagnostics-report"],
       "source": ["src/game/create-into-the-meadow-game.js", "src/validation", "tests"],
-      "next": "Report input, player, path, interaction, story, and objective reducer health."
+      "next": "Report input, action, player, path, interaction, story, and objective reducer health."
     },
     {
       "id": "meadow-performance-dsk",
@@ -261,6 +264,11 @@
   ],
   "runtimeCutoverKits": [
     {
+      "id": "meadow-action-contract-kit",
+      "status": "next",
+      "provides": ["defineActionTypes", "normalizeActionFrame", "validateActions", "serializeActions", "replayActions"]
+    },
+    {
       "id": "meadow-input-runtime-kit",
       "status": "next",
       "provides": ["collectKeyboard", "collectPointer", "collectTouch", "normalizeActions", "snapshot"]
@@ -268,92 +276,87 @@
     {
       "id": "meadow-player-runtime-kit",
       "status": "next",
-      "provides": ["integrateMovement", "updateYawPitch", "clampToMeadow", "emitPlayerSnapshot", "validate"]
+      "provides": ["integrateMovement", "updateYawPitch", "clampToMeadow", "emitPlayerSnapshot", "projectRenderMetadata"]
     },
     {
       "id": "path-progress-runtime-kit",
       "status": "next",
-      "provides": ["sampleNearestPathPoint", "computeProgress", "emitPathProgressEvent", "validate"]
+      "provides": ["sampleNearestSegment", "calculateProgress01", "emitPathProgressEvents", "validatePathProgress"]
     },
     {
       "id": "focal-tree-interaction-runtime-kit",
       "status": "next",
-      "provides": ["checkProximity", "checkFacing", "resolveAffordance", "emitInspectEvent", "validate"]
+      "provides": ["evaluateProximity", "evaluateFacing", "setInspectAffordance", "emitInspectEvent", "snapshot"]
     },
     {
       "id": "story-trigger-runtime-kit",
       "status": "next",
-      "provides": ["evaluateSceneStart", "evaluatePathProgress", "evaluateInspect", "appendOneShotBeat", "validate"]
+      "provides": ["parseTrigger", "evaluateOneShotTriggers", "appendStoryBeat", "diagnoseUnhandledTriggers"]
     },
     {
       "id": "objective-completion-runtime-kit",
       "status": "next",
-      "provides": ["evaluateWalkThePath", "evaluateInspectTree", "advanceActiveObjective", "emitCompletionLedger", "validate"]
+      "provides": ["evaluateProgressObjective", "evaluateInspectObjective", "completeObjective", "advanceActiveObjective", "snapshot"]
     },
     {
       "id": "arrival-completion-save-kit",
-      "status": "after-deterministic-loop",
-      "provides": ["completionState", "localStorageAdapter", "migration", "snapshot", "validate"]
+      "status": "next",
+      "provides": ["deriveArrivalCompletion", "snapshotCompletion", "deferPersistence", "validateCompletionState"]
+    },
+    {
+      "id": "meadow-gameplay-diagnostics-kit",
+      "status": "next",
+      "provides": ["reportActionCounts", "reportReducerOrder", "reportObjectiveState", "reportStoryState", "reportInteractionState"]
+    },
+    {
+      "id": "meadow-scripted-input-smoke-kit",
+      "status": "next",
+      "provides": ["scriptPathWalk", "scriptFocalTreeInspect", "replayActions", "assertDeterministicSnapshot"]
+    },
+    {
+      "id": "meadow-render-metadata-projection-kit",
+      "status": "next",
+      "provides": ["projectPlayerMetadata", "projectCameraMetadata", "projectObjectiveMetadata", "projectInteractionMetadata"]
     },
     {
       "id": "playable-loop-smoke-kit",
-      "status": "next-test",
-      "provides": ["scriptForwardMovement", "scriptInspect", "assertStoryBeat", "assertObjectivesComplete", "assertDeterministicSnapshot"]
+      "status": "next",
+      "provides": ["assertPathProgress", "assertStoryTrigger", "assertWalkObjective", "assertInspectObjective", "assertCompletion"]
     }
   ],
   "blockers": [
-    {
-      "id": "advance-game-state-stub",
-      "severity": "high",
-      "detail": "advanceGameState() only increments frame and records lastTick."
-    },
-    {
-      "id": "no-action-frame-input",
-      "severity": "high",
-      "detail": "web-host-dsk does not collect keyboard, pointer, touch, or inspect input yet."
-    },
-    {
-      "id": "path-progress-not-evaluated",
-      "severity": "high",
-      "detail": "walk-the-path requires progressAtLeast 0.35, but no runtime calculates path progress."
-    },
-    {
-      "id": "focal-tree-inspect-not-evaluated",
-      "severity": "high",
-      "detail": "focal-tree target exists with radius 4.5, but proximity/facing/inspect checks are not implemented."
-    },
-    {
-      "id": "story-triggers-not-runtime",
-      "severity": "medium",
-      "detail": "path-discovery and focal-tree story beats exist as descriptors but are not runtime-triggered."
-    },
-    {
-      "id": "save-dsk-descriptor-only",
-      "severity": "medium",
-      "detail": "meadow-save-dsk is listed but does not yet persist arrival completion."
-    }
+    "advance-game-state-stub",
+    "input-gap",
+    "action-contract-gap",
+    "path-progress-gap",
+    "interaction-gap",
+    "story-gap",
+    "objective-gap",
+    "save-gap",
+    "render-metadata-gap"
   ],
-  "nextSlice": {
-    "name": "IntoTheMeadow Runtime Loop Evaluation Cutover",
-    "orderedSteps": [
+  "recommendedNextSlice": {
+    "name": "IntoTheMeadow Action Contract + Objective Smoke Cutover",
+    "steps": [
       "Keep index.html and src/boot/boot-game.js thin.",
-      "Add host input collector in src/hosts/web-host.js.",
-      "Pass normalized action frames into game.tick({ time, dt, actions }).",
-      "Expand advanceGameState() into service-composed reducers.",
-      "Add path-progress sampling from ARRIVAL_MEADOW_CONFIG.features.path.points.",
-      "Add focal-tree affordance and inspect event evaluation.",
-      "Add one-shot story trigger evaluation.",
-      "Add objective completion reducers.",
-      "Add arrival completion state before localStorage persistence.",
-      "Add playable loop smoke fixture."
+      "Add meadow-action-contract-kit with stable actions: move, look, inspect, reset, debug-toggle.",
+      "Collect host input in src/hosts/web-host.js without putting browser events into deterministic state.",
+      "Pass game.tick({ time, dt, actions }) every frame.",
+      "Split advanceGameState into ordered reducer services.",
+      "Add movement, path progress, focal tree interaction, story trigger, objective completion, and arrival completion services.",
+      "Add render metadata projection for player, camera, objective, story, and interaction state.",
+      "Add scripted smoke for path walk and focal-tree inspection."
     ],
-    "acceptanceTargets": [
+    "acceptance": [
       "npm run check",
-      "GameHost state exposes advancing player.pathProgress under scripted movement",
-      "path-discovery story beat appears once after progress >= 0.25",
-      "walk-the-path completes after progress >= 0.35",
+      "pathProgress increases under scripted movement",
+      "path-discovery appears once after pathProgress >= 0.25",
+      "walk-the-path completes after pathProgress >= 0.35",
+      "focal-tree affordance appears inside target radius",
       "inspect-tree completes after inspect:focal-tree",
-      "diagnostics reports gameplay reducer health"
+      "arrival completion is derived after both objectives complete",
+      "GameHost snapshot exposes player, story, objective, interaction, completion, and reducer diagnostics",
+      "scripted action replay produces the same snapshot"
     ]
   }
 }

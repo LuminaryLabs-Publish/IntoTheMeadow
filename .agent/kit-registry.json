@@ -1,26 +1,26 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-07T18:19:15-04:00",
-  "status": "gameplay-snapshot-fixture-contract-action-reducer-source-lock-documented",
+  "generatedAt": "2026-07-07T19:42:05-04:00",
+  "status": "actionframe-fixture-seed-snapshot-gameplay-source-gate-documented",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
     "reason": "The central Publish repo ledger showed IntoTheMeadow as the oldest eligible tracked non-Cavalry repo by latest review timestamp.",
     "eligibleTimestampsChecked": {
-      "IntoTheMeadow": "2026-07-07T16:58:09-04:00",
-      "ZombieOrchard": "2026-07-07T17:10:21-04:00",
-      "HorrorCorridor": "2026-07-07T17:20:57-04:00",
-      "TheOpenAbove": "2026-07-07T17:29:51-04:00",
-      "AetherVale": "2026-07-07T17-38-46-04-00",
-      "PhantomCommand": "2026-07-07T17:49:34-04:00",
-      "PrehistoricRush": "2026-07-07T18:00:19-04:00",
-      "MyCozyIsland": "2026-07-07T18:10:03-04:00"
+      "IntoTheMeadow": "2026-07-07T18:19:15-04:00",
+      "ZombieOrchard": "2026-07-07T18:28:54-04:00",
+      "HorrorCorridor": "2026-07-07T18:41:07-04:00",
+      "TheOpenAbove": "2026-07-07T18:49:32-04:00",
+      "AetherVale": "2026-07-07T19:01:37-04:00",
+      "PhantomCommand": "2026-07-07T19:08:52-04:00",
+      "PrehistoricRush": "2026-07-07T19:18:58-04:00",
+      "MyCozyIsland": "2026-07-07T19:29:28-04:00"
     }
   },
-  "latestTracker": ".agent/trackers/2026-07-07T18-19-15-04-00/project-breakdown.md",
-  "nextBuildTarget": "IntoTheMeadow GameplaySnapshot Fixture Contract + Action Reducer Source Lock",
+  "latestTracker": ".agent/trackers/2026-07-07T19-42-05-04-00/project-breakdown.md",
+  "nextBuildTarget": "IntoTheMeadow ActionFrame Fixture Seed + Snapshot.Gameplay Source Gate",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",
@@ -49,16 +49,55 @@
     "hostGap": "web-host.js loads kits, ticks, renders, and exposes GameHost, but does not collect deterministic action frames or pass actions into tick.",
     "snapshotGap": "game-snapshot.js exposes raw state/render/diagnostics but not a dedicated gameplay snapshot contract.",
     "contentReady": "The arrival meadow path, focal tree target, story beats, and objectives are descriptor-driven enough for the first playable loop.",
-    "newNarrowing": "Build GameplaySnapshot fixture contracts and Action Reducer source locks before renderer extraction, save persistence, pointer-lock polish, audio, or ProtoKit promotion."
+    "newNarrowing": "Build ActionFrame fixture seeds and snapshot.gameplay source gates before renderer extraction, save persistence, pointer-lock polish, audio, or ProtoKit promotion."
   },
   "sourceFacts": {
-    "initialPlayer": { "x": 0, "y": 0, "z": -36, "yaw": 0, "pitch": 0, "pathProgress": 0 },
+    "initialPlayer": {
+      "x": 0,
+      "y": 0,
+      "z": -36,
+      "yaw": 0,
+      "pitch": 0,
+      "pathProgress": 0
+    },
     "pathPointCount": 6,
-    "pathStart": { "x": 0, "z": -44 },
-    "pathEnd": { "x": 0, "z": 20 },
-    "walkObjective": { "id": "walk-the-path", "requiredAction": "path-progress", "targetId": "arrival-path", "progressAtLeast": 0.35 },
-    "inspectObjective": { "id": "inspect-tree", "requiredAction": "inspect", "targetId": "focal-tree", "inspected": true },
-    "focalTreeTarget": { "id": "focal-tree", "type": "inspectable", "x": 0, "y": 1.4, "z": 24, "radius": 4.5 }
+    "pathStart": {
+      "x": 0,
+      "z": -44
+    },
+    "pathEnd": {
+      "x": 0,
+      "z": 20
+    },
+    "walkObjective": {
+      "id": "walk-the-path",
+      "requiredAction": "path-progress",
+      "targetId": "arrival-path",
+      "progressAtLeast": 0.35
+    },
+    "inspectObjective": {
+      "id": "inspect-tree",
+      "requiredAction": "inspect",
+      "targetId": "focal-tree",
+      "inspected": true
+    },
+    "focalTreeTarget": {
+      "id": "focal-tree",
+      "type": "inspectable",
+      "x": 0,
+      "y": 1.4,
+      "z": 24,
+      "radius": 4.5
+    },
+    "arrivalPathTarget": {
+      "id": "arrival-path",
+      "type": "path",
+      "x": 0,
+      "y": 0,
+      "z": -8,
+      "radius": 32
+    },
+    "worldWindStrength": 0.38
   },
   "interactionLoop": {
     "current": [
@@ -102,7 +141,8 @@
       "gamehost-state-contract",
       "gamehost-snapshot-contract",
       "gamehost-diagnostics-contract",
-      "gamehost-render-snapshot-contract"
+      "gamehost-render-snapshot-contract",
+      "runtime-compatibility-contract"
     ],
     "gameComposition": [
       "product-game-factory",
@@ -117,7 +157,8 @@
       "scene-identity",
       "session-identity",
       "tick-clock",
-      "last-tick-diagnostics"
+      "last-tick-diagnostics",
+      "content-pack-authority"
     ],
     "meadowContent": [
       "arrival-meadow-content",
@@ -183,14 +224,23 @@
       "source": "https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-area-kit/index.js",
       "status": "loaded-by-web-host",
       "domain": "meadow-area",
-      "provides": ["createMeadowAreaKit", "getRenderPlan", "getSnapshot", "validate"]
+      "provides": [
+        "createMeadowAreaKit",
+        "getRenderPlan",
+        "getSnapshot",
+        "validate"
+      ]
     },
     {
       "id": "meadow-webgl-render-kit",
       "source": "https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-webgl-render-kit/index.js",
       "status": "loaded-by-web-host",
       "domain": "meadow-webgl-render",
-      "provides": ["createMeadowWebglRenderKit", "render", "getSnapshot"]
+      "provides": [
+        "createMeadowWebglRenderKit",
+        "render",
+        "getSnapshot"
+      ]
     }
   ],
   "activeLocalDsks": [
@@ -240,45 +290,237 @@
     "static-pages-deploy-dsk"
   ],
   "runtimeCutoverKits": [
-    { "id": "meadow-actionframe-contract-kit", "status": "next-first", "provides": ["defineActionFrameShape", "defineActionTypes", "normalizeActionFrame", "validateActionFrame", "serializeActionFrame", "markAccepted", "markRejected"] },
-    { "id": "meadow-action-batch-kit", "status": "next-first", "provides": ["collectFrameActions", "sortActionFrames", "dedupeActionFrames", "freezeActionBatch", "summarizeActionBatch"] },
-    { "id": "meadow-action-journal-kit", "status": "next-first", "provides": ["appendActionRecord", "queryActionsByStatus", "summarizeActionJournal", "serializeActionJournal", "assertReplayableActionJournal"] },
-    { "id": "meadow-action-rejection-reason-kit", "status": "next-first", "provides": ["defineReasonCodes", "rejectUnsupportedAction", "rejectInvalidScene", "rejectInvalidPayload", "rejectOutOfRange", "rejectWrongTarget", "rejectDuplicateEvent", "rejectNoEffect"] },
-    { "id": "meadow-action-source-fixture-kit", "status": "next-first", "provides": ["createNoopActionFixture", "createPathWalkActionFixture", "createInvalidInspectFixture", "createValidInspectFixture", "assertFixtureActionOrder"] },
-    { "id": "meadow-reducer-result-contract-kit", "status": "next-first", "provides": ["defineReducerResultShape", "createReducerResult", "createNoopReducerResult", "mergeReducerResults", "validateReducerResult"] },
-    { "id": "meadow-reducer-result-journal-kit", "status": "next-first", "provides": ["appendReducerResult", "summarizeReducerJournal", "queryReducerResults", "assertReducerOrder", "serializeReducerJournal"] },
-    { "id": "meadow-player-path-reducer-kit", "status": "next-first", "provides": ["samplePathPoints", "computeNearestPathSegment", "advancePathProgress", "clampPathProgress", "emitPathProgressResult"] },
-    { "id": "path-progress-runtime-kit", "status": "next-first", "provides": ["samplePathProgress", "computeProgressDelta", "projectProgressToObjective", "summarizePathProgress"] },
-    { "id": "path-threshold-event-kit", "status": "next-first", "provides": ["definePathThresholds", "emitPathProgressEvent", "dedupePathThresholdEvent", "summarizeThresholdState"] },
-    { "id": "focal-tree-affordance-kit", "status": "next-first", "provides": ["resolveInteractionTarget", "computeDistanceToTarget", "evaluateInspectRange", "evaluateInspectFacing", "createAffordanceSnapshot"] },
-    { "id": "inspect-result-reducer-kit", "status": "next-first", "provides": ["reduceInspectAction", "rejectInspectOutOfRange", "rejectInspectWrongTarget", "acceptInspectTarget", "emitInspectEvent"] },
-    { "id": "objective-state-authority-kit", "status": "next-first", "provides": ["resolveObjectiveDescriptors", "evaluateObjectiveCompletion", "appendCompletedObjective", "deriveActiveObjective", "summarizeObjectiveState"] },
-    { "id": "meadow-gameplay-snapshot-kit", "status": "next-first", "provides": ["createGameplaySnapshot", "validateGameplaySnapshot", "summarizeGameplaySnapshot", "exposeGameplayDebugFields", "assertReplaySnapshotParity"] },
-    { "id": "gameplay-snapshot-fixture-kit", "status": "next-first", "provides": ["createExpectedNoopSnapshot", "createExpectedPathSnapshot", "createExpectedInspectSnapshot", "compareGameplaySnapshots", "assertObjectiveSnapshotShape"] },
-    { "id": "replay-parity-smoke-kit", "status": "next-first", "provides": ["runScriptedActionFixture", "replayAcceptedJournal", "compareGameplaySnapshots", "assertObjectiveCompletion", "assertDeterministicReplay"] }
+    {
+      "id": "meadow-actionframe-contract-kit",
+      "status": "next-first",
+      "provides": [
+        "defineActionFrameShape",
+        "defineActionTypes",
+        "normalizeActionFrame",
+        "validateActionFrame",
+        "serializeActionFrame"
+      ]
+    },
+    {
+      "id": "meadow-action-batch-kit",
+      "status": "next-first",
+      "provides": [
+        "collectFrameActions",
+        "sortActionFrames",
+        "dedupeActionFrames",
+        "freezeActionBatch",
+        "summarizeActionBatch"
+      ]
+    },
+    {
+      "id": "meadow-action-journal-kit",
+      "status": "next-first",
+      "provides": [
+        "appendActionRecord",
+        "queryActionsByStatus",
+        "summarizeActionJournal",
+        "serializeActionJournal",
+        "assertReplayableActionJournal"
+      ]
+    },
+    {
+      "id": "meadow-action-rejection-reason-kit",
+      "status": "next-first",
+      "provides": [
+        "unsupported_action",
+        "invalid_scene",
+        "invalid_payload",
+        "out_of_range",
+        "wrong_target",
+        "duplicate_event",
+        "no_effect"
+      ]
+    },
+    {
+      "id": "meadow-action-source-fixture-kit",
+      "status": "next-first",
+      "provides": [
+        "createNoopActionFixture",
+        "createPathWalkActionFixture",
+        "createInvalidInspectFixture",
+        "createValidInspectFixture",
+        "assertFixtureActionOrder"
+      ]
+    },
+    {
+      "id": "meadow-reducer-result-contract-kit",
+      "status": "next-first",
+      "provides": [
+        "defineReducerResultShape",
+        "createReducerResult",
+        "createNoopReducerResult",
+        "mergeReducerResults",
+        "validateReducerResult"
+      ]
+    },
+    {
+      "id": "meadow-reducer-result-journal-kit",
+      "status": "next-first",
+      "provides": [
+        "appendReducerResult",
+        "summarizeReducerJournal",
+        "queryReducerResults",
+        "assertReducerOrder",
+        "serializeReducerJournal"
+      ]
+    },
+    {
+      "id": "meadow-player-path-reducer-kit",
+      "status": "next-first",
+      "provides": [
+        "samplePathPoints",
+        "computeNearestPathSegment",
+        "advancePathProgress",
+        "clampPathProgress",
+        "emitPathProgressResult"
+      ]
+    },
+    {
+      "id": "path-progress-runtime-kit",
+      "status": "next-first",
+      "provides": [
+        "samplePathProgress",
+        "computeProgressDelta",
+        "projectProgressToObjective",
+        "summarizePathProgress"
+      ]
+    },
+    {
+      "id": "path-threshold-event-kit",
+      "status": "next-first",
+      "provides": [
+        "definePathThresholds",
+        "emitPathProgressEvent",
+        "dedupePathThresholdEvent",
+        "summarizeThresholdState"
+      ]
+    },
+    {
+      "id": "focal-tree-affordance-kit",
+      "status": "next-first",
+      "provides": [
+        "resolveInteractionTarget",
+        "computeDistanceToTarget",
+        "evaluateFacing",
+        "createAffordanceSnapshot",
+        "rejectOutOfRange"
+      ]
+    },
+    {
+      "id": "inspect-result-reducer-kit",
+      "status": "next-first",
+      "provides": [
+        "normalizeInspectAction",
+        "evaluateInspectPreflight",
+        "acceptInspectTarget",
+        "rejectInspectAction",
+        "emitInspectEvent"
+      ]
+    },
+    {
+      "id": "objective-state-authority-kit",
+      "status": "next-first",
+      "provides": [
+        "readObjectiveDescriptors",
+        "evaluateObjectiveCompletion",
+        "completeObjectiveOnce",
+        "summarizeObjectiveState"
+      ]
+    },
+    {
+      "id": "arrival-completion-runtime-kit",
+      "status": "next-first",
+      "provides": [
+        "deriveArrivalCompletion",
+        "emitArrivalCompleteOnce",
+        "summarizeArrivalCompletion"
+      ]
+    },
+    {
+      "id": "meadow-gameplay-snapshot-kit",
+      "status": "next-first",
+      "provides": [
+        "createGameplaySnapshot",
+        "summarizeObjectives",
+        "summarizeInteraction",
+        "summarizeCompletion",
+        "validateGameplaySnapshot"
+      ]
+    },
+    {
+      "id": "gamehost-gameplay-diagnostics-kit",
+      "status": "next-first",
+      "provides": [
+        "getLatestActionSummary",
+        "getLatestReducerSummary",
+        "getGameplayStatus",
+        "getReplayReadiness"
+      ]
+    },
+    {
+      "id": "replay-parity-smoke-kit",
+      "status": "next-first",
+      "provides": [
+        "runNoopTickFixture",
+        "runPathWalkFixture",
+        "runInvalidInspectFixture",
+        "runValidInspectFixture",
+        "runObjectiveCompletionFixture",
+        "assertReplayParity"
+      ]
+    }
   ],
-  "recommendedBuildOrder": [
-    "preserve current index.html, boot-game.js, web-host.js render behavior, and GameHost compatibility",
-    "keep game.tick({ time, dt }) working",
-    "allow additive game.tick({ time, dt, actions })",
-    "add ActionFrame and ActionBatch contracts",
-    "add ActionJournal and ReducerResultJournal contracts",
-    "add no-op reducer seed fixture",
-    "add player path reducer against ARRIVAL_MEADOW_CONFIG.features.path.points",
-    "emit path-progress threshold events",
-    "complete walk-the-path at progress >= 0.35",
-    "add focal-tree affordance reducer using ARRIVAL_INTERACTION_TARGETS radius 4.5",
-    "reject invalid inspect with stable reasons",
-    "accept inspect:focal-tree when target constraints pass",
-    "complete inspect-tree after accepted inspect",
-    "derive arrival completion from both objectives",
-    "expose snapshot.gameplay and GameHost gameplay diagnostics",
-    "add DOM-free action replay smoke for no-op tick, path walk, invalid inspect, valid inspect, objective completion, and replay parity"
+  "deferredKits": [
+    "renderer-extraction-kit",
+    "save-persistence-kit",
+    "pointer-lock-polish-kit",
+    "meadow-audio-runtime-kit",
+    "external-protokit-promotion-kit"
   ],
-  "validationStatus": {
-    "runtimeSourceChanged": false,
+  "recommendedNextSlice": {
+    "name": "IntoTheMeadow ActionFrame Fixture Seed + Snapshot.Gameplay Source Gate",
+    "preserve": [
+      "current static browser route",
+      "current boot-game.js behavior",
+      "current web-host.js render loop",
+      "current GameHost compatibility",
+      "game.tick({ time, dt })"
+    ],
+    "add": [
+      "game.tick({ time, dt, actions })",
+      "ActionFrame and ActionBatch contracts",
+      "ActionJournal",
+      "ReducerResult and ReducerResultJournal",
+      "no-op reducer seed fixture",
+      "scripted path-walk fixture",
+      "pathProgress reducer",
+      "path threshold events",
+      "walk-the-path completion",
+      "focal-tree affordance reducer",
+      "inspect reducer with stable rejection reasons",
+      "inspect-tree completion",
+      "arrival completion derivation",
+      "snapshot.gameplay",
+      "GameHost gameplay diagnostics",
+      "DOM-free replay parity smoke"
+    ],
+    "defer": [
+      "renderer extraction",
+      "save persistence",
+      "pointer-lock polish",
+      "audio",
+      "ProtoKit promotion"
+    ]
+  },
+  "validation": {
+    "runtimeFilesChanged": false,
     "localBuildRun": false,
     "smokeTestRun": false,
-    "notes": "Documentation-only pass. Existing static/render/DSK smoke surfaces were not executed."
+    "note": "Documentation-only pass through GitHub connector."
   }
 }

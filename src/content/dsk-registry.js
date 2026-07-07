@@ -24,6 +24,13 @@ export const LOCAL_DSK_IDS = Object.freeze([
   "meadow-diagnostics-dsk",
   "meadow-performance-dsk",
   "meadow-render-host-dsk",
+  "post-process-stack-dsk",
+  "render-target-kit",
+  "sobel-outline-pass-kit",
+  "color-grade-pass-kit",
+  "depth-fog-pass-kit",
+  "vignette-pass-kit",
+  "final-composite-pass-kit",
   "static-pages-deploy-dsk"
 ]);
 
@@ -34,6 +41,8 @@ export const REQUIRED_V01_DSK_IDS = Object.freeze([
   "meadow-area-bridge-dsk",
   "meadow-render-host-dsk",
   "meadow-diagnostics-dsk",
+  "meadow-performance-dsk",
+  "post-process-stack-dsk",
   "static-pages-deploy-dsk"
 ]);
 

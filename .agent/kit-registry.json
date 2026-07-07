@@ -1,11 +1,13 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-07T04:41:22-04:00",
-  "status": "follow-up documented",
+  "generatedAt": "2026-07-07T05:50:01-04:00",
+  "status": "runtime-loop-cutover-documented",
   "selection": {
-    "excludedRepos": ["LuminaryLabs-Publish/TheCavalryOfRome"],
-    "reason": "Next eligible follow-up repo after the latest PrehistoricRush ledger pass; IntoTheMeadow had no repo-local .agent/kit-registry.json before this run."
+    "excludedRepos": [
+      "LuminaryLabs-Publish/TheCavalryOfRome"
+    ],
+    "reason": "Oldest eligible repo in the tracked Publish rotation after the latest PrehistoricRush ledger pass."
   },
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
@@ -17,7 +19,37 @@
     "areaConfig": "src/content/meadow-areas/arrival-meadow.js",
     "objectives": "src/content/objectives/arrival-objectives.js",
     "story": "src/content/story/story-beats.js",
-    "interactionTargets": "src/content/interaction-targets/arrival-targets.js"
+    "interactionTargets": "src/content/interaction-targets/arrival-targets.js",
+    "tests": [
+      "tests/static-smoke.mjs",
+      "tests/dsk-registry-smoke.mjs",
+      "tests/render-plan-smoke.mjs",
+      "tests/deterministic-scene-smoke.mjs"
+    ]
+  },
+  "interactionLoop": {
+    "current": [
+      "Browser loads index.html.",
+      "boot-game.js locates DOM host nodes.",
+      "web-host.js imports meadow-area-kit and meadow-webgl-render-kit from the manifest.",
+      "createIntoTheMeadowGame installs local DSK descriptors and creates the arrival meadow area.",
+      "requestAnimationFrame calls game.tick({ time, dt }).",
+      "advanceGameState increments frame and records lastTick.",
+      "meadow-area-kit emits a render plan.",
+      "enhanceRenderPlan applies product metadata.",
+      "meadow-webgl-render-kit renders the scene.",
+      "window.GameHost exposes state, snapshot, diagnostics, and render snapshot."
+    ],
+    "target": [
+      "Collect host input.",
+      "Normalize input through meadow-input-dsk.",
+      "Move player through meadow-player-dsk.",
+      "Sample path progress through path-corridor-dsk.",
+      "Evaluate focal-tree inspect affordance through meadow-interaction-dsk.",
+      "Evaluate story triggers through meadow-story-dsk.",
+      "Complete walk-the-path and inspect-tree through meadow-objective-dsk.",
+      "Record arrival completion through meadow-save-dsk."
+    ]
   },
   "externalKits": [
     {
@@ -25,18 +57,32 @@
       "source": "https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-area-kit/index.js",
       "status": "loaded-by-web-host",
       "domain": "meadow-area",
-      "provides": ["createMeadowAreaKit", "getRenderPlan", "getSnapshot", "validate"],
-      "usedBy": ["src/hosts/web-host.js", "src/game/create-into-the-meadow-game.js"],
-      "notes": "Consumes ARRIVAL_MEADOW_CONFIG and returns the reusable meadow render plan."
+      "provides": [
+        "createMeadowAreaKit",
+        "getRenderPlan",
+        "getSnapshot",
+        "validate"
+      ],
+      "usedBy": [
+        "src/hosts/web-host.js",
+        "src/game/create-into-the-meadow-game.js"
+      ],
+      "next": "Keep reusable meadow render-plan generation external and feed only generic player/camera metadata back through render-plan enhancement."
     },
     {
       "id": "meadow-webgl-render-kit",
       "source": "https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-webgl-render-kit/index.js",
       "status": "loaded-by-web-host",
       "domain": "meadow-webgl-render",
-      "provides": ["createMeadowWebglRenderKit", "render", "getSnapshot"],
-      "usedBy": ["src/hosts/web-host.js"],
-      "notes": "Owns canvas rendering for enhanced meadow render plans."
+      "provides": [
+        "createMeadowWebglRenderKit",
+        "render",
+        "getSnapshot"
+      ],
+      "usedBy": [
+        "src/hosts/web-host.js"
+      ],
+      "next": "Keep renderer kit reusable. Do not place product-specific objectives or story logic in renderer code."
     }
   ],
   "requiredV01Dsks": [
@@ -54,124 +100,62 @@
     {
       "id": "into-the-meadow-game-dsk",
       "domain": "into-the-meadow-game",
-      "label": "Game Foundation",
       "status": "active-v0.1",
       "provides": ["game-manifest", "kit-stack-registry", "game-state-root", "boot-sequence", "game-snapshot"],
       "source": ["src/content/game-manifest.js", "src/game/create-into-the-meadow-game.js", "src/game/game-snapshot.js"],
-      "next": "Keep product ownership here; do not promote this game-specific boundary into ProtoKits."
+      "next": "Own product composition and orchestrate gameplay reducers without becoming a reusable ProtoKit."
     },
     {
       "id": "web-host-dsk",
       "domain": "web-host",
-      "label": "Host Runtime",
       "status": "active-v0.1",
       "provides": ["document-shell", "browser-loop", "host-debug-surface", "asset-loading-host", "browser-safety"],
       "source": ["src/boot/boot-game.js", "src/hosts/web-host.js", "src/boot/expose-game-host.js"],
-      "next": "Add browser input collection and route normalized actions into game.tick()."
+      "next": "Add browser input collection and pass normalized action frames into game.tick()."
     },
     {
       "id": "game-composition-dsk",
       "domain": "game-composition",
-      "label": "Composition",
       "status": "active-v0.1",
       "provides": ["dsk-registry", "scene-composition", "render-composition", "simulation-composition", "composition-validation"],
       "source": ["src/boot/install-dsks.js", "src/dsks/index.js", "src/game/enhance-render-plan.js"],
-      "next": "Split simulation reducers behind DSK service functions instead of growing game-state.js as a monolith."
+      "next": "Split simulation into composed service calls instead of growing game-state.js as a monolith."
     },
     {
       "id": "meadow-area-bridge-dsk",
       "domain": "meadow-area-bridge",
-      "label": "Meadow Area",
       "status": "active-v0.1",
       "provides": ["meadow-area-config", "meadow-feature-config", "meadow-area-kit-adapter", "meadow-area-state", "meadow-area-validation"],
       "source": ["src/content/meadow-areas/arrival-meadow.js", "src/game/create-into-the-meadow-game.js"],
-      "next": "Expose player/camera metadata to render-plan enhancement without making the external meadow-area-kit product-specific."
-    },
-    {
-      "id": "meadow-terrain-texture-dsk",
-      "domain": "meadow-terrain-texture",
-      "label": "Terrain Texturing",
-      "status": "planned",
-      "provides": ["terrain-surface-model", "material-layer-system", "path-layer-system", "terrain-sampler", "terrain-validation"],
-      "source": ["src/dsks/index.js", "src/content/meadow-areas/arrival-meadow.js"],
-      "next": "Move terrain material bands out of raw config when they become executable shader inputs."
+      "next": "Bridge player/camera metadata to render-plan enhancement without making external meadow-area-kit product-specific."
     },
     {
       "id": "path-corridor-dsk",
       "domain": "path-corridor",
-      "label": "Path Corridor",
       "status": "planned-runtime-needed",
       "provides": ["path-curve-model", "walkable-corridor", "path-surface-detail", "path-progression", "path-validation"],
       "source": ["src/content/meadow-areas/arrival-meadow.js", "src/content/objectives/arrival-objectives.js"],
-      "next": "Implement deterministic path progress sampling for the walk-the-path objective."
-    },
-    {
-      "id": "grass-patch-dsk",
-      "domain": "grass-patch",
-      "label": "Vegetation",
-      "status": "planned",
-      "provides": ["patch-grid", "blade-distribution", "terrain-awareness", "wind-binding", "grass-validation"],
-      "source": ["src/dsks/index.js", "src/content/meadow-areas/arrival-meadow.js"],
-      "next": "Upgrade descriptor grass into path-aware patches after the playable loop works."
-    },
-    {
-      "id": "gpu-grass-render-dsk",
-      "domain": "gpu-grass-render",
-      "label": "Vegetation Render",
-      "status": "planned",
-      "provides": ["grass-instance-buffer", "grass-blade-mesh", "shader-wind", "grass-lod-render", "grass-render-validation"],
-      "source": ["src/dsks/index.js"],
-      "next": "Keep as a render extraction candidate; only promote after profiling."
-    },
-    {
-      "id": "wind-field-dsk",
-      "domain": "wind-field",
-      "label": "Wind Weather",
-      "status": "planned",
-      "provides": ["wind-state", "wind-sampler", "wind-zones", "wind-consumers", "wind-validation"],
-      "source": ["src/content/meadow-areas/arrival-meadow.js", "src/game/game-state.js"],
-      "next": "Use one deterministic wind state for grass, tree, ambience, and render metadata."
+      "next": "Implement deterministic path progress sampling for walk-the-path."
     },
     {
       "id": "tree-object-dsk",
       "domain": "tree-object",
-      "label": "Tree",
       "status": "planned-runtime-needed",
       "provides": ["focal-tree-model", "tree-line-model", "tree-materials", "tree-wind-binding", "tree-validation"],
       "source": ["src/content/meadow-areas/arrival-meadow.js", "src/content/interaction-targets/arrival-targets.js"],
-      "next": "Bind focal-tree model to interaction target and story trigger."
-    },
-    {
-      "id": "meadow-scatter-dsk",
-      "domain": "meadow-scatter",
-      "label": "Meadow Scatter",
-      "status": "planned",
-      "provides": ["flower-scatter", "rock-scatter", "mushroom-scatter", "placement-rules", "scatter-validation"],
-      "source": ["src/content/meadow-areas/arrival-meadow.js"],
-      "next": "Treat flowers/rocks/mushrooms as non-blocking visual scatter until collision or collection is needed."
-    },
-    {
-      "id": "meadow-atmosphere-dsk",
-      "domain": "meadow-atmosphere",
-      "label": "Atmosphere",
-      "status": "planned",
-      "provides": ["sky-gradient", "sun-system", "cloud-layer", "distant-hills", "atmosphere-validation"],
-      "source": ["src/content/meadow-areas/arrival-meadow.js"],
-      "next": "Keep golden-hour styling compact and renderer-agnostic."
+      "next": "Bind focal-tree model to interaction, story, and objective evaluation."
     },
     {
       "id": "meadow-player-dsk",
       "domain": "meadow-player",
-      "label": "Player Exploration",
       "status": "planned-runtime-needed",
       "provides": ["player-state", "movement-profile", "terrain-contact", "player-actions", "player-validation"],
       "source": ["src/game/game-state.js"],
-      "next": "First executable gameplay service to add: update player position, yaw, pitch, and pathProgress from normalized input."
+      "next": "Update player position, yaw, pitch, and pathProgress from normalized input."
     },
     {
       "id": "meadow-camera-dsk",
       "domain": "meadow-camera",
-      "label": "Camera",
       "status": "planned-runtime-needed",
       "provides": ["camera-mode", "camera-rig", "camera-collision", "camera-feel", "camera-validation"],
       "source": ["src/game/game-state.js", "src/game/enhance-render-plan.js"],
@@ -180,202 +164,196 @@
     {
       "id": "meadow-input-dsk",
       "domain": "meadow-input",
-      "label": "Input",
       "status": "planned-runtime-needed",
       "provides": ["action-map", "device-bindings", "input-context", "input-normalization", "input-validation"],
       "source": ["src/hosts/web-host.js"],
-      "next": "Collect keyboard/pointer actions in the host and pass action frames into tick()."
+      "next": "Collect keyboard, pointer, touch, and inspect actions in the host."
     },
     {
       "id": "meadow-interaction-dsk",
       "domain": "meadow-interaction",
-      "label": "Interaction",
       "status": "planned-runtime-needed",
       "provides": ["interactable-registry", "affordance-rules", "inspect-state", "interaction-events", "interaction-validation"],
       "source": ["src/content/interaction-targets/arrival-targets.js"],
-      "next": "Resolve focal-tree proximity/look/inspect affordance and emit inspect:focal-tree."
+      "next": "Resolve focal-tree proximity, facing, and inspect affordance."
     },
     {
       "id": "meadow-story-dsk",
       "domain": "meadow-story",
-      "label": "Story Flow",
       "status": "planned-runtime-needed",
       "provides": ["story-state", "story-beats", "dialogue-text", "sequence-runner", "story-validation"],
       "source": ["src/content/story/story-beats.js", "src/game/game-state.js"],
-      "next": "Evaluate one-shot triggers: scene-start, path-progress:0.25, inspect:focal-tree."
+      "next": "Evaluate scene-start, path-progress:0.25, and inspect:focal-tree as one-shot story triggers."
     },
     {
       "id": "meadow-objective-dsk",
       "domain": "meadow-objective",
-      "label": "Progression",
       "status": "planned-runtime-needed",
       "provides": ["objective-model", "objective-flow", "completion-ledger", "feedback-surface", "objective-validation"],
       "source": ["src/content/objectives/arrival-objectives.js", "src/game/game-state.js"],
       "next": "Evaluate walk-the-path and inspect-tree completion into progression.completedObjectiveIds."
     },
     {
-      "id": "meadow-ecology-dsk",
-      "domain": "meadow-ecology",
-      "label": "Ecology Ambience",
-      "status": "planned",
-      "provides": ["ambient-life", "ecology-zones", "ambience-triggers", "non-gameplay-agents", "ecology-validation"],
-      "source": ["src/dsks/index.js"],
-      "next": "Defer until the core playable loop exists."
-    },
-    {
-      "id": "meadow-audio-dsk",
-      "domain": "meadow-audio",
-      "label": "Audio",
-      "status": "planned",
-      "provides": ["ambient-bed", "spatial-audio-cues", "audio-state", "audio-events", "audio-validation"],
-      "source": ["src/dsks/index.js"],
-      "next": "Bind to story and interaction events after state transitions exist."
-    },
-    {
-      "id": "meadow-ui-dsk",
-      "domain": "meadow-ui",
-      "label": "UI",
-      "status": "planned",
-      "provides": ["minimal-hud", "story-text-panel", "debug-ui", "ui-state", "ui-validation"],
-      "source": ["src/hosts/web-host.js"],
-      "next": "Keep public UI minimal; use debug HUD only through query flag."
-    },
-    {
       "id": "meadow-save-dsk",
       "domain": "meadow-save",
-      "label": "Persistence",
       "status": "planned",
       "provides": ["save-model", "save-slots", "persistence-adapter", "migration", "save-validation"],
       "source": ["src/dsks/index.js"],
-      "next": "Record arrival meadow completion after objective runtime lands."
+      "next": "Record arrival meadow completion after gameplay state is deterministic."
     },
     {
       "id": "meadow-diagnostics-dsk",
       "domain": "meadow-diagnostics",
-      "label": "Diagnostics",
       "status": "active-v0.1",
       "provides": ["runtime-health", "render-health", "determinism-checks", "smoke-tests", "diagnostics-report"],
-      "source": ["src/game/create-into-the-meadow-game.js", "tests/static-smoke.mjs", "tests/dsk-registry-smoke.mjs", "tests/render-plan-smoke.mjs", "tests/deterministic-scene-smoke.mjs"],
-      "next": "Add scripted loop smoke: start -> path progress -> inspect tree -> objectives complete."
+      "source": ["src/game/create-into-the-meadow-game.js", "src/validation", "tests"],
+      "next": "Report input, player, path, interaction, story, and objective reducer health."
     },
     {
       "id": "meadow-performance-dsk",
       "domain": "meadow-performance",
-      "label": "Performance",
       "status": "active-v0.1",
       "provides": ["quality-profile", "budget-policy", "lod-policy", "adaptive-scaling", "performance-validation"],
-      "source": ["src/dsks/index.js", "src/game/enhance-render-plan.js"],
-      "next": "Keep render budgets visible in diagnostics as grass/render complexity increases."
+      "source": ["src/game/enhance-render-plan.js", "src/content/meadow-areas/arrival-meadow.js"],
+      "next": "Keep quality metadata separate from gameplay state."
     },
     {
       "id": "meadow-render-host-dsk",
       "domain": "meadow-render-host",
-      "label": "Render Host",
       "status": "active-v0.1",
       "provides": ["renderer-selection", "render-plan-ingest", "pass-order", "renderer-state", "renderer-validation"],
       "source": ["src/hosts/web-host.js", "src/game/enhance-render-plan.js"],
-      "next": "Pass camera and objective/story highlight metadata into render plan without hard-coupling to Three/WebGL."
+      "next": "Accept camera/player metadata but never own objective or story state."
     },
     {
       "id": "post-process-stack-dsk",
       "domain": "post-process-stack",
-      "label": "Post Process Stack",
       "status": "active-v0.1",
       "provides": ["pass-registry", "render-target-system", "sobel-outline-pass", "color-grade-pass", "post-validation"],
       "source": ["src/dsks/index.js"],
-      "next": "Keep as declarative metadata until the renderer accepts full pass configuration."
-    },
-    {
-      "id": "render-target-kit",
-      "domain": "render-target",
-      "label": "Render Target",
-      "status": "planned",
-      "provides": ["scene-color-texture", "depth-texture", "normal-texture", "ping-pong-buffer", "resize-policy"],
-      "source": ["src/dsks/index.js"],
-      "next": "Renderer-only extraction candidate."
-    },
-    {
-      "id": "sobel-outline-pass-kit",
-      "domain": "sobel-outline-pass",
-      "label": "Sobel Outline Pass",
-      "status": "planned",
-      "provides": ["color-edge-threshold", "depth-edge-threshold", "normal-edge-threshold", "outline-color", "object-mask"],
-      "source": ["src/dsks/index.js"],
-      "next": "Use sparingly; previous visual direction prefers no harsh tiny-object outlines."
-    },
-    {
-      "id": "color-grade-pass-kit",
-      "domain": "color-grade-pass",
-      "label": "Color Grade Pass",
-      "status": "planned",
-      "provides": ["warmth", "contrast", "saturation", "shadow-tint", "highlight-tint"],
-      "source": ["src/dsks/index.js"],
-      "next": "Bind to golden-hour meadow look."
-    },
-    {
-      "id": "depth-fog-pass-kit",
-      "domain": "depth-fog-pass",
-      "label": "Depth Fog Pass",
-      "status": "planned",
-      "provides": ["fog-near", "fog-far", "fog-color", "distance-curve", "horizon-haze"],
-      "source": ["src/dsks/index.js"],
-      "next": "Use to soften meadow distance and hide edge of small scene."
-    },
-    {
-      "id": "vignette-pass-kit",
-      "domain": "vignette-pass",
-      "label": "Vignette Pass",
-      "status": "planned",
-      "provides": ["radius", "softness", "strength", "center", "quality-tier"],
-      "source": ["src/dsks/index.js"],
-      "next": "Optional cinematic pass; do not block playable loop."
-    },
-    {
-      "id": "final-composite-pass-kit",
-      "domain": "final-composite-pass",
-      "label": "Final Composite Pass",
-      "status": "planned",
-      "provides": ["scene-input", "post-input", "output-target", "debug-overlay", "fallback-composite"],
-      "source": ["src/dsks/index.js"],
-      "next": "Renderer-only extraction candidate."
+      "next": "Keep as descriptor until renderer requires actual pass objects."
     },
     {
       "id": "static-pages-deploy-dsk",
       "domain": "static-pages-deploy",
-      "label": "Deploy",
       "status": "active-v0.1",
       "provides": ["build-config", "github-pages-workflow", "release-artifacts", "cache-invalidation", "deploy-validation"],
       "source": ["package.json", ".github/workflows"],
-      "next": "Keep deploy static and validate with npm run check before publish-impact changes."
+      "next": "Keep npm run check as the baseline deploy gate."
     }
   ],
-  "interactionLoopTarget": [
-    "spawn-at-arrival-path",
-    "normalize-input",
-    "move-player-along-path",
-    "sample-path-progress",
-    "trigger-path-discovery-story-beat",
-    "inspect-focal-tree",
-    "complete-walk-the-path-and-inspect-tree-objectives",
-    "record-arrival-meadow-completion",
-    "preserve-gamehost-diagnostics"
+  "descriptorOnlyKits": [
+    "meadow-terrain-texture-dsk",
+    "grass-patch-dsk",
+    "gpu-grass-render-dsk",
+    "wind-field-dsk",
+    "meadow-scatter-dsk",
+    "meadow-atmosphere-dsk",
+    "meadow-ecology-dsk",
+    "meadow-audio-dsk",
+    "meadow-ui-dsk",
+    "render-target-kit",
+    "sobel-outline-pass-kit",
+    "color-grade-pass-kit",
+    "depth-fog-pass-kit",
+    "vignette-pass-kit",
+    "final-composite-pass-kit"
+  ],
+  "runtimeCutoverKits": [
+    {
+      "id": "meadow-input-runtime-kit",
+      "status": "next",
+      "provides": ["collectKeyboard", "collectPointer", "collectTouch", "normalizeActions", "snapshot"]
+    },
+    {
+      "id": "meadow-player-runtime-kit",
+      "status": "next",
+      "provides": ["integrateMovement", "updateYawPitch", "clampToMeadow", "emitPlayerSnapshot", "validate"]
+    },
+    {
+      "id": "path-progress-runtime-kit",
+      "status": "next",
+      "provides": ["sampleNearestPathPoint", "computeProgress", "emitPathProgressEvent", "validate"]
+    },
+    {
+      "id": "focal-tree-interaction-runtime-kit",
+      "status": "next",
+      "provides": ["checkProximity", "checkFacing", "resolveAffordance", "emitInspectEvent", "validate"]
+    },
+    {
+      "id": "story-trigger-runtime-kit",
+      "status": "next",
+      "provides": ["evaluateSceneStart", "evaluatePathProgress", "evaluateInspect", "appendOneShotBeat", "validate"]
+    },
+    {
+      "id": "objective-completion-runtime-kit",
+      "status": "next",
+      "provides": ["evaluateWalkThePath", "evaluateInspectTree", "advanceActiveObjective", "emitCompletionLedger", "validate"]
+    },
+    {
+      "id": "arrival-completion-save-kit",
+      "status": "after-deterministic-loop",
+      "provides": ["completionState", "localStorageAdapter", "migration", "snapshot", "validate"]
+    },
+    {
+      "id": "playable-loop-smoke-kit",
+      "status": "next-test",
+      "provides": ["scriptForwardMovement", "scriptInspect", "assertStoryBeat", "assertObjectivesComplete", "assertDeterministicSnapshot"]
+    }
   ],
   "blockers": [
-    "advanceGameState only increments frame and stores lastTick",
-    "no runtime action map exists yet",
-    "no path progress sampler exists yet",
-    "no proximity or look-based interaction evaluator exists yet",
-    "story beats and objectives are content-only until reducer services evaluate them"
+    {
+      "id": "advance-game-state-stub",
+      "severity": "high",
+      "detail": "advanceGameState() only increments frame and records lastTick."
+    },
+    {
+      "id": "no-action-frame-input",
+      "severity": "high",
+      "detail": "web-host-dsk does not collect keyboard, pointer, touch, or inspect input yet."
+    },
+    {
+      "id": "path-progress-not-evaluated",
+      "severity": "high",
+      "detail": "walk-the-path requires progressAtLeast 0.35, but no runtime calculates path progress."
+    },
+    {
+      "id": "focal-tree-inspect-not-evaluated",
+      "severity": "high",
+      "detail": "focal-tree target exists with radius 4.5, but proximity/facing/inspect checks are not implemented."
+    },
+    {
+      "id": "story-triggers-not-runtime",
+      "severity": "medium",
+      "detail": "path-discovery and focal-tree story beats exist as descriptors but are not runtime-triggered."
+    },
+    {
+      "id": "save-dsk-descriptor-only",
+      "severity": "medium",
+      "detail": "meadow-save-dsk is listed but does not yet persist arrival completion."
+    }
   ],
-  "nextRecommendedSlice": {
-    "name": "Arrival Meadow Playable Loop Cutover",
-    "steps": [
-      "Add host-level input collection and meadow-input-dsk normalization.",
-      "Expand state reducer through service-composed movement, path, interaction, story, and objective helpers.",
-      "Add path progress sampling against ARRIVAL_MEADOW_CONFIG.features.path.points.",
-      "Evaluate inspect:focal-tree from ARRIVAL_INTERACTION_TARGETS.",
-      "Complete walk-the-path and inspect-tree objectives deterministically.",
-      "Add scripted smoke coverage for the full arrival loop."
+  "nextSlice": {
+    "name": "IntoTheMeadow Runtime Loop Evaluation Cutover",
+    "orderedSteps": [
+      "Keep index.html and src/boot/boot-game.js thin.",
+      "Add host input collector in src/hosts/web-host.js.",
+      "Pass normalized action frames into game.tick({ time, dt, actions }).",
+      "Expand advanceGameState() into service-composed reducers.",
+      "Add path-progress sampling from ARRIVAL_MEADOW_CONFIG.features.path.points.",
+      "Add focal-tree affordance and inspect event evaluation.",
+      "Add one-shot story trigger evaluation.",
+      "Add objective completion reducers.",
+      "Add arrival completion state before localStorage persistence.",
+      "Add playable loop smoke fixture."
+    ],
+    "acceptanceTargets": [
+      "npm run check",
+      "GameHost state exposes advancing player.pathProgress under scripted movement",
+      "path-discovery story beat appears once after progress >= 0.25",
+      "walk-the-path completes after progress >= 0.35",
+      "inspect-tree completes after inspect:focal-tree",
+      "diagnostics reports gameplay reducer health"
     ]
   }
 }

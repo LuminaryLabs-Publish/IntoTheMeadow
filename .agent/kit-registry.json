@@ -1,26 +1,26 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-07T22:20:00-04:00",
-  "status": "action-batch-reducer-harness-gameplay-projection-gate-documented",
+  "generatedAt": "2026-07-07T23:40:40-04:00",
+  "status": "gameplay-snapshot-fixture-matrix-reducer-acceptance-gate-documented",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
     "reason": "The central Publish repo ledger showed IntoTheMeadow as the oldest eligible tracked non-Cavalry repo by latest review timestamp.",
     "eligibleTimestampsChecked": {
-      "IntoTheMeadow": "2026-07-07T20:59:30-04:00",
-      "ZombieOrchard": "2026-07-07T21:09:57-04:00",
-      "HorrorCorridor": "2026-07-07T21:18:45-04:00",
-      "TheOpenAbove": "2026-07-07T21:29:47-04:00",
-      "AetherVale": "2026-07-07T21:39:36-04:00",
-      "PhantomCommand": "2026-07-07T21:50:56-04:00",
-      "PrehistoricRush": "2026-07-07T21:59:06-04:00",
-      "MyCozyIsland": "2026-07-07T22:11:41-04:00"
+      "IntoTheMeadow": "2026-07-07T22:20:00-04:00",
+      "ZombieOrchard": "2026-07-07T22:31:24-04:00",
+      "HorrorCorridor": "2026-07-07T22:41:23-04:00",
+      "TheOpenAbove": "2026-07-07T22:50:39-04:00",
+      "AetherVale": "2026-07-07T22:59:19-04:00",
+      "PhantomCommand": "2026-07-07T23:09:45-04:00",
+      "PrehistoricRush": "2026-07-07T23:21:18-04:00",
+      "MyCozyIsland": "2026-07-07T23:31:44-04:00"
     }
   },
-  "latestTracker": ".agent/trackers/2026-07-07T22-20-00-04-00/project-breakdown.md",
-  "nextBuildTarget": "IntoTheMeadow Action Batch Reducer Harness + Gameplay Projection Gate",
+  "latestTracker": ".agent/trackers/2026-07-07T23-40-40-04-00/project-breakdown.md",
+  "nextBuildTarget": "IntoTheMeadow Gameplay Snapshot Fixture Matrix + Reducer Acceptance Gate",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",
@@ -49,7 +49,7 @@
     "hostGap": "web-host.js loads kits, ticks, renders, and exposes GameHost, but does not collect deterministic action frames or pass actions into tick.",
     "snapshotGap": "game-snapshot.js exposes raw state/render/diagnostics but not a dedicated gameplay snapshot contract.",
     "contentReady": "The arrival meadow path, focal tree target, story beats, and objectives are descriptor-driven enough for the first playable loop.",
-    "newNarrowing": "Build ActionFrame intake, ActionBatch ordering, ActionResult records, ReducerResult records, path/inspect objective reducers, snapshot.gameplay projection, and DOM-free fixtures before pointer-lock controls, save persistence, audio, renderer extraction, or ProtoKit promotion."
+    "newNarrowing": "Build snapshot.gameplay, typed reducer results, action fixtures, path/inspect objective reducers, GameHost gameplay diagnostics, and replay parity before pointer-lock controls, save persistence, audio, renderer extraction, or ProtoKit promotion."
   },
   "sourceFacts": {
     "initialPlayer": {
@@ -259,7 +259,7 @@
     "post-process-stack-dsk",
     "static-pages-deploy-dsk"
   ],
-  "fullLocalInventory": [
+  "localInventory": [
     "into-the-meadow-game-dsk",
     "web-host-dsk",
     "game-composition-dsk",
@@ -467,7 +467,7 @@
     ]
   },
   "recommendedNextSlice": {
-    "name": "IntoTheMeadow Action Batch Reducer Harness + Gameplay Projection Gate",
+    "name": "IntoTheMeadow Gameplay Snapshot Fixture Matrix + Reducer Acceptance Gate",
     "preserve": [
       "current index.html route",
       "src/boot/boot-game.js startup",

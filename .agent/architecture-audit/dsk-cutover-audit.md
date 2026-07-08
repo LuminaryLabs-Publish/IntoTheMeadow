@@ -1,6 +1,6 @@
 # Architecture Audit — DSK Cutover
 
-**Timestamp:** `2026-07-08T02:00:12-04:00`
+**Timestamp:** `2026-07-08T05:19:46-04:00`
 
 ## Architecture intent
 
@@ -44,7 +44,8 @@ IntoTheMeadow
 │  ├─ external-kit-loader
 │  ├─ request-animation-frame-loop
 │  ├─ GameHost-exposure
-│  └─ renderer-handoff
+│  ├─ renderer-handoff
+│  └─ renderer-parity-projection
 ├─ game-authority
 │  ├─ manifest-authority
 │  ├─ local-dsk-install
@@ -67,6 +68,12 @@ IntoTheMeadow
 │  ├─ wind-field descriptors
 │  ├─ performance policy
 │  └─ render stats
+├─ renderer-consumption-authority
+│  ├─ descriptor-consumption-parity
+│  ├─ unsupported-descriptor-reasons
+│  ├─ grass-drawgroup-consumption
+│  ├─ post-process-pass-consumption
+│  └─ renderer-snapshot-parity
 ├─ grass-system
 │  ├─ density-texture-kit
 │  ├─ clump-archetype-kit
@@ -111,6 +118,17 @@ grass-patch-placement-kit
 grass-clump-instancing-render-kit
 post-process-stack-dsk
 static-pages-deploy-dsk
+```
+
+Needed renderer-parity descriptors:
+
+```txt
+renderer-descriptor-consumption-kit
+renderer-unsupported-descriptor-reason-kit
+renderer-parity-report-kit
+grass-drawgroup-consumption-kit
+post-process-pass-consumption-kit
+gamehost-render-parity-diagnostics-kit
 ```
 
 Larger local planned/descriptor inventory:
@@ -198,11 +216,25 @@ create-grass-debug-summary
 attach-render-stats
 ```
 
+Needed renderer-parity services:
+
+```txt
+collect-expected-render-descriptors
+collect-renderer-snapshot-consumption
+compare-render-descriptor-parity
+classify-unsupported-render-descriptor
+report-grass-drawgroup-parity
+report-post-process-parity
+project-render-parity-to-GameHost
+run-render-parity-fixture
+```
+
 ## Architecture gaps
 
 ```txt
 - Game state does not yet own a full action/reducer gameplay pipeline.
 - Render descriptors are ahead of renderer implementation.
+- There is no stable consumed/unconsumed descriptor parity report.
 - Many local DSK IDs are descriptor-level or planned, not full runtime packages.
 - Reusable renderer systems should be promoted to ProtoKits when stable.
 - Browser host still directly controls frame cadence and renderer handoff.
@@ -213,9 +245,10 @@ attach-render-stats
 Make cutovers in dependency order:
 
 ```txt
-1. prove render plan shape in IntoTheMeadow
-2. update ProtoKits renderer to consume the shape
-3. add screenshot/browser validation
-4. add gameplay action/reducer fixtures
-5. promote any reusable local utilities out of the publish repo
+1. prove enhanced render plan shape in IntoTheMeadow
+2. add renderer descriptor-consumption parity reporting
+3. update ProtoKits renderer to consume the shape
+4. add screenshot/browser validation
+5. add gameplay action/reducer fixtures
+6. promote any reusable local utilities out of the publish repo
 ```

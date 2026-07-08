@@ -4,7 +4,7 @@ This folder contains internal project breakdowns for `LuminaryLabs-Publish/IntoT
 
 ## Current project read
 
-`IntoTheMeadow` is a publishable DSK-composed meadow exploration game repo. It owns the browser route, launch host, game factory, deterministic state root, snapshot seam, local DSK descriptor install, arrival-meadow content, story/objective/interaction descriptors, render enhancement, diagnostics, static smoke scripts, and Pages deployment surface while consuming reusable meadow infrastructure from `NexusRealtime-ProtoKits`.
+`IntoTheMeadow` is a publishable DSK-composed meadow exploration game repo. It owns the static browser route, web host, game factory, deterministic state root, snapshot seam, DSK descriptor install, arrival-meadow content, story/objective/interaction descriptors, render enhancement layer, diagnostics surface, smoke scripts, and Pages deployment surface while consuming reusable meadow infrastructure from `NexusRealtime-ProtoKits`.
 
 The live route remains:
 
@@ -17,13 +17,13 @@ index.html
   -> src/game/game-snapshot.js
 ```
 
-The current blocker is still gameplay authority. The web host calls `game.tick({ time, dt })`; `advanceGameState()` only increments `frame` and writes `lastTick`; `createGameSnapshot()` exposes manifest/state/renderPlan/diagnostics but no dedicated `snapshot.gameplay` branch. The first loop is descriptor-ready: six path points, player spawn at `{ x: 0, y: 0, z: -36 }`, `walk-the-path` completion at `pathProgress >= 0.35`, `inspect-tree`, `focal-tree` radius `4.5`, `arrival-path` radius `32`, and wind strength `0.38`.
+The current blocker is still gameplay authority. The host calls `game.tick({ time, dt })`; `advanceGameState()` only increments `frame` and writes `lastTick`; objectives and interaction targets are descriptor-ready but not reduced into gameplay state; and `createGameSnapshot()` exposes manifest/state/renderPlan/diagnostics without a dedicated `snapshot.gameplay` branch.
 
-This pass narrows the next cut into **Gameplay Snapshot Fixture Matrix + Reducer Acceptance Gate**. Build `ActionFrame` intake, ordered `ActionBatch` records, typed `ActionResult` and `ReducerResult` records, stable rejection reasons, path progress reduction, focal-tree inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before pointer-lock controls, saves, audio, renderer extraction, or ProtoKit promotion.
+This pass narrows the next cut into **Gameplay Authority Contract + Fixture Replay Gate**. Build ActionFrame intake, ordered ActionBatch records, typed ActionResult and ReducerResult records, stable rejection reasons, path progress reduction, focal-tree inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before pointer-lock controls, saves, audio, renderer extraction, or ProtoKit promotion.
 
 ## Latest tracker
 
-- `trackers/2026-07-07T23-40-40-04-00/project-breakdown.md`
+- `trackers/2026-07-08T01-10-16-04-00/project-breakdown.md`
 
 ## Kit registry
 
@@ -31,6 +31,7 @@ This pass narrows the next cut into **Gameplay Snapshot Fixture Matrix + Reducer
 
 ## Previous trackers
 
+- `trackers/2026-07-07T23-40-40-04-00/project-breakdown.md`
 - `trackers/2026-07-07T22-20-00-04-00/project-breakdown.md`
 - `trackers/2026-07-07T20-59-30-04-00/project-breakdown.md`
 - `trackers/2026-07-07T19-42-05-04-00/project-breakdown.md`
@@ -58,8 +59,10 @@ Current loop:
 4. `createIntoTheMeadowGame()` installs local DSK descriptors and creates the arrival meadow area.
 5. The animation frame loop calls `game.tick({ time, dt })`.
 6. `advanceGameState()` increments frame and records `lastTick` only.
-7. The meadow area kit creates a render plan, `enhanceRenderPlan()` adds product metadata, and the WebGL renderer draws the scene.
-8. `window.GameHost` exposes state, snapshot, diagnostics, and render snapshot surfaces.
+7. The meadow area kit creates a render plan.
+8. `enhanceRenderPlan()` adds outline policy, wind, post-process metadata, and texture-driven grass system metadata.
+9. The WebGL renderer draws the scene.
+10. `window.GameHost` exposes state, snapshot, diagnostics, and render snapshot surfaces.
 
 Target playable loop:
 
@@ -80,7 +83,7 @@ Target playable loop:
 
 ## Active next direction
 
-The best next slice is **IntoTheMeadow Gameplay Snapshot Fixture Matrix + Reducer Acceptance Gate**:
+The best next slice is **IntoTheMeadow Gameplay Authority Contract + Fixture Replay Gate**:
 
 - Keep `index.html`, `src/boot/boot-game.js`, current render behavior, and GameHost compatibility intact.
 - Keep `game.tick({ time, dt })` compatible for existing runtime and tests.

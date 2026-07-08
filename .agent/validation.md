@@ -1,6 +1,6 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T05:19:46-04:00`
+**Timestamp:** `2026-07-08T06:10:03-04:00`
 
 ## Validation performed this run
 
@@ -15,32 +15,27 @@ README.md
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
 src/game/enhance-render-plan.js
-src/game/game-state.js
-src/boot/expose-game-host.js
 .agent/START_HERE.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
-.agent/architecture-audit/dsk-cutover-audit.md
-.agent/render-audit/meadow-renderer-gap-audit.md
 .agent/kit-registry.json
+.agent/renderer-consumption-audit/descriptor-consumption-parity.md
 LuminaryLabs-Dev/LuminaryLabs/repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 ```
 
 Writes performed:
 
 ```txt
+.agent/trackers/2026-07-08T06-10-03-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T06-10-03-04-00.md
+.agent/renderer-consumption-audit/parity-fixture-matrix.md
 .agent/START_HERE.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
-.agent/architecture-audit/dsk-cutover-audit.md
-.agent/render-audit/meadow-renderer-gap-audit.md
-.agent/renderer-consumption-audit/descriptor-consumption-parity.md
-.agent/trackers/2026-07-08T05-19-46-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T05-19-46-04-00.md
 .agent/kit-registry.json
 ```
 
@@ -100,6 +95,12 @@ Run from repo root:
 npm run check
 ```
 
+After implementing the parity fixture, add this command to the check path:
+
+```txt
+node tests/render-parity-fixture-smoke.mjs
+```
+
 Then browser-check the public route and capture:
 
 ```txt
@@ -108,6 +109,7 @@ Then browser-check the public route and capture:
 - GameHost.getDiagnostics().validation.passed equals true
 - GameHost.getRenderPlan() exposes grassSystem
 - GameHost.getSnapshot().render exists
+- GameHost.getDiagnostics().renderParity exists
 - renderer snapshot reports descriptor-consumption parity
 - the visual scene shows real dense grass, not old primitive blades
 ```
@@ -121,5 +123,6 @@ local-smoke-run: no
 browser-check-run: no
 visual-quality-confirmed: no
 renderer-parity-confirmed: no
+parity-fixture-implemented: no
 next-required-command: npm run check
 ```

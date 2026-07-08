@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T05:19:46-04:00`
+**Timestamp:** `2026-07-08T06:10:03-04:00`
 
 ## Highest-priority gaps
 
@@ -25,7 +25,24 @@ stats.estimatedGrassCards
 
 The missing proof is a stable parity report showing which descriptors the renderer consumed, which descriptors it ignored, and why.
 
-### 2. Grass system is metadata-first, not renderer-authoritative yet
+### 2. Parity fixture matrix does not exist yet
+
+The repo needs a DOM-free fixture that accepts:
+
+```txt
+enhancedRenderPlan
+rendererSnapshot
+```
+
+and returns:
+
+```txt
+RenderDescriptorParityResult
+```
+
+The fixture must cover positive and negative cases so a primitive renderer cannot silently pass just because the enhanced plan exists.
+
+### 3. Grass system is metadata-first, not renderer-authoritative yet
 
 The local game emits:
 
@@ -42,7 +59,7 @@ The local game emits:
 
 The renderer still needs to draw reusable clump batches as instanced grass patches and avoid returning to old individual grass-blade object rendering.
 
-### 3. Post-process stack is descriptor-ready but not guaranteed executed
+### 4. Post-process stack is descriptor-ready but not guaranteed executed
 
 The game emits post-process pass descriptors.
 
@@ -59,23 +76,31 @@ final composite
 unsupported pass reasons
 ```
 
-### 4. GameHost diagnostics do not yet expose renderer parity
+### 5. GameHost diagnostics do not yet expose renderer parity
 
 Needed diagnostic shape:
 
 ```txt
 GameHost.getDiagnostics().renderParity
+  expectedDescriptors[]
   consumedDescriptors[]
   unconsumedDescriptors[]
-  unsupportedReasons[]
-  grassDrawGroupsExpected
-  grassDrawGroupsRendered
-  postProcessPassesExpected
-  postProcessPassesExecuted
+  unsupportedDescriptors[]
+  missingPlanDescriptors[]
+  missingSnapshotFields[]
+  fallbackDescriptors[]
+  grass.drawGroupsExpected
+  grass.drawGroupsRendered
+  grass.instancesExpected
+  grass.instancesRendered
+  postProcess.passesExpected
+  postProcess.passesExecuted
+  wind.windUniformsBound
+  renderStyle.styledObjectsConsumed
   parityPassed
 ```
 
-### 5. Gameplay authority is thin
+### 6. Gameplay authority is thin
 
 `game.tick({ time, dt })` advances a deterministic state root, but the story/objective/interaction descriptors are not yet reduced into an action/result gameplay runtime.
 
@@ -95,7 +120,7 @@ fixture replay parity
 snapshot.gameplay
 ```
 
-### 6. DSK inventory overstates runtime readiness
+### 7. DSK inventory overstates runtime readiness
 
 `src/content/dsk-registry.js` lists many local DSK and kit IDs.
 
@@ -112,7 +137,7 @@ blocked-by-renderer
 blocked-by-gameplay-runtime
 ```
 
-### 7. The game repo must not absorb reusable renderer work permanently
+### 8. The game repo must not absorb reusable renderer work permanently
 
 Reusable grass, post-process, terrain, tree, and renderer consumption should be promoted or mirrored into ProtoKits when stable.
 
@@ -128,6 +153,7 @@ The publish repo should keep only game-specific composition, parity fixtures, di
 - no audio/ambience runtime yet
 - no visual screenshot proof stored in repo-local agent state
 - no renderer parity fixture committed yet
+- no GameHost renderParity projection yet
 ```
 
 ## Current visual-risk diagnosis

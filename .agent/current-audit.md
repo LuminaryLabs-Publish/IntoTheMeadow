@@ -1,10 +1,10 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T02:00:12-04:00`
+**Timestamp:** `2026-07-08T03:28:56-04:00`
 
 ## Current state
 
-`IntoTheMeadow` is a static browser game route that boots from `index.html`, imports `src/boot/boot-game.js`, starts `src/hosts/web-host.js`, creates the game through `src/game/create-into-the-meadow-game.js`, and renders via the external `meadow-webgl-render-kit`.
+`IntoTheMeadow` is a static browser game route that boots from `index.html`, imports `src/boot/boot-game.js`, starts `src/hosts/web-host.js`, creates the game through `src/game/create-into-the-meadow-game.js`, enhances external meadow-area render plans through `src/game/enhance-render-plan.js`, and renders via the external `meadow-webgl-render-kit`.
 
 The repo correctly declares itself as a publishable game/deploy repo, not a generic kit foundry.
 
@@ -32,7 +32,7 @@ The game consumes:
 
 ## Repo-selection audit
 
-The full `LuminaryLabs-Publish` list checked this run contained:
+The full accessible `LuminaryLabs-Publish` list checked this run contained:
 
 ```txt
 IntoTheMeadow
@@ -47,11 +47,13 @@ TheCavalryOfRome
 PrehistoricRush
 ```
 
-The central `LuminaryLabs-Dev/LuminaryLabs` ledger had an `IntoTheMeadow` entry, but the actual repo-local root `.agent/START_HERE.md` was missing before this run.
+The central `LuminaryLabs-Dev/LuminaryLabs` ledger has entries for all checked non-Cavalry Publish repos.
 
-That made `IntoTheMeadow` eligible under the new missing-root-agent priority rule.
+Root `.agent/START_HERE.md` readback was confirmed for the checked non-Cavalry Publish set during this pass.
 
 `TheCavalryOfRome` was not considered because of the standing exclusion rule.
+
+`IntoTheMeadow` was selected by fallback oldest eligible root-agent alignment for a follow-up breakdown.
 
 ## Interaction loop
 
@@ -73,32 +75,101 @@ index.html
 
 The current game is descriptor-rich but renderer-limited.
 
-The local `enhanceRenderPlan()` step emits a texture-driven grass system, static grass batches, draw groups, shader wind descriptors, LOD policy, post-process stack descriptors, outline policy, and performance budgets.
+The local `enhanceRenderPlan()` step emits a texture-driven grass system, static grass batches, grass patch placements, draw groups, shader wind descriptors, LOD policy, post-process stack descriptors, outline policy, performance budgets, and estimated grass/card counts.
 
-The main visible gap is that the external renderer must actually consume those descriptors as production-grade scene systems.
+The render-plan smoke test already expects density texture, static batches, texture-driven patches, instancing draw groups, and post-process pass descriptors in the enhanced render plan.
+
+The main visible gap is that the external renderer must actually consume those descriptors as production-grade scene systems and report descriptor-consumption parity in its snapshot.
 
 ## Current live-risk summary
 
 ```txt
-- Root .agent was missing before this run despite central ledger references.
 - The visual route depends on external ProtoKits renderer behavior.
 - The game emits grassSystem metadata, but the render kit still needs real instanced clump rendering.
 - The game emits postProcess metadata, but the render kit still needs pass execution.
 - Tree metadata is enriched locally, but renderer authority must move away from primitive focal-tree drawing.
+- GameHost diagnostics does not yet prove renderer descriptor-consumption parity.
 - Gameplay state remains minimal compared to story/objective/interaction descriptors.
 - The repo has many planned DSK descriptors that are not all implemented as real runtime packages.
+```
+
+## Domains in use
+
+```txt
+static-browser-shell
+github-pages-deployment
+browser-boot-runtime
+web-host-runtime
+external-kit-loading
+cdn-kit-import-manifest
+animation-frame-loop
+debug-hud-runtime
+canvas-surface
+GameHost-state-contract
+GameHost-snapshot-contract
+GameHost-diagnostics-contract
+runtime-compatibility-contract
+static-smoke-validation
+manifest-authority
+game-factory
+content-pack-authority
+local-dsk-registry
+local-dsk-descriptor-installer
+local-dsk-validation
+external-meadow-area-bridge
+external-webgl-render-bridge
+fallback-meadow-area-kit
+scene-identity
+session-identity
+deterministic-state-root
+tick-clock
+last-tick-diagnostics
+snapshot-root
+arrival-meadow-area
+arrival-path-content
+focal-tree-content
+terrain-material-palette
+golden-hour-style
+grass-content
+flower-content
+rock-content
+mushroom-content
+tree-line-content
+wind-state
+story-beat-ledger
+objective-ledger
+interaction-target-registry
+render-plan-generation
+render-plan-enhancement
+outline-policy
+small-object-clutter-reduction
+focal-tree-enhancement
+grass-density-texture
+grass-clump-archetype
+grass-static-batch
+grass-patch-placement
+grass-clump-instancing-render
+grass-shader-wind
+grass-lod-policy
+grass-density-scaling
+grass-debug-visualization
+wind-field-render-metadata
+post-process-stack-metadata
+render-stats-diagnostics
+webgl-renderer-snapshot
 ```
 
 ## Current status
 
 ```txt
-status: root-agent-state-added
+status: followup-agent-breakdown-added
 selected-repo: LuminaryLabs-Publish/IntoTheMeadow
 primary-gap: renderer-descriptor-consumption
 secondary-gap: gameplay-authority-runtime
 safe-next-ledges:
-  1. renderer consumes grassSystem
-  2. renderer executes postProcess descriptors
-  3. gameplay action/reducer fixture gate
-  4. GameHost exposes gameplay diagnostics
+  1. renderer consumes grassSystem.drawGroups
+  2. renderer executes or reports postProcess descriptors
+  3. renderer snapshot reports descriptor-consumption parity
+  4. gameplay action/reducer fixture gate
+  5. GameHost exposes gameplay diagnostics
 ```

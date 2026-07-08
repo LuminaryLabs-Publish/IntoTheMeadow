@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T13-50-37-04-00`
+**Timestamp:** `2026-07-08T15-28-13-04-00`
 
 ## Highest-priority gaps
 
@@ -23,34 +23,50 @@ stats.estimatedGrassCards
 
 `src/hosts/web-host.js` sends the enhanced plan into `renderer.render(plan)` and exposes a renderer snapshot through `GameHost`, but there is no normalized parity report showing which descriptors were consumed, unconsumed, unsupported, fallback-rendered, or missing.
 
-### 2. Renderer snapshot normalization is absent
+### 2. The GameHost splice point is known but not implemented
 
-The host currently trusts whatever `renderer.getSnapshot?.()` returns.
-
-Needed next:
+The exact next splice point is `src/hosts/web-host.js` after:
 
 ```txt
-normalize absent snapshot without crash
-normalize renderer id/version when available
-normalize grass consumption fields when available
-normalize fallback/unsupported rows when fields are unavailable
+const render = renderer.render(plan);
 ```
 
-### 3. Grass readback is not proven
+The source should compute a parity record from:
 
-The game has a texture-driven grass descriptor stack, but the renderer-facing readback is not yet stable.
+```txt
+expected: enhanced plan descriptors
+actual: renderer.getSnapshot?.() consumption readback
+```
+
+Then expose it additively through:
+
+```txt
+GameHost.getState().renderParity
+GameHost.getSnapshot().renderParity
+```
+
+Existing `enhancedRenderPlan` and `render` fields must remain stable.
+
+### 3. Grass readback rows are not proven
+
+The game has a texture-driven grass descriptor stack, but renderer-facing readback is not yet stable.
 
 The next pass must prove or explicitly classify:
 
 ```txt
-densityTexture
-staticBatches
-patches
-drawGroups
-shaderWind
-lodPolicy
-densityScale
-estimated instances/cards
+grassSystem.densityTexture
+grassSystem.staticBatches
+grassSystem.patches
+grassSystem.drawGroups
+grassSystem.shaderWind
+grassSystem.lodPolicy
+grassSystem.densityScale
+grassPatches
+stats.grassPatchCount
+stats.grassStaticBatchCount
+stats.grassDrawGroupCount
+stats.estimatedGrassInstances
+stats.estimatedGrassCards
 ```
 
 Silent descriptor drop is the main render failure mode.
@@ -59,7 +75,7 @@ Silent descriptor drop is the main render failure mode.
 
 `createInitialGameState()` has player, progression, world, session, and DSK state.
 
-`advanceGameState()` only increments frame and records `lastTick`.
+`advanceGameState()` only increments `frame` and records `lastTick`.
 
 There is no typed action frame, no action result journal, no path-progress reducer, no inspect reducer, and no idempotent objective completion resolver.
 
@@ -70,15 +86,28 @@ There is no typed action frame, no action result journal, no path-progress reduc
 It does not expose:
 
 ```txt
+snapshot.renderParity
 snapshot.gameplay.activeObjectiveId
 snapshot.gameplay.completedObjectiveIds
 snapshot.gameplay.storyBeatIds
 snapshot.gameplay.lastActionResults
 snapshot.gameplay.actionJournal
-snapshot.renderParity
 ```
 
-### 6. Fixture smoke coverage is not yet wired
+### 6. The first objective proof set exists but is not wired
+
+The data already contains the right first proof targets:
+
+```txt
+walk-the-path -> arrival-path -> path-progress -> progressAtLeast 0.35
+inspect-tree  -> focal-tree   -> inspect       -> inspected true
+```
+
+The gap is not content.
+
+The gap is a deterministic reducer path from optional actions into objective completion and snapshot projection.
+
+### 7. Fixture smoke coverage is not yet wired
 
 `npm run check` currently runs the existing smoke suite, but it does not include render-parity or gameplay-authority fixtures.
 
@@ -90,7 +119,7 @@ tests/gameplay-authority-fixture-smoke.mjs
 package.json check script inclusion
 ```
 
-### 7. Public route should stay backward-compatible
+### 8. Public route should stay backward-compatible
 
 `game.tick({ time, dt })` is already used by the host loop.
 
@@ -114,5 +143,5 @@ game.tick({ time, dt, actions })
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Render Parity Consumer Snapshot + Gameplay Action Fixture Gate
+IntoTheMeadow GameHost Render Parity + Gameplay ActionResult Splice Fixture Gate
 ```

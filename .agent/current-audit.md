@@ -1,6 +1,6 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T12-21-20-04-00`
+**Timestamp:** `2026-07-08T13-50-37-04-00`
 
 ## Current state
 
@@ -11,6 +11,8 @@ The repo correctly acts as a publishable game/deploy repo, not a generic kit fou
 The game owns:
 
 ```txt
+- static HTML route
+- web host
 - game manifest
 - local DSK descriptor registry
 - game factory
@@ -26,8 +28,8 @@ The game owns:
 The game consumes:
 
 ```txt
-- meadow-area-kit from NexusRealtime-ProtoKits
-- meadow-webgl-render-kit from NexusRealtime-ProtoKits
+- meadow-area-kit from NexusRealtime-ProtoKits via CDN
+- meadow-webgl-render-kit from NexusRealtime-ProtoKits via CDN
 ```
 
 ## Repo-selection audit
@@ -51,7 +53,7 @@ TheUnmappedHouse
 
 No checked non-Cavalry repo was fully new, absent from the central ledger, undocumented, or missing sampled root `.agent/START_HERE.md` state.
 
-`IntoTheMeadow` was selected as the oldest eligible fallback because its renderer descriptor parity and gameplay action-result seam remain unresolved.
+`IntoTheMeadow` was selected as the oldest observed eligible fallback because its latest central ledger update was `2026-07-08T12:21:20-04:00`, older than the other checked non-excluded repos, and its renderer descriptor parity plus gameplay action-result seam remain unresolved.
 
 ## Interaction loop
 
@@ -76,9 +78,9 @@ index.html
 
 `package.json` exposes `npm run check` as the validation umbrella for static smoke, DSK registry smoke, render-plan smoke, and deterministic scene smoke.
 
-`web-host.js` stores `lastPlan`, passes the enhanced plan to the renderer, and exposes `enhancedRenderPlan` plus `render` snapshot through `GameHost`.
+`web-host.js` stores `lastPlan`, passes the enhanced plan to `renderer.render(plan)`, and exposes `enhancedRenderPlan` plus `render` snapshot through `GameHost`.
 
-`enhanceRenderPlan()` creates `grassSystem`, `grassPatches`, `windField`, `postProcess`, `performance`, and grass stats.
+`enhanceRenderPlan()` creates `grassSystem`, `grassPatches`, `windField`, `postProcess`, `performance`, grass validation records, and grass stats.
 
 `advanceGameState()` still only increments `frame` and writes `lastTick`.
 
@@ -89,7 +91,7 @@ Arrival objectives and interaction targets already define `walk-the-path`, `insp
 ## Current priority
 
 ```txt
-IntoTheMeadow Renderer/GamePlay Contract Fixture Gate
+IntoTheMeadow Render Parity Consumer Snapshot + Gameplay Action Fixture Gate
 ```
 
 The next implementation turn should prove render descriptor parity and gameplay action results before adding more meadow visuals or authored objectives.

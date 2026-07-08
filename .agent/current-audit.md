@@ -1,10 +1,10 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T07:41:52-04:00`
+**Timestamp:** `2026-07-08T09:11:03-04:00`
 
 ## Current state
 
-`IntoTheMeadow` is a static browser game route that boots from `index.html`, imports `src/boot/boot-game.js`, starts `src/hosts/web-host.js`, creates the game through `src/game/create-into-the-meadow-game.js`, enhances external meadow-area render plans through `src/game/enhance-render-plan.js`, and renders via the external `meadow-webgl-render-kit`.
+`IntoTheMeadow` is a static browser game route that boots from `index.html`, imports `src/boot/boot-game.js`, starts `src/hosts/web-host.js`, creates the game through `src/game/create-into-the-meadow-game.js`, enhances external meadow-area render plans through `src/game/enhance-render-plan.js`, and renders through the external `meadow-webgl-render-kit`.
 
 The repo correctly declares itself as a publishable game/deploy repo, not a generic kit foundry.
 
@@ -35,23 +35,23 @@ The game consumes:
 The accessible `LuminaryLabs-Publish` repo list checked this run contained:
 
 ```txt
+IntoTheMeadow
 HorrorCorridor
 AetherVale
-TheOpenAbove
-TheCavalryOfRome
-PhantomCommand
-PrehistoricRush
 ZombieOrchard
-IntoTheMeadow
-MyCozyIsland
 TheUnmappedHouse
+MyCozyIsland
+TheOpenAbove
+PhantomCommand
+TheCavalryOfRome
+PrehistoricRush
 ```
 
-The central `LuminaryLabs-Dev/LuminaryLabs` ledger/status readback has entries for checked non-Cavalry Publish repos, and root `.agent/START_HERE.md` state exists for checked non-Cavalry repos.
+The central `LuminaryLabs-Dev/LuminaryLabs` ledger has entries for checked non-Cavalry Publish repos, and root `.agent/START_HERE.md` state exists for checked non-Cavalry repos.
 
 `TheCavalryOfRome` was not considered because of the standing exclusion rule.
 
-`IntoTheMeadow` was selected by fallback follow-up because the renderer-consumption contract and first gameplay action/result reducer handoff remain the two most important local proof seams before additional content or visual expansion.
+`IntoTheMeadow` was selected as the oldest eligible fallback follow-up because the renderer-consumption contract and first gameplay action/result reducer handoff remain the two most important local proof seams before additional content or visual expansion.
 
 ## Interaction loop
 
@@ -64,7 +64,7 @@ index.html
   -> createIntoTheMeadowGame builds ARRIVAL_MEADOW_CONFIG through meadow-area-kit
   -> requestAnimationFrame calls game.tick({ time, dt })
   -> game.getRenderPlan(time) returns the external meadow-area render plan
-  -> enhanceRenderPlan adds local grass, wind, post-process, tree, performance, and render stats descriptors
+  -> enhanceRenderPlan adds local grass, wind, post-process, tree, performance, outline, and stats descriptors
   -> meadow-webgl-render-kit renders the enhanced plan
   -> GameHost exposes state, snapshot, diagnostics, render plan, and renderer snapshot
 ```
@@ -88,6 +88,19 @@ advanceGameState(state, input)
   -> lastTick.time
 ```
 
+Target gameplay proof loop:
+
+```txt
+game.tick({ time, dt, actions })
+  -> create ActionFrame
+  -> normalize ActionEnvelope records
+  -> reduce path-progress and inspect actions
+  -> emit accepted/rejected ActionResult records
+  -> update completedObjectiveIds idempotently
+  -> append gameplay action journal
+  -> expose snapshot.gameplay
+```
+
 ## Key architecture truth
 
 The current game is descriptor-rich but still proof-limited.
@@ -96,7 +109,7 @@ The current game is descriptor-rich but still proof-limited.
 
 `web-host.js` passes the enhanced plan to `renderer.render(plan)` and exposes an enhanced render plan plus renderer snapshot through `GameHost`, but there is no parity gate proving the renderer consumed each high-fidelity descriptor.
 
-`game-state.js` contains a `player.pathProgress` field and `progression.activeObjectiveId`, while the content descriptors define `walk-the-path` and `inspect-tree`, but there is no action reducer yet.
+`game-state.js` contains `player.pathProgress` and `progression.activeObjectiveId`, while the content descriptors define `walk-the-path` and `inspect-tree`, but there is no action reducer yet.
 
 ## Current live-risk summary
 
@@ -104,7 +117,7 @@ The current game is descriptor-rich but still proof-limited.
 - The visual route depends on external ProtoKits renderer behavior.
 - The game emits grassSystem metadata, but the render kit still needs real instanced clump rendering or explicit unconsumed reporting.
 - The game emits postProcess metadata, but the render kit still needs pass execution or explicit unsupported-pass reporting.
-- GameHost diagnostics does not yet prove renderer descriptor-consumption parity.
+- GameHost diagnostics does not yet expose renderer descriptor-consumption parity.
 - game.tick({ time, dt }) has no ActionFrame / ActionResult reducer path.
 - Objective and interaction descriptors exist but are not reduced into gameplay state.
 - snapshot.gameplay does not exist yet.
@@ -178,166 +191,44 @@ wind-field-render-metadata
 post-process-stack-metadata
 render-stats-diagnostics
 webgl-renderer-snapshot
-renderer-descriptor-consumption-parity
-renderer-unsupported-descriptor-reason-catalog
-renderer-parity-fixture-domain
-renderer-fixture-case-matrix
-renderer-parity-diagnostics-projection
-action-frame-contract
-action-batch-contract
-action-result-contract
-action-journal-contract
-stable-rejection-reason-catalog
-reducer-result-contract
-ordered-reducer-pipeline
-path-progress-reducer
-inspect-target-reducer
-objective-completion-reducer
-story-trigger-reducer
-gameplay-snapshot-contract
-fixture-replay-domain
+renderer-descriptor-consumption-parity-needed
+ActionFrame-contract-needed
+ActionResult-contract-needed
+objective-reducer-needed
+gameplay-snapshot-needed
 ```
 
-## Services captured
-
-Current host/game services:
+## Kit service summary
 
 ```txt
-locate-canvas
-locate-hud
-locate-loading-surface
-start-web-host
-load-external-kits
-create-game
-create-renderer
-expose-game-host
-run-frame-loop
-render-frame
-install-dsks
-validate-local-dsks
-create-meadow-area-kit
-create-fallback-meadow-area-kit
-create-initial-game-state
-advance-game-state
-create-game-snapshot
-validate-game-snapshot
-get-render-plan
-get-diagnostics
-reset-state
+meadow-area-kit: createMeadowAreaKit, getRenderPlan, getSnapshot, validate
+meadow-webgl-render-kit: createMeadowWebglRenderKit, render, getSnapshot
+grass-density-texture-kit: density texture descriptor and validation
+grass-clump-archetype-kit: card clump archetype creation and validation
+grass-static-batch-kit: static batch descriptor creation and validation
+grass-patch-placement-kit: grass patch placement and validation
+grass-clump-instancing-render-kit: drawGroup derivation and validation
+grass-shader-wind-kit: wind shader metadata and validation
+grass-lod-policy-kit: LOD descriptors and validation
+grass-density-scaling-kit: density scale by quality profile
+grass-debug-visualization-kit: density/batch/patch/drawGroup summary
+wind-field-dsk: normalized wind render metadata
+tree-object-dsk: focal tree descriptor enhancement
+meadow-performance-dsk: quality profile, budgets, outline policy
+post-process-stack-dsk: post-process pass descriptor stack
 ```
 
-Current render services:
+## Next safe ledge
+
+Implement the source-order **Renderer Parity + ActionFrame Fixture Implementation Map**:
 
 ```txt
-reduce-tiny-clutter
-apply-outline-policy
-enhance-focal-tree
-create-wind-field
-create-post-process-stack
-create-grass-density-texture
-create-grass-clump-archetype
-create-grass-static-batch
-create-grass-patch-placement
-create-grass-instancing-draw-groups
-create-grass-shader-wind
-create-grass-lod-policy
-create-grass-density-scaling
-create-grass-debug-summary
-attach-grass-stats
-```
-
-Needed renderer parity services:
-
-```txt
-collect-expected-render-descriptors
-normalize-renderer-snapshot-consumption
-compare-render-descriptor-parity
-classify-render-descriptor-status
-report-grass-drawgroup-parity
-report-post-process-parity
-report-wind-field-parity
-report-render-style-parity
-project-render-parity-to-GameHost
-run-render-parity-fixture-matrix
-```
-
-Needed gameplay authority services:
-
-```txt
-normalize-action-frame
-reduce-path-progress-action
-reduce-inspect-action
-resolve-objective-completion
-resolve-story-trigger
-emit-action-result
-append-action-journal-entry
-project-gameplay-snapshot
-run-action-replay-fixture
-```
-
-## Kits captured
-
-External kits:
-
-```txt
-meadow-area-kit
-meadow-webgl-render-kit
-```
-
-Current local active kits:
-
-```txt
-grass-density-texture-kit
-grass-clump-archetype-kit
-grass-static-batch-kit
-grass-patch-placement-kit
-grass-clump-instancing-render-kit
-grass-shader-wind-kit
-grass-lod-policy-kit
-grass-density-scaling-kit
-grass-debug-visualization-kit
-wind-field-dsk
-tree-object-dsk
-meadow-performance-dsk
-post-process-stack-dsk
-```
-
-Next-cut proof kits:
-
-```txt
-renderer-descriptor-expectation-kit
-renderer-snapshot-consumption-kit
-renderer-descriptor-consumption-kit
-renderer-unsupported-descriptor-reason-kit
-renderer-parity-report-kit
-grass-drawgroup-consumption-kit
-post-process-pass-consumption-kit
-wind-field-consumption-kit
-render-style-consumption-kit
-gamehost-render-parity-diagnostics-kit
-renderer-parity-fixture-kit
-action-frame-kit
-action-batch-kit
-action-result-kit
-path-progress-reducer-kit
-inspect-target-reducer-kit
-objective-completion-reducer-kit
-story-trigger-reducer-kit
-gameplay-snapshot-kit
-gameplay-replay-fixture-kit
-```
-
-## Current status
-
-```txt
-status: renderer-parity-and-action-frame-handoff-documented
-selected-repo: LuminaryLabs-Publish/IntoTheMeadow
-primary-gap: renderer-descriptor-consumption-parity
-secondary-gap: gameplay-action-result-authority
-safe-next-ledges:
-  1. DOM-free renderer parity fixture matrix
-  2. GameHost renderParity diagnostic projection
-  3. optional ActionFrame support in game.tick({ time, dt, actions })
-  4. path-progress and inspect reducers
-  5. snapshot.gameplay and replay fixture
+src/render-parity/*
+tests/render-parity-fixture-smoke.mjs
+GameHost renderParity projection
+src/gameplay-authority/*
+src/game/game-state.js optional actions
+src/game/game-snapshot.js snapshot.gameplay
+tests/gameplay-authority-fixture-smoke.mjs
+package.json check path update
 ```

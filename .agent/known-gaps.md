@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T07:41:52-04:00`
+**Timestamp:** `2026-07-08T09:11:03-04:00`
 
 ## Highest-priority gaps
 
@@ -25,22 +25,26 @@ stats.estimatedGrassCards
 
 The missing proof is a stable parity report showing which descriptors the renderer consumed, which descriptors it ignored, and why.
 
-### 2. Parity fixture matrix does not exist yet
+### 2. Render parity fixture implementation is still missing
 
-The repo needs a DOM-free fixture that accepts:
+The prior docs define the matrix. The source files still need to exist.
 
-```txt
-enhancedRenderPlan
-rendererSnapshot
-```
-
-and returns:
+Required files:
 
 ```txt
-RenderDescriptorParityResult
+src/render-parity/collect-expected-render-descriptors.js
+src/render-parity/normalize-renderer-snapshot-consumption.js
+src/render-parity/compare-render-descriptor-parity.js
+src/render-parity/render-parity-reasons.js
+tests/render-parity-fixture-smoke.mjs
 ```
 
-The fixture must cover positive and negative cases so a primitive renderer cannot silently pass just because the enhanced plan exists.
+Required projection:
+
+```txt
+GameHost.getDiagnostics().renderParity
+GameHost.getSnapshot().renderParity
+```
 
 ### 3. Grass system is metadata-first, not renderer-authoritative yet
 
@@ -93,11 +97,14 @@ GameHost.getDiagnostics().renderParity
   grass.drawGroupsRendered
   grass.instancesExpected
   grass.instancesRendered
+  grass.cardsExpected
+  grass.cardsRendered
   postProcess.passesExpected
   postProcess.passesExecuted
   wind.windUniformsBound
   renderStyle.styledObjectsConsumed
   parityPassed
+  reasons[]
 ```
 
 ### 6. Gameplay authority is thin
@@ -113,10 +120,11 @@ advanceGameState(state, input)
   -> lastTick.time
 ```
 
-Needed after renderer parity starts:
+Needed next:
 
 ```txt
 ActionFrame
+ActionEnvelope
 ActionBatch
 ActionResult
 ReducerResult
@@ -156,58 +164,48 @@ storyBeatIds progression
 snapshot.gameplay
 ```
 
-### 8. DSK inventory overstates runtime readiness
+### 8. Gameplay fixture smoke is missing
 
-`src/content/dsk-registry.js` lists many local DSK and kit IDs.
-
-Some are active descriptors, some are planned domains, and some are runtime-adjacent metadata emitters.
-
-Future audits should label each as:
+Required test file:
 
 ```txt
-active-runtime
-active-descriptor
-planned
-external
-blocked-by-renderer
-blocked-by-gameplay-runtime
+tests/gameplay-authority-fixture-smoke.mjs
 ```
 
-### 9. The game repo must not absorb reusable renderer work permanently
-
-Reusable grass, post-process, terrain, tree, and renderer consumption should be promoted or mirrored into ProtoKits when stable.
-
-The publish repo should keep only game-specific composition, parity fixtures, diagnostics, and deploy proof.
-
-## Medium-priority gaps
+Required fixture cases:
 
 ```txt
-- no explicit player movement runtime yet
-- no first-person or inspection camera controller yet
-- no interaction hit testing or affordance radius runtime yet
-- no save/load adapter beyond base state exposure
-- no audio/ambience runtime yet
-- no visual screenshot proof stored in repo-local agent state
-- no renderer parity fixture committed yet
-- no GameHost renderParity projection yet
-- no ActionFrame / ActionResult fixture committed yet
-- no snapshot.gameplay projection yet
+tick_without_actions_stays_compatible
+path_progress_under_threshold_rejected_or_pending
+path_progress_threshold_completes_walk_the_path
+path_progress_repeated_does_not_duplicate_objective
+inspect_focal_tree_completes_inspect_tree
+inspect_unknown_target_rejected
+unknown_action_type_rejected
+snapshot_gameplay_exposes_journal_and_last_results
 ```
 
-## Current visual-risk diagnosis
+### 9. DSK inventory overstates runtime readiness
+
+The repo has a strong set of local DSK descriptors and render enhancement helpers, but not every named DSK is a reusable package with standalone tests, docs, and external installation semantics.
+
+Keep these categories explicit:
 
 ```txt
-source emits high-fidelity intent
-renderer may consume older primitive object shapes
-result can remain visually simple/cartoonish
+implemented local source kits
+implemented external CDN kits
+descriptor-only DSKs
+next-cut fixture kits
+future reusable engine/protokit candidates
 ```
 
-## Current gameplay-risk diagnosis
+### 10. Validation gap remains
+
+`npm run check` exists, but it does not yet include:
 
 ```txt
-source declares story/objective/interaction intent
-state only increments frame
-result can remain non-playable even when descriptors look complete
+node tests/render-parity-fixture-smoke.mjs
+node tests/gameplay-authority-fixture-smoke.mjs
 ```
 
-The next implementation pass should start with descriptor-consumption parity, then add the smallest action/result gameplay reducer gate.
+No local or browser validation was run in this documentation pass.

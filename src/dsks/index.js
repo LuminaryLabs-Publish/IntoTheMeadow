@@ -7,6 +7,15 @@ const DOMAIN_LABELS = Object.freeze({
   "meadow-area-bridge-dsk": "Meadow Area",
   "meadow-terrain-texture-dsk": "Terrain Texturing",
   "path-corridor-dsk": "Path Corridor",
+  "grass-density-texture-kit": "Grass Density Texture",
+  "grass-clump-archetype-kit": "Grass Clump Archetype",
+  "grass-static-batch-kit": "Grass Static Batch",
+  "grass-patch-placement-kit": "Grass Patch Placement",
+  "grass-clump-instancing-render-kit": "Grass Clump Instancing Render",
+  "grass-shader-wind-kit": "Grass Shader Wind",
+  "grass-lod-policy-kit": "Grass LOD Policy",
+  "grass-density-scaling-kit": "Grass Density Scaling",
+  "grass-debug-visualization-kit": "Grass Debug Visualization",
   "grass-patch-dsk": "Vegetation",
   "gpu-grass-render-dsk": "Vegetation Render",
   "wind-field-dsk": "Wind Weather",
@@ -43,6 +52,15 @@ const SERVICES = Object.freeze({
   "meadow-area-bridge-dsk": ["meadow-area-config", "meadow-feature-config", "meadow-area-kit-adapter", "meadow-area-state", "meadow-area-validation"],
   "meadow-terrain-texture-dsk": ["terrain-surface-model", "material-layer-system", "path-layer-system", "terrain-sampler", "terrain-validation"],
   "path-corridor-dsk": ["path-curve-model", "walkable-corridor", "path-surface-detail", "path-progression", "path-validation"],
+  "grass-density-texture-kit": ["density-texture-model", "density-channels", "density-compositor", "density-sampler", "density-validation"],
+  "grass-clump-archetype-kit": ["clump-family-registry", "card-layout-generator", "texture-atlas-binding", "clump-variant-generator", "archetype-validation"],
+  "grass-static-batch-kit": ["clump-mesh-builder", "batch-variant-cache", "atlas-material", "static-batch-lod", "batch-validation"],
+  "grass-patch-placement-kit": ["patch-grid", "density-driven-placement", "clump-instance-selection", "patch-instance-buffer", "placement-validation"],
+  "grass-clump-instancing-render-kit": ["batch-registry", "instance-stream", "draw-group-builder", "shader-binding", "render-validation"],
+  "grass-shader-wind-kit": ["wind-uniforms", "tip-bend-model", "phase-field", "gust-response", "wind-validation"],
+  "grass-lod-policy-kit": ["near-lod", "mid-lod", "far-lod", "terrain-tint-lod", "lod-validation"],
+  "grass-density-scaling-kit": ["quality-scale", "budget-scale", "density-scale", "profile-scale", "scale-validation"],
+  "grass-debug-visualization-kit": ["density-view", "patch-view", "instance-view", "lod-view", "debug-validation"],
   "grass-patch-dsk": ["patch-grid", "blade-distribution", "terrain-awareness", "wind-binding", "grass-validation"],
   "gpu-grass-render-dsk": ["grass-instance-buffer", "grass-blade-mesh", "shader-wind", "grass-lod-render", "grass-render-validation"],
   "wind-field-dsk": ["wind-state", "wind-sampler", "wind-zones", "wind-consumers", "wind-validation"],
@@ -92,9 +110,7 @@ export function createDskDescriptor(id) {
     ]),
     provides: Object.freeze([`game:${toDomain(id)}`]),
     requires: Object.freeze([]),
-    snapshot() {
-      return { id, status: this.status, layers: this.layers.length, subdomainCount: subdomains.length };
-    },
+    snapshot() { return { id, status: this.status, layers: this.layers.length, subdomainCount: subdomains.length }; },
     validate() {
       const failures = [];
       if (!id.endsWith("-dsk") && !id.endsWith("-kit")) failures.push("id must end with -dsk or -kit");
@@ -105,11 +121,7 @@ export function createDskDescriptor(id) {
 }
 
 export const LOCAL_DSKS = Object.freeze(LOCAL_DSK_IDS.map(createDskDescriptor));
-
-export function getDsk(id) {
-  return LOCAL_DSKS.find((dsk) => dsk.id === id) ?? null;
-}
-
+export function getDsk(id) { return LOCAL_DSKS.find((dsk) => dsk.id === id) ?? null; }
 export function validateLocalDsks(dsks = LOCAL_DSKS) {
   const failures = [];
   const ids = new Set();

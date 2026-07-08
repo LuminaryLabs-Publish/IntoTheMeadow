@@ -1,13 +1,13 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-08T10-48-47-04-00",
-  "status": "renderer-parity-action-result-cutover-fixture-gate-planned",
+  "generatedAt": "2026-07-08T12-21-20-04-00",
+  "status": "renderer-gameplay-contract-fixture-gate-planned",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
-    "reason": "No checked non-Cavalry Publish repo was new, absent from the central ledger, undocumented, or missing sampled root .agent/START_HERE.md state. IntoTheMeadow was selected as the oldest eligible fallback because renderer descriptor-consumption parity and ActionFrame/ActionResult objective reducer proof are still unresolved.",
+    "reason": "No checked non-Cavalry Publish repo was new, absent from the central ledger, undocumented, or missing sampled root .agent/START_HERE.md state. IntoTheMeadow was selected as the oldest eligible fallback because renderer descriptor-consumption parity and gameplay ActionFrame/ActionResult proof are still unresolved.",
     "checkedRepos": [
       "LuminaryLabs-Publish/HorrorCorridor",
       "LuminaryLabs-Publish/AetherVale",
@@ -21,188 +21,37 @@
       "LuminaryLabs-Publish/TheUnmappedHouse"
     ]
   },
-  "latestTracker": ".agent/trackers/2026-07-08T10-48-47-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-08T10-48-47-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-08T10-48-47-04-00-dsk-domain-breakdown.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-08T10-48-47-04-00-renderer-parity-cutover-readback.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-08T10-48-47-04-00-grass-consumption-fixture-seams.md",
-  "latestGameplayAuthorityAudit": ".agent/gameplay-authority-audit/2026-07-08T10-48-47-04-00-action-result-implementation-cutover.md",
-  "previousTracker": ".agent/trackers/2026-07-08T09-11-03-04-00/project-breakdown.md",
-  "previousRenderAudit": ".agent/render-audit/2026-07-08T09-11-03-04-00-render-parity-fixture-wire-map.md",
-  "previousGameplayAuthorityAudit": ".agent/gameplay-authority-audit/2026-07-08T09-11-03-04-00-action-frame-fixture-implementation-map.md",
-  "nextBuildTarget": "IntoTheMeadow Renderer Parity + Action Result Cutover Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-08T12-21-20-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-08T12-21-20-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-08T12-21-20-04-00-renderer-gameplay-contract-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-08T12-21-20-04-00-render-parity-contract-map.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-08T12-21-20-04-00-grass-render-readback-ledger.md",
+  "latestGameplayAuthorityAudit": ".agent/gameplay-authority-audit/2026-07-08T12-21-20-04-00-action-result-fixture-ledger.md",
+  "previousTracker": ".agent/trackers/2026-07-08T10-48-47-04-00/project-breakdown.md",
+  "nextBuildTarget": "IntoTheMeadow Renderer/GamePlay Contract Fixture Gate",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",
     "gameFactory": "src/game/create-into-the-meadow-game.js",
     "state": "src/game/game-state.js",
     "snapshot": "src/game/game-snapshot.js",
-    "gameHost": "src/boot/expose-game-host.js",
     "renderEnhancement": "src/game/enhance-render-plan.js",
-    "dskInstaller": "src/boot/install-dsks.js",
-    "dskDescriptors": "src/dsks/index.js",
-    "dskRegistry": "src/content/dsk-registry.js",
-    "manifest": "src/content/game-manifest.js",
-    "areaConfig": "src/content/meadow-areas/arrival-meadow.js",
     "objectives": "src/content/objectives/arrival-objectives.js",
-    "interactionTargets": "src/content/interaction-targets/arrival-targets.js",
-    "tests": [
-      "tests/static-smoke.mjs",
-      "tests/dsk-registry-smoke.mjs",
-      "tests/render-plan-smoke.mjs",
-      "tests/deterministic-scene-smoke.mjs"
-    ],
-    "neededNextTests": [
-      "tests/render-parity-fixture-smoke.mjs",
-      "tests/gameplay-authority-fixture-smoke.mjs"
-    ]
+    "targets": "src/content/interaction-targets/arrival-targets.js"
   },
-  "sourceRead": {
-    "repoShape": "Publishable DSK-composed meadow exploration game with a clean route, host, factory, state, snapshot, DSK descriptor, content descriptor, and render enhancement split.",
-    "renderGap": "enhanceRenderPlan emits rich grassSystem, windField, postProcess, performance, renderStyle, and stats descriptors, but no parity report proves consumed/unconsumed/unsupported renderer behavior.",
-    "hostGap": "web-host.js passes enhanced plans to renderer.render(plan) and exposes enhanced plan plus render snapshot, but no parity contract compares plan descriptors to renderer consumption.",
-    "stateGap": "createInitialGameState defines player, progression, world, and DSK snapshot, but advanceGameState only increments frame and lastTick.",
-    "contentGap": "ARRIVAL_OBJECTIVES and ARRIVAL_INTERACTION_TARGETS define walk-the-path and inspect-tree, but those descriptors do not yet reduce into runtime ActionResult or snapshot.gameplay records.",
-    "newNarrowing": "Implement renderer-parity modules, GameHost renderParity projection, gameplay-authority modules, snapshot.gameplay projection, and fixture smoke tests before visual or content expansion."
-  },
-  "interactionLoop": {
-    "current": [
-      "Browser loads index.html.",
-      "boot-game.js starts the web host.",
-      "web-host.js imports meadow-area-kit and meadow-webgl-render-kit from GAME_MANIFEST.",
-      "createIntoTheMeadowGame installs local DSK descriptors and creates the arrival meadow area.",
-      "requestAnimationFrame calls game.tick({ time, dt }).",
-      "advanceGameState increments frame and records lastTick only.",
-      "meadow-area-kit emits a render plan.",
-      "enhanceRenderPlan applies grass patches, wind, post-process, outline policy, and stats.",
-      "meadow-webgl-render-kit renders the scene.",
-      "window.GameHost exposes state, snapshot, diagnostics, render plan, and renderer snapshot."
-    ],
-    "targetRendererParity": [
-      "Collect expected descriptors from enhanced render plan.",
-      "Normalize consumed descriptors from renderer snapshot.",
-      "Classify each descriptor as consumed, unconsumed, unsupported, missing, or fallback-rendered.",
-      "Project parity result to GameHost diagnostics and snapshot.",
-      "Prove parity in a DOM-free fixture matrix before visual expansion."
-    ],
-    "targetGameplayAuthority": [
-      "Normalize optional tick actions into ActionFrame.",
-      "Reduce path-progress and inspect actions into ActionResult records.",
-      "Resolve walk-the-path and inspect-tree objective completion idempotently.",
-      "Append a gameplay action journal and last results.",
-      "Expose snapshot.gameplay while keeping current tick behavior compatible."
-    ]
-  },
-  "domains": {
-    "runtimeAndHost": [
-      "static-browser-shell",
-      "github-pages-deployment",
-      "browser-boot-runtime",
-      "web-host-runtime",
-      "external-kit-loading",
-      "cdn-kit-import-manifest",
-      "animation-frame-loop",
-      "debug-hud-runtime",
-      "canvas-surface",
-      "GameHost-state-contract",
-      "GameHost-snapshot-contract",
-      "GameHost-diagnostics-contract",
-      "GameHost-render-snapshot-contract",
-      "runtime-compatibility-contract"
-    ],
-    "gameComposition": [
-      "manifest-authority",
-      "game-factory",
-      "content-pack-authority",
-      "local-dsk-registry",
-      "local-dsk-descriptor-installer",
-      "local-dsk-validation",
-      "external-meadow-area-bridge",
-      "external-webgl-render-bridge",
-      "fallback-meadow-area-kit",
-      "scene-identity",
-      "session-identity",
-      "deterministic-state-root",
-      "tick-clock",
-      "snapshot-root"
-    ],
-    "meadowContent": [
-      "arrival-meadow-area",
-      "arrival-path-content",
-      "focal-tree-content",
-      "terrain-material-palette",
-      "golden-hour-style",
-      "grass-content",
-      "flower-content",
-      "rock-content",
-      "mushroom-content",
-      "tree-line-content",
-      "wind-state",
-      "story-beat-ledger",
-      "objective-ledger",
-      "interaction-target-registry"
-    ],
-    "render": [
-      "render-plan-generation",
-      "render-plan-enhancement",
-      "outline-policy",
-      "small-object-clutter-reduction",
-      "focal-tree-enhancement",
-      "grass-density-texture",
-      "grass-clump-archetype",
-      "grass-static-batch",
-      "grass-patch-placement",
-      "grass-clump-instancing-render",
-      "grass-shader-wind",
-      "grass-lod-policy",
-      "grass-density-scaling",
-      "grass-debug-visualization",
-      "wind-field-render-metadata",
-      "post-process-stack-metadata",
-      "render-stats-diagnostics",
-      "webgl-renderer-snapshot",
-      "renderer-descriptor-consumption-parity"
-    ],
-    "gameplayAuthorityNeeded": [
-      "ActionFrame-contract",
-      "ActionBatch-normalization",
-      "ActionResult-contract",
-      "ActionReason-catalog",
-      "path-progress-reducer",
-      "inspect-target-reducer",
-      "objective-completion-resolver",
-      "story-trigger-resolver",
-      "gameplay-action-journal",
-      "gameplay-snapshot",
-      "fixture-replay-parity"
-    ]
-  },
-  "externalKits": [
-    {
-      "id": "meadow-area-kit",
-      "source": "https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-area-kit/index.js",
-      "status": "loaded-by-web-host",
-      "domain": "meadow-area",
-      "provides": [
-        "createMeadowAreaKit",
-        "getRenderPlan",
-        "getSnapshot",
-        "validate"
-      ]
-    },
-    {
-      "id": "meadow-webgl-render-kit",
-      "source": "https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-webgl-render-kit/index.js",
-      "status": "loaded-by-web-host-needs-parity-proof",
-      "domain": "meadow-webgl-render",
-      "provides": [
-        "createMeadowWebglRenderKit",
-        "render",
-        "getSnapshot"
-      ]
-    }
-  ],
-  "activeLocalKits": [
+  "currentKits": [
+    "meadow-area-kit",
+    "meadow-webgl-render-kit",
+    "game-manifest descriptor",
+    "local-dsk-registry",
+    "arrival-meadow content descriptor",
+    "story-beats descriptor",
+    "arrival-objectives descriptor",
+    "arrival-interaction-targets descriptor",
+    "tree-object-dsk",
+    "wind-field-dsk",
+    "meadow-performance-dsk",
+    "post-process-stack-dsk",
     "grass-density-texture-kit",
     "grass-clump-archetype-kit",
     "grass-static-batch-kit",
@@ -212,35 +61,33 @@
     "grass-lod-policy-kit",
     "grass-density-scaling-kit",
     "grass-debug-visualization-kit",
-    "wind-field-dsk",
-    "tree-object-dsk",
-    "meadow-performance-dsk",
-    "post-process-stack-dsk"
+    "fallback-meadow-area-kit"
   ],
   "nextCutKits": [
-    "renderer-descriptor-expectation-kit",
+    "render-parity-reason-kit",
+    "expected-render-descriptor-kit",
     "renderer-snapshot-consumption-kit",
-    "renderer-descriptor-consumption-kit",
-    "renderer-unsupported-descriptor-reason-kit",
-    "renderer-parity-report-kit",
-    "gamehost-render-parity-diagnostics-kit",
-    "ActionFrame-contract-kit",
-    "ActionResult-contract-kit",
-    "ActionReason-catalog-kit",
+    "render-descriptor-parity-kit",
+    "render-parity-diagnostics-projection-kit",
+    "action-frame-kit",
+    "action-result-kit",
     "path-progress-reducer-kit",
     "inspect-target-reducer-kit",
-    "objective-completion-reducer-kit",
+    "objective-completion-resolver-kit",
     "gameplay-snapshot-kit",
-    "gameplay-fixture-replay-kit"
+    "renderer-gameplay-fixture-smoke-kit"
   ],
+  "sourceRead": {
+    "renderGap": "enhanceRenderPlan emits rich grassSystem, windField, postProcess, performance, renderStyle, and stats descriptors, but no parity report proves consumed/unconsumed/unsupported renderer behavior.",
+    "hostGap": "web-host.js passes enhanced plans to renderer.render(plan) and exposes enhanced plan plus render snapshot, but no parity contract compares plan descriptors to renderer consumption.",
+    "stateGap": "createInitialGameState defines player, progression, world, and DSK snapshot, but advanceGameState only increments frame and lastTick.",
+    "contentGap": "ARRIVAL_OBJECTIVES and ARRIVAL_INTERACTION_TARGETS define walk-the-path and inspect-tree, but those descriptors do not yet reduce into runtime ActionResult or snapshot.gameplay records.",
+    "narrowing": "Build render-parity modules, GameHost renderParity projection, gameplay-authority modules, snapshot.gameplay projection, and fixture smoke tests before visual or content expansion."
+  },
   "validation": {
-    "runtimeFilesChanged": false,
+    "runtimeSourceChanged": false,
     "localSmokeRun": false,
-    "browserCheckRun": false,
-    "rendererParityConfirmed": false,
-    "gameplayAuthorityConfirmed": false,
-    "parityFixtureImplemented": false,
-    "actionFrameFixtureImplemented": false,
-    "nextRequiredCommand": "npm run check"
+    "browserSmokeRun": false,
+    "pushedToMain": true
   }
 }

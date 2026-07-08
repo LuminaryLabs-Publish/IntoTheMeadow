@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T09:11:03-04:00`
+**Timestamp:** `2026-07-08T10-48-47-04-00`
 
 ## Goal
 
@@ -10,6 +10,7 @@ The immediate path is:
 
 ```txt
 renderer parity proof
+-> grass descriptor consumption readback
 -> GameHost renderParity diagnostics
 -> ActionFrame / ActionResult gameplay reducer gate
 -> first objective loop proof
@@ -31,10 +32,10 @@ Add a DOM-free parity fixture that compares the enhanced render plan against ren
 Required modules:
 
 ```txt
+src/render-parity/render-parity-reasons.js
 src/render-parity/collect-expected-render-descriptors.js
 src/render-parity/normalize-renderer-snapshot-consumption.js
 src/render-parity/compare-render-descriptor-parity.js
-src/render-parity/render-parity-reasons.js
 tests/render-parity-fixture-smoke.mjs
 ```
 
@@ -97,7 +98,24 @@ Acceptance:
 - renderParity appears only after a render snapshot exists or reports missing snapshot clearly.
 ```
 
-### 3. ActionFrame / ActionResult gameplay authority implementation
+### 3. Grass consumption readback
+
+Do not add more grass metadata yet.
+
+Use the render parity layer to prove:
+
+```txt
+- density texture descriptor presence
+- static batch ids expected vs consumed
+- patch ids expected vs consumed
+- drawGroup ids expected vs consumed
+- expected instance count vs rendered instance count
+- expected card count vs rendered card count
+- shader wind uniforms expected vs bound
+- LOD policy expected vs supported/unsupported
+```
+
+### 4. ActionFrame / ActionResult gameplay authority implementation
 
 Keep current ticking valid:
 
@@ -114,9 +132,9 @@ game.tick({ time, dt, actions })
 Required modules:
 
 ```txt
-src/gameplay-authority/action-frame.js
-src/gameplay-authority/action-result.js
 src/gameplay-authority/action-reasons.js
+src/gameplay-authority/action-result.js
+src/gameplay-authority/action-frame.js
 src/gameplay-authority/reduce-path-progress.js
 src/gameplay-authority/reduce-inspect-target.js
 src/gameplay-authority/resolve-objective-completion.js
@@ -153,7 +171,7 @@ Acceptance:
 - snapshot.gameplay exposes active objective, completed objectives, story beats, player pathProgress, actionJournal, and lastActionResults.
 ```
 
-### 4. Package check integration
+### 5. Package check integration
 
 After the two fixtures exist, update `package.json`:
 
@@ -167,7 +185,7 @@ npm run check
   -> node tests/gameplay-authority-fixture-smoke.mjs
 ```
 
-### 5. First playable objective loop
+### 6. First playable objective loop
 
 Implement only after renderer parity and action-result gates exist:
 

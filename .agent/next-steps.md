@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T10-48-47-04-00`
+**Timestamp:** `2026-07-08T12-21-20-04-00`
 
 ## Goal
 
@@ -13,221 +13,120 @@ renderer parity proof
 -> grass descriptor consumption readback
 -> GameHost renderParity diagnostics
 -> ActionFrame / ActionResult gameplay reducer gate
+-> snapshot.gameplay projection
 -> first objective loop proof
 -> then visual/gameplay expansion
 ```
 
 ## Ordered next implementation ledges
 
-### 1. Renderer Descriptor Consumption Parity Fixture Implementation
+### 1. Renderer parity reason catalog
 
-Target repo:
+Add stable reason constants for renderer parity classification.
 
-```txt
-LuminaryLabs-Publish/IntoTheMeadow
-```
-
-Add a DOM-free parity fixture that compares the enhanced render plan against renderer snapshot consumption.
-
-Required modules:
+Target files:
 
 ```txt
 src/render-parity/render-parity-reasons.js
+```
+
+### 2. Expected descriptor collector
+
+Collect expected descriptors from an enhanced render plan.
+
+Target files:
+
+```txt
 src/render-parity/collect-expected-render-descriptors.js
+```
+
+### 3. Renderer snapshot consumption normalizer
+
+Normalize renderer snapshot fields without requiring a specific renderer version.
+
+Target files:
+
+```txt
 src/render-parity/normalize-renderer-snapshot-consumption.js
+```
+
+### 4. Descriptor parity comparator
+
+Compare expected plan descriptors against consumed snapshot descriptors.
+
+Target files:
+
+```txt
 src/render-parity/compare-render-descriptor-parity.js
-tests/render-parity-fixture-smoke.mjs
 ```
 
-Required result fields:
+### 5. GameHost renderParity projection
+
+Keep existing GameHost fields and add parity diagnostics additively.
+
+Target file:
 
 ```txt
-expectedDescriptors
-consumedDescriptors
-unconsumedDescriptors
-unsupportedDescriptors
-missingPlanDescriptors
-missingSnapshotFields
-fallbackDescriptors
-grass.drawGroupsExpected
-grass.drawGroupsRendered
-grass.instancesExpected
-grass.instancesRendered
-grass.cardsExpected
-grass.cardsRendered
-postProcess.passesExpected
-postProcess.passesExecuted
-postProcess.unsupportedPasses
-wind.windUniformsBound
-renderStyle.styledObjectsConsumed
-parityPassed
-reasons
+src/hosts/web-host.js
 ```
 
-Acceptance:
+### 6. Gameplay action contracts
 
-```txt
-- Fixture passes all-descriptors-consumed positive case.
-- Fixture fails renderer-snapshot-missing case with stable reason.
-- Fixture fails renderer-does-not-report-parity case with stable reason.
-- Fixture reports unconsumed grass draw groups.
-- Fixture reports grass count mismatches.
-- Fixture reports unsupported post-process passes.
-- Fixture reports unsupported wind uniforms.
-- Fixture reports unconsumed renderStyle tiers.
-- Fixture handles optional absent descriptors without false failure.
-- Fixture reports fallback renderer use.
-```
+Add optional action input while preserving `game.tick({ time, dt })`.
 
-### 2. GameHost render parity diagnostics
-
-Project the fixture result into:
-
-```txt
-GameHost.getDiagnostics().renderParity
-GameHost.getSnapshot().renderParity
-```
-
-Acceptance:
-
-```txt
-- GameHost remains backward compatible.
-- GameHost.getState() still works.
-- GameHost.getSnapshot().enhancedRenderPlan still exists.
-- GameHost.getSnapshot().render still exists.
-- renderParity appears only after a render snapshot exists or reports missing snapshot clearly.
-```
-
-### 3. Grass consumption readback
-
-Do not add more grass metadata yet.
-
-Use the render parity layer to prove:
-
-```txt
-- density texture descriptor presence
-- static batch ids expected vs consumed
-- patch ids expected vs consumed
-- drawGroup ids expected vs consumed
-- expected instance count vs rendered instance count
-- expected card count vs rendered card count
-- shader wind uniforms expected vs bound
-- LOD policy expected vs supported/unsupported
-```
-
-### 4. ActionFrame / ActionResult gameplay authority implementation
-
-Keep current ticking valid:
-
-```txt
-game.tick({ time, dt })
-```
-
-Add optional gameplay action input:
-
-```txt
-game.tick({ time, dt, actions })
-```
-
-Required modules:
+Target files:
 
 ```txt
 src/gameplay-authority/action-reasons.js
-src/gameplay-authority/action-result.js
 src/gameplay-authority/action-frame.js
+src/gameplay-authority/action-result.js
+```
+
+### 7. Objective reducers
+
+Reduce existing descriptors into deterministic results.
+
+Target files:
+
+```txt
 src/gameplay-authority/reduce-path-progress.js
 src/gameplay-authority/reduce-inspect-target.js
 src/gameplay-authority/resolve-objective-completion.js
+```
+
+### 8. Snapshot gameplay projection
+
+Expose gameplay proof through snapshots.
+
+Target files:
+
+```txt
 src/gameplay-authority/create-gameplay-snapshot.js
+src/game/game-state.js
+src/game/game-snapshot.js
+```
+
+### 9. Fixture smoke tests
+
+Add DOM-free fixtures before runtime visuals.
+
+Target files:
+
+```txt
+tests/render-parity-fixture-smoke.mjs
 tests/gameplay-authority-fixture-smoke.mjs
+package.json
 ```
 
-Required result fields:
+## Acceptance checklist
 
-```txt
-ActionResult
-  id
-  actionId
-  actionType
-  targetId
-  accepted
-  reason
-  stateDelta
-  objectiveDelta
-  storyDelta
-  diagnostics
-```
-
-Acceptance:
-
-```txt
-- Existing game.tick({ time, dt }) behavior still increments frame and records lastTick.
-- game.tick({ time, dt, actions }) accepts path-progress and inspect action arrays.
-- path-progress can complete walk-the-path only when progressAtLeast >= 0.35.
-- inspect can complete inspect-tree only for focal-tree.
-- unknown targets return stable unknown-target reason.
-- unknown action types return stable unknown-action-type reason.
-- repeated objective completion does not duplicate completedObjectiveIds.
-- snapshot.gameplay exposes active objective, completed objectives, story beats, player pathProgress, actionJournal, and lastActionResults.
-```
-
-### 5. Package check integration
-
-After the two fixtures exist, update `package.json`:
-
-```txt
-npm run check
-  -> node tests/static-smoke.mjs
-  -> node tests/dsk-registry-smoke.mjs
-  -> node tests/render-plan-smoke.mjs
-  -> node tests/deterministic-scene-smoke.mjs
-  -> node tests/render-parity-fixture-smoke.mjs
-  -> node tests/gameplay-authority-fixture-smoke.mjs
-```
-
-### 6. First playable objective loop
-
-Implement only after renderer parity and action-result gates exist:
-
-```txt
-- minimal path-progress input source
-- minimal inspect input source
-- active objective HUD readout
-- completed objective readout
-- story beat progression display
-```
-
-Do not do this before fixture proof exists.
-
-## Exact source order for next implementation pass
-
-```txt
-1. src/render-parity/render-parity-reasons.js
-2. src/render-parity/collect-expected-render-descriptors.js
-3. src/render-parity/normalize-renderer-snapshot-consumption.js
-4. src/render-parity/compare-render-descriptor-parity.js
-5. tests/render-parity-fixture-smoke.mjs
-6. src/hosts/web-host.js renderParity projection
-7. src/gameplay-authority/action-reasons.js
-8. src/gameplay-authority/action-result.js
-9. src/gameplay-authority/action-frame.js
-10. src/gameplay-authority/resolve-objective-completion.js
-11. src/gameplay-authority/reduce-path-progress.js
-12. src/gameplay-authority/reduce-inspect-target.js
-13. src/gameplay-authority/create-gameplay-snapshot.js
-14. src/game/game-state.js optional actions
-15. src/game/game-snapshot.js snapshot.gameplay
-16. tests/gameplay-authority-fixture-smoke.mjs
-17. package.json check command
-18. npm run check
-```
-
-## Do not do next
-
-```txt
-- Do not add a new scene yet.
-- Do not add real first-person movement yet.
-- Do not add more grass metadata before parity is readable.
-- Do not claim renderer parity without fixture output.
-- Do not move modules into NexusEngine or ProtoKits until local proof is stable.
-```
+- [ ] Renderer descriptors classify as consumed, unconsumed, unsupported, fallback, or missing.
+- [ ] Grass descriptor readback has stable report shape.
+- [ ] Renderer parity failures are visible through `GameHost`.
+- [ ] `game.tick({ time, dt })` remains compatible.
+- [ ] `game.tick({ time, dt, actions })` produces deterministic action results.
+- [ ] `walk-the-path` completes idempotently.
+- [ ] `inspect-tree` completes idempotently.
+- [ ] Invalid action and unknown target return stable rejected results.
+- [ ] `snapshot.gameplay` exists.
+- [ ] `npm run check` includes the new fixtures.

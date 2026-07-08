@@ -8,11 +8,11 @@ This folder contains internal project breakdowns for `LuminaryLabs-Publish/IntoT
 
 The repo is structurally ready for the first small playable loop, but gameplay authority is still not executable. The web host currently calls `game.tick({ time, dt })`, `advanceGameState()` only increments `frame` and writes `lastTick`, and `createGameSnapshot()` exposes manifest/state/renderPlan/diagnostics without a dedicated `snapshot.gameplay` contract. The content needed for the first loop already exists: six path points, the `walk-the-path` objective at `pathProgress >= 0.35`, the `inspect-tree` objective, and the `focal-tree` interaction target at radius `4.5`.
 
-This pass narrows the next cut into **Reducer Result Runtime Gate + Gameplay Snapshot Fixture Lock**. Build `ActionFrame`, `ActionBatch`, `ActionResult`, `ReducerResult`, path progress, inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before renderer extraction, save persistence, pointer-lock polish, audio, or external ProtoKit promotion.
+This pass narrows the next cut into **Action Batch Reducer Harness + Gameplay Projection Gate**. Build ActionFrame intake, ActionBatch ordering, ActionResult records, ReducerResult records, path progress, inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before pointer-lock controls, save persistence, audio, renderer extraction, or ProtoKit promotion.
 
 ## Latest tracker
 
-- `trackers/2026-07-07T20-59-30-04-00/project-breakdown.md`
+- `trackers/2026-07-07T22-20-00-04-00/project-breakdown.md`
 
 ## Kit registry
 
@@ -20,6 +20,7 @@ This pass narrows the next cut into **Reducer Result Runtime Gate + Gameplay Sna
 
 ## Previous trackers
 
+- `trackers/2026-07-07T20-59-30-04-00/project-breakdown.md`
 - `trackers/2026-07-07T19-42-05-04-00/project-breakdown.md`
 - `trackers/2026-07-07T18-19-15-04-00/project-breakdown.md`
 - `trackers/2026-07-07T16-58-09-04-00/project-breakdown.md`
@@ -52,7 +53,7 @@ Target playable loop:
 
 1. Player spawns at the arrival path.
 2. `meadow-actionframe-contract-kit` defines stable `ActionFrame` records.
-3. `meadow-action-batch-kit` batches and orders host/scripted/fixture action frames per tick.
+3. `meadow-action-batch-kit` batches, sorts, dedupes, and freezes host/scripted/fixture/replay action frames per tick.
 4. `meadow-action-result-contract-kit` standardizes accepted, rejected, and no-op command results.
 5. `meadow-action-journal-kit` records action intake and action results.
 6. `meadow-reducer-result-contract-kit` requires every reducer to return state, accepted actions, rejected actions, events, diffs, and diagnostics.
@@ -66,17 +67,17 @@ Target playable loop:
 14. `objective-completion-runtime-kit` completes `inspect-tree` from accepted `inspect:focal-tree`.
 15. `arrival-completion-runtime-kit` records deterministic arrival meadow completion.
 16. `meadow-gameplay-snapshot-kit` exposes stable gameplay snapshots through `window.GameHost`.
-17. `replay-parity-smoke-kit` proves no-op tick, path walk, invalid inspect, valid inspect, objective completion, and replay parity without DOM input.
+17. `replay-parity-smoke-kit` proves no-op tick, action batch ordering, reducer result shape, path walk, invalid inspect, valid inspect, objective completion, and replay parity without DOM input.
 
 ## Active next direction
 
-The best next slice is **IntoTheMeadow Reducer Result Runtime Gate + Gameplay Snapshot Fixture Lock**:
+The best next slice is **IntoTheMeadow Action Batch Reducer Harness + Gameplay Projection Gate**:
 
 - Keep `index.html`, `src/boot/boot-game.js`, current render behavior, and GameHost compatibility intact.
 - Keep `game.tick({ time, dt })` compatible for existing runtime and tests.
 - Allow `game.tick({ time, dt, actions })` as additive input.
-- Add `meadow-actionframe-contract-kit` with stable action id, frame, time, scene id, source, type, target, payload, accepted/rejected, and reason metadata.
-- Add `meadow-action-batch-kit` so `game.tick()` receives stable sorted action arrays.
+- Add `meadow-actionframe-contract-kit` with stable action id, frame, time, scene id, source, type, target id, payload, and metadata.
+- Add `meadow-action-batch-kit` so `game.tick()` receives stable sorted and deduped action arrays.
 - Add `meadow-action-result-contract-kit` so accepted, rejected, and no-op command results have a stable shape.
 - Add `meadow-action-journal-kit` for accepted, rejected, and no-op action records.
 - Add `meadow-action-rejection-reason-kit` with `unsupported_action`, `invalid_scene`, `invalid_payload`, `out_of_range`, `wrong_target`, `duplicate_event`, and `no_effect`.
@@ -91,8 +92,8 @@ The best next slice is **IntoTheMeadow Reducer Result Runtime Gate + Gameplay Sn
 - Add `inspect-result-reducer-kit` so out-of-range, wrong-target, duplicate, no-effect, unsupported, invalid-payload, and accepted inspect paths are all explicit.
 - Trigger the `focal-tree` story beat and complete `inspect-tree` after valid inspect.
 - Derive arrival completion after both existing objectives complete.
-- Add `meadow-gameplay-snapshot-kit` so `window.GameHost.getSnapshot().gameplay` exposes player, actions, reducers, events, story, objectives, interaction, completion, and render metadata.
-- Add scripted fixtures for no-op tick, action journal, reducer result shape, path walk, invalid inspect, valid inspect, objective completion, and replay parity.
+- Add `meadow-gameplay-snapshot-kit` so `window.GameHost.getSnapshot().gameplay` exposes player, path, actions, reducers, events, story, objectives, interaction, completion, and render metadata.
+- Add scripted fixtures for no-op tick, action batch ordering, action journal, reducer result shape, path walk, invalid inspect, valid inspect, objective completion, and replay parity.
 
 ## Runtime cutover kits
 

@@ -1,6 +1,6 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T06:10:03-04:00`
+**Timestamp:** `2026-07-08T07:41:52-04:00`
 
 ## Current state
 
@@ -35,23 +35,23 @@ The game consumes:
 The accessible `LuminaryLabs-Publish` repo list checked this run contained:
 
 ```txt
-IntoTheMeadow
 HorrorCorridor
 AetherVale
-ZombieOrchard
-TheUnmappedHouse
-MyCozyIsland
 TheOpenAbove
-PhantomCommand
 TheCavalryOfRome
+PhantomCommand
 PrehistoricRush
+ZombieOrchard
+IntoTheMeadow
+MyCozyIsland
+TheUnmappedHouse
 ```
 
-The central `LuminaryLabs-Dev/LuminaryLabs` ledger has entries for checked non-Cavalry Publish repos, and root `.agent/START_HERE.md` state exists for checked non-Cavalry repos.
+The central `LuminaryLabs-Dev/LuminaryLabs` ledger/status readback has entries for checked non-Cavalry Publish repos, and root `.agent/START_HERE.md` state exists for checked non-Cavalry repos.
 
 `TheCavalryOfRome` was not considered because of the standing exclusion rule.
 
-`IntoTheMeadow` was selected by fallback follow-up because its renderer-consumption contract remains the most important local proof seam before more visual expansion.
+`IntoTheMeadow` was selected by fallback follow-up because the renderer-consumption contract and first gameplay action/result reducer handoff remain the two most important local proof seams before additional content or visual expansion.
 
 ## Interaction loop
 
@@ -69,25 +69,45 @@ index.html
   -> GameHost exposes state, snapshot, diagnostics, render plan, and renderer snapshot
 ```
 
+Current gameplay state loop:
+
+```txt
+createInitialGameState()
+  -> frame: 0
+  -> activeSceneId
+  -> activeSessionId
+  -> player.position/yaw/pitch/pathProgress
+  -> world.wind
+  -> progression.activeObjectiveId
+  -> progression.completedObjectiveIds
+  -> progression.storyBeatIds
+
+advanceGameState(state, input)
+  -> frame + 1
+  -> lastTick.dt
+  -> lastTick.time
+```
+
 ## Key architecture truth
 
-The current game is descriptor-rich but renderer-limited.
+The current game is descriptor-rich but still proof-limited.
 
 `enhanceRenderPlan()` emits a texture-driven grass system, density texture, 64-card clump archetypes, static batches, patch placements, instancing draw groups, shader wind, LOD policy, debug summary, post-process stack descriptors, outline policy, performance budgets, and estimated grass/card counts.
 
 `web-host.js` passes the enhanced plan to `renderer.render(plan)` and exposes an enhanced render plan plus renderer snapshot through `GameHost`, but there is no parity gate proving the renderer consumed each high-fidelity descriptor.
 
-This means a scene can still look cartoony or sparse even when the source descriptors claim dense procedural meadow intent.
+`game-state.js` contains a `player.pathProgress` field and `progression.activeObjectiveId`, while the content descriptors define `walk-the-path` and `inspect-tree`, but there is no action reducer yet.
 
 ## Current live-risk summary
 
 ```txt
 - The visual route depends on external ProtoKits renderer behavior.
-- The game emits grassSystem metadata, but the render kit still needs real instanced clump rendering.
+- The game emits grassSystem metadata, but the render kit still needs real instanced clump rendering or explicit unconsumed reporting.
 - The game emits postProcess metadata, but the render kit still needs pass execution or explicit unsupported-pass reporting.
-- Tree metadata is enriched locally, but renderer authority must move away from primitive focal-tree drawing.
 - GameHost diagnostics does not yet prove renderer descriptor-consumption parity.
-- Gameplay state remains minimal compared to story/objective/interaction descriptors.
+- game.tick({ time, dt }) has no ActionFrame / ActionResult reducer path.
+- Objective and interaction descriptors exist but are not reduced into gameplay state.
+- snapshot.gameplay does not exist yet.
 - The repo has many planned DSK descriptors that are not all implemented as real runtime packages.
 ```
 
@@ -123,6 +143,8 @@ session-identity
 deterministic-state-root
 tick-clock
 last-tick-diagnostics
+player-state
+path-progress-state
 snapshot-root
 arrival-meadow-area
 arrival-path-content
@@ -168,6 +190,10 @@ action-journal-contract
 stable-rejection-reason-catalog
 reducer-result-contract
 ordered-reducer-pipeline
+path-progress-reducer
+inspect-target-reducer
+objective-completion-reducer
+story-trigger-reducer
 gameplay-snapshot-contract
 fixture-replay-domain
 ```
@@ -235,6 +261,20 @@ project-render-parity-to-GameHost
 run-render-parity-fixture-matrix
 ```
 
+Needed gameplay authority services:
+
+```txt
+normalize-action-frame
+reduce-path-progress-action
+reduce-inspect-action
+resolve-objective-completion
+resolve-story-trigger
+emit-action-result
+append-action-journal-entry
+project-gameplay-snapshot
+run-action-replay-fixture
+```
+
 ## Kits captured
 
 External kits:
@@ -262,7 +302,7 @@ meadow-performance-dsk
 post-process-stack-dsk
 ```
 
-Next-cut parity kits:
+Next-cut proof kits:
 
 ```txt
 renderer-descriptor-expectation-kit
@@ -276,19 +316,28 @@ wind-field-consumption-kit
 render-style-consumption-kit
 gamehost-render-parity-diagnostics-kit
 renderer-parity-fixture-kit
+action-frame-kit
+action-batch-kit
+action-result-kit
+path-progress-reducer-kit
+inspect-target-reducer-kit
+objective-completion-reducer-kit
+story-trigger-reducer-kit
+gameplay-snapshot-kit
+gameplay-replay-fixture-kit
 ```
 
 ## Current status
 
 ```txt
-status: renderer-parity-fixture-matrix-documented
+status: renderer-parity-and-action-frame-handoff-documented
 selected-repo: LuminaryLabs-Publish/IntoTheMeadow
 primary-gap: renderer-descriptor-consumption-parity
-secondary-gap: gameplay-authority-runtime
+secondary-gap: gameplay-action-result-authority
 safe-next-ledges:
   1. DOM-free renderer parity fixture matrix
   2. GameHost renderParity diagnostic projection
-  3. renderer consumes or reports grassSystem.drawGroups
-  4. renderer executes or reports postProcess descriptors
-  5. gameplay action/reducer fixture gate
+  3. optional ActionFrame support in game.tick({ time, dt, actions })
+  4. path-progress and inspect reducers
+  5. snapshot.gameplay and replay fixture
 ```

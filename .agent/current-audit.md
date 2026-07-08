@@ -1,6 +1,6 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T03:28:56-04:00`
+**Timestamp:** `2026-07-08T05:19:46-04:00`
 
 ## Current state
 
@@ -32,28 +32,26 @@ The game consumes:
 
 ## Repo-selection audit
 
-The full accessible `LuminaryLabs-Publish` list checked this run contained:
+The accessible `LuminaryLabs-Publish` repo list checked this run contained:
 
 ```txt
-IntoTheMeadow
 HorrorCorridor
 AetherVale
-ZombieOrchard
-TheUnmappedHouse
-MyCozyIsland
 TheOpenAbove
-PhantomCommand
 TheCavalryOfRome
+PhantomCommand
 PrehistoricRush
+ZombieOrchard
+IntoTheMeadow
+MyCozyIsland
+TheUnmappedHouse
 ```
 
-The central `LuminaryLabs-Dev/LuminaryLabs` ledger has entries for all checked non-Cavalry Publish repos.
-
-Root `.agent/START_HERE.md` readback was confirmed for the checked non-Cavalry Publish set during this pass.
+The central `LuminaryLabs-Dev/LuminaryLabs` ledger has entries for checked non-Cavalry Publish repos, and root `.agent/START_HERE.md` readback was confirmed for the checked non-Cavalry set.
 
 `TheCavalryOfRome` was not considered because of the standing exclusion rule.
 
-`IntoTheMeadow` was selected by fallback oldest eligible root-agent alignment for a follow-up breakdown.
+`IntoTheMeadow` was selected by fallback follow-up because its renderer-consumption contract is still the oldest high-value unresolved local seam in this pass.
 
 ## Interaction loop
 
@@ -75,18 +73,16 @@ index.html
 
 The current game is descriptor-rich but renderer-limited.
 
-The local `enhanceRenderPlan()` step emits a texture-driven grass system, static grass batches, grass patch placements, draw groups, shader wind descriptors, LOD policy, post-process stack descriptors, outline policy, performance budgets, and estimated grass/card counts.
+`enhanceRenderPlan()` emits a texture-driven grass system, density texture, 64-card clump archetypes, static batches, patch placements, instancing draw groups, shader wind, LOD policy, debug summary, post-process stack descriptors, outline policy, performance budgets, and estimated grass/card counts.
 
-The render-plan smoke test already expects density texture, static batches, texture-driven patches, instancing draw groups, and post-process pass descriptors in the enhanced render plan.
-
-The main visible gap is that the external renderer must actually consume those descriptors as production-grade scene systems and report descriptor-consumption parity in its snapshot.
+`web-host.js` passes the enhanced plan to `renderer.render(plan)` and exposes an enhanced render plan plus renderer snapshot through `GameHost`, but there is no parity gate proving the renderer consumed each high-fidelity descriptor.
 
 ## Current live-risk summary
 
 ```txt
 - The visual route depends on external ProtoKits renderer behavior.
 - The game emits grassSystem metadata, but the render kit still needs real instanced clump rendering.
-- The game emits postProcess metadata, but the render kit still needs pass execution.
+- The game emits postProcess metadata, but the render kit still needs pass execution or explicit unsupported-pass reporting.
 - Tree metadata is enriched locally, but renderer authority must move away from primitive focal-tree drawing.
 - GameHost diagnostics does not yet prove renderer descriptor-consumption parity.
 - Gameplay state remains minimal compared to story/objective/interaction descriptors.
@@ -108,6 +104,7 @@ canvas-surface
 GameHost-state-contract
 GameHost-snapshot-contract
 GameHost-diagnostics-contract
+GameHost-render-snapshot-contract
 runtime-compatibility-contract
 static-smoke-validation
 manifest-authority
@@ -157,19 +154,30 @@ wind-field-render-metadata
 post-process-stack-metadata
 render-stats-diagnostics
 webgl-renderer-snapshot
+renderer-descriptor-consumption-parity
+renderer-unsupported-descriptor-reason-catalog
+action-frame-contract
+action-batch-contract
+action-result-contract
+action-journal-contract
+stable-rejection-reason-catalog
+reducer-result-contract
+ordered-reducer-pipeline
+gameplay-snapshot-contract
+fixture-replay-domain
 ```
 
 ## Current status
 
 ```txt
-status: followup-agent-breakdown-added
+status: renderer-parity-followup-added
 selected-repo: LuminaryLabs-Publish/IntoTheMeadow
-primary-gap: renderer-descriptor-consumption
+primary-gap: renderer-descriptor-consumption-parity
 secondary-gap: gameplay-authority-runtime
 safe-next-ledges:
-  1. renderer consumes grassSystem.drawGroups
-  2. renderer executes or reports postProcess descriptors
-  3. renderer snapshot reports descriptor-consumption parity
-  4. gameplay action/reducer fixture gate
-  5. GameHost exposes gameplay diagnostics
+  1. renderer snapshot reports consumed/unconsumed descriptor parity
+  2. renderer consumes grassSystem.drawGroups as instanced clump batches
+  3. renderer executes or reports postProcess descriptors
+  4. GameHost exposes renderer parity diagnostics
+  5. gameplay action/reducer fixture gate
 ```

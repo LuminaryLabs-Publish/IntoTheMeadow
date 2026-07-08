@@ -1,12 +1,12 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T09:11:03-04:00`
+**Timestamp:** `2026-07-08T10-48-47-04-00`
 
 ## Current state
 
 `IntoTheMeadow` is a static browser game route that boots from `index.html`, imports `src/boot/boot-game.js`, starts `src/hosts/web-host.js`, creates the game through `src/game/create-into-the-meadow-game.js`, enhances external meadow-area render plans through `src/game/enhance-render-plan.js`, and renders through the external `meadow-webgl-render-kit`.
 
-The repo correctly declares itself as a publishable game/deploy repo, not a generic kit foundry.
+The repo correctly acts as a publishable game/deploy repo, not a generic kit foundry.
 
 The game owns:
 
@@ -35,23 +35,28 @@ The game consumes:
 The accessible `LuminaryLabs-Publish` repo list checked this run contained:
 
 ```txt
-IntoTheMeadow
 HorrorCorridor
 AetherVale
-ZombieOrchard
-TheUnmappedHouse
-MyCozyIsland
 TheOpenAbove
-PhantomCommand
 TheCavalryOfRome
+PhantomCommand
 PrehistoricRush
+ZombieOrchard
+IntoTheMeadow
+MyCozyIsland
+TheUnmappedHouse
 ```
 
-The central `LuminaryLabs-Dev/LuminaryLabs` ledger has entries for checked non-Cavalry Publish repos, and root `.agent/START_HERE.md` state exists for checked non-Cavalry repos.
+The central `LuminaryLabs-Dev/LuminaryLabs` ledger has entries for checked non-Cavalry Publish repos, and sampled root `.agent/START_HERE.md` state exists for checked non-Cavalry repos.
 
 `TheCavalryOfRome` was not considered because of the standing exclusion rule.
 
-`IntoTheMeadow` was selected as the oldest eligible fallback follow-up because the renderer-consumption contract and first gameplay action/result reducer handoff remain the two most important local proof seams before additional content or visual expansion.
+`IntoTheMeadow` was selected as the oldest eligible fallback because its central ledger update was older than the other checked eligible repos and the source still needs two fixture-readable cutovers:
+
+```txt
+renderer descriptor-consumption parity
+gameplay ActionFrame / ActionResult authority
+```
 
 ## Interaction loop
 
@@ -103,7 +108,7 @@ game.tick({ time, dt, actions })
 
 ## Key architecture truth
 
-The current game is descriptor-rich but still proof-limited.
+The current game is descriptor-rich but proof-limited.
 
 `enhanceRenderPlan()` emits a texture-driven grass system, density texture, 64-card clump archetypes, static batches, patch placements, instancing draw groups, shader wind, LOD policy, debug summary, post-process stack descriptors, outline policy, performance budgets, and estimated grass/card counts.
 
@@ -117,11 +122,11 @@ The current game is descriptor-rich but still proof-limited.
 - The visual route depends on external ProtoKits renderer behavior.
 - The game emits grassSystem metadata, but the render kit still needs real instanced clump rendering or explicit unconsumed reporting.
 - The game emits postProcess metadata, but the render kit still needs pass execution or explicit unsupported-pass reporting.
-- GameHost diagnostics does not yet expose renderer descriptor-consumption parity.
+- GameHost diagnostics does not yet expose renderer parity.
 - game.tick({ time, dt }) has no ActionFrame / ActionResult reducer path.
 - Objective and interaction descriptors exist but are not reduced into gameplay state.
 - snapshot.gameplay does not exist yet.
-- The repo has many planned DSK descriptors that are not all implemented as real runtime packages.
+- package.json check does not yet include parity/action fixture smokes.
 ```
 
 ## Domains in use
@@ -218,17 +223,11 @@ meadow-performance-dsk: quality profile, budgets, outline policy
 post-process-stack-dsk: post-process pass descriptor stack
 ```
 
-## Next safe ledge
-
-Implement the source-order **Renderer Parity + ActionFrame Fixture Implementation Map**:
+## Latest documentation additions
 
 ```txt
-src/render-parity/*
-tests/render-parity-fixture-smoke.mjs
-GameHost renderParity projection
-src/gameplay-authority/*
-src/game/game-state.js optional actions
-src/game/game-snapshot.js snapshot.gameplay
-tests/gameplay-authority-fixture-smoke.mjs
-package.json check path update
+.agent/architecture-audit/2026-07-08T10-48-47-04-00-dsk-domain-breakdown.md
+.agent/render-audit/2026-07-08T10-48-47-04-00-renderer-parity-cutover-readback.md
+.agent/grass-system-audit/2026-07-08T10-48-47-04-00-grass-consumption-fixture-seams.md
+.agent/gameplay-authority-audit/2026-07-08T10-48-47-04-00-action-result-implementation-cutover.md
 ```

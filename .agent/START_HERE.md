@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-08T05:19:46-04:00`
+**Last aligned:** `2026-07-08T06:10:03-04:00`
 
 ## Purpose
 
@@ -16,7 +16,7 @@ The accessible `LuminaryLabs-Publish` repo list was compared against the central
 
 No checked non-Cavalry Publish repo was fully new, absent from the central ledger, or missing root `.agent/START_HERE.md` state.
 
-`IntoTheMeadow` was selected by fallback oldest eligible follow-up because its next high-value seam is still the renderer descriptor-consumption contract.
+`IntoTheMeadow` was selected as the current fallback follow-up because the renderer descriptor-consumption contract is still the highest leverage unresolved meadow proof: the game emits high-fidelity descriptors, but renderer consumption is not yet proven or reported.
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
@@ -50,9 +50,17 @@ index.html
 .agent/render-audit/meadow-renderer-gap-audit.md
 .agent/grass-system-audit/texture-driven-grass-system.md
 .agent/renderer-consumption-audit/descriptor-consumption-parity.md
+.agent/renderer-consumption-audit/parity-fixture-matrix.md
+.agent/trackers/2026-07-08T06-10-03-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T06-10-03-04-00.md
+.agent/kit-registry.json
+```
+
+Previous high-value entry:
+
+```txt
 .agent/trackers/2026-07-08T05-19-46-04-00/project-breakdown.md
 .agent/turn-ledger/2026-07-08T05-19-46-04-00.md
-.agent/kit-registry.json
 ```
 
 ## Source files to inspect next
@@ -80,6 +88,6 @@ The game repo should compose and prove the meadow game. Reusable meadow renderer
 
 ## Current next safe ledge
 
-Build the **Renderer Descriptor Consumption Parity Fixture Gate**.
+Build the **Renderer Descriptor Consumption Parity Fixture Matrix**.
 
-Keep the public route working while proving that the enhanced `grassSystem`, `postProcess`, `windField`, `performance`, and `renderStyle` descriptors are either consumed by the renderer snapshot or explicitly reported as unconsumed with stable reason metadata.
+Keep the public route working while proving that the enhanced `grassSystem`, `postProcess`, `windField`, `performance`, and `renderStyle` descriptors are either consumed by the renderer snapshot or explicitly reported as unconsumed/unsupported with stable reason metadata.

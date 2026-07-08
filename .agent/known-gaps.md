@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T17-59-43-04-00`
+**Timestamp:** `2026-07-08T18-09-21-04-00`
 
 ## Highest-priority gaps
 
@@ -13,7 +13,7 @@ grassSystem
 windField
 postProcess
 performance
-outlinePolicy
+outlinePolicy / renderStyle
 grassPatches
 grass drawGroups
 grass staticBatches
@@ -23,22 +23,7 @@ stats.estimatedGrassCards
 
 `src/hosts/web-host.js` sends the enhanced plan into `renderer.render(plan)` and exposes a renderer snapshot through `GameHost`, but there is no normalized parity report showing which descriptors were consumed, unconsumed, unsupported, fallback-rendered, or missing.
 
-### 2. The render consumption source manifest is missing
-
-The next implementation needs a small pure `src/render-parity/` layer before the browser host consumes it.
-
-Required source files:
-
-```txt
-src/render-parity/render-parity-reasons.js
-src/render-parity/collect-expected-render-descriptors.js
-src/render-parity/normalize-renderer-snapshot-consumption.js
-src/render-parity/compare-render-descriptor-parity.js
-src/render-parity/create-render-parity-report.js
-src/render-parity/project-render-parity.js
-```
-
-### 3. The GameHost splice point is known but not implemented
+### 2. The GameHost render parity splice point is known but not implemented
 
 The exact next splice point is `src/hosts/web-host.js` after:
 
@@ -56,13 +41,13 @@ actual: renderer.getSnapshot?.() consumption readback
 Then expose it additively through:
 
 ```txt
-GameHost.getState().renderParity
 GameHost.getSnapshot().renderParity
+GameHost.getState?.().renderParity
 ```
 
 Existing `enhancedRenderPlan` and `render` fields must remain stable.
 
-### 4. Grass readback rows are not proven
+### 3. Grass readback rows are not proven
 
 The game has a texture-driven grass descriptor stack, but renderer-facing readback is not yet stable.
 
@@ -86,13 +71,21 @@ stats.estimatedGrassCards
 
 Silent descriptor drop is the main render failure mode.
 
+### 4. Renderer snapshot absence is not handled as a first-class result
+
+The external renderer may not expose a complete consumption snapshot.
+
+That should not block readback.
+
+A missing or sparse renderer snapshot must produce a stable failed report with specific reason rows, not an exception and not a silent pass.
+
 ### 5. Gameplay action authority is still inert
 
 `createInitialGameState()` has player, progression, world, session, and DSK state.
 
 `advanceGameState()` only increments `frame` and records `lastTick`.
 
-There is no typed action frame, no action result journal, no path-progress reducer, no inspect reducer, and no idempotent objective completion resolver.
+There is no typed action frame, action result journal, path-progress reducer, inspect reducer, or idempotent objective completion resolver.
 
 ### 6. Snapshot gameplay branch is absent
 
@@ -153,10 +146,12 @@ game.tick({ time, dt, actions })
 - do not add audio
 - do not add more grass visuals without renderer readback
 - do not move kits to NexusEngine or ProtoKits until local proof is fixture-stable
+- do not replace the external renderer just to make parity pass
+- do not make renderer parity depend on browser-only WebGL state
 ```
 
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Render Consumption Source Manifest + Objective Action Fixture Matrix
+IntoTheMeadow GameHost RenderParity Consumer + Objective ActionResult Fixture Gate
 ```

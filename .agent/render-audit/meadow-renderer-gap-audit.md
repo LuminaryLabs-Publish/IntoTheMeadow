@@ -1,6 +1,6 @@
 # Render Audit — Meadow Renderer Gap
 
-**Timestamp:** `2026-07-08T02:00:12-04:00`
+**Timestamp:** `2026-07-08T05:19:46-04:00`
 
 ## Current render handoff
 
@@ -13,11 +13,11 @@ plan = enhanceRenderPlan(rawPlan)
 renderer.render(plan)
 ```
 
-The local game repo therefore has a clean renderer-handoff seam.
+The local game repo has a clean renderer-handoff seam.
 
 The issue is not that `IntoTheMeadow` lacks render intent.
 
-The issue is that the renderer must consume the enhanced plan as production visual systems.
+The issue is that the renderer must consume the enhanced plan as production visual systems, and the renderer snapshot must say what was consumed.
 
 ## Enhanced render plan adds
 
@@ -35,11 +35,22 @@ The issue is that the renderer must consume the enhanced plan as production visu
 - stats.estimatedGrassCards
 ```
 
-## Renderer risk
+## Renderer parity risk
 
 If `meadow-webgl-render-kit` continues to render old object primitives, then the scene will remain visually simple even when the game plan contains high-fidelity grass, post-process, wind, and batching metadata.
 
-This is the likely reason the scene can still look cartoonish.
+A renderer can also partly consume the plan while silently ignoring the most important descriptors.
+
+The next proof must separate these states:
+
+```txt
+consumed
+unconsumed
+unsupported
+fallback-rendered
+missing-from-plan
+missing-from-snapshot
+```
 
 ## Required renderer consumption
 
@@ -58,6 +69,21 @@ plan.performance
 object.renderStyle
 ```
 
+## Required renderer snapshot fields
+
+```txt
+snapshot.renderParity.consumedDescriptors
+snapshot.renderParity.unconsumedDescriptors
+snapshot.renderParity.unsupportedReasons
+snapshot.renderParity.grass.drawGroupsExpected
+snapshot.renderParity.grass.drawGroupsRendered
+snapshot.renderParity.grass.instancesExpected
+snapshot.renderParity.grass.instancesRendered
+snapshot.renderParity.postProcess.passesExpected
+snapshot.renderParity.postProcess.passesExecuted
+snapshot.renderParity.parityPassed
+```
+
 ## Target render pipeline
 
 ```txt
@@ -72,6 +98,7 @@ meadow render plan
   -> scene color target
   -> outline/post-process passes
   -> final composite
+  -> renderer parity snapshot
 ```
 
 ## Concrete renderer fixes needed
@@ -84,8 +111,8 @@ meadow render plan
 5. Use density texture channels to drive patch density and path clearing.
 6. Convert focal tree metadata into real tree silhouette/framing geometry.
 7. Use renderStyle outline classes instead of one global cartoon outline.
-8. Execute postProcess descriptors instead of only carrying metadata.
-9. Add renderer snapshot fields for grass draw calls, post passes, and material tiers.
+8. Execute postProcess descriptors or report them unsupported.
+9. Add renderer snapshot fields for grass draw calls, post passes, material tiers, and parity.
 10. Add a browser screenshot proof after renderer cutover.
 ```
 
@@ -96,8 +123,9 @@ meadow render plan
 - path visibly cuts through grass density
 - foreground/midground/background vegetation reads as one meadow system
 - focal tree has believable silhouette mass, not a primitive symbol
-- post-process visibly grades depth, edge, haze, and vignette
-- debug GameHost render plan matches renderer snapshot counts
+- post-process visibly grades depth, edge, haze, and vignette or reports unsupported reasons
+- GameHost render plan matches renderer snapshot counts
+- GameHost diagnostics reports renderer parity pass/fail
 ```
 
 ## Ownership call
@@ -108,4 +136,4 @@ Reusable renderer implementation belongs in:
 LuminaryLabs-Agents/NexusRealtime-ProtoKits/protokits/meadow-webgl-render-kit
 ```
 
-`IntoTheMeadow` should keep only proof fixtures and game-specific composition for this renderer contract.
+`IntoTheMeadow` should keep only proof fixtures, diagnostics, and game-specific composition for this renderer contract.

@@ -1,6 +1,6 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T07:41:52-04:00`
+**Timestamp:** `2026-07-08T09:11:03-04:00`
 
 ## Validation performed this run
 
@@ -11,9 +11,7 @@ This run performed repository-file inspection through GitHub and updated repo-lo
 Files inspected:
 
 ```txt
-README.md
-index.html
-src/boot/boot-game.js
+package.json
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
 src/game/game-state.js
@@ -26,12 +24,11 @@ src/content/interaction-targets/arrival-targets.js
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
-.agent/renderer-consumption-audit/parity-fixture-matrix.md
-LuminaryLabs-Dev/LuminaryLabs/repo-checks/reports/status-summary.json
+.agent/kit-registry.json
 LuminaryLabs-Dev/LuminaryLabs/repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 ```
 
-Writes performed:
+Writes performed in `LuminaryLabs-Publish/IntoTheMeadow`:
 
 ```txt
 .agent/START_HERE.md
@@ -39,13 +36,19 @@ Writes performed:
 .agent/next-steps.md
 .agent/known-gaps.md
 .agent/validation.md
-.agent/architecture-audit/2026-07-08T07-41-52-04-00-dsk-domain-breakdown.md
-.agent/render-audit/2026-07-08T07-41-52-04-00-renderer-parity-readback.md
-.agent/gameplay-authority-audit/2026-07-08T07-41-52-04-00-action-frame-objective-reducer-gate.md
-.agent/trackers/2026-07-08T07-41-52-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T07-41-52-04-00.md
-LuminaryLabs-Dev/LuminaryLabs/repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
-LuminaryLabs-Dev/LuminaryLabs/internal-change-log/2026-07-08T07-41-52-04-00-into-the-meadow-action-frame-handoff.md
+.agent/kit-registry.json
+.agent/architecture-audit/2026-07-08T09-11-03-04-00-dsk-domain-breakdown.md
+.agent/render-audit/2026-07-08T09-11-03-04-00-render-parity-fixture-wire-map.md
+.agent/gameplay-authority-audit/2026-07-08T09-11-03-04-00-action-frame-fixture-implementation-map.md
+.agent/trackers/2026-07-08T09-11-03-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T09-11-03-04-00.md
+```
+
+Central writes performed in `LuminaryLabs-Dev/LuminaryLabs`:
+
+```txt
+repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
+internal-change-log/2026-07-08T09-11-03-04-00-into-the-meadow-action-frame-fixture-map.md
 ```
 
 ## Validation not performed
@@ -73,7 +76,7 @@ Do not claim they passed based on this audit alone.
 npm run check
 ```
 
-The declared check runs:
+The declared check currently runs:
 
 ```txt
 node tests/static-smoke.mjs
@@ -99,7 +102,7 @@ node tests/deterministic-scene-smoke.mjs
 
 ## Required next validation
 
-Run from repo root:
+Run from repo root after source implementation:
 
 ```bash
 npm run check
@@ -126,10 +129,11 @@ Then browser-check the public route and capture:
 - GameHost.getRenderPlan() exposes grassSystem
 - GameHost.getSnapshot().render exists
 - GameHost.getDiagnostics().renderParity exists
+- GameHost.getSnapshot().renderParity exists
 - GameHost.getSnapshot().gameplay exists
-- renderer snapshot reports descriptor-consumption parity
+- renderer snapshot reports descriptor-consumption parity or explicit unsupported/unconsumed reasons
 - path-progress and inspect actions produce deterministic ActionResult records
-- the visual scene shows real dense grass, not old primitive blades
+- objective completion is idempotent
 ```
 
 ## Validation status
@@ -139,9 +143,7 @@ agent-docs-updated: yes
 runtime-files-changed: no
 local-smoke-run: no
 browser-check-run: no
-visual-quality-confirmed: no
-renderer-parity-confirmed: no
-parity-fixture-implemented: no
-gameplay-authority-implemented: no
-next-required-command: npm run check
+render-parity-confirmed: no
+gameplay-authority-confirmed: no
+pushed-to-main: yes
 ```

@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-08T02:00:12-04:00`
+**Last aligned:** `2026-07-08T03:28:56-04:00`
 
 ## Purpose
 
@@ -10,13 +10,13 @@ This `.agent/` folder is the repo-local operating memory for scheduled and manua
 
 Read this folder before changing implementation code.
 
-## Selection reason
+## Latest follow-up
 
-This repo was selected from the full `LuminaryLabs-Publish` repo list because the central ledger already referenced `IntoTheMeadow`, but the repo-local root `.agent/START_HERE.md` was missing when checked during this run.
+The latest scheduled breakdown compared the full accessible `LuminaryLabs-Publish` repo list against the central `LuminaryLabs-Dev/LuminaryLabs` ledger.
 
-The selection rule now prefers repos that are new, ledger-absent, undocumented, or missing root `.agent` state before falling back to oldest eligible repo selection.
+No new accessible non-Cavalry Publish repo was found outside the central ledger, and all checked non-Cavalry Publish repos now have root `.agent/START_HERE.md` state.
 
-`LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
+`IntoTheMeadow` was selected by fallback oldest eligible root-agent alignment for a follow-up audit because the remaining high-value seam is still renderer descriptor consumption.
 
 ## Current product read
 
@@ -36,9 +36,16 @@ Reusable meadow generation and WebGL rendering are consumed from `LuminaryLabs-A
 .agent/architecture-audit/dsk-cutover-audit.md
 .agent/render-audit/meadow-renderer-gap-audit.md
 .agent/grass-system-audit/texture-driven-grass-system.md
+.agent/trackers/2026-07-08T03-28-56-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T03-28-56-04-00.md
+.agent/kit-registry.json
+```
+
+Earlier root-agent materialization pass:
+
+```txt
 .agent/trackers/2026-07-08T02-00-12-04-00/project-breakdown.md
 .agent/turn-ledger/2026-07-08T02-00-12-04-00.md
-.agent/kit-registry.json
 ```
 
 ## Source files to inspect next
@@ -71,8 +78,8 @@ The game repo should compose and prove the meadow game, while reusable meadow re
 
 ## Current next safe ledge
 
-Fix the renderer authority mismatch.
+Build the **IntoTheMeadow Renderer Descriptor Consumption Fixture Gate**.
 
-The game now emits rich `grassSystem`, `postProcess`, wind, and performance metadata, but the external render kit still needs to consume those descriptors as real instanced grass, tree framing, terrain material, and post-process passes.
+The game now emits rich `grassSystem`, `postProcess`, wind, and performance metadata. The external render kit still needs to consume those descriptors as real instanced grass, tree framing, terrain material, and post-process passes.
 
-Keep the existing public route working while replacing primitive object rendering with descriptor-driven renderer systems.
+Keep the existing public route working while proving that enhanced render-plan descriptors are consumed by the renderer snapshot instead of only existing as metadata.

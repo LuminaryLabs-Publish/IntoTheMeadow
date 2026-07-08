@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T09:11:03-04:00`
+**Timestamp:** `2026-07-08T10-48-47-04-00`
 
 ## Highest-priority gaps
 
@@ -26,8 +26,6 @@ stats.estimatedGrassCards
 The missing proof is a stable parity report showing which descriptors the renderer consumed, which descriptors it ignored, and why.
 
 ### 2. Render parity fixture implementation is still missing
-
-The prior docs define the matrix. The source files still need to exist.
 
 Required files:
 
@@ -61,7 +59,7 @@ The local game emits:
 - debug summary
 ```
 
-The renderer still needs to draw reusable clump batches as instanced grass patches or explicitly report those descriptors as unconsumed.
+The renderer still needs to draw reusable clump batches as instanced grass patches or explicitly report those descriptors as unconsumed/unsupported.
 
 ### 4. Post-process stack is descriptor-ready but not guaranteed executed
 

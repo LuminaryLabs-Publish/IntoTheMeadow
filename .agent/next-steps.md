@@ -1,26 +1,27 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T13-50-37-04-00`
+**Timestamp:** `2026-07-08T15-28-13-04-00`
 
 ## Goal
 
-Move `IntoTheMeadow` from descriptor-rich prototype toward a fixture-proven meadow game without letting the publish repo become the permanent home for reusable renderer systems.
+Move `IntoTheMeadow` from descriptor-rich prototype toward a fixture-proven meadow game without turning the publish repo into the permanent home for reusable renderer systems.
 
 The immediate path is:
 
 ```txt
-renderer parity proof
--> grass descriptor consumption readback
--> GameHost renderParity diagnostics
--> ActionFrame / ActionResult gameplay reducer gate
+GameHost render parity splice
+-> grass descriptor consumption row contract
+-> DOM-free render parity fixture
+-> optional ActionFrame support
+-> first objective ActionResult reducers
 -> snapshot.gameplay projection
--> first objective loop proof
+-> DOM-free gameplay authority fixture
 -> then visual/gameplay expansion
 ```
 
 ## Ordered next implementation ledges
 
-### 1. Renderer parity reason catalog
+### 1. Render parity reason catalog
 
 Add stable reason constants for renderer parity classification.
 
@@ -28,6 +29,18 @@ Target file:
 
 ```txt
 src/render-parity/render-parity-reasons.js
+```
+
+Reason families:
+
+```txt
+consumed
+unconsumed
+unsupported
+fallback-rendered
+missing-renderer-snapshot
+missing-renderer-field
+invalid-plan-descriptor
 ```
 
 ### 2. Expected descriptor collector
@@ -55,6 +68,8 @@ grassSystem.drawGroups
 grassSystem.shaderWind
 grassSystem.lodPolicy
 grassSystem.densityScale
+grassPatches
+stats grass counts
 ```
 
 ### 3. Renderer snapshot consumption normalizer
@@ -79,6 +94,21 @@ Target file:
 src/render-parity/compare-render-descriptor-parity.js
 ```
 
+Output shape:
+
+```txt
+RenderParityReport
+  id
+  passed
+  generatedAtFrame
+  expectedCount
+  consumedCount
+  unsupportedCount
+  fallbackCount
+  missingCount
+  rows[]
+```
+
 ### 5. GameHost renderParity projection
 
 Keep existing GameHost fields and add parity diagnostics additively.
@@ -88,6 +118,16 @@ Target file:
 ```txt
 src/hosts/web-host.js
 ```
+
+Splice point:
+
+```txt
+const render = renderer.render(plan);
+const rendererSnapshot = renderer.getSnapshot?.();
+const renderParity = compareRenderDescriptorParity(plan, rendererSnapshot);
+```
+
+Expose through `GameHost.getSnapshot()` and any existing `GameHost.getState()` path without removing `enhancedRenderPlan` or `render`.
 
 ### 6. Gameplay action contracts
 
@@ -114,6 +154,17 @@ src/gameplay-authority/reduce-inspect-target.js
 src/gameplay-authority/resolve-objective-completion.js
 ```
 
+First fixture rows:
+
+```txt
+path-progress accepted below threshold
+path-progress accepted and completes walk-the-path
+inspect focal-tree accepted and completes inspect-tree
+repeat inspect focal-tree returns unchanged/idempotent
+unknown target returns rejected
+wrong action for target returns rejected
+```
+
 ### 8. Snapshot gameplay projection
 
 Expose gameplay proof through snapshots.
@@ -124,6 +175,16 @@ Target files:
 src/gameplay-authority/create-gameplay-snapshot.js
 src/game/game-state.js
 src/game/game-snapshot.js
+```
+
+Required branch:
+
+```txt
+snapshot.gameplay.activeObjectiveId
+snapshot.gameplay.completedObjectiveIds
+snapshot.gameplay.storyBeatIds
+snapshot.gameplay.lastActionResults
+snapshot.gameplay.actionJournal
 ```
 
 ### 9. Fixture smoke tests
@@ -140,8 +201,8 @@ package.json
 
 ## Acceptance checklist
 
-- [ ] Renderer descriptors classify as consumed, unconsumed, unsupported, fallback, or missing.
-- [ ] Grass descriptor readback has stable report shape.
+- [ ] Renderer descriptors classify as consumed, unconsumed, unsupported, fallback-rendered, missing-renderer-snapshot, or missing-renderer-field.
+- [ ] Grass descriptor readback has stable report rows.
 - [ ] Renderer parity failures are visible through `GameHost`.
 - [ ] `game.tick({ time, dt })` remains compatible.
 - [ ] `game.tick({ time, dt, actions })` produces deterministic action results.

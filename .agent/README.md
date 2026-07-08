@@ -4,15 +4,15 @@ This folder contains internal project breakdowns for `LuminaryLabs-Publish/IntoT
 
 ## Current project read
 
-`IntoTheMeadow` is a publishable DSK-composed meadow exploration game repo. It owns the product route, browser host, game factory, deterministic state root, local DSK descriptors, arrival-meadow content, objective/story/interaction descriptors, diagnostics, validation scripts, and deployment surface while consuming reusable meadow infrastructure from `NexusRealtime-ProtoKits`.
+`IntoTheMeadow` is a publishable DSK-composed meadow exploration game repo. It owns the browser route, launch host, game factory, deterministic state root, snapshot seam, local DSK descriptor install, arrival-meadow content, story/objective/interaction descriptors, render enhancement, diagnostics, static smoke scripts, and Pages deployment surface while consuming reusable meadow infrastructure from `NexusRealtime-ProtoKits`.
 
-The repo remains a strong v0.1 DSK scaffold and browser proof. The active missing layer is still executable gameplay authority. `src/hosts/web-host.js` calls `game.tick({ time, dt })`, `src/game/game-state.js` advances only `frame` and `lastTick`, and `src/game/game-snapshot.js` has no dedicated `snapshot.gameplay` contract. The content needed for the first playable loop already exists: six path points, the `walk-the-path` objective at `pathProgress >= 0.35`, the `inspect-tree` objective, and the `focal-tree` interaction target with radius `4.5`.
+The repo is structurally ready for the first small playable loop, but gameplay authority is still not executable. The web host currently calls `game.tick({ time, dt })`, `advanceGameState()` only increments `frame` and writes `lastTick`, and `createGameSnapshot()` exposes manifest/state/renderPlan/diagnostics without a dedicated `snapshot.gameplay` contract. The content needed for the first loop already exists: six path points, the `walk-the-path` objective at `pathProgress >= 0.35`, the `inspect-tree` objective, and the `focal-tree` interaction target at radius `4.5`.
 
-This pass narrows the next cut into **ActionFrame Fixture Seed + Snapshot.Gameplay Source Gate**. Build `ActionFrame`, `ActionBatch`, `ActionJournal`, `ReducerResult`, path progress, inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before renderer extraction, save persistence, pointer-lock polish, audio, or external ProtoKit promotion.
+This pass narrows the next cut into **Reducer Result Runtime Gate + Gameplay Snapshot Fixture Lock**. Build `ActionFrame`, `ActionBatch`, `ActionResult`, `ReducerResult`, path progress, inspect affordance, objective completion, `snapshot.gameplay`, GameHost gameplay diagnostics, and DOM-free replay fixtures before renderer extraction, save persistence, pointer-lock polish, audio, or external ProtoKit promotion.
 
 ## Latest tracker
 
-- `trackers/2026-07-07T19-42-05-04-00/project-breakdown.md`
+- `trackers/2026-07-07T20-59-30-04-00/project-breakdown.md`
 
 ## Kit registry
 
@@ -20,6 +20,7 @@ This pass narrows the next cut into **ActionFrame Fixture Seed + Snapshot.Gamepl
 
 ## Previous trackers
 
+- `trackers/2026-07-07T19-42-05-04-00/project-breakdown.md`
 - `trackers/2026-07-07T18-19-15-04-00/project-breakdown.md`
 - `trackers/2026-07-07T16-58-09-04-00/project-breakdown.md`
 - `trackers/2026-07-07T15-49-14-04-00/project-breakdown.md`
@@ -50,31 +51,33 @@ Current loop:
 Target playable loop:
 
 1. Player spawns at the arrival path.
-2. `meadow-actionframe-contract-kit` defines stable ActionFrame records.
-3. `meadow-action-batch-kit` batches and orders host/scripted action frames per tick.
-4. `meadow-action-journal-kit` records accepted, rejected, and no-op actions.
-5. `meadow-reducer-result-contract-kit` requires every reducer to return state, accepted/rejected actions, events, and diagnostics.
-6. `meadow-reducer-result-journal-kit` records reducer outputs for fixture and diagnostic assertions.
-7. `meadow-reducer-pipeline-kit` applies reducers in fixed order.
-8. `path-progress-runtime-kit` samples `ARRIVAL_MEADOW_CONFIG.features.path.points`.
-9. `path-threshold-event-kit` emits one-shot path threshold events.
-10. `objective-state-authority-kit` completes `walk-the-path` at `pathProgress >= 0.35`.
-11. `focal-tree-affordance-kit` evaluates the old-tree inspect affordance with the `4.5` radius target.
-12. `inspect-result-reducer-kit` accepts or rejects inspect actions with stable reasons.
-13. `objective-completion-runtime-kit` completes `inspect-tree` from accepted `inspect:focal-tree`.
-14. `arrival-completion-runtime-kit` records deterministic arrival meadow completion.
-15. `meadow-gameplay-snapshot-kit` exposes stable gameplay snapshots through `window.GameHost`.
-16. `replay-parity-smoke-kit` proves no-op tick, path walk, invalid inspect, valid inspect, and objective completion without DOM input.
+2. `meadow-actionframe-contract-kit` defines stable `ActionFrame` records.
+3. `meadow-action-batch-kit` batches and orders host/scripted/fixture action frames per tick.
+4. `meadow-action-result-contract-kit` standardizes accepted, rejected, and no-op command results.
+5. `meadow-action-journal-kit` records action intake and action results.
+6. `meadow-reducer-result-contract-kit` requires every reducer to return state, accepted actions, rejected actions, events, diffs, and diagnostics.
+7. `meadow-reducer-result-journal-kit` records reducer outputs for fixture and diagnostic assertions.
+8. `meadow-reducer-pipeline-kit` applies reducers in fixed order.
+9. `path-progress-runtime-kit` samples `ARRIVAL_MEADOW_CONFIG.features.path.points`.
+10. `path-threshold-event-kit` emits one-shot path threshold events.
+11. `objective-state-authority-kit` completes `walk-the-path` at `pathProgress >= 0.35`.
+12. `focal-tree-affordance-kit` evaluates the old-tree inspect affordance with the `4.5` radius target.
+13. `inspect-result-reducer-kit` accepts or rejects inspect actions with stable reasons.
+14. `objective-completion-runtime-kit` completes `inspect-tree` from accepted `inspect:focal-tree`.
+15. `arrival-completion-runtime-kit` records deterministic arrival meadow completion.
+16. `meadow-gameplay-snapshot-kit` exposes stable gameplay snapshots through `window.GameHost`.
+17. `replay-parity-smoke-kit` proves no-op tick, path walk, invalid inspect, valid inspect, objective completion, and replay parity without DOM input.
 
 ## Active next direction
 
-The best next slice is **IntoTheMeadow ActionFrame Fixture Seed + Snapshot.Gameplay Source Gate**:
+The best next slice is **IntoTheMeadow Reducer Result Runtime Gate + Gameplay Snapshot Fixture Lock**:
 
 - Keep `index.html`, `src/boot/boot-game.js`, current render behavior, and GameHost compatibility intact.
 - Keep `game.tick({ time, dt })` compatible for existing runtime and tests.
 - Allow `game.tick({ time, dt, actions })` as additive input.
 - Add `meadow-actionframe-contract-kit` with stable action id, frame, time, scene id, source, type, target, payload, accepted/rejected, and reason metadata.
 - Add `meadow-action-batch-kit` so `game.tick()` receives stable sorted action arrays.
+- Add `meadow-action-result-contract-kit` so accepted, rejected, and no-op command results have a stable shape.
 - Add `meadow-action-journal-kit` for accepted, rejected, and no-op action records.
 - Add `meadow-action-rejection-reason-kit` with `unsupported_action`, `invalid_scene`, `invalid_payload`, `out_of_range`, `wrong_target`, `duplicate_event`, and `no_effect`.
 - Add `meadow-reducer-result-contract-kit` before concrete reducers.
@@ -96,6 +99,7 @@ The best next slice is **IntoTheMeadow ActionFrame Fixture Seed + Snapshot.Gamep
 ```txt
 meadow-actionframe-contract-kit
 meadow-action-batch-kit
+meadow-action-result-contract-kit
 meadow-action-journal-kit
 meadow-input-runtime-kit
 meadow-action-acceptance-kit

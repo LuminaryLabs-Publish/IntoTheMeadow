@@ -1,13 +1,13 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-08T06:10:03-04:00",
-  "status": "renderer-parity-fixture-matrix-documented",
+  "generatedAt": "2026-07-08T09:11:03-04:00",
+  "status": "renderer-parity-plus-actionframe-fixture-map-documented",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
-    "reason": "No checked non-Cavalry Publish repo was new, absent from the central ledger, or missing root .agent/START_HERE.md state. IntoTheMeadow was selected for the high-value unresolved follow-up seam: renderer descriptor-consumption parity fixture matrix.",
+    "reason": "No checked non-Cavalry Publish repo was new, absent from the central ledger, undocumented, or missing root .agent/START_HERE.md state. IntoTheMeadow was selected as the oldest eligible fallback follow-up because renderer descriptor-consumption parity and ActionFrame objective reducer proof are still unresolved.",
     "checkedRepos": [
       "LuminaryLabs-Publish/IntoTheMeadow",
       "LuminaryLabs-Publish/HorrorCorridor",
@@ -21,11 +21,15 @@
       "LuminaryLabs-Publish/PrehistoricRush"
     ]
   },
-  "latestTracker": ".agent/trackers/2026-07-08T06-10-03-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-08T06-10-03-04-00.md",
-  "latestRendererConsumptionAudit": ".agent/renderer-consumption-audit/parity-fixture-matrix.md",
-  "previousTracker": ".agent/trackers/2026-07-08T05-19-46-04-00/project-breakdown.md",
-  "nextBuildTarget": "IntoTheMeadow Renderer Descriptor Consumption Parity Fixture Matrix",
+  "latestTracker": ".agent/trackers/2026-07-08T09-11-03-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-08T09-11-03-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-08T09-11-03-04-00-dsk-domain-breakdown.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-08T09-11-03-04-00-render-parity-fixture-wire-map.md",
+  "latestGameplayAuthorityAudit": ".agent/gameplay-authority-audit/2026-07-08T09-11-03-04-00-action-frame-fixture-implementation-map.md",
+  "previousTracker": ".agent/trackers/2026-07-08T07-41-52-04-00/project-breakdown.md",
+  "previousRenderAudit": ".agent/render-audit/2026-07-08T07-41-52-04-00-renderer-parity-readback.md",
+  "previousGameplayAuthorityAudit": ".agent/gameplay-authority-audit/2026-07-08T07-41-52-04-00-action-frame-objective-reducer-gate.md",
+  "nextBuildTarget": "IntoTheMeadow Renderer Parity + ActionFrame Fixture Implementation Map",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",
@@ -39,20 +43,26 @@
     "dskRegistry": "src/content/dsk-registry.js",
     "manifest": "src/content/game-manifest.js",
     "areaConfig": "src/content/meadow-areas/arrival-meadow.js",
+    "objectives": "src/content/objectives/arrival-objectives.js",
+    "interactionTargets": "src/content/interaction-targets/arrival-targets.js",
     "tests": [
       "tests/static-smoke.mjs",
       "tests/dsk-registry-smoke.mjs",
       "tests/render-plan-smoke.mjs",
       "tests/deterministic-scene-smoke.mjs"
     ],
-    "neededNextTest": "tests/render-parity-fixture-smoke.mjs"
+    "neededNextTests": [
+      "tests/render-parity-fixture-smoke.mjs",
+      "tests/gameplay-authority-fixture-smoke.mjs"
+    ]
   },
   "sourceRead": {
-    "repoShape": "Publishable DSK-composed meadow exploration game with a clean route, host, factory, state, snapshot, DSK descriptor, and render enhancement split.",
+    "repoShape": "Publishable DSK-composed meadow exploration game with a clean route, host, factory, state, snapshot, DSK descriptor, content descriptor, and render enhancement split.",
     "renderGap": "enhanceRenderPlan emits rich grassSystem, windField, postProcess, performance, renderStyle, and stats descriptors, but the renderer snapshot does not yet prove consumed/unconsumed descriptor parity.",
     "hostGap": "web-host.js passes enhanced plans to renderer.render(plan) and exposes enhanced plan plus render snapshot, but no parity contract compares plan descriptors to renderer consumption.",
     "stateGap": "createInitialGameState defines player, progression, world, and DSK snapshot, but advanceGameState only increments frame and lastTick.",
-    "newNarrowing": "Build the DOM-free parity fixture matrix before adding more content, visual metadata, first-person movement, or gameplay reducers."
+    "contentGap": "ARRIVAL_OBJECTIVES and ARRIVAL_INTERACTION_TARGETS define walk-the-path and inspect-tree, but those descriptors do not yet reduce into runtime ActionResult or snapshot.gameplay records.",
+    "newNarrowing": "Build the renderer-parity fixture modules, GameHost renderParity projection, gameplay-authority modules, snapshot.gameplay projection, and fixture smoke tests before visual or content expansion."
   },
   "interactionLoop": {
     "current": [
@@ -71,8 +81,15 @@
       "Collect expected descriptors from enhanced render plan.",
       "Normalize consumed descriptors from renderer snapshot.",
       "Classify each descriptor as consumed, unconsumed, unsupported, missing, or fallback-rendered.",
-      "Project parity result to GameHost diagnostics.",
+      "Project parity result to GameHost diagnostics and snapshot.",
       "Prove parity in a DOM-free fixture matrix before visual expansion."
+    ],
+    "targetGameplayAuthority": [
+      "Normalize optional tick actions into ActionFrame.",
+      "Reduce path-progress and inspect actions into ActionResult records.",
+      "Resolve walk-the-path and inspect-tree objective completion idempotently.",
+      "Append a gameplay action journal and last results.",
+      "Expose snapshot.gameplay while keeping current tick behavior compatible."
     ]
   },
   "domains": {
@@ -90,7 +107,7 @@
       "GameHost-snapshot-contract",
       "GameHost-diagnostics-contract",
       "GameHost-render-snapshot-contract",
-      "renderer-parity-projection"
+      "runtime-compatibility-contract"
     ],
     "gameComposition": [
       "manifest-authority",
@@ -142,20 +159,21 @@
       "wind-field-render-metadata",
       "post-process-stack-metadata",
       "render-stats-diagnostics",
-      "webgl-renderer-snapshot"
+      "webgl-renderer-snapshot",
+      "renderer-descriptor-consumption-parity"
     ],
-    "rendererParityNeeded": [
-      "renderer-descriptor-expectation-kit",
-      "renderer-snapshot-consumption-kit",
-      "renderer-descriptor-consumption-kit",
-      "renderer-unsupported-descriptor-reason-kit",
-      "renderer-parity-report-kit",
-      "grass-drawgroup-consumption-kit",
-      "post-process-pass-consumption-kit",
-      "wind-field-consumption-kit",
-      "render-style-consumption-kit",
-      "gamehost-render-parity-diagnostics-kit",
-      "renderer-parity-fixture-kit"
+    "gameplayAuthorityNeeded": [
+      "ActionFrame-contract",
+      "ActionBatch-normalization",
+      "ActionResult-contract",
+      "ActionReason-catalog",
+      "path-progress-reducer",
+      "inspect-target-reducer",
+      "objective-completion-resolver",
+      "story-trigger-resolver",
+      "gameplay-action-journal",
+      "gameplay-snapshot",
+      "fixture-replay-parity"
     ]
   },
   "externalKits": [
@@ -204,19 +222,24 @@
     "renderer-descriptor-consumption-kit",
     "renderer-unsupported-descriptor-reason-kit",
     "renderer-parity-report-kit",
-    "grass-drawgroup-consumption-kit",
-    "post-process-pass-consumption-kit",
-    "wind-field-consumption-kit",
-    "render-style-consumption-kit",
     "gamehost-render-parity-diagnostics-kit",
-    "renderer-parity-fixture-kit"
+    "ActionFrame-contract-kit",
+    "ActionResult-contract-kit",
+    "ActionReason-catalog-kit",
+    "path-progress-reducer-kit",
+    "inspect-target-reducer-kit",
+    "objective-completion-reducer-kit",
+    "gameplay-snapshot-kit",
+    "gameplay-fixture-replay-kit"
   ],
   "validation": {
     "runtimeFilesChanged": false,
     "localSmokeRun": false,
     "browserCheckRun": false,
     "rendererParityConfirmed": false,
+    "gameplayAuthorityConfirmed": false,
     "parityFixtureImplemented": false,
+    "actionFrameFixtureImplemented": false,
     "nextRequiredCommand": "npm run check"
   }
 }

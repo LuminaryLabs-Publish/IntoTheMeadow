@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-08T12-21-20-04-00`
+**Last aligned:** `2026-07-08T13-50-37-04-00`
 
 ## Purpose
 
@@ -18,13 +18,13 @@ No checked non-Cavalry Publish repo was fully new, absent from the central ledge
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible fallback because the renderer parity plus gameplay action-result seam is still unresolved and remains the correct next proof before visual/content expansion.
+`IntoTheMeadow` was selected by the oldest eligible fallback rule because its prior central ledger update was the oldest observed non-excluded repo update and the renderer parity plus gameplay ActionResult seam remains unresolved.
 
 ## Current product read
 
 `IntoTheMeadow` is a publishable DSK-composed meadow exploration game.
 
-The repo owns the static route, web host, game factory, local DSK descriptor registry, arrival-meadow content, story/objective/interaction descriptors, render-plan enhancement, validation, GameHost projection, and Pages deploy surface.
+The repo owns the static route, web host, game factory, local DSK descriptor registry, arrival-meadow content, story/objective/interaction descriptors, render-plan enhancement, validation scripts, GameHost projection, and Pages deploy surface.
 
 Reusable meadow generation and WebGL rendering are consumed from `LuminaryLabs-Agents/NexusRealtime-ProtoKits` through CDN kit URLs.
 
@@ -57,7 +57,7 @@ requestAnimationFrame
 requestAnimationFrame
   -> enhanced render plan descriptors are collected as expectations
   -> renderer snapshot is normalized into consumed descriptor readback
-  -> renderParity reports consumed/unconsumed/unsupported/fallback descriptors
+  -> renderParity reports consumed/unconsumed/unsupported/fallback/missing descriptors
   -> optional tick actions normalize into ActionFrame
   -> path-progress / inspect actions reduce into ActionResult records
   -> objective resolver updates completedObjectiveIds and storyBeatIds idempotently
@@ -72,12 +72,12 @@ requestAnimationFrame
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
-.agent/architecture-audit/2026-07-08T12-21-20-04-00-renderer-gameplay-contract-map.md
-.agent/render-audit/2026-07-08T12-21-20-04-00-render-parity-contract-map.md
-.agent/grass-system-audit/2026-07-08T12-21-20-04-00-grass-render-readback-ledger.md
-.agent/gameplay-authority-audit/2026-07-08T12-21-20-04-00-action-result-fixture-ledger.md
-.agent/trackers/2026-07-08T12-21-20-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T12-21-20-04-00.md
+.agent/architecture-audit/2026-07-08T13-50-37-04-00-renderer-gameplay-implementation-cutline.md
+.agent/render-audit/2026-07-08T13-50-37-04-00-render-parity-consumption-proof.md
+.agent/grass-system-audit/2026-07-08T13-50-37-04-00-grass-descriptor-readback-contract.md
+.agent/gameplay-authority-audit/2026-07-08T13-50-37-04-00-action-result-reducer-implementation-plan.md
+.agent/trackers/2026-07-08T13-50-37-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T13-50-37-04-00.md
 .agent/kit-registry.json
 ```
 
@@ -110,12 +110,12 @@ The game repo should compose and prove the meadow game. Reusable meadow renderer
 
 ## Current next safe ledge
 
-Build the **Renderer/GamePlay Contract Fixture Gate**.
+Build the **Render Parity Consumer Snapshot + Gameplay Action Fixture Gate**.
 
 Keep the public route working while proving that:
 
 ```txt
-1. enhanced renderer descriptors are consumed or explicitly reported as unconsumed/unsupported/fallback
+1. enhanced renderer descriptors are consumed or explicitly reported as unconsumed/unsupported/fallback/missing
 2. grass descriptors have renderer readback or stable unsupported reasons
 3. game.tick({ time, dt }) remains backward-compatible
 4. optional game.tick({ time, dt, actions }) reduces path-progress and inspect actions into deterministic ActionResult records

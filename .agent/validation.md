@@ -1,10 +1,10 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T09:11:03-04:00`
+**Timestamp:** `2026-07-08T10-48-47-04-00`
 
 ## Validation performed this run
 
-No local command execution was available in this connector-only scheduled pass.
+No local command execution was available in this connector-only pass.
 
 This run performed repository-file inspection through GitHub and updated repo-local `.agent` operating state.
 
@@ -28,6 +28,8 @@ src/content/interaction-targets/arrival-targets.js
 LuminaryLabs-Dev/LuminaryLabs/repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 ```
 
+Root `.agent/START_HERE.md` was sampled for checked non-Cavalry publish repos to verify no missing root agent state took priority over fallback selection.
+
 Writes performed in `LuminaryLabs-Publish/IntoTheMeadow`:
 
 ```txt
@@ -37,18 +39,19 @@ Writes performed in `LuminaryLabs-Publish/IntoTheMeadow`:
 .agent/known-gaps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-08T09-11-03-04-00-dsk-domain-breakdown.md
-.agent/render-audit/2026-07-08T09-11-03-04-00-render-parity-fixture-wire-map.md
-.agent/gameplay-authority-audit/2026-07-08T09-11-03-04-00-action-frame-fixture-implementation-map.md
-.agent/trackers/2026-07-08T09-11-03-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T09-11-03-04-00.md
+.agent/architecture-audit/2026-07-08T10-48-47-04-00-dsk-domain-breakdown.md
+.agent/render-audit/2026-07-08T10-48-47-04-00-renderer-parity-cutover-readback.md
+.agent/grass-system-audit/2026-07-08T10-48-47-04-00-grass-consumption-fixture-seams.md
+.agent/gameplay-authority-audit/2026-07-08T10-48-47-04-00-action-result-implementation-cutover.md
+.agent/trackers/2026-07-08T10-48-47-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T10-48-47-04-00.md
 ```
 
 Central writes performed in `LuminaryLabs-Dev/LuminaryLabs`:
 
 ```txt
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
-internal-change-log/2026-07-08T09-11-03-04-00-into-the-meadow-action-frame-fixture-map.md
+internal-change-log/2026-07-08T10-48-47-04-00-into-the-meadow-parity-action-cutover.md
 ```
 
 ## Validation not performed

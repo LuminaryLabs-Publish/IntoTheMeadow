@@ -1,28 +1,47 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T02:00:12-04:00`
+**Timestamp:** `2026-07-08T05:19:46-04:00`
 
 ## Validation performed this run
 
 No local command execution was available in this connector-only scheduled pass.
 
-This run performed repository-file inspection through GitHub and added missing repo-local `.agent` operating state.
+This run performed repository-file inspection through GitHub and updated repo-local `.agent` operating state.
 
 Files inspected:
 
 ```txt
 README.md
-index.html
-src/boot/boot-game.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
 src/game/enhance-render-plan.js
-src/boot/install-dsks.js
-src/dsks/index.js
-src/content/dsk-registry.js
-package.json
-tests/render-plan-smoke.mjs
+src/game/game-state.js
+src/boot/expose-game-host.js
+.agent/START_HERE.md
+.agent/current-audit.md
+.agent/known-gaps.md
+.agent/next-steps.md
+.agent/validation.md
+.agent/architecture-audit/dsk-cutover-audit.md
+.agent/render-audit/meadow-renderer-gap-audit.md
+.agent/kit-registry.json
 LuminaryLabs-Dev/LuminaryLabs/repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
+```
+
+Writes performed:
+
+```txt
+.agent/START_HERE.md
+.agent/current-audit.md
+.agent/known-gaps.md
+.agent/next-steps.md
+.agent/validation.md
+.agent/architecture-audit/dsk-cutover-audit.md
+.agent/render-audit/meadow-renderer-gap-audit.md
+.agent/renderer-consumption-audit/descriptor-consumption-parity.md
+.agent/trackers/2026-07-08T05-19-46-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T05-19-46-04-00.md
+.agent/kit-registry.json
 ```
 
 ## Validation not performed
@@ -34,6 +53,7 @@ browser render check
 GitHub Pages deployment check
 visual screenshot comparison
 external meadow-webgl-render-kit behavior check
+local ProtoKits renderer update
 ```
 
 These were not run in this pass.
@@ -83,21 +103,23 @@ npm run check
 Then browser-check the public route and capture:
 
 ```txt
-- does route load without console errors
-- does GameHost exist
-- does GameHost.getDiagnostics().validation.passed equal true
-- does GameHost.getRenderPlan() expose grassSystem
-- does renderer snapshot report meaningful render output
-- does the visual scene show real dense grass, not old primitive blades
+- route loads without console errors
+- GameHost exists
+- GameHost.getDiagnostics().validation.passed equals true
+- GameHost.getRenderPlan() exposes grassSystem
+- GameHost.getSnapshot().render exists
+- renderer snapshot reports descriptor-consumption parity
+- the visual scene shows real dense grass, not old primitive blades
 ```
 
 ## Validation status
 
 ```txt
-agent-docs-created: yes
+agent-docs-updated: yes
 runtime-files-changed: no
 local-smoke-run: no
 browser-check-run: no
 visual-quality-confirmed: no
+renderer-parity-confirmed: no
 next-required-command: npm run check
 ```

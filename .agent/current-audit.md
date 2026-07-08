@@ -1,6 +1,6 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T17-59-43-04-00`
+**Timestamp:** `2026-07-08T18-09-21-04-00`
 
 ## Current state
 
@@ -27,9 +27,9 @@ TheUnmappedHouse
 
 `TheCavalryOfRome` was excluded.
 
-Central comparison in `LuminaryLabs-Dev/LuminaryLabs` showed the non-excluded Publish repos represented in `repo-ledger/LuminaryLabs-Publish/`.
+No checked non-Cavalry repo was fully new, absent from the central ledger, undocumented, recently added but undocumented, or missing sampled root `.agent/START_HERE.md` state.
 
-`IntoTheMeadow` was selected as the fallback repo for this run because its render-consumption and first-objective action-authority seams remain unresolved and can be made more precise without changing runtime source.
+`IntoTheMeadow` was selected for a follow-up documentation pass on the unresolved render-consumption and first-objective ActionResult seam. Repo-local readback showed a prior alignment at `2026-07-08T17-59-43-04-00`; this pass keeps the same next slice but narrows the consumer boundary and fixture rows.
 
 ## Current interaction loop
 
@@ -52,15 +52,11 @@ index.html
 
 ## Source-backed facts
 
-`src/content/game-manifest.js` owns the route, build id, public URL, default scene, and external CDN URLs for `meadow-area-kit` and `meadow-webgl-render-kit`.
-
-`src/hosts/web-host.js` loads the two external kits, creates the game, creates the renderer, stores `lastPlan`, calls `renderer.render(plan)`, and exposes `enhancedRenderPlan` plus `render: renderer.getSnapshot?.()` through `GameHost`.
-
-`src/game/create-into-the-meadow-game.js` owns the fallback meadow kit, DSK install snapshot, content bundle, diagnostics, state access, tick, reset, and snapshot entry.
+`src/hosts/web-host.js` loads two external kits from `GAME_MANIFEST.externalKits`, creates the game, creates the renderer, stores `lastPlan`, calls `renderer.render(plan)`, and exposes `enhancedRenderPlan` plus `render: renderer.getSnapshot?.()` through `GameHost`.
 
 `src/game/enhance-render-plan.js` creates the grass system through local DSKs for density texture, clump archetypes, static batches, patch placement, instancing draw groups, shader wind, LOD policy, density scaling, and debug visualization.
 
-`src/game/game-state.js` still treats `advanceGameState()` as a tick-only reducer: it increments `frame` and writes `lastTick` without consuming gameplay actions.
+`src/game/game-state.js` still treats `advanceGameState()` as a tick-only reducer: it increments `frame` and writes `lastTick` without consuming any gameplay actions.
 
 `src/game/game-snapshot.js` exposes `manifest`, `state`, `renderPlan`, and `diagnostics`, but does not expose `renderParity` or `gameplay` branches.
 
@@ -74,44 +70,47 @@ inspect-tree  -> inspect       -> focal-tree   -> inspected true
 ## Domains in use
 
 ```txt
-static-route-domain
-browser-boot-domain
-web-host-domain
-external-kit-loading-domain
-manifest-domain
-cdn-kit-source-domain
-dsk-install-domain
-meadow-area-domain
-fallback-meadow-area-domain
-render-plan-domain
-render-plan-enhancement-domain
-render-descriptor-domain
-renderer-host-domain
-renderer-snapshot-domain
-render-consumption-domain
-render-parity-domain
-grass-system-domain
-grass-density-domain
-grass-archetype-domain
-grass-static-batch-domain
-grass-patch-placement-domain
-grass-instancing-domain
-grass-shader-wind-domain
-grass-lod-domain
-grass-debug-domain
-game-state-domain
-player-state-domain
-world-state-domain
-progression-domain
-objective-domain
-interaction-target-domain
-action-frame-domain
-action-result-domain
-action-journal-domain
-gameplay-snapshot-domain
-gamehost-diagnostics-domain
-fixture-smoke-domain
-pages-deploy-domain
+implemented:
+  static-route-domain
+  browser-boot-domain
+  web-host-domain
+  external-kit-loading-domain
+  manifest-domain
+  dsk-install-domain
+  meadow-area-domain
+  render-plan-domain
+  render-plan-enhancement-domain
+  renderer-host-domain
+  render-snapshot-domain
+  grass-system-domain
+  grass-density-domain
+  grass-static-batch-domain
+  grass-placement-domain
+  grass-instancing-domain
+  grass-wind-domain
+  grass-lod-domain
+  post-process-domain
+  performance-policy-domain
+  game-state-domain
+  player-state-domain
+  world-state-domain
+  progression-domain
+  objective-descriptor-domain
+  interaction-target-domain
+  gamehost-diagnostics-domain
+  pages-deploy-domain
+
+missing / next-cut:
+  render-parity-domain
+  expected-render-descriptor-domain
+  renderer-snapshot-consumption-domain
+  grass-consumption-readback-domain
+  action-frame-domain
+  action-result-domain
+  action-journal-domain
+  objective-completion-reducer-domain
+  gameplay-snapshot-domain
+  fixture-smoke-domain
 ```
 
 ## Services
@@ -128,7 +127,9 @@ current services:
 needed next services:
   collect expected enhanced-plan descriptors
   normalize renderer.getSnapshot consumption readback
-  classify render-consumption rows
+  compare expected descriptors against renderer consumption
+  classify consumed/unconsumed/unsupported/fallback/missing descriptor rows
+  classify grass consumption rows explicitly
   expose GameHost.renderParity additively
   normalize optional input actions into ActionFrame records
   reduce path-progress and inspect actions into ActionResults
@@ -152,8 +153,6 @@ implemented local kits / descriptors:
   arrival-objectives descriptor
   arrival-interaction-targets descriptor
   fallback-meadow-area-kit
-  web-host composition kit
-  GameHost exposure kit
   tree-object-dsk
   wind-field-dsk
   meadow-performance-dsk
@@ -169,13 +168,12 @@ implemented local kits / descriptors:
   grass-debug-visualization-kit
 
 next-cut kits:
-  render-consumption-source-manifest-kit
+  render-parity-reason-kit
   expected-render-descriptor-kit
   renderer-snapshot-consumption-kit
-  render-consumption-row-kit
-  render-parity-report-kit
-  GameHost-render-parity-projection-kit
-  grass-consumption-fixture-row-kit
+  render-descriptor-parity-kit
+  render-parity-diagnostics-projection-kit
+  grass-consumption-row-kit
   action-frame-kit
   action-result-kit
   action-journal-kit
@@ -190,7 +188,7 @@ next-cut kits:
 ## Current priority
 
 ```txt
-IntoTheMeadow Render Consumption Source Manifest + Objective Action Fixture Matrix
+IntoTheMeadow GameHost RenderParity Consumer + Objective ActionResult Fixture Gate
 ```
 
-The next implementation turn should add pure render-parity and gameplay-authority modules, fixture rows, and additive GameHost/snapshot projections. Do not start new content or visual expansion first.
+The next implementation turn should add a render parity helper chain, splice a report into `web-host.js`, preserve existing GameHost fields, add optional action support, reduce `walk-the-path` and `inspect-tree`, and prove both through DOM-free fixtures.

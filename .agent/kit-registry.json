@@ -1,29 +1,31 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-08T05:19:46-04:00",
-  "status": "renderer-descriptor-consumption-parity-gate-documented",
+  "generatedAt": "2026-07-08T06:10:03-04:00",
+  "status": "renderer-parity-fixture-matrix-documented",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
-    "reason": "No checked non-Cavalry Publish repo was new, absent from the central ledger, or missing root .agent/START_HERE.md state. IntoTheMeadow was selected for the oldest high-value unresolved follow-up seam: renderer descriptor-consumption parity.",
+    "reason": "No checked non-Cavalry Publish repo was new, absent from the central ledger, or missing root .agent/START_HERE.md state. IntoTheMeadow was selected for the high-value unresolved follow-up seam: renderer descriptor-consumption parity fixture matrix.",
     "checkedRepos": [
+      "LuminaryLabs-Publish/IntoTheMeadow",
       "LuminaryLabs-Publish/HorrorCorridor",
       "LuminaryLabs-Publish/AetherVale",
-      "LuminaryLabs-Publish/TheOpenAbove",
-      "LuminaryLabs-Publish/TheCavalryOfRome",
-      "LuminaryLabs-Publish/PhantomCommand",
-      "LuminaryLabs-Publish/PrehistoricRush",
       "LuminaryLabs-Publish/ZombieOrchard",
-      "LuminaryLabs-Publish/IntoTheMeadow",
+      "LuminaryLabs-Publish/TheUnmappedHouse",
       "LuminaryLabs-Publish/MyCozyIsland",
-      "LuminaryLabs-Publish/TheUnmappedHouse"
+      "LuminaryLabs-Publish/TheOpenAbove",
+      "LuminaryLabs-Publish/PhantomCommand",
+      "LuminaryLabs-Publish/TheCavalryOfRome",
+      "LuminaryLabs-Publish/PrehistoricRush"
     ]
   },
-  "latestTracker": ".agent/trackers/2026-07-08T05-19-46-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-08T05-19-46-04-00.md",
-  "nextBuildTarget": "IntoTheMeadow Renderer Descriptor Consumption Parity Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-08T06-10-03-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-08T06-10-03-04-00.md",
+  "latestRendererConsumptionAudit": ".agent/renderer-consumption-audit/parity-fixture-matrix.md",
+  "previousTracker": ".agent/trackers/2026-07-08T05-19-46-04-00/project-breakdown.md",
+  "nextBuildTarget": "IntoTheMeadow Renderer Descriptor Consumption Parity Fixture Matrix",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",
@@ -42,14 +44,15 @@
       "tests/dsk-registry-smoke.mjs",
       "tests/render-plan-smoke.mjs",
       "tests/deterministic-scene-smoke.mjs"
-    ]
+    ],
+    "neededNextTest": "tests/render-parity-fixture-smoke.mjs"
   },
   "sourceRead": {
     "repoShape": "Publishable DSK-composed meadow exploration game with a clean route, host, factory, state, snapshot, DSK descriptor, and render enhancement split.",
     "renderGap": "enhanceRenderPlan emits rich grassSystem, windField, postProcess, performance, renderStyle, and stats descriptors, but the renderer snapshot does not yet prove consumed/unconsumed descriptor parity.",
     "hostGap": "web-host.js passes enhanced plans to renderer.render(plan) and exposes enhanced plan plus render snapshot, but no parity contract compares plan descriptors to renderer consumption.",
     "stateGap": "createInitialGameState defines player, progression, world, and DSK snapshot, but advanceGameState only increments frame and lastTick.",
-    "newNarrowing": "Build renderer descriptor-consumption parity before adding more content, visual metadata, first-person movement, or gameplay reducers."
+    "newNarrowing": "Build the DOM-free parity fixture matrix before adding more content, visual metadata, first-person movement, or gameplay reducers."
   },
   "interactionLoop": {
     "current": [
@@ -66,10 +69,10 @@
     ],
     "targetRendererParity": [
       "Collect expected descriptors from enhanced render plan.",
-      "Collect consumed descriptors from renderer snapshot.",
+      "Normalize consumed descriptors from renderer snapshot.",
       "Classify each descriptor as consumed, unconsumed, unsupported, missing, or fallback-rendered.",
       "Project parity result to GameHost diagnostics.",
-      "Prove parity in a DOM-free fixture before visual expansion."
+      "Prove parity in a DOM-free fixture matrix before visual expansion."
     ]
   },
   "domains": {
@@ -142,11 +145,15 @@
       "webgl-renderer-snapshot"
     ],
     "rendererParityNeeded": [
+      "renderer-descriptor-expectation-kit",
+      "renderer-snapshot-consumption-kit",
       "renderer-descriptor-consumption-kit",
       "renderer-unsupported-descriptor-reason-kit",
       "renderer-parity-report-kit",
       "grass-drawgroup-consumption-kit",
       "post-process-pass-consumption-kit",
+      "wind-field-consumption-kit",
+      "render-style-consumption-kit",
       "gamehost-render-parity-diagnostics-kit",
       "renderer-parity-fixture-kit"
     ]
@@ -192,11 +199,15 @@
     "post-process-stack-dsk"
   ],
   "nextCutKits": [
+    "renderer-descriptor-expectation-kit",
+    "renderer-snapshot-consumption-kit",
     "renderer-descriptor-consumption-kit",
     "renderer-unsupported-descriptor-reason-kit",
     "renderer-parity-report-kit",
     "grass-drawgroup-consumption-kit",
     "post-process-pass-consumption-kit",
+    "wind-field-consumption-kit",
+    "render-style-consumption-kit",
     "gamehost-render-parity-diagnostics-kit",
     "renderer-parity-fixture-kit"
   ],
@@ -205,6 +216,7 @@
     "localSmokeRun": false,
     "browserCheckRun": false,
     "rendererParityConfirmed": false,
+    "parityFixtureImplemented": false,
     "nextRequiredCommand": "npm run check"
   }
 }

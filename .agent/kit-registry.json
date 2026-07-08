@@ -1,13 +1,13 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-08T12-21-20-04-00",
-  "status": "renderer-gameplay-contract-fixture-gate-planned",
+  "generatedAt": "2026-07-08T13-50-37-04-00",
+  "status": "render-parity-consumer-snapshot-gameplay-action-fixture-gate-planned",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
-    "reason": "No checked non-Cavalry Publish repo was new, absent from the central ledger, undocumented, or missing sampled root .agent/START_HERE.md state. IntoTheMeadow was selected as the oldest eligible fallback because renderer descriptor-consumption parity and gameplay ActionFrame/ActionResult proof are still unresolved.",
+    "reason": "No checked non-Cavalry Publish repo was new, absent from the central ledger, undocumented, or missing sampled root .agent/START_HERE.md state. IntoTheMeadow was selected as the oldest observed eligible fallback because its central update was older than other checked eligible Publish repos and render parity plus gameplay ActionResult proof are unresolved.",
     "checkedRepos": [
       "LuminaryLabs-Publish/HorrorCorridor",
       "LuminaryLabs-Publish/AetherVale",
@@ -21,14 +21,14 @@
       "LuminaryLabs-Publish/TheUnmappedHouse"
     ]
   },
-  "latestTracker": ".agent/trackers/2026-07-08T12-21-20-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-08T12-21-20-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-08T12-21-20-04-00-renderer-gameplay-contract-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-08T12-21-20-04-00-render-parity-contract-map.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-08T12-21-20-04-00-grass-render-readback-ledger.md",
-  "latestGameplayAuthorityAudit": ".agent/gameplay-authority-audit/2026-07-08T12-21-20-04-00-action-result-fixture-ledger.md",
-  "previousTracker": ".agent/trackers/2026-07-08T10-48-47-04-00/project-breakdown.md",
-  "nextBuildTarget": "IntoTheMeadow Renderer/GamePlay Contract Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-08T13-50-37-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-08T13-50-37-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-08T13-50-37-04-00-renderer-gameplay-implementation-cutline.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-08T13-50-37-04-00-render-parity-consumption-proof.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-08T13-50-37-04-00-grass-descriptor-readback-contract.md",
+  "latestGameplayAuthorityAudit": ".agent/gameplay-authority-audit/2026-07-08T13-50-37-04-00-action-result-reducer-implementation-plan.md",
+  "previousTracker": ".agent/trackers/2026-07-08T12-21-20-04-00/project-breakdown.md",
+  "nextBuildTarget": "IntoTheMeadow Render Parity Consumer Snapshot + Gameplay Action Fixture Gate",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",
@@ -36,6 +36,7 @@
     "state": "src/game/game-state.js",
     "snapshot": "src/game/game-snapshot.js",
     "renderEnhancement": "src/game/enhance-render-plan.js",
+    "manifest": "src/content/game-manifest.js",
     "objectives": "src/content/objectives/arrival-objectives.js",
     "targets": "src/content/interaction-targets/arrival-targets.js"
   },
@@ -69,25 +70,30 @@
     "renderer-snapshot-consumption-kit",
     "render-descriptor-parity-kit",
     "render-parity-diagnostics-projection-kit",
+    "grass-readback-row-kit",
     "action-frame-kit",
     "action-result-kit",
+    "action-journal-kit",
     "path-progress-reducer-kit",
     "inspect-target-reducer-kit",
     "objective-completion-resolver-kit",
     "gameplay-snapshot-kit",
-    "renderer-gameplay-fixture-smoke-kit"
+    "render-parity-fixture-smoke-kit",
+    "gameplay-authority-fixture-smoke-kit"
   ],
   "sourceRead": {
-    "renderGap": "enhanceRenderPlan emits rich grassSystem, windField, postProcess, performance, renderStyle, and stats descriptors, but no parity report proves consumed/unconsumed/unsupported renderer behavior.",
+    "renderGap": "enhanceRenderPlan emits rich grassSystem, windField, postProcess, performance, renderStyle, and stats descriptors, but no parity report proves consumed/unconsumed/unsupported/fallback renderer behavior.",
     "hostGap": "web-host.js passes enhanced plans to renderer.render(plan) and exposes enhanced plan plus render snapshot, but no parity contract compares plan descriptors to renderer consumption.",
     "stateGap": "createInitialGameState defines player, progression, world, and DSK snapshot, but advanceGameState only increments frame and lastTick.",
     "contentGap": "ARRIVAL_OBJECTIVES and ARRIVAL_INTERACTION_TARGETS define walk-the-path and inspect-tree, but those descriptors do not yet reduce into runtime ActionResult or snapshot.gameplay records.",
-    "narrowing": "Build render-parity modules, GameHost renderParity projection, gameplay-authority modules, snapshot.gameplay projection, and fixture smoke tests before visual or content expansion."
+    "narrowing": "Build render-parity modules, grass readback rows, GameHost renderParity projection, gameplay-authority modules, snapshot.gameplay projection, and fixture smoke tests before visual or content expansion."
   },
   "validation": {
     "runtimeSourceChanged": false,
     "localSmokeRun": false,
     "browserSmokeRun": false,
+    "branchCreated": false,
+    "pullRequestCreated": false,
     "pushedToMain": true
   }
 }

@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-08T15-28-13-04-00`
+**Last aligned:** `2026-07-08T17-59-43-04-00`
 
 ## Purpose
 
@@ -12,27 +12,27 @@ Read this folder before changing implementation code.
 
 ## Latest selection result
 
-The full accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger and sampled root `.agent/START_HERE.md` state.
+The full accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
 
-No checked non-Cavalry Publish repo was fully new, absent from the central ledger, undocumented, recently added but undocumented, or missing sampled root `.agent/START_HERE.md` state.
+No non-excluded Publish repo was found to be fully new, absent from the central ledger, or undocumented in the current comparison.
 
-`LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
+`LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by rule.
 
-`IntoTheMeadow` was selected by the oldest eligible fallback rule because its sampled root alignment was the oldest current non-Cavalry alignment among checked repos, and its renderer parity plus first-objective gameplay ActionResult seam is still unresolved.
+`IntoTheMeadow` was selected as the fallback repo for this run because it is tracked and repo-local `.agent` is present, but its render-consumption and first-objective gameplay authority seams still need a concrete source manifest and fixture matrix.
 
 ## Publish repos checked
 
 ```txt
-LuminaryLabs-Publish/AetherVale          tracked / root .agent present / latest sampled alignment 2026-07-08T15-20-41-04-00
-LuminaryLabs-Publish/HorrorCorridor      tracked / root .agent present / latest sampled alignment 2026-07-08T13:59:50-04:00
-LuminaryLabs-Publish/IntoTheMeadow       selected fallback / previous sampled alignment 2026-07-08T13-50-37-04-00
-LuminaryLabs-Publish/MyCozyIsland        tracked / root .agent present / latest sampled alignment 2026-07-08T14-58-49-04-00
-LuminaryLabs-Publish/PhantomCommand      tracked / root .agent present / latest sampled alignment 2026-07-08T14-08-24-04-00
-LuminaryLabs-Publish/PrehistoricRush     tracked / root .agent present / latest sampled alignment 2026-07-08T14:51:11-04:00
+LuminaryLabs-Publish/HorrorCorridor      tracked / central ledger present
+LuminaryLabs-Publish/AetherVale          tracked / central ledger present
+LuminaryLabs-Publish/TheOpenAbove        tracked / central ledger present
 LuminaryLabs-Publish/TheCavalryOfRome    excluded by rule
-LuminaryLabs-Publish/TheOpenAbove        tracked / root .agent present / latest sampled alignment 2026-07-08T15-11-18-04-00
-LuminaryLabs-Publish/TheUnmappedHouse    tracked / root .agent present / latest sampled alignment 2026-07-08T14-31-06-04-00
-LuminaryLabs-Publish/ZombieOrchard       tracked / root .agent present / latest sampled alignment 2026-07-08T14-18-45-04-00
+LuminaryLabs-Publish/PhantomCommand      tracked / central ledger present
+LuminaryLabs-Publish/PrehistoricRush     tracked / central ledger present
+LuminaryLabs-Publish/ZombieOrchard       tracked / central ledger present
+LuminaryLabs-Publish/IntoTheMeadow       selected fallback
+LuminaryLabs-Publish/MyCozyIsland        tracked / central ledger present
+LuminaryLabs-Publish/TheUnmappedHouse    tracked / central ledger present
 ```
 
 ## Current product read
@@ -51,6 +51,7 @@ index.html
   -> src/hosts/web-host.js
   -> src/game/create-into-the-meadow-game.js
   -> src/game/enhance-render-plan.js
+  -> external meadow-area-kit
   -> external meadow-webgl-render-kit
 ```
 
@@ -59,7 +60,7 @@ index.html
 ```txt
 requestAnimationFrame
   -> game.tick({ time, dt })
-  -> advanceGameState increments frame and lastTick
+  -> advanceGameState increments frame and lastTick only
   -> game.getRenderPlan(time)
   -> enhanceRenderPlan(rawPlan)
   -> renderer.render(enhancedPlan)
@@ -69,15 +70,15 @@ requestAnimationFrame
 ## Target proof loop
 
 ```txt
-raw meadow render plan
-  -> enhanced render plan
-  -> expected descriptor collection
-  -> renderer snapshot consumption normalization
-  -> descriptor parity report
+enhanced render plan
+  -> expected descriptor source manifest
+  -> normalized renderer snapshot consumption
+  -> render consumption rows
+  -> render parity report
   -> GameHost.renderParity
   -> DOM-free render parity fixture
   -> optional ActionFrame input
-  -> ActionResult reducers for path progress and inspect target
+  -> path-progress / inspect ActionResult reducers
   -> objective completion resolver
   -> snapshot.gameplay
   -> DOM-free gameplay authority fixture
@@ -90,12 +91,13 @@ raw meadow render plan
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
-.agent/architecture-audit/2026-07-08T15-28-13-04-00-render-gameplay-splice-map.md
-.agent/render-audit/2026-07-08T15-28-13-04-00-gamehost-render-parity-readback-map.md
-.agent/grass-system-audit/2026-07-08T15-28-13-04-00-grass-consumption-row-contract.md
-.agent/gameplay-audit/2026-07-08T15-28-13-04-00-action-result-fixture-splice-map.md
-.agent/trackers/2026-07-08T15-28-13-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T15-28-13-04-00.md
+.agent/architecture-audit/2026-07-08T17-59-43-04-00-render-action-source-manifest-dsk-breakdown.md
+.agent/render-audit/2026-07-08T17-59-43-04-00-render-consumption-source-manifest.md
+.agent/grass-system-audit/2026-07-08T17-59-43-04-00-grass-render-consumption-fixture-rows.md
+.agent/gameplay-audit/2026-07-08T17-59-43-04-00-objective-action-fixture-matrix.md
+.agent/interaction-audit/2026-07-08T17-59-43-04-00-action-frame-target-contract.md
+.agent/trackers/2026-07-08T17-59-43-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T17-59-43-04-00.md
 .agent/kit-registry.json
 ```
 
@@ -106,24 +108,22 @@ package.json
 index.html
 src/boot/boot-game.js
 src/hosts/web-host.js
+src/boot/expose-game-host.js
 src/game/create-into-the-meadow-game.js
 src/game/game-state.js
 src/game/game-snapshot.js
 src/game/enhance-render-plan.js
+src/content/game-manifest.js
 src/content/objectives/arrival-objectives.js
 src/content/interaction-targets/arrival-targets.js
 ```
 
-## Main rule
-
-Keep `IntoTheMeadow` as the publishable game proof surface.
-
-Do not move reusable render/gameplay kits out to shared repos until the local render-parity and gameplay ActionResult fixture gates are stable, documented, and passing.
-
-## Current next safe ledge
+## Next safe ledge
 
 ```txt
-IntoTheMeadow GameHost Render Parity + Gameplay ActionResult Splice Fixture Gate
+IntoTheMeadow Render Consumption Source Manifest + Objective Action Fixture Matrix
 ```
 
-Preserve the current route, manifest CDN kit loading, `game.tick({ time, dt })`, `renderer.render(plan)`, and existing `GameHost` fields while adding additive render parity, grass-consumption rows, optional action input, objective ActionResults, snapshot gameplay projection, and DOM-free fixtures.
+## Main rule
+
+Keep `IntoTheMeadow` as the publishable game proof surface. Do not add new content, first-person controls, inventory, audio, or DSK migration before local render parity and gameplay authority fixtures are passing.

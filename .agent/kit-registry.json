@@ -1,26 +1,26 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-07T19:42:05-04:00",
-  "status": "actionframe-fixture-seed-snapshot-gameplay-source-gate-documented",
+  "generatedAt": "2026-07-07T20:59:30-04:00",
+  "status": "reducer-result-runtime-gate-gameplay-snapshot-fixture-lock-documented",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
-    "reason": "The central Publish repo ledger showed IntoTheMeadow as the oldest eligible tracked non-Cavalry repo by latest review timestamp.",
+    "reason": "The central Publish repo ledger showed IntoTheMeadow as the oldest eligible tracked non-Cavalry repo by latest review timestamp after the MyCozyIsland pass.",
     "eligibleTimestampsChecked": {
-      "IntoTheMeadow": "2026-07-07T18:19:15-04:00",
-      "ZombieOrchard": "2026-07-07T18:28:54-04:00",
-      "HorrorCorridor": "2026-07-07T18:41:07-04:00",
-      "TheOpenAbove": "2026-07-07T18:49:32-04:00",
-      "AetherVale": "2026-07-07T19:01:37-04:00",
-      "PhantomCommand": "2026-07-07T19:08:52-04:00",
-      "PrehistoricRush": "2026-07-07T19:18:58-04:00",
-      "MyCozyIsland": "2026-07-07T19:29:28-04:00"
+      "IntoTheMeadow": "2026-07-07T19:42:05-04:00",
+      "ZombieOrchard": "2026-07-07T19:51:43-04:00",
+      "HorrorCorridor": "2026-07-07T20:00:46-04:00",
+      "TheOpenAbove": "2026-07-07T20:10:49-04:00",
+      "AetherVale": "2026-07-07T20:21:40-04:00",
+      "PhantomCommand": "2026-07-07T20:31:21-04:00",
+      "PrehistoricRush": "2026-07-07T20:38:27-04:00",
+      "MyCozyIsland": "2026-07-07T20:50:10-04:00"
     }
   },
-  "latestTracker": ".agent/trackers/2026-07-07T19-42-05-04-00/project-breakdown.md",
-  "nextBuildTarget": "IntoTheMeadow ActionFrame Fixture Seed + Snapshot.Gameplay Source Gate",
+  "latestTracker": ".agent/trackers/2026-07-07T20-59-30-04-00/project-breakdown.md",
+  "nextBuildTarget": "IntoTheMeadow Reducer Result Runtime Gate + Gameplay Snapshot Fixture Lock",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",
@@ -49,7 +49,7 @@
     "hostGap": "web-host.js loads kits, ticks, renders, and exposes GameHost, but does not collect deterministic action frames or pass actions into tick.",
     "snapshotGap": "game-snapshot.js exposes raw state/render/diagnostics but not a dedicated gameplay snapshot contract.",
     "contentReady": "The arrival meadow path, focal tree target, story beats, and objectives are descriptor-driven enough for the first playable loop.",
-    "newNarrowing": "Build ActionFrame fixture seeds and snapshot.gameplay source gates before renderer extraction, save persistence, pointer-lock polish, audio, or ProtoKit promotion."
+    "newNarrowing": "Build reducer result runtime gates and snapshot.gameplay fixture locks before renderer extraction, save persistence, pointer-lock polish, audio, or ProtoKit promotion."
   },
   "sourceFacts": {
     "initialPlayer": {
@@ -114,8 +114,9 @@
     ],
     "targetPlayer": [
       "Spawn on the arrival path.",
-      "Collect host and scripted input into normalized ActionFrame batches.",
+      "Collect host, scripted, fixture, and replay input into normalized ActionFrame batches.",
       "Apply pure reducers in stable order.",
+      "Require every reducer to return ReducerResult metadata.",
       "Move along ARRIVAL_MEADOW_CONFIG.features.path.points.",
       "Emit path-progress threshold events once.",
       "Complete walk-the-path after pathProgress >= 0.35.",
@@ -125,7 +126,8 @@
       "Emit inspect:focal-tree from accepted inspect action.",
       "Complete inspect-tree.",
       "Derive arrival meadow completion.",
-      "Expose gameplay metadata through GameHost and render debug surfaces."
+      "Expose gameplay metadata through GameHost and render debug surfaces.",
+      "Prove DOM-free replay parity with fixture snapshots."
     ]
   },
   "domains": {
@@ -188,8 +190,11 @@
     "gameplayAuthorityNeeded": [
       "host-input-ingress",
       "scripted-input-domain",
+      "fixture-input-domain",
+      "replay-input-domain",
       "action-frame-contract",
       "action-batch-contract",
+      "action-result-contract",
       "action-journal-contract",
       "action-frame-normalization",
       "action-acceptance-policy",
@@ -313,6 +318,17 @@
       ]
     },
     {
+      "id": "meadow-action-result-contract-kit",
+      "status": "next-first",
+      "provides": [
+        "defineActionResultShape",
+        "acceptedAction",
+        "rejectedAction",
+        "noopAction",
+        "summarizeActionResults"
+      ]
+    },
+    {
       "id": "meadow-action-journal-kit",
       "status": "next-first",
       "provides": [
@@ -337,25 +353,14 @@
       ]
     },
     {
-      "id": "meadow-action-source-fixture-kit",
-      "status": "next-first",
-      "provides": [
-        "createNoopActionFixture",
-        "createPathWalkActionFixture",
-        "createInvalidInspectFixture",
-        "createValidInspectFixture",
-        "assertFixtureActionOrder"
-      ]
-    },
-    {
       "id": "meadow-reducer-result-contract-kit",
       "status": "next-first",
       "provides": [
         "defineReducerResultShape",
-        "createReducerResult",
+        "createAcceptedReducerResult",
+        "createRejectedReducerResult",
         "createNoopReducerResult",
-        "mergeReducerResults",
-        "validateReducerResult"
+        "assertReducerResult"
       ]
     },
     {
@@ -363,82 +368,64 @@
       "status": "next-first",
       "provides": [
         "appendReducerResult",
-        "summarizeReducerJournal",
-        "queryReducerResults",
-        "assertReducerOrder",
-        "serializeReducerJournal"
+        "summarizeReducerOrder",
+        "summarizeStateDiffs",
+        "serializeReducerJournal",
+        "assertReducerReplayable"
       ]
     },
     {
-      "id": "meadow-player-path-reducer-kit",
+      "id": "meadow-reducer-pipeline-kit",
       "status": "next-first",
       "provides": [
-        "samplePathPoints",
-        "computeNearestPathSegment",
-        "advancePathProgress",
-        "clampPathProgress",
-        "emitPathProgressResult"
+        "registerReducers",
+        "runReducersInOrder",
+        "collectReducerResults",
+        "projectReducerDiagnostics"
       ]
     },
     {
       "id": "path-progress-runtime-kit",
       "status": "next-first",
       "provides": [
-        "samplePathProgress",
-        "computeProgressDelta",
-        "projectProgressToObjective",
-        "summarizePathProgress"
-      ]
-    },
-    {
-      "id": "path-threshold-event-kit",
-      "status": "next-first",
-      "provides": [
-        "definePathThresholds",
-        "emitPathProgressEvent",
-        "dedupePathThresholdEvent",
-        "summarizeThresholdState"
+        "samplePathSegments",
+        "projectNearestPathPoint",
+        "computePathProgress",
+        "emitPathThresholdEvents",
+        "projectPathDiagnostics"
       ]
     },
     {
       "id": "focal-tree-affordance-kit",
       "status": "next-first",
       "provides": [
-        "resolveInteractionTarget",
-        "computeDistanceToTarget",
-        "evaluateFacing",
-        "createAffordanceSnapshot",
-        "rejectOutOfRange"
+        "loadFocalTreeTarget",
+        "evaluateInspectDistance",
+        "evaluateInspectTarget",
+        "projectAffordanceState",
+        "projectAffordanceDiagnostics"
       ]
     },
     {
       "id": "inspect-result-reducer-kit",
       "status": "next-first",
       "provides": [
-        "normalizeInspectAction",
-        "evaluateInspectPreflight",
+        "reduceInspectAction",
+        "rejectInspectWithReason",
         "acceptInspectTarget",
-        "rejectInspectAction",
-        "emitInspectEvent"
+        "emitInspectEvent",
+        "projectInspectDiagnostics"
       ]
     },
     {
-      "id": "objective-state-authority-kit",
+      "id": "objective-completion-runtime-kit",
       "status": "next-first",
       "provides": [
-        "readObjectiveDescriptors",
-        "evaluateObjectiveCompletion",
-        "completeObjectiveOnce",
-        "summarizeObjectiveState"
-      ]
-    },
-    {
-      "id": "arrival-completion-runtime-kit",
-      "status": "next-first",
-      "provides": [
+        "completeWalkObjective",
+        "completeInspectObjective",
         "deriveArrivalCompletion",
-        "emitArrivalCompleteOnce",
-        "summarizeArrivalCompletion"
+        "projectObjectiveState",
+        "projectCompletionEvents"
       ]
     },
     {
@@ -446,27 +433,17 @@
       "status": "next-first",
       "provides": [
         "createGameplaySnapshot",
-        "summarizeObjectives",
-        "summarizeInteraction",
-        "summarizeCompletion",
-        "validateGameplaySnapshot"
-      ]
-    },
-    {
-      "id": "gamehost-gameplay-diagnostics-kit",
-      "status": "next-first",
-      "provides": [
-        "getLatestActionSummary",
-        "getLatestReducerSummary",
-        "getGameplayStatus",
-        "getReplayReadiness"
+        "validateGameplaySnapshot",
+        "projectGameplayForGameHost",
+        "projectGameplayRenderMetadata",
+        "assertSnapshotReplayParity"
       ]
     },
     {
       "id": "replay-parity-smoke-kit",
       "status": "next-first",
       "provides": [
-        "runNoopTickFixture",
+        "runNoopFixture",
         "runPathWalkFixture",
         "runInvalidInspectFixture",
         "runValidInspectFixture",
@@ -476,51 +453,76 @@
     }
   ],
   "deferredKits": [
-    "renderer-extraction-kit",
-    "save-persistence-kit",
-    "pointer-lock-polish-kit",
-    "meadow-audio-runtime-kit",
-    "external-protokit-promotion-kit"
+    "first-person-pointer-lock-kit",
+    "meadow-camera-smoothing-kit",
+    "meadow-save-persistence-kit",
+    "meadow-audio-ambient-kit",
+    "meadow-audio-interaction-kit",
+    "meadow-ui-objective-card-kit",
+    "meadow-accessibility-options-kit",
+    "meadow-protokit-promotion-kit"
   ],
-  "recommendedNextSlice": {
-    "name": "IntoTheMeadow ActionFrame Fixture Seed + Snapshot.Gameplay Source Gate",
-    "preserve": [
-      "current static browser route",
-      "current boot-game.js behavior",
-      "current web-host.js render loop",
-      "current GameHost compatibility",
-      "game.tick({ time, dt })"
+  "services": {
+    "current": [
+      "serve static browser route",
+      "boot web host from boot-game.js",
+      "load external meadow kits from manifest URLs",
+      "install and validate local DSK descriptors",
+      "create arrival meadow area kit",
+      "create WebGL renderer",
+      "tick state with time and fixed dt",
+      "generate render plans",
+      "enhance render metadata",
+      "render scene",
+      "expose GameHost state, snapshot, diagnostics, and render snapshot",
+      "run existing static smoke checks"
     ],
-    "add": [
-      "game.tick({ time, dt, actions })",
-      "ActionFrame and ActionBatch contracts",
-      "ActionJournal",
-      "ReducerResult and ReducerResultJournal",
-      "no-op reducer seed fixture",
-      "scripted path-walk fixture",
-      "pathProgress reducer",
-      "path threshold events",
-      "walk-the-path completion",
-      "focal-tree affordance reducer",
-      "inspect reducer with stable rejection reasons",
-      "inspect-tree completion",
-      "arrival completion derivation",
-      "snapshot.gameplay",
-      "GameHost gameplay diagnostics",
-      "DOM-free replay parity smoke"
-    ],
-    "defer": [
-      "renderer extraction",
-      "save persistence",
-      "pointer-lock polish",
-      "audio",
-      "ProtoKit promotion"
+    "nextNeeded": [
+      "normalize ActionFrame records",
+      "collect ActionBatch records",
+      "record ActionResult entries",
+      "record ActionJournal state",
+      "return ReducerResult entries from every reducer",
+      "record ReducerResultJournal state",
+      "sample path progress from source path points",
+      "emit one-shot path threshold events",
+      "evaluate focal tree inspect affordance",
+      "complete objectives from descriptor conditions",
+      "derive arrival completion",
+      "project snapshot.gameplay",
+      "project GameHost gameplay diagnostics",
+      "run DOM-free gameplay replay fixtures"
     ]
   },
-  "validation": {
-    "runtimeFilesChanged": false,
-    "localBuildRun": false,
-    "smokeTestRun": false,
-    "note": "Documentation-only pass through GitHub connector."
-  }
+  "blockers": [
+    "advanceGameState is still only a clock/frame reducer",
+    "no ActionFrame or ActionResult contract exists",
+    "no reducer result contract exists for accepted/rejected/no-op gameplay",
+    "no path progress reducer uses the six path source points",
+    "no inspect reducer evaluates the focal-tree target",
+    "objective completion is descriptor-ready but not runtime-driven",
+    "createGameSnapshot has no dedicated gameplay projection",
+    "existing smokes do not prove DOM-free gameplay replay parity"
+  ],
+  "nextBuildOrder": [
+    "preserve current static route, host, renderer, GameHost, and game.tick({ time, dt }) behavior",
+    "add additive game.tick({ time, dt, actions }) support",
+    "create ActionFrame and ActionBatch contracts",
+    "create ActionResult and ReducerResult contracts",
+    "add accepted/rejected/no-op journals",
+    "add reducer pipeline with no-op seed reducer first",
+    "add path-progress reducer using ARRIVAL_MEADOW_CONFIG.features.path.points",
+    "complete walk-the-path when pathProgress >= 0.35",
+    "add focal-tree affordance and inspect reducer using ARRIVAL_INTERACTION_TARGETS",
+    "reject unsupported, invalid_scene, invalid_payload, wrong_target, out_of_range, duplicate_event, and no_effect cases",
+    "accept inspect:focal-tree when constraints pass",
+    "complete inspect-tree and derive arrival completion",
+    "add snapshot.gameplay with player, actions, reducers, events, objectives, story, interaction, completion, and render metadata",
+    "add GameHost gameplay diagnostics",
+    "add DOM-free fixtures for no-op tick, path walk, invalid inspect, valid inspect, objective completion, and replay parity"
+  ],
+  "notes": [
+    "No runtime source files changed in this documentation pass.",
+    "The next code pass should be additive and must not break the current render proof or GameHost compatibility."
+  ]
 }

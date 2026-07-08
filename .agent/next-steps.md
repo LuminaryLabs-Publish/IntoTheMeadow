@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T17-59-43-04-00`
+**Timestamp:** `2026-07-08T18-09-21-04-00`
 
 ## Goal
 
@@ -9,23 +9,27 @@ Move `IntoTheMeadow` from descriptor-rich prototype toward a fixture-proven mead
 The immediate path is:
 
 ```txt
-render consumption source manifest
--> renderer snapshot consumption normalizer
--> render parity report
--> GameHost renderParity projection
--> grass descriptor fixture rows
+GameHost render parity consumer boundary
+-> grass descriptor consumption rows
+-> DOM-free render parity fixture
 -> optional ActionFrame support
 -> first objective ActionResult reducers
 -> snapshot.gameplay projection
--> DOM-free render/gameplay fixtures
+-> DOM-free gameplay authority fixture
 -> then visual/gameplay expansion
+```
+
+## Current ledge name
+
+```txt
+IntoTheMeadow GameHost RenderParity Consumer + Objective ActionResult Fixture Gate
 ```
 
 ## Ordered next implementation ledges
 
 ### 1. Render parity reason catalog
 
-Add stable reason constants.
+Add stable reason constants for renderer parity classification.
 
 Target file:
 
@@ -43,6 +47,7 @@ fallback-rendered
 missing-renderer-snapshot
 missing-renderer-field
 invalid-plan-descriptor
+count-mismatch
 ```
 
 ### 2. Expected descriptor collector
@@ -59,7 +64,7 @@ Expected descriptor groups:
 
 ```txt
 base objects
-outline policy
+outline policy / renderStyle
 windField
 postProcess
 performance
@@ -86,7 +91,32 @@ src/render-parity/normalize-renderer-snapshot-consumption.js
 
 The normalizer must return a stable unsupported/readback-absent shape when `renderer.getSnapshot?.()` is missing or sparse.
 
-### 4. Descriptor parity comparator
+### 4. Grass consumption rows
+
+Create grass-specific parity rows from expected descriptors and renderer snapshot consumption.
+
+Target file:
+
+```txt
+src/render-parity/create-grass-consumption-rows.js
+```
+
+Required row groups:
+
+```txt
+grass-density-texture
+static-batch-count
+patch-count
+draw-group-count
+shader-wind
+lod-policy
+density-scale
+estimated-instances
+estimated-cards
+validation-summary
+```
+
+### 5. Descriptor parity comparator
 
 Compare expected plan descriptors against consumed snapshot descriptors.
 
@@ -96,41 +126,18 @@ Target file:
 src/render-parity/compare-render-descriptor-parity.js
 ```
 
-Output row shape:
-
-```txt
-RenderConsumptionRow
-  id
-  descriptorPath
-  descriptorType
-  expected
-  consumed
-  reason
-  severity
-  rendererField
-  notes
-```
-
-### 5. Render parity report projector
-
-Create the report shape consumed by fixtures and `GameHost`.
-
-Target file:
-
-```txt
-src/render-parity/create-render-parity-report.js
-```
-
 Output shape:
 
 ```txt
 RenderParityReport
   id
+  planId
+  rendererId
   passed
   generatedAtFrame
-  planId
   expectedCount
   consumedCount
+  unconsumedCount
   unsupportedCount
   fallbackCount
   missingCount
@@ -144,10 +151,8 @@ Keep existing GameHost fields and add parity diagnostics additively.
 Target files:
 
 ```txt
-src/render-parity/project-render-parity.js
+src/render-parity/create-gamehost-render-parity.js
 src/hosts/web-host.js
-src/boot/expose-game-host.js
-src/game/game-snapshot.js
 ```
 
 Splice point:
@@ -155,7 +160,7 @@ Splice point:
 ```txt
 const render = renderer.render(plan);
 const rendererSnapshot = renderer.getSnapshot?.();
-const renderParity = createRenderParityReport(plan, rendererSnapshot, { frame: game.getState().frame });
+const renderParity = createGameHostRenderParity({ plan, render, rendererSnapshot });
 ```
 
 Expose through `GameHost.getSnapshot()` and any existing `GameHost.getState()` path without removing `enhancedRenderPlan` or `render`.
@@ -190,12 +195,11 @@ First fixture rows:
 ```txt
 path-progress accepted below threshold
 path-progress accepted and completes walk-the-path
-repeat path-progress is idempotent
+repeat path-progress does not duplicate walk-the-path
 inspect focal-tree accepted and completes inspect-tree
 repeat inspect focal-tree returns unchanged/idempotent
 unknown target returns rejected
 wrong action for target returns rejected
-invalid progress returns rejected
 ```
 
 ### 9. Snapshot gameplay projection
@@ -234,7 +238,7 @@ package.json
 
 ## Acceptance checklist
 
-- [ ] Renderer descriptors classify as consumed, unconsumed, unsupported, fallback-rendered, missing-renderer-snapshot, or missing-renderer-field.
+- [ ] Renderer descriptors classify as consumed, unconsumed, unsupported, fallback-rendered, missing-renderer-snapshot, missing-renderer-field, invalid-plan-descriptor, or count-mismatch.
 - [ ] Grass descriptor readback has stable report rows.
 - [ ] Renderer parity failures are visible through `GameHost`.
 - [ ] `game.tick({ time, dt })` remains compatible.
@@ -247,4 +251,4 @@ package.json
 
 ## Stop conditions
 
-Do not proceed into new art, new areas, audio, inventory, first-person controls, or DSK extraction until the fixture gate above is passing.
+Do not proceed into new art, new areas, audio, inventory, first-person controls, renderer replacement, or DSK extraction until the fixture gate above is passing.

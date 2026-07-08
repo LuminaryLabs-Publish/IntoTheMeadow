@@ -1,6 +1,6 @@
 {
   "id": "into-the-meadow-dsk-registry",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "rule": "Game-specific DSKs live here; reusable meadow infrastructure stays in ProtoKits.",
   "external": ["meadow-area-kit", "meadow-webgl-render-kit"],
   "local": [
@@ -10,6 +10,15 @@
     "meadow-area-bridge-dsk",
     "meadow-terrain-texture-dsk",
     "path-corridor-dsk",
+    "grass-density-texture-kit",
+    "grass-clump-archetype-kit",
+    "grass-static-batch-kit",
+    "grass-patch-placement-kit",
+    "grass-clump-instancing-render-kit",
+    "grass-shader-wind-kit",
+    "grass-lod-policy-kit",
+    "grass-density-scaling-kit",
+    "grass-debug-visualization-kit",
     "grass-patch-dsk",
     "gpu-grass-render-dsk",
     "wind-field-dsk",
@@ -46,12 +55,17 @@
     "meadow-render-host-dsk",
     "meadow-diagnostics-dsk",
     "meadow-performance-dsk",
+    "grass-density-texture-kit",
+    "grass-clump-archetype-kit",
+    "grass-static-batch-kit",
+    "grass-patch-placement-kit",
+    "grass-clump-instancing-render-kit",
     "post-process-stack-dsk",
     "static-pages-deploy-dsk"
   ],
   "phases": {
-    "v0.1": "bootable DSK scaffold, browser meadow proof, post-process pass graph, and render-plan enhancement",
+    "v0.1": "bootable DSK scaffold, browser meadow proof, post-process pass graph, and texture-driven grass descriptors",
     "v0.2": "first-person exploration, camera, input, interaction, story, objectives",
-    "v0.3": "grass patches, shader wind, terrain texture extraction, performance profiles"
+    "v0.3": "grass renderer consumes static clump batches with instancing and shader wind"
   }
 }

@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T12-21-20-04-00`
+**Timestamp:** `2026-07-08T13-50-37-04-00`
 
 ## Goal
 
@@ -24,7 +24,7 @@ renderer parity proof
 
 Add stable reason constants for renderer parity classification.
 
-Target files:
+Target file:
 
 ```txt
 src/render-parity/render-parity-reasons.js
@@ -34,27 +34,46 @@ src/render-parity/render-parity-reasons.js
 
 Collect expected descriptors from an enhanced render plan.
 
-Target files:
+Target file:
 
 ```txt
 src/render-parity/collect-expected-render-descriptors.js
+```
+
+Expected descriptor groups:
+
+```txt
+base objects
+outline policy
+windField
+postProcess
+performance
+grassSystem.densityTexture
+grassSystem.staticBatches
+grassSystem.patches
+grassSystem.drawGroups
+grassSystem.shaderWind
+grassSystem.lodPolicy
+grassSystem.densityScale
 ```
 
 ### 3. Renderer snapshot consumption normalizer
 
 Normalize renderer snapshot fields without requiring a specific renderer version.
 
-Target files:
+Target file:
 
 ```txt
 src/render-parity/normalize-renderer-snapshot-consumption.js
 ```
 
+The normalizer must return a stable unsupported/readback-absent shape when `renderer.getSnapshot?.()` is missing or sparse.
+
 ### 4. Descriptor parity comparator
 
 Compare expected plan descriptors against consumed snapshot descriptors.
 
-Target files:
+Target file:
 
 ```txt
 src/render-parity/compare-render-descriptor-parity.js
@@ -80,6 +99,7 @@ Target files:
 src/gameplay-authority/action-reasons.js
 src/gameplay-authority/action-frame.js
 src/gameplay-authority/action-result.js
+src/gameplay-authority/action-journal.js
 ```
 
 ### 7. Objective reducers
@@ -130,3 +150,7 @@ package.json
 - [ ] Invalid action and unknown target return stable rejected results.
 - [ ] `snapshot.gameplay` exists.
 - [ ] `npm run check` includes the new fixtures.
+
+## Stop conditions
+
+Do not proceed into new art, new areas, audio, inventory, first-person controls, or DSK extraction until the fixture gate above is passing.

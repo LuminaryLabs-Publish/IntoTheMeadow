@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T15-28-13-04-00`
+**Timestamp:** `2026-07-08T17-59-43-04-00`
 
 ## Goal
 
@@ -9,13 +9,15 @@ Move `IntoTheMeadow` from descriptor-rich prototype toward a fixture-proven mead
 The immediate path is:
 
 ```txt
-GameHost render parity splice
--> grass descriptor consumption row contract
--> DOM-free render parity fixture
+render consumption source manifest
+-> renderer snapshot consumption normalizer
+-> render parity report
+-> GameHost renderParity projection
+-> grass descriptor fixture rows
 -> optional ActionFrame support
 -> first objective ActionResult reducers
 -> snapshot.gameplay projection
--> DOM-free gameplay authority fixture
+-> DOM-free render/gameplay fixtures
 -> then visual/gameplay expansion
 ```
 
@@ -23,7 +25,7 @@ GameHost render parity splice
 
 ### 1. Render parity reason catalog
 
-Add stable reason constants for renderer parity classification.
+Add stable reason constants.
 
 Target file:
 
@@ -94,6 +96,31 @@ Target file:
 src/render-parity/compare-render-descriptor-parity.js
 ```
 
+Output row shape:
+
+```txt
+RenderConsumptionRow
+  id
+  descriptorPath
+  descriptorType
+  expected
+  consumed
+  reason
+  severity
+  rendererField
+  notes
+```
+
+### 5. Render parity report projector
+
+Create the report shape consumed by fixtures and `GameHost`.
+
+Target file:
+
+```txt
+src/render-parity/create-render-parity-report.js
+```
+
 Output shape:
 
 ```txt
@@ -101,6 +128,7 @@ RenderParityReport
   id
   passed
   generatedAtFrame
+  planId
   expectedCount
   consumedCount
   unsupportedCount
@@ -109,14 +137,17 @@ RenderParityReport
   rows[]
 ```
 
-### 5. GameHost renderParity projection
+### 6. GameHost renderParity projection
 
 Keep existing GameHost fields and add parity diagnostics additively.
 
-Target file:
+Target files:
 
 ```txt
+src/render-parity/project-render-parity.js
 src/hosts/web-host.js
+src/boot/expose-game-host.js
+src/game/game-snapshot.js
 ```
 
 Splice point:
@@ -124,12 +155,12 @@ Splice point:
 ```txt
 const render = renderer.render(plan);
 const rendererSnapshot = renderer.getSnapshot?.();
-const renderParity = compareRenderDescriptorParity(plan, rendererSnapshot);
+const renderParity = createRenderParityReport(plan, rendererSnapshot, { frame: game.getState().frame });
 ```
 
 Expose through `GameHost.getSnapshot()` and any existing `GameHost.getState()` path without removing `enhancedRenderPlan` or `render`.
 
-### 6. Gameplay action contracts
+### 7. Gameplay action contracts
 
 Add optional action input while preserving `game.tick({ time, dt })`.
 
@@ -142,7 +173,7 @@ src/gameplay-authority/action-result.js
 src/gameplay-authority/action-journal.js
 ```
 
-### 7. Objective reducers
+### 8. Objective reducers
 
 Reduce existing descriptors into deterministic results.
 
@@ -159,13 +190,15 @@ First fixture rows:
 ```txt
 path-progress accepted below threshold
 path-progress accepted and completes walk-the-path
+repeat path-progress is idempotent
 inspect focal-tree accepted and completes inspect-tree
 repeat inspect focal-tree returns unchanged/idempotent
 unknown target returns rejected
 wrong action for target returns rejected
+invalid progress returns rejected
 ```
 
-### 8. Snapshot gameplay projection
+### 9. Snapshot gameplay projection
 
 Expose gameplay proof through snapshots.
 
@@ -187,7 +220,7 @@ snapshot.gameplay.lastActionResults
 snapshot.gameplay.actionJournal
 ```
 
-### 9. Fixture smoke tests
+### 10. Fixture smoke tests
 
 Add DOM-free fixtures before runtime visuals.
 

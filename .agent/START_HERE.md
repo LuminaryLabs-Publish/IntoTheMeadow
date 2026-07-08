@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-08T06:10:03-04:00`
+**Last aligned:** `2026-07-08T07:41:52-04:00`
 
 ## Purpose
 
@@ -12,11 +12,11 @@ Read this folder before changing implementation code.
 
 ## Latest selection result
 
-The accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` ledger.
+The accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` ledger/status readback.
 
 No checked non-Cavalry Publish repo was fully new, absent from the central ledger, or missing root `.agent/START_HERE.md` state.
 
-`IntoTheMeadow` was selected as the current fallback follow-up because the renderer descriptor-consumption contract is still the highest leverage unresolved meadow proof: the game emits high-fidelity descriptors, but renderer consumption is not yet proven or reported.
+`IntoTheMeadow` was selected by fallback follow-up because it still has a critical proof seam: the renderer parity fixture must prove which high-fidelity meadow descriptors are consumed, and the next gameplay handoff must define `ActionFrame` / `ActionResult` before story or movement expansion.
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
@@ -39,6 +39,18 @@ index.html
   -> external meadow-webgl-render-kit
 ```
 
+## Current loop truth
+
+```txt
+requestAnimationFrame
+-> game.tick({ time, dt: 1 / 60 })
+-> advanceGameState increments frame and lastTick only
+-> getRenderPlan(time)
+-> enhanceRenderPlan(rawPlan)
+-> renderer.render(enhancedPlan)
+-> GameHost exposes state, snapshot, diagnostics, render plan, and renderer snapshot
+```
+
 ## First files to read
 
 ```txt
@@ -46,19 +58,20 @@ index.html
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
-.agent/architecture-audit/dsk-cutover-audit.md
-.agent/render-audit/meadow-renderer-gap-audit.md
-.agent/grass-system-audit/texture-driven-grass-system.md
-.agent/renderer-consumption-audit/descriptor-consumption-parity.md
+.agent/architecture-audit/2026-07-08T07-41-52-04-00-dsk-domain-breakdown.md
+.agent/render-audit/2026-07-08T07-41-52-04-00-renderer-parity-readback.md
+.agent/gameplay-authority-audit/2026-07-08T07-41-52-04-00-action-frame-objective-reducer-gate.md
 .agent/renderer-consumption-audit/parity-fixture-matrix.md
-.agent/trackers/2026-07-08T06-10-03-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T06-10-03-04-00.md
+.agent/trackers/2026-07-08T07-41-52-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T07-41-52-04-00.md
 .agent/kit-registry.json
 ```
 
-Previous high-value entry:
+Previous high-value entries:
 
 ```txt
+.agent/trackers/2026-07-08T06-10-03-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T06-10-03-04-00.md
 .agent/trackers/2026-07-08T05-19-46-04-00/project-breakdown.md
 .agent/turn-ledger/2026-07-08T05-19-46-04-00.md
 ```
@@ -77,6 +90,8 @@ src/game/game-snapshot.js
 src/content/game-manifest.js
 src/content/dsk-registry.js
 src/content/meadow-areas/arrival-meadow.js
+src/content/objectives/arrival-objectives.js
+src/content/interaction-targets/arrival-targets.js
 tests/render-plan-smoke.mjs
 ```
 
@@ -88,6 +103,12 @@ The game repo should compose and prove the meadow game. Reusable meadow renderer
 
 ## Current next safe ledge
 
-Build the **Renderer Descriptor Consumption Parity Fixture Matrix**.
+Build the **Renderer Parity Fixture + ActionFrame Objective Reducer Handoff**.
 
-Keep the public route working while proving that the enhanced `grassSystem`, `postProcess`, `windField`, `performance`, and `renderStyle` descriptors are either consumed by the renderer snapshot or explicitly reported as unconsumed/unsupported with stable reason metadata.
+Keep the public route working while proving that:
+
+```txt
+1. enhanced renderer descriptors are consumed or explicitly reported as unconsumed/unsupported
+2. game.tick({ time, dt }) remains backward-compatible
+3. optional game.tick({ time, dt, actions }) can reduce path-progress and inspect actions into deterministic objective state
+```

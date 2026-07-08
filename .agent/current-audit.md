@@ -1,36 +1,12 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T13-50-37-04-00`
+**Timestamp:** `2026-07-08T15-28-13-04-00`
 
 ## Current state
 
 `IntoTheMeadow` is a static browser game route that boots from `index.html`, imports `src/boot/boot-game.js`, starts `src/hosts/web-host.js`, creates the game through `src/game/create-into-the-meadow-game.js`, enhances external meadow-area render plans through `src/game/enhance-render-plan.js`, and renders through the external `meadow-webgl-render-kit`.
 
 The repo correctly acts as a publishable game/deploy repo, not a generic kit foundry.
-
-The game owns:
-
-```txt
-- static HTML route
-- web host
-- game manifest
-- local DSK descriptor registry
-- game factory
-- deterministic state root
-- GameHost exposure
-- arrival meadow content
-- story/objective/interaction descriptors
-- render-plan enhancement layer
-- static validation scripts
-- GitHub Pages deploy surface
-```
-
-The game consumes:
-
-```txt
-- meadow-area-kit from NexusRealtime-ProtoKits via CDN
-- meadow-webgl-render-kit from NexusRealtime-ProtoKits via CDN
-```
 
 ## Repo-selection audit
 
@@ -51,11 +27,11 @@ TheUnmappedHouse
 
 `TheCavalryOfRome` was excluded.
 
-No checked non-Cavalry repo was fully new, absent from the central ledger, undocumented, or missing sampled root `.agent/START_HERE.md` state.
+No checked non-Cavalry repo was fully new, absent from the central ledger, undocumented, recently added but undocumented, or missing sampled root `.agent/START_HERE.md` state.
 
-`IntoTheMeadow` was selected as the oldest observed eligible fallback because its latest central ledger update was `2026-07-08T12:21:20-04:00`, older than the other checked non-excluded repos, and its renderer descriptor parity plus gameplay action-result seam remain unresolved.
+`IntoTheMeadow` was selected by oldest eligible fallback because its sampled root alignment remained the oldest current non-Cavalry alignment among checked repos.
 
-## Interaction loop
+## Current interaction loop
 
 ```txt
 index.html
@@ -74,24 +50,130 @@ index.html
   -> GameHost exposes state, snapshot, diagnostics, enhanced plan, and renderer snapshot
 ```
 
-## Key current facts
+## Source-backed facts
 
-`package.json` exposes `npm run check` as the validation umbrella for static smoke, DSK registry smoke, render-plan smoke, and deterministic scene smoke.
+`src/hosts/web-host.js` loads two external kits from `GAME_MANIFEST.externalKits`, creates the game, creates the renderer, stores `lastPlan`, calls `renderer.render(plan)`, and exposes `enhancedRenderPlan` plus `render: renderer.getSnapshot?.()` through `GameHost`.
 
-`web-host.js` stores `lastPlan`, passes the enhanced plan to `renderer.render(plan)`, and exposes `enhancedRenderPlan` plus `render` snapshot through `GameHost`.
+`src/game/enhance-render-plan.js` creates the grass system through local DSKs for density texture, clump archetypes, static batches, patch placement, instancing draw groups, shader wind, LOD policy, density scaling, and debug visualization.
 
-`enhanceRenderPlan()` creates `grassSystem`, `grassPatches`, `windField`, `postProcess`, `performance`, grass validation records, and grass stats.
+`src/game/game-state.js` still treats `advanceGameState()` as a tick-only reducer: it increments `frame` and writes `lastTick` without consuming any gameplay actions.
 
-`advanceGameState()` still only increments `frame` and writes `lastTick`.
+`src/game/game-snapshot.js` exposes `manifest`, `state`, `renderPlan`, and `diagnostics`, but does not expose `renderParity` or `gameplay` branches.
 
-`createGameSnapshot()` still exposes `state`, `renderPlan`, and `diagnostics`, but does not expose a `gameplay` branch.
+`ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS` already define the first playable proof set:
 
-Arrival objectives and interaction targets already define `walk-the-path`, `inspect-tree`, `arrival-path`, and `focal-tree` descriptors.
+```txt
+walk-the-path -> path-progress -> arrival-path -> progressAtLeast 0.35
+inspect-tree  -> inspect       -> focal-tree   -> inspected true
+```
+
+## Domains in use
+
+```txt
+static-route-domain
+browser-boot-domain
+web-host-domain
+external-kit-loading-domain
+manifest-domain
+dsk-install-domain
+meadow-area-domain
+render-plan-domain
+render-plan-enhancement-domain
+renderer-host-domain
+render-snapshot-domain
+render-parity-domain
+grass-system-domain
+grass-consumption-domain
+game-state-domain
+player-state-domain
+world-state-domain
+progression-domain
+objective-domain
+interaction-target-domain
+action-frame-domain
+action-result-domain
+action-journal-domain
+gameplay-snapshot-domain
+gamehost-diagnostics-domain
+fixture-smoke-domain
+pages-deploy-domain
+```
+
+## Services
+
+```txt
+current services:
+  load external meadow kits from CDN
+  create DSK install snapshot
+  create arrival meadow render plan
+  enhance render plans with grass/wind/postprocess/performance descriptors
+  render enhanced plan through the external renderer
+  expose state, snapshot, diagnostics, enhanced plan, and renderer snapshot through GameHost
+
+needed next services:
+  collect expected enhanced-plan descriptors
+  normalize renderer.getSnapshot consumption readback
+  compare expected descriptors against renderer consumption
+  classify consumed/unconsumed/unsupported/fallback/missing descriptor rows
+  expose GameHost.renderParity additively
+  normalize optional input actions into ActionFrame records
+  reduce path-progress and inspect actions into ActionResults
+  resolve objective completion idempotently
+  project snapshot.gameplay without breaking existing snapshot shape
+  smoke render parity and gameplay action reducers without DOM/browser dependencies
+```
+
+## Kits
+
+```txt
+implemented external kits:
+  meadow-area-kit
+  meadow-webgl-render-kit
+
+implemented local kits / descriptors:
+  game-manifest descriptor
+  local-dsk-registry
+  arrival-meadow content descriptor
+  story-beats descriptor
+  arrival-objectives descriptor
+  arrival-interaction-targets descriptor
+  fallback-meadow-area-kit
+  tree-object-dsk
+  wind-field-dsk
+  meadow-performance-dsk
+  post-process-stack-dsk
+  grass-density-texture-kit
+  grass-clump-archetype-kit
+  grass-static-batch-kit
+  grass-patch-placement-kit
+  grass-clump-instancing-render-kit
+  grass-shader-wind-kit
+  grass-lod-policy-kit
+  grass-density-scaling-kit
+  grass-debug-visualization-kit
+
+next-cut kits:
+  render-parity-reason-kit
+  expected-render-descriptor-kit
+  renderer-snapshot-consumption-kit
+  render-descriptor-parity-kit
+  render-parity-diagnostics-projection-kit
+  grass-consumption-row-kit
+  action-frame-kit
+  action-result-kit
+  action-journal-kit
+  path-progress-reducer-kit
+  inspect-target-reducer-kit
+  objective-completion-resolver-kit
+  gameplay-snapshot-kit
+  render-parity-fixture-smoke-kit
+  gameplay-authority-fixture-smoke-kit
+```
 
 ## Current priority
 
 ```txt
-IntoTheMeadow Render Parity Consumer Snapshot + Gameplay Action Fixture Gate
+IntoTheMeadow GameHost Render Parity + Gameplay ActionResult Splice Fixture Gate
 ```
 
-The next implementation turn should prove render descriptor parity and gameplay action results before adding more meadow visuals or authored objectives.
+The next implementation turn should splice render parity into `web-host.js` and snapshot output, then add the first gameplay ActionResult fixture loop for `walk-the-path` and `inspect-tree`.

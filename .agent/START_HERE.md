@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-08T10-48-47-04-00`
+**Last aligned:** `2026-07-08T12-21-20-04-00`
 
 ## Purpose
 
@@ -12,13 +12,13 @@ Read this folder before changing implementation code.
 
 ## Latest selection result
 
-The full accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
+The accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
 
 No checked non-Cavalry Publish repo was fully new, absent from the central ledger, undocumented, or missing sampled root `.agent/START_HERE.md` state.
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible fallback because it had the oldest observed latest central update among checked eligible repos.
+`IntoTheMeadow` was selected as the oldest eligible fallback because the renderer parity plus gameplay action-result seam is still unresolved and remains the correct next proof before visual/content expansion.
 
 ## Current product read
 
@@ -62,7 +62,7 @@ requestAnimationFrame
   -> path-progress / inspect actions reduce into ActionResult records
   -> objective resolver updates completedObjectiveIds and storyBeatIds idempotently
   -> snapshot.gameplay exposes action journal and last results
-  -> GameHost diagnostics expose renderParity without breaking existing fields
+  -> GameHost diagnostics expose renderParity without removing existing fields
 ```
 
 ## First files to read
@@ -72,12 +72,12 @@ requestAnimationFrame
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
-.agent/architecture-audit/2026-07-08T10-48-47-04-00-dsk-domain-breakdown.md
-.agent/render-audit/2026-07-08T10-48-47-04-00-renderer-parity-cutover-readback.md
-.agent/grass-system-audit/2026-07-08T10-48-47-04-00-grass-consumption-fixture-seams.md
-.agent/gameplay-authority-audit/2026-07-08T10-48-47-04-00-action-result-implementation-cutover.md
-.agent/trackers/2026-07-08T10-48-47-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T10-48-47-04-00.md
+.agent/architecture-audit/2026-07-08T12-21-20-04-00-renderer-gameplay-contract-map.md
+.agent/render-audit/2026-07-08T12-21-20-04-00-render-parity-contract-map.md
+.agent/grass-system-audit/2026-07-08T12-21-20-04-00-grass-render-readback-ledger.md
+.agent/gameplay-authority-audit/2026-07-08T12-21-20-04-00-action-result-fixture-ledger.md
+.agent/trackers/2026-07-08T12-21-20-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T12-21-20-04-00.md
 .agent/kit-registry.json
 ```
 
@@ -110,12 +110,12 @@ The game repo should compose and prove the meadow game. Reusable meadow renderer
 
 ## Current next safe ledge
 
-Build the **Renderer Parity + Action Result Cutover Fixture Gate**.
+Build the **Renderer/GamePlay Contract Fixture Gate**.
 
 Keep the public route working while proving that:
 
 ```txt
-1. enhanced renderer descriptors are consumed or explicitly reported as unconsumed/unsupported
+1. enhanced renderer descriptors are consumed or explicitly reported as unconsumed/unsupported/fallback
 2. grass descriptors have renderer readback or stable unsupported reasons
 3. game.tick({ time, dt }) remains backward-compatible
 4. optional game.tick({ time, dt, actions }) reduces path-progress and inspect actions into deterministic ActionResult records

@@ -1,6 +1,6 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T17-59-43-04-00`
+**Timestamp:** `2026-07-08T18-09-21-04-00`
 
 ## Validation performed this run
 
@@ -18,11 +18,7 @@ Files inspected:
 .agent/validation.md
 .agent/kit-registry.json
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
-package.json
-src/content/game-manifest.js
 src/hosts/web-host.js
-src/boot/expose-game-host.js
-src/game/create-into-the-meadow-game.js
 src/game/game-state.js
 src/game/game-snapshot.js
 src/game/enhance-render-plan.js
@@ -34,8 +30,8 @@ GitHub organization/ledger inspection performed:
 
 ```txt
 LuminaryLabs-Publish repository list read from the Publish installation
-LuminaryLabs-Dev/LuminaryLabs central repo-ledger index searched
 LuminaryLabs-Dev/LuminaryLabs central ledger file read for IntoTheMeadow
+sampled root .agent/START_HERE.md files read for checked non-Cavalry Publish repos
 ```
 
 Files written in `LuminaryLabs-Publish/IntoTheMeadow`:
@@ -47,20 +43,19 @@ Files written in `LuminaryLabs-Publish/IntoTheMeadow`:
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-08T17-59-43-04-00-render-action-source-manifest-dsk-breakdown.md
-.agent/render-audit/2026-07-08T17-59-43-04-00-render-consumption-source-manifest.md
-.agent/grass-system-audit/2026-07-08T17-59-43-04-00-grass-render-consumption-fixture-rows.md
-.agent/gameplay-audit/2026-07-08T17-59-43-04-00-objective-action-fixture-matrix.md
-.agent/interaction-audit/2026-07-08T17-59-43-04-00-action-frame-target-contract.md
-.agent/trackers/2026-07-08T17-59-43-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T17-59-43-04-00.md
+.agent/architecture-audit/2026-07-08T18-09-21-04-00-renderparity-actionresult-dsk-map.md
+.agent/render-audit/2026-07-08T18-09-21-04-00-gamehost-renderparity-consumer-boundary.md
+.agent/grass-system-audit/2026-07-08T18-09-21-04-00-grass-consumption-fixture-rows.md
+.agent/gameplay-audit/2026-07-08T18-09-21-04-00-objective-actionresult-fixture-gate.md
+.agent/trackers/2026-07-08T18-09-21-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T18-09-21-04-00.md
 ```
 
 Central files written in `LuminaryLabs-Dev/LuminaryLabs`:
 
 ```txt
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
-internal-change-log/2026-07-08T17-59-43-04-00-into-the-meadow-render-action-source-manifest.md
+internal-change-log/2026-07-08T18-09-21-04-00-into-the-meadow-renderparity-actionresult-consumer-gate.md
 ```
 
 ## Validation not performed
@@ -73,6 +68,8 @@ npm test
 browser smoke
 GitHub Pages smoke
 runtime source edit
+DOM-free fixture run
+renderer execution
 ```
 
 ## Validation command for next implementation pass

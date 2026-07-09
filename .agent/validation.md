@@ -1,6 +1,6 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T00-50-00-04-00`
+**Timestamp:** `2026-07-09T03-35-07-04-00`
 
 ## Validation performed this run
 
@@ -27,12 +27,18 @@ repo-ledger/LuminaryLabs-Publish/ZombieOrchard.md
 repo-ledger/LuminaryLabs-Publish/MyCozyIsland.md
 repo-ledger/LuminaryLabs-Publish/TheUnmappedHouse.md
 package.json
+index.html
+src/boot/boot-game.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
 src/game/game-state.js
 src/game/game-snapshot.js
 src/game/enhance-render-plan.js
+src/boot/install-dsks.js
+src/dsks/index.js
+src/content/dsk-registry.js
 src/content/game-manifest.js
+src/content/meadow-areas/arrival-meadow.js
 src/content/objectives/arrival-objectives.js
 src/content/interaction-targets/arrival-targets.js
 ```
@@ -40,7 +46,7 @@ src/content/interaction-targets/arrival-targets.js
 GitHub organization/ledger inspection performed:
 
 ```txt
-LuminaryLabs-Publish repository list read from the Publish installation
+LuminaryLabs-Publish repository list read from GitHub search over the installed Publish org
 LuminaryLabs-Dev/LuminaryLabs central repo-ledger files compared against Publish list
 Cavalry of Rome excluded by rule
 IntoTheMeadow selected as oldest eligible tracked fallback by central alignment timestamp
@@ -55,20 +61,20 @@ Files written in `LuminaryLabs-Publish/IntoTheMeadow`:
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-09T00-50-00-04-00-renderparity-gameplay-fixture-contract.md
-.agent/render-audit/2026-07-09T00-50-00-04-00-render-consumption-diagnostic-snapshot.md
-.agent/grass-system-audit/2026-07-09T00-50-00-04-00-grass-descriptor-consumer-matrix.md
-.agent/gameplay-audit/2026-07-09T00-50-00-04-00-action-replay-snapshot-loop.md
-.agent/deploy-audit/2026-07-09T00-50-00-04-00-check-script-fixture-gate.md
-.agent/trackers/2026-07-09T00-50-00-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T00-50-00-04-00.md
+.agent/architecture-audit/2026-07-09T03-35-07-04-00-renderparity-gameplay-source-contract.md
+.agent/render-audit/2026-07-09T03-35-07-04-00-render-consumer-readback-freeze.md
+.agent/grass-system-audit/2026-07-09T03-35-07-04-00-grass-consumption-row-contract.md
+.agent/gameplay-audit/2026-07-09T03-35-07-04-00-action-result-source-contract.md
+.agent/deploy-audit/2026-07-09T03-35-07-04-00-fixture-check-wire-map.md
+.agent/trackers/2026-07-09T03-35-07-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T03-35-07-04-00.md
 ```
 
 Files written in `LuminaryLabs-Dev/LuminaryLabs`:
 
 ```txt
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
-internal-change-log/2026-07-09T00-50-00-04-00-into-the-meadow-renderparity-gameplay-fixture.md
+internal-change-log/2026-07-09T03-35-07-04-00-into-the-meadow-source-contract-freeze.md
 ```
 
 ## Validation not performed
@@ -92,4 +98,12 @@ pull request created: no
 pushed to main: yes
 documentation-only: yes
 runtime/source changed: no
+```
+
+## Next validation target
+
+```txt
+npm run check
+  + tests/render-parity-fixture-smoke.mjs
+  + tests/gameplay-action-replay-fixture-smoke.mjs
 ```

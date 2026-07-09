@@ -1,37 +1,36 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-09T03-50-12-04-00",
-  "status": "render-readback-parity-action-result-replay-fixture-gate-planned",
+  "generatedAt": "2026-07-09T06-28-53-04-00",
+  "status": "render-readback-action-replay-proof-freeze-fixture-gate-planned",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
-    "reason": "The accessible LuminaryLabs-Publish repository list was compared against the central LuminaryLabs-Dev/LuminaryLabs repo ledger. Every non-excluded Publish repo was already represented in the central ledger with known root .agent state. IntoTheMeadow was selected because repo-local .agent state had advanced beyond central tracking and the renderer-readback / gameplay-action proof seam remains unresolved.",
+    "reason": "The accessible LuminaryLabs-Publish repository list was compared against the central LuminaryLabs-Dev/LuminaryLabs repo ledger and sampled root .agent state. Every non-excluded Publish repo was represented in the central ledger. IntoTheMeadow was selected as the oldest eligible documented fallback after same-day catch-up passes, with the renderer-readback and gameplay-action proof seam still unresolved.",
     "checkedRepos": [
+      "LuminaryLabs-Publish/IntoTheMeadow",
       "LuminaryLabs-Publish/HorrorCorridor",
       "LuminaryLabs-Publish/AetherVale",
-      "LuminaryLabs-Publish/TheOpenAbove",
-      "LuminaryLabs-Publish/TheCavalryOfRome",
-      "LuminaryLabs-Publish/PhantomCommand",
-      "LuminaryLabs-Publish/PrehistoricRush",
       "LuminaryLabs-Publish/ZombieOrchard",
-      "LuminaryLabs-Publish/IntoTheMeadow",
+      "LuminaryLabs-Publish/TheUnmappedHouse",
       "LuminaryLabs-Publish/MyCozyIsland",
-      "LuminaryLabs-Publish/TheUnmappedHouse"
+      "LuminaryLabs-Publish/TheOpenAbove",
+      "LuminaryLabs-Publish/PhantomCommand",
+      "LuminaryLabs-Publish/TheCavalryOfRome",
+      "LuminaryLabs-Publish/PrehistoricRush"
     ]
   },
-  "latestTracker": ".agent/trackers/2026-07-09T03-50-12-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-09T03-50-12-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-09T03-50-12-04-00-render-readback-action-result-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-09T03-50-12-04-00-render-readback-parity-contract.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-09T03-50-12-04-00-grass-consumer-row-freeze.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-09T03-50-12-04-00-action-result-replay-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-09T03-50-12-04-00-target-action-result-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-09T03-50-12-04-00-fixture-check-gate-map.md",
-  "previousTracker": ".agent/trackers/2026-07-09T03-38-54-04-00/project-breakdown.md",
-  "previousCentralTracker": ".agent/trackers/2026-07-09T03-35-07-04-00/project-breakdown.md",
-  "nextBuildTarget": "IntoTheMeadow Render Readback Parity + Action Result Replay Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-09T06-28-53-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-09T06-28-53-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-09T06-28-53-04-00-render-readback-action-replay-proof-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-09T06-28-53-04-00-renderer-consumption-readback-contract.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-09T06-28-53-04-00-grass-descriptor-consumption-row-contract.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-09T06-28-53-04-00-action-frame-objective-replay-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-09T06-28-53-04-00-target-action-result-reason-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-09T06-28-53-04-00-fixture-check-freeze-map.md",
+  "previousTracker": ".agent/trackers/2026-07-09T03-50-12-04-00/project-breakdown.md",
+  "nextBuildTarget": "IntoTheMeadow Render Readback + Action Replay Proof Freeze Fixture Gate",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",
@@ -42,6 +41,7 @@
     "manifest": "src/content/game-manifest.js",
     "dskInstall": "src/boot/install-dsks.js",
     "dskRegistry": "src/dsks/index.js",
+    "dskIdRegistry": "src/content/dsk-registry.js",
     "objectives": "src/content/objectives/arrival-objectives.js",
     "targets": "src/content/interaction-targets/arrival-targets.js"
   },
@@ -71,7 +71,10 @@
     "grass-shader-wind-kit",
     "grass-lod-policy-kit",
     "grass-density-scaling-kit",
-    "grass-debug-visualization-kit"
+    "grass-debug-visualization-kit",
+    "meadow-render-host-dsk",
+    "meadow-diagnostics-dsk",
+    "static-pages-deploy-dsk"
   ],
   "nextCutKits": [
     "render-parity-reason-kit",
@@ -87,6 +90,7 @@
     "action-result-kit",
     "action-result-reason-kit",
     "action-journal-kit",
+    "target-action-preflight-kit",
     "path-progress-reducer-kit",
     "inspect-target-reducer-kit",
     "objective-completion-resolver-kit",
@@ -104,7 +108,7 @@
     "grassGap": "The grass descriptor stack is well formed but has no renderer readback rows for density texture, static batches, patches, draw groups, shader wind, LOD, density scale, instances, or estimated cards.",
     "stateGap": "advanceGameState only increments frame and lastTick.",
     "contentGap": "ARRIVAL_OBJECTIVES and ARRIVAL_INTERACTION_TARGETS define walk-the-path and inspect-tree, but those descriptors do not yet reduce into runtime ActionResult or snapshot.gameplay records.",
-    "narrowing": "Build render parity helpers, GameHost renderParity projection, grass readback rows, ActionFrame input, first objective reducers, snapshot.gameplay, and DOM-free fixtures before visual or content expansion."
+    "narrowing": "Build render parity helpers, GameHost renderParity projection, grass readback rows, ActionFrame input, target/action reducers, first objective completion, snapshot.gameplay, and DOM-free fixtures before visual or content expansion."
   },
   "validation": {
     "runtimeSourceChanged": false,

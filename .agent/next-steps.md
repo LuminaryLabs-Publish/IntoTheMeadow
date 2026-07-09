@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T22-38-17-04-00`
+**Timestamp:** `2026-07-09T00-50-00-04-00`
 
 ## Goal
 
@@ -22,7 +22,7 @@ GameHost render parity consumer boundary
 ## Current ledge name
 
 ```txt
-IntoTheMeadow RenderParity Consumer Fixture + Gameplay Action Replay Gate
+IntoTheMeadow RenderParity Consumer Snapshot + Gameplay Replay Fixture Gate
 ```
 
 ## Ordered next implementation ledges
@@ -191,6 +191,23 @@ tests/gameplay-action-replay-fixture-smoke.mjs
 ```
 
 Then append both to `npm run check`.
+
+### 11. Fixture manifest rows
+
+Add explicit fixture rows for:
+
+```txt
+renderer snapshot absent
+renderer snapshot sparse
+grass density texture expected but not consumed
+grass draw group count mismatch
+path-progress accepted
+path-progress rejected out of range
+inspect accepted for focal-tree
+inspect rejected for unknown target
+objective completion after accepted actions
+legacy snapshot compatibility preserved
+```
 
 ## Stop condition
 

@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T03-50-12-04-00`
+**Timestamp:** `2026-07-09T06-28-53-04-00`
 
 ## Highest-priority gaps
 
@@ -102,6 +102,7 @@ invalid-progress
 objective-already-complete
 accepted
 no-state-change
+objective-completed
 ```
 
 ### 7. The check script does not cover the next proof seam
@@ -123,7 +124,7 @@ The next implementation should add a source-side compatibility adapter that clas
 
 ### 9. Central/docs freshness can drift from repo-local state
 
-A same-hour repo-local pointer had advanced beyond the central ledger. Keep the central `LuminaryLabs-Dev/LuminaryLabs` ledger updated in the same pass whenever root `.agent` files are refreshed.
+The central ledger had `IntoTheMeadow` as the oldest eligible non-Cavalry alignment before this pass. Keep the central `LuminaryLabs-Dev/LuminaryLabs` ledger updated in the same pass whenever root `.agent` files are refreshed.
 
 ## Non-goals for the next pass
 

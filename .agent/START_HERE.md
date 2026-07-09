@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-08T22-38-17-04-00`
+**Last aligned:** `2026-07-09T00-50-00-04-00`
 
 ## Purpose
 
@@ -18,7 +18,7 @@ All non-Cavalry Publish repos were already represented in the central ledger and
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible tracked fallback by central alignment timestamp. Its previous central alignment was `2026-07-08T20-21-59-04-00`, older than the other checked non-excluded repos.
+`IntoTheMeadow` was selected as the oldest eligible tracked fallback by central alignment timestamp. Its previous central alignment was `2026-07-08T22-38-17-04-00`, older than the other checked non-excluded repos.
 
 ## Current product read
 
@@ -73,7 +73,7 @@ frame input
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow RenderParity Consumer Fixture + Gameplay Action Replay Gate
+IntoTheMeadow RenderParity Consumer Snapshot + Gameplay Replay Fixture Gate
 ```
 
 ## First files to read
@@ -84,13 +84,13 @@ IntoTheMeadow RenderParity Consumer Fixture + Gameplay Action Replay Gate
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-08T22-38-17-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T22-38-17-04-00.md
-.agent/architecture-audit/2026-07-08T22-38-17-04-00-renderparity-consumer-action-replay-dsk-map.md
-.agent/render-audit/2026-07-08T22-38-17-04-00-renderer-consumption-readback-fixture.md
-.agent/grass-system-audit/2026-07-08T22-38-17-04-00-grass-consumption-row-fixture.md
-.agent/gameplay-audit/2026-07-08T22-38-17-04-00-action-replay-objective-result-loop.md
-.agent/deploy-audit/2026-07-08T22-38-17-04-00-check-script-fixture-wire-map.md
+.agent/trackers/2026-07-09T00-50-00-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T00-50-00-04-00.md
+.agent/architecture-audit/2026-07-09T00-50-00-04-00-renderparity-gameplay-fixture-contract.md
+.agent/render-audit/2026-07-09T00-50-00-04-00-render-consumption-diagnostic-snapshot.md
+.agent/grass-system-audit/2026-07-09T00-50-00-04-00-grass-descriptor-consumer-matrix.md
+.agent/gameplay-audit/2026-07-09T00-50-00-04-00-action-replay-snapshot-loop.md
+.agent/deploy-audit/2026-07-09T00-50-00-04-00-check-script-fixture-gate.md
 ```
 
 ## Source files to inspect before implementation

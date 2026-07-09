@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T00-50-00-04-00`
+**Timestamp:** `2026-07-09T03-35-07-04-00`
 
 ## Goal
 
@@ -16,13 +16,14 @@ GameHost render parity consumer boundary
 -> first objective ActionResult reducers
 -> snapshot.gameplay projection
 -> DOM-free gameplay action replay fixture
+-> npm run check integration
 -> then visual/gameplay expansion
 ```
 
 ## Current ledge name
 
 ```txt
-IntoTheMeadow RenderParity Consumer Snapshot + Gameplay Replay Fixture Gate
+IntoTheMeadow RenderParity + Gameplay Source Contract Freeze
 ```
 
 ## Ordered next implementation ledges
@@ -92,7 +93,33 @@ src/render-parity/normalize-renderer-snapshot-consumption.js
 
 Return a stable unsupported/readback-absent shape when `renderer.getSnapshot?.()` is missing or sparse.
 
-### 4. Descriptor parity report
+### 4. Grass consumption rows
+
+Create grass-specific parity rows from expected descriptors and renderer snapshot consumption.
+
+Target file:
+
+```txt
+src/render-parity/create-grass-consumption-rows.js
+```
+
+Required row groups:
+
+```txt
+density-texture-row
+static-batch-row
+patch-grid-row
+patch-instance-row
+draw-group-row
+shader-wind-row
+lod-policy-row
+density-scale-row
+debug-summary-row
+estimated-instance-row
+estimated-card-row
+```
+
+### 5. Descriptor parity report
 
 Compare expected descriptors to normalized renderer readback.
 
@@ -114,16 +141,6 @@ RenderParityReport {
 }
 ```
 
-### 5. Grass consumption rows
-
-Create grass-specific parity rows from expected descriptors and renderer snapshot consumption.
-
-Target file:
-
-```txt
-src/render-parity/create-grass-consumption-rows.js
-```
-
 ### 6. GameHost render parity projection
 
 Wire additively in `src/hosts/web-host.js` after:
@@ -136,6 +153,7 @@ Expose:
 
 ```txt
 GameHost.getSnapshot().renderParity
+GameHost.getState?.().renderParity
 ```
 
 Do not remove existing snapshot/readback fields.
@@ -220,4 +238,14 @@ game snapshot has additive gameplay branch
 missing/sparse renderer snapshots are explicit reason rows
 path-progress and inspect-tree produce ActionResult rows
 legacy snapshot fields remain stable
+```
+
+## Do not do before the stop condition
+
+```txt
+Do not add new meadow areas.
+Do not retune visual grass density.
+Do not replace the renderer.
+Do not change external CDN kit URLs.
+Do not add Playwright before pure fixture coverage exists.
 ```

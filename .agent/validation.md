@@ -1,6 +1,6 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T06-28-53-04-00`
+**Timestamp:** `2026-07-09T09-41-24-04-00`
 
 ## Validation performed this run
 
@@ -11,79 +11,58 @@ Repository-file inspection was performed through GitHub for the selected repo an
 Files inspected:
 
 ```txt
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/MyCozyIsland.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/PrehistoricRush.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/TheOpenAbove.md
 .agent/START_HERE.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
+index.html
+package.json
+src/boot/boot-game.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
 src/game/game-state.js
-src/game/game-snapshot.js
 src/game/enhance-render-plan.js
-src/dsks/index.js
-src/content/dsk-registry.js
-src/content/game-manifest.js
+src/boot/expose-game-host.js
 src/content/objectives/arrival-objectives.js
 src/content/interaction-targets/arrival-targets.js
 ```
 
-GitHub organization/ledger inspection performed:
+## Commands run
 
 ```txt
-LuminaryLabs-Publish repository list read from the Publish installation
-LuminaryLabs-Dev/LuminaryLabs central repo-ledger compared against Publish list
-Cavalry of Rome excluded by rule
-IntoTheMeadow selected as the oldest eligible central-ledger fallback after same-day catch-up passes
+No local shell commands were run.
+No npm commands were run.
+No browser smoke was run.
+No DOM-free fixture was run because the next fixture files do not exist yet.
 ```
 
-Files written in `LuminaryLabs-Publish/IntoTheMeadow`:
+## Validation status
 
 ```txt
-.agent/START_HERE.md
-.agent/current-audit.md
-.agent/known-gaps.md
-.agent/next-steps.md
-.agent/validation.md
-.agent/kit-registry.json
-.agent/architecture-audit/2026-07-09T06-28-53-04-00-render-readback-action-replay-proof-dsk-map.md
-.agent/render-audit/2026-07-09T06-28-53-04-00-renderer-consumption-readback-contract.md
-.agent/grass-system-audit/2026-07-09T06-28-53-04-00-grass-descriptor-consumption-row-contract.md
-.agent/gameplay-audit/2026-07-09T06-28-53-04-00-action-frame-objective-replay-loop.md
-.agent/interaction-audit/2026-07-09T06-28-53-04-00-target-action-result-reason-contract.md
-.agent/deploy-audit/2026-07-09T06-28-53-04-00-fixture-check-freeze-map.md
-.agent/trackers/2026-07-09T06-28-53-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T06-28-53-04-00.md
-```
-
-Files written in `LuminaryLabs-Dev/LuminaryLabs`:
-
-```txt
-repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
-internal-change-log/2026-07-09T06-28-53-04-00-into-the-meadow-render-gameplay-proof-freeze.md
-```
-
-## Validation not performed
-
-```txt
-local checkout: no
-npm install: no
-npm run check: no
-npm test: no
-browser route check: no
-GitHub Pages route check: no
-DOM-free fixture run: no, fixture files do not exist yet
-runtime source edit: no
+runtime source changed: no
 branch created: no
 pull request created: no
+npm run check: not run
+browser route check: not run
+fixture replay: not run, fixture files do not exist yet
+repo-local .agent docs updated: yes
+central ledger updated: yes
+pushed to main: yes
 ```
 
-## Push status
+## Existing validation entrypoint
+
+`package.json` exposes:
 
 ```txt
-pushed to main: yes
-documentation-only: yes
-runtime/source changed: no
+npm run check
+npm test
 ```
+
+`npm run check` currently runs static smoke, DSK registry smoke, render-plan smoke, and deterministic scene smoke. Add the future render/action fixture there only after fixture files exist.

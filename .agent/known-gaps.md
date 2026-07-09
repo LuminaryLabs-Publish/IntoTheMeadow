@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T06-28-53-04-00`
+**Timestamp:** `2026-07-09T09-41-24-04-00`
 
 ## Highest-priority gaps
 
@@ -21,117 +21,36 @@ stats.estimatedGrassInstances
 stats.estimatedGrassCards
 ```
 
-`src/hosts/web-host.js` sends the enhanced plan into `renderer.render(plan)` and exposes a renderer snapshot through `GameHost`, but there is still no normalized parity report showing which descriptors were consumed, unconsumed, unsupported, fallback-rendered, sparse, or missing.
+`src/hosts/web-host.js` sends the enhanced plan into `renderer.render(plan)` and exposes `renderer.getSnapshot?.()` through `GameHost.getSnapshot()`, but no repo-local consumer ledger classifies consumed, unsupported, fallback-rendered, sparse, or missing descriptors.
 
-### 2. The GameHost render parity splice point is known but not implemented
+### 2. Grass is descriptor-rich but not readback-proven
 
-The exact next splice point is `src/hosts/web-host.js` after:
+The grass system derives density textures, clump archetypes, static batches, patch placements, draw groups, shader wind, LOD policy, density scaling, and debug summaries. That is the right structure, but there is no fixture row proving that expected patches/draw groups/instance counts line up with renderer readback.
 
-```txt
-const render = renderer.render(plan);
-```
+### 3. Gameplay action descriptors are inert
 
-The source should compute a parity record from:
+`ARRIVAL_OBJECTIVES` defines `path-progress` and `inspect` requirements, and `ARRIVAL_INTERACTION_TARGETS` defines `arrival-path` and `focal-tree`. `advanceGameState()` currently increments frame and writes `lastTick`; it does not reduce actions, emit action results, complete objectives, or project gameplay proof into snapshots.
 
-```txt
-expected: enhanced plan descriptors
-actual: renderer.getSnapshot?.() consumption readback
-```
+### 4. GameHost has no additive proof projection
 
-Then expose it additively through:
+`GameHost` exposes state, snapshot, diagnostics, and game reference. It does not expose additive `renderParity`, `grassReadback`, `gameplayAction`, or `objectiveProgress` proof records yet.
 
-```txt
-GameHost.getSnapshot().renderParity
-GameHost.getState?.().renderParity
-```
+### 5. Fixture coverage is not wired into `npm run check`
 
-Existing `enhancedRenderPlan`, `render`, `state`, `snapshot`, and `diagnostics` fields must remain stable.
-
-### 3. Grass readback rows are not proven
-
-The game has a texture-driven grass descriptor stack, but renderer-facing readback is not stable.
-
-The next pass must prove or explicitly classify:
-
-```txt
-grassSystem.densityTexture
-grassSystem.staticBatches
-grassSystem.patches
-grassSystem.drawGroups
-grassSystem.shaderWind
-grassSystem.lodPolicy
-grassSystem.densityScale
-grassSystem.debug
-grassPatches
-stats.grassPatchCount
-stats.grassStaticBatchCount
-stats.grassDrawGroupCount
-stats.estimatedGrassInstances
-stats.estimatedGrassCards
-```
-
-Silent descriptor drop remains the main render failure mode.
-
-### 4. Renderer snapshot absence is not handled as a first-class result
-
-The external renderer may not expose a complete consumption snapshot.
-
-A missing or sparse renderer snapshot must produce stable reason rows, not an exception and not a silent pass.
-
-### 5. Gameplay descriptors are inert
-
-`ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS` define the first gameplay loop:
-
-```txt
-path-progress -> arrival-path -> walk-the-path
-inspect -> focal-tree -> inspect-tree
-```
-
-`advanceGameState()` does not consume actions, so those descriptors never become `ActionResult`, `completedObjectiveIds`, or `snapshot.gameplay` records.
-
-### 6. Interaction target authority has no reducer
-
-`arrival-targets.js` knows which target accepts which action, but the runtime has no pure reducer that validates target/action pairs.
-
-Missing rows:
-
-```txt
-unknown-target
-wrong-action-for-target
-invalid-progress
-objective-already-complete
-accepted
-no-state-change
-objective-completed
-```
-
-### 7. The check script does not cover the next proof seam
-
-`npm run check` currently covers static, registry, render-plan, and deterministic-scene smokes.
-
-It does not yet run:
-
-```txt
-render-parity-fixture-smoke
-gameplay-action-replay-fixture-smoke
-```
-
-### 8. Consumer snapshot compatibility needs an explicit adapter
-
-The external `meadow-webgl-render-kit` may return renderer readback with sparse fields, no grass-specific rows, or no `getSnapshot` at all.
-
-The next implementation should add a source-side compatibility adapter that classifies sparse consumer data as explicit parity rows instead of assuming the renderer is wrong or complete.
-
-### 9. Central/docs freshness can drift from repo-local state
-
-The central ledger had `IntoTheMeadow` as the oldest eligible non-Cavalry alignment before this pass. Keep the central `LuminaryLabs-Dev/LuminaryLabs` ledger updated in the same pass whenever root `.agent` files are refreshed.
+`package.json` already has `npm run check` for static and render-plan smoke tests. The next fixture scripts should be pure Node/DOM-free and should be added to this existing check path after they exist.
 
 ## Non-goals for the next pass
 
+Do not start with:
+
 ```txt
-Do not rewrite renderer visuals.
-Do not change meadow content placement.
-Do not change external CDN kit URLs.
-Do not move reusable renderer systems into this publish repo permanently.
-Do not add browser-only test dependencies before pure fixture coverage exists.
+visual meadow expansion
+external CDN kit changes
+renderer replacement
+grass renderer rewrite
+new gameplay content
+shared kit promotion
+route/UI redesign
 ```
+
+The next pass should stay narrow: source records, consumer ledgers, action-result rows, objective rows, fixture rows, and additive GameHost projection.

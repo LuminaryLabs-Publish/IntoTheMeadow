@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T18-09-21-04-00`
+**Timestamp:** `2026-07-08T20-21-59-04-00`
 
 ## Highest-priority gaps
 
@@ -21,7 +21,7 @@ stats.estimatedGrassInstances
 stats.estimatedGrassCards
 ```
 
-`src/hosts/web-host.js` sends the enhanced plan into `renderer.render(plan)` and exposes a renderer snapshot through `GameHost`, but there is no normalized parity report showing which descriptors were consumed, unconsumed, unsupported, fallback-rendered, or missing.
+`src/hosts/web-host.js` sends the enhanced plan into `renderer.render(plan)` and exposes a renderer snapshot through `GameHost`, but there is still no normalized parity report showing which descriptors were consumed, unconsumed, unsupported, fallback-rendered, or missing.
 
 ### 2. The GameHost render parity splice point is known but not implemented
 
@@ -45,7 +45,7 @@ GameHost.getSnapshot().renderParity
 GameHost.getState?.().renderParity
 ```
 
-Existing `enhancedRenderPlan` and `render` fields must remain stable.
+Existing `enhancedRenderPlan`, `render`, `state`, `snapshot`, and `diagnostics` fields must remain stable.
 
 ### 3. Grass readback rows are not proven
 
@@ -69,13 +69,13 @@ stats.estimatedGrassInstances
 stats.estimatedGrassCards
 ```
 
-Silent descriptor drop is the main render failure mode.
+Silent descriptor drop remains the main render failure mode.
 
 ### 4. Renderer snapshot absence is not handled as a first-class result
 
 The external renderer may not expose a complete consumption snapshot.
 
-That should not block readback.
+That should not block the fixture.
 
 A missing or sparse renderer snapshot must produce a stable failed report with specific reason rows, not an exception and not a silent pass.
 
@@ -127,7 +127,7 @@ tests/gameplay-authority-fixture-smoke.mjs
 package.json check script inclusion
 ```
 
-### 9. Public route should stay backward-compatible
+### 9. Runtime compatibility needs explicit protection
 
 `game.tick({ time, dt })` is already used by the host loop.
 
@@ -136,6 +136,12 @@ Any action input upgrade must preserve that call shape and only add optional sup
 ```txt
 game.tick({ time, dt, actions })
 ```
+
+`exposeGameHost()` should also keep the currently exposed fields intact while adding `renderParity` and `gameplay` branches.
+
+### 10. The publish repo should not absorb reusable renderer responsibility permanently
+
+The next work can live locally long enough to prove the contract, but reusable render parity, grass readback, and gameplay authority concepts should remain cleanly bounded so they can later be promoted or mirrored into Nexus-style kit repos.
 
 ## Do not do yet
 
@@ -153,5 +159,5 @@ game.tick({ time, dt, actions })
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow GameHost RenderParity Consumer + Objective ActionResult Fixture Gate
+IntoTheMeadow RenderParity + Gameplay ActionResult Source Contract Fixture Gate
 ```

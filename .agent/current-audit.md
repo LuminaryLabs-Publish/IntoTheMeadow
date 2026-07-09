@@ -1,6 +1,6 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T22-38-17-04-00`
+**Timestamp:** `2026-07-09T00-50-00-04-00`
 
 ## Current state
 
@@ -13,16 +13,16 @@ The repo should stay a publishable game/deploy repo with local proof kits, not t
 The accessible `LuminaryLabs-Publish` repo list checked this run contained:
 
 ```txt
-IntoTheMeadow
 HorrorCorridor
 AetherVale
-ZombieOrchard
-TheUnmappedHouse
-MyCozyIsland
 TheOpenAbove
-PhantomCommand
 TheCavalryOfRome
+PhantomCommand
 PrehistoricRush
+ZombieOrchard
+IntoTheMeadow
+MyCozyIsland
+TheUnmappedHouse
 ```
 
 `TheCavalryOfRome` was excluded.
@@ -31,7 +31,7 @@ The central ledger already tracks every non-Cavalry repo in that list.
 
 No non-excluded Publish repo was found to be fully new, absent from the central ledger, undocumented, recently added but undocumented, or missing sampled root `.agent` state.
 
-`IntoTheMeadow` was selected because its central ledger timestamp, `2026-07-08T20-21-59-04-00`, was the oldest eligible non-Cavalry fallback among the checked ledgers.
+`IntoTheMeadow` was selected because its central ledger timestamp, `2026-07-08T22-38-17-04-00`, was the oldest eligible non-Cavalry fallback among the checked ledgers.
 
 ## Current interaction loop
 

@@ -1,6 +1,6 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T22-38-17-04-00`
+**Timestamp:** `2026-07-09T00-50-00-04-00`
 
 ## Validation performed this run
 
@@ -26,9 +26,7 @@ repo-ledger/LuminaryLabs-Publish/PrehistoricRush.md
 repo-ledger/LuminaryLabs-Publish/ZombieOrchard.md
 repo-ledger/LuminaryLabs-Publish/MyCozyIsland.md
 repo-ledger/LuminaryLabs-Publish/TheUnmappedHouse.md
-index.html
 package.json
-src/boot/boot-game.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
 src/game/game-state.js
@@ -57,20 +55,20 @@ Files written in `LuminaryLabs-Publish/IntoTheMeadow`:
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-08T22-38-17-04-00-renderparity-consumer-action-replay-dsk-map.md
-.agent/render-audit/2026-07-08T22-38-17-04-00-renderer-consumption-readback-fixture.md
-.agent/grass-system-audit/2026-07-08T22-38-17-04-00-grass-consumption-row-fixture.md
-.agent/gameplay-audit/2026-07-08T22-38-17-04-00-action-replay-objective-result-loop.md
-.agent/deploy-audit/2026-07-08T22-38-17-04-00-check-script-fixture-wire-map.md
-.agent/trackers/2026-07-08T22-38-17-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T22-38-17-04-00.md
+.agent/architecture-audit/2026-07-09T00-50-00-04-00-renderparity-gameplay-fixture-contract.md
+.agent/render-audit/2026-07-09T00-50-00-04-00-render-consumption-diagnostic-snapshot.md
+.agent/grass-system-audit/2026-07-09T00-50-00-04-00-grass-descriptor-consumer-matrix.md
+.agent/gameplay-audit/2026-07-09T00-50-00-04-00-action-replay-snapshot-loop.md
+.agent/deploy-audit/2026-07-09T00-50-00-04-00-check-script-fixture-gate.md
+.agent/trackers/2026-07-09T00-50-00-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T00-50-00-04-00.md
 ```
 
 Files written in `LuminaryLabs-Dev/LuminaryLabs`:
 
 ```txt
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
-internal-change-log/2026-07-08T22-38-17-04-00-into-the-meadow-renderparity-consumer-action-replay.md
+internal-change-log/2026-07-09T00-50-00-04-00-into-the-meadow-renderparity-gameplay-fixture.md
 ```
 
 ## Validation not performed

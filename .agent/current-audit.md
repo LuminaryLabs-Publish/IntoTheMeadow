@@ -1,6 +1,6 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T00-50-00-04-00`
+**Timestamp:** `2026-07-09T03-35-07-04-00`
 
 ## Current state
 
@@ -13,16 +13,16 @@ The repo should stay a publishable game/deploy repo with local proof kits, not t
 The accessible `LuminaryLabs-Publish` repo list checked this run contained:
 
 ```txt
+IntoTheMeadow
 HorrorCorridor
 AetherVale
-TheOpenAbove
-TheCavalryOfRome
-PhantomCommand
-PrehistoricRush
 ZombieOrchard
-IntoTheMeadow
-MyCozyIsland
 TheUnmappedHouse
+MyCozyIsland
+TheOpenAbove
+PhantomCommand
+TheCavalryOfRome
+PrehistoricRush
 ```
 
 `TheCavalryOfRome` was excluded.
@@ -31,7 +31,7 @@ The central ledger already tracks every non-Cavalry repo in that list.
 
 No non-excluded Publish repo was found to be fully new, absent from the central ledger, undocumented, recently added but undocumented, or missing sampled root `.agent` state.
 
-`IntoTheMeadow` was selected because its central ledger timestamp, `2026-07-08T22-38-17-04-00`, was the oldest eligible non-Cavalry fallback among the checked ledgers.
+`IntoTheMeadow` was selected because its central ledger timestamp, `2026-07-09T00-50-00-04-00`, was the oldest eligible non-Cavalry fallback among the checked ledgers after later catch-up passes advanced `HorrorCorridor`, `PhantomCommand`, `ZombieOrchard`, `TheUnmappedHouse`, `MyCozyIsland`, `AetherVale`, `PrehistoricRush`, and `TheOpenAbove`.
 
 ## Current interaction loop
 
@@ -49,6 +49,7 @@ index.html
   -> game.getRenderPlan(time)
   -> enhanceRenderPlan(rawPlan)
   -> renderer.render(plan)
+  -> optional debug HUD reads diagnostics and render counts
   -> GameHost exposes state, snapshot, diagnostics, enhanced plan, and renderer snapshot
 ```
 
@@ -68,12 +69,15 @@ index.html
 
 `ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS` already define the first gameplay proof seam: `path-progress` for `arrival-path` and `inspect` for `focal-tree`.
 
+`package.json` exposes `npm run check`, but the script does not yet run render-parity or gameplay-action replay fixtures.
+
 ## Current gap summary
 
 ```txt
 render descriptor parity: missing
 grass consumption readback rows: missing
 renderer snapshot absence handling: missing
+GameHost.renderParity projection: missing
 ActionFrame normalization: missing
 ActionResult reducers: missing
 objective completion projection: missing

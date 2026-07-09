@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-09T12-08-46-04-00`
+**Last aligned:** `2026-07-09T15-39-08-04-00`
 
 ## Purpose
 
@@ -18,26 +18,26 @@ No checked non-Cavalry Publish repo was fully new, central-ledger absent, undocu
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible central-ledger fallback. Central tracking still pointed to `2026-07-09T09-50-00-04-00`, older than the other checked non-Cavalry Publish repos at read time.
+`IntoTheMeadow` was selected as the oldest eligible central-ledger fallback. Central tracking still pointed at `2026-07-09T12-08-46-04-00`, older than the other checked non-Cavalry Publish repos at read time.
 
 ## Publish repos checked
 
 ```txt
-LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central-ledger fallback / central latest 2026-07-09T09-50-00-04-00
-LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T10-10-32-04-00
-LuminaryLabs-Publish/AetherVale           tracked / root .agent present / central latest 2026-07-09T11-30-50-04-00
-LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T10-40-00-04-00
-LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T11-00-39-04-00
-LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T11-39-50-04-00
-LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T11-50-08-04-00
-LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T10-29-02-04-00
+LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central-ledger fallback / central latest 2026-07-09T12-08-46-04-00
+LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T12-30-09-04-00
+LuminaryLabs-Publish/AetherVale           tracked / root .agent present / central latest 2026-07-09T14-16-00-04-00
+LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T13-18-48-04-00
+LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T13-38-15-04-00
+LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T14-39-07-04-00
+LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T15-09-09-04-00
+LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T13-00-37-04-00
 LuminaryLabs-Publish/TheCavalryOfRome     excluded by rule
-LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T11-46-08-04-00
+LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T15-20-00-04-00
 ```
 
 ## Current product read
 
-`IntoTheMeadow` is a static DSK-composed meadow exploration route. It boots from `index.html` into `src/boot/boot-game.js`, then `src/hosts/web-host.js` loads external meadow kits, creates the local game composition, enhances the render plan, renders through the external WebGL renderer kit, and exposes partial diagnostics through `GameHost`.
+`IntoTheMeadow` is a static DSK-composed meadow exploration route. It boots from `index.html` into `src/boot/boot-game.js`, then `src/hosts/web-host.js` imports external meadow kits, creates the local game composition, enhances the render plan, renders through the external WebGL renderer kit, and exposes diagnostics through `GameHost`.
 
 ## Current interaction loop
 
@@ -57,7 +57,7 @@ index.html
   -> advanceGameState() increments frame and records lastTick only
   -> game.getRenderPlan(time)
   -> enhanceRenderPlan(rawPlan)
-  -> createGrassSystem() produces texture-driven grass descriptors
+  -> createGrassSystem() produces texture-driven grass descriptors and stats
   -> renderer.render(enhancedPlan)
   -> optional debug HUD reports validation/object/grass/render counts
   -> GameHost exposes state, snapshot, diagnostics, enhanced render plan, and optional renderer snapshot
@@ -70,7 +70,7 @@ frame or fixture input
   -> expected render descriptor collection
   -> renderer snapshot normalization
   -> render consumption ledger rows
-  -> grass readback rows
+  -> grass consumption rows
   -> ActionFrame and target/action preflight rows
   -> ActionResult and objective progress rows
   -> snapshot.renderParity and snapshot.gameplay projections
@@ -81,7 +81,7 @@ frame or fixture input
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Render Consumption + Gameplay Action Fixture Gate
+IntoTheMeadow Render Consumption Ledger Central Refresh + Action Fixture Gate
 ```
 
 ## First files to read
@@ -92,14 +92,14 @@ IntoTheMeadow Render Consumption + Gameplay Action Fixture Gate
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-09T12-08-46-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T12-08-46-04-00.md
-.agent/architecture-audit/2026-07-09T12-08-46-04-00-render-consumption-gameplay-fixture-dsk-map.md
-.agent/render-audit/2026-07-09T12-08-46-04-00-renderer-consumption-gamehost-readback.md
-.agent/grass-system-audit/2026-07-09T12-08-46-04-00-grass-descriptor-readback-proof-map.md
-.agent/gameplay-audit/2026-07-09T12-08-46-04-00-action-result-objective-loop.md
-.agent/interaction-audit/2026-07-09T12-08-46-04-00-target-action-preflight-reason-map.md
-.agent/deploy-audit/2026-07-09T12-08-46-04-00-npm-check-fixture-wire-plan.md
+.agent/trackers/2026-07-09T15-39-08-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T15-39-08-04-00.md
+.agent/architecture-audit/2026-07-09T15-39-08-04-00-render-consumption-ledger-central-refresh-dsk-map.md
+.agent/render-audit/2026-07-09T15-39-08-04-00-renderer-consumption-ledger-readback.md
+.agent/grass-system-audit/2026-07-09T15-39-08-04-00-grass-consumption-row-ledger.md
+.agent/gameplay-audit/2026-07-09T15-39-08-04-00-action-result-objective-fixture-loop.md
+.agent/interaction-audit/2026-07-09T15-39-08-04-00-target-action-preflight-fixture-map.md
+.agent/deploy-audit/2026-07-09T15-39-08-04-00-check-fixture-ledger-wire-map.md
 ```
 
 ## Source files to inspect before implementation

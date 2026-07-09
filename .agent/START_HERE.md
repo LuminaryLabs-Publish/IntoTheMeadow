@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-09T15-39-08-04-00`
+**Last aligned:** `2026-07-09T18-20-18-04-00`
 
 ## Purpose
 
@@ -12,27 +12,26 @@ Read this folder before changing implementation code.
 
 ## Current selection result
 
-The accessible `LuminaryLabs-Publish` repository list was compared against the tracked/documented repo ledger in `LuminaryLabs-Dev/LuminaryLabs` and sampled repo-local root `.agent` state.
+The current public `LuminaryLabs-Publish` repository list was compared against the tracked/documented repo ledger in `LuminaryLabs-Dev/LuminaryLabs` and sampled root `.agent/START_HERE.md` state.
 
-No checked non-Cavalry Publish repo was fully new, central-ledger absent, undocumented, recently added but undocumented, or missing sampled root `.agent/START_HERE.md` state.
+No checked non-Cavalry Publish repo was new, missing from the central ledger, missing a root `.agent` folder, recently added but undocumented, or otherwise undocumented.
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible central-ledger fallback. Central tracking still pointed at `2026-07-09T12-08-46-04-00`, older than the other checked non-Cavalry Publish repos at read time.
+`IntoTheMeadow` was selected as the oldest eligible documented fallback among checked public non-Cavalry repos. Its central ledger was at `2026-07-09T15-39-08-04-00`, older than the other checked eligible public entries.
 
-## Publish repos checked
+## Public Publish repos checked
 
 ```txt
-LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central-ledger fallback / central latest 2026-07-09T12-08-46-04-00
-LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T12-30-09-04-00
-LuminaryLabs-Publish/AetherVale           tracked / root .agent present / central latest 2026-07-09T14-16-00-04-00
-LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T13-18-48-04-00
-LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T13-38-15-04-00
-LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T14-39-07-04-00
-LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T15-09-09-04-00
-LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T13-00-37-04-00
+LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T17-48-20-04-00
+LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T16-58-52-04-00
+LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T16-38-14-04-00
+LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T16-29-23-04-00
+LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T16-00-13-04-00
+LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T18-11-58-04-00
+LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible documented fallback / central latest 2026-07-09T15-39-08-04-00
 LuminaryLabs-Publish/TheCavalryOfRome     excluded by rule
-LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T15-20-00-04-00
+LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T17-58-53-04-00
 ```
 
 ## Current product read
@@ -81,7 +80,7 @@ frame or fixture input
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Render Consumption Ledger Central Refresh + Action Fixture Gate
+IntoTheMeadow Render Action Readback + DOM-Free Fixture Gate
 ```
 
 ## First files to read
@@ -92,14 +91,14 @@ IntoTheMeadow Render Consumption Ledger Central Refresh + Action Fixture Gate
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-09T15-39-08-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T15-39-08-04-00.md
-.agent/architecture-audit/2026-07-09T15-39-08-04-00-render-consumption-ledger-central-refresh-dsk-map.md
-.agent/render-audit/2026-07-09T15-39-08-04-00-renderer-consumption-ledger-readback.md
-.agent/grass-system-audit/2026-07-09T15-39-08-04-00-grass-consumption-row-ledger.md
-.agent/gameplay-audit/2026-07-09T15-39-08-04-00-action-result-objective-fixture-loop.md
-.agent/interaction-audit/2026-07-09T15-39-08-04-00-target-action-preflight-fixture-map.md
-.agent/deploy-audit/2026-07-09T15-39-08-04-00-check-fixture-ledger-wire-map.md
+.agent/trackers/2026-07-09T18-20-18-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T18-20-18-04-00.md
+.agent/architecture-audit/2026-07-09T18-20-18-04-00-render-action-readback-dsk-map.md
+.agent/render-audit/2026-07-09T18-20-18-04-00-render-plan-consumption-readback.md
+.agent/grass-system-audit/2026-07-09T18-20-18-04-00-grass-descriptor-consumption-proof.md
+.agent/gameplay-audit/2026-07-09T18-20-18-04-00-action-objective-result-loop.md
+.agent/interaction-audit/2026-07-09T18-20-18-04-00-target-action-preflight-contract.md
+.agent/deploy-audit/2026-07-09T18-20-18-04-00-dom-free-fixture-gate.md
 ```
 
 ## Source files to inspect before implementation

@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T18-09-21-04-00`
+**Timestamp:** `2026-07-08T20-21-59-04-00`
 
 ## Goal
 
@@ -22,7 +22,7 @@ GameHost render parity consumer boundary
 ## Current ledge name
 
 ```txt
-IntoTheMeadow GameHost RenderParity Consumer + Objective ActionResult Fixture Gate
+IntoTheMeadow RenderParity + Gameplay ActionResult Source Contract Fixture Gate
 ```
 
 ## Ordered next implementation ledges
@@ -234,6 +234,33 @@ Target files:
 tests/render-parity-fixture-smoke.mjs
 tests/gameplay-authority-fixture-smoke.mjs
 package.json
+```
+
+### 11. Keep publish-host compatibility explicit
+
+The host currently calls `game.tick({ time, dt })`, then asks for a render plan and passes the enhanced plan to `renderer.render(plan)`.
+
+Any source contract work must preserve that path.
+
+Allowed additive changes:
+
+```txt
+lastRenderParity
+GameHost.renderParity
+snapshot.renderParity
+snapshot.gameplay
+game.tick({ time, dt, actions }) optional support
+```
+
+Disallowed changes in this slice:
+
+```txt
+renderer replacement
+new meadow content
+new interaction UI
+new visual density
+browser-only parity assertions
+breaking existing GameHost fields
 ```
 
 ## Acceptance checklist

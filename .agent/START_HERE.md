@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-09T03-38-54-04-00`
+**Last aligned:** `2026-07-09T03-50-12-04-00`
 
 ## Purpose
 
@@ -12,19 +12,17 @@ Read this folder before changing implementation code.
 
 ## Latest selection result
 
-The accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
+The accessible `LuminaryLabs-Publish` repository list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
 
 All non-Cavalry Publish repos were already represented in the central ledger and had sampled root `.agent` state.
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible tracked fallback by central alignment timestamp. Its previous central alignment was `2026-07-09T00-50-00-04-00`, older than the other checked non-excluded repos.
-
-A repo-local `03:35` same-hour pointer was observed in root `.agent` state while central tracking still lagged at `00:50`; this pass preserves that context and advances the central ledger to the fresh `03:38` tracker.
+`IntoTheMeadow` was selected for this pass because its repo-local `.agent` state had advanced beyond central ledger state and its renderer-readback / gameplay-action proof seam is still unresolved. This run keeps the work to one repo, refreshes the root `.agent` pointer, and catches the central ledger up to the latest source contract framing.
 
 ## Current product read
 
-`IntoTheMeadow` is a static DSK-composed meadow exploration game.
+`IntoTheMeadow` is a static DSK-composed meadow exploration route.
 
 It boots from:
 
@@ -77,7 +75,7 @@ frame input
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Renderer Readback Consumer Freeze + Action Replay Fixture Gate
+IntoTheMeadow Render Readback Parity + Action Result Replay Fixture Gate
 ```
 
 ## First files to read
@@ -88,14 +86,14 @@ IntoTheMeadow Renderer Readback Consumer Freeze + Action Replay Fixture Gate
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-09T03-38-54-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T03-38-54-04-00.md
-.agent/architecture-audit/2026-07-09T03-38-54-04-00-renderer-readback-consumer-freeze-dsk-map.md
-.agent/render-audit/2026-07-09T03-38-54-04-00-renderer-consumption-readback-contract.md
-.agent/grass-system-audit/2026-07-09T03-38-54-04-00-grass-render-consumption-row-contract.md
-.agent/gameplay-audit/2026-07-09T03-38-54-04-00-action-replay-consumer-freeze.md
-.agent/interaction-audit/2026-07-09T03-38-54-04-00-target-action-contract.md
-.agent/deploy-audit/2026-07-09T03-38-54-04-00-check-script-fixture-map.md
+.agent/trackers/2026-07-09T03-50-12-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T03-50-12-04-00.md
+.agent/architecture-audit/2026-07-09T03-50-12-04-00-render-readback-action-result-dsk-map.md
+.agent/render-audit/2026-07-09T03-50-12-04-00-render-readback-parity-contract.md
+.agent/grass-system-audit/2026-07-09T03-50-12-04-00-grass-consumer-row-freeze.md
+.agent/gameplay-audit/2026-07-09T03-50-12-04-00-action-result-replay-loop.md
+.agent/interaction-audit/2026-07-09T03-50-12-04-00-target-action-result-contract.md
+.agent/deploy-audit/2026-07-09T03-50-12-04-00-fixture-check-gate-map.md
 ```
 
 ## Source files to inspect before implementation

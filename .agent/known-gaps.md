@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T09-41-24-04-00`
+**Timestamp:** `2026-07-09T09-50-00-04-00`
 
 ## Highest-priority gaps
 
@@ -25,17 +25,21 @@ stats.estimatedGrassCards
 
 ### 2. Grass is descriptor-rich but not readback-proven
 
-The grass system derives density textures, clump archetypes, static batches, patch placements, draw groups, shader wind, LOD policy, density scaling, and debug summaries. That is the right structure, but there is no fixture row proving that expected patches/draw groups/instance counts line up with renderer readback.
+The grass system derives density textures, clump archetypes, static batches, patch placements, draw groups, shader wind, LOD policy, density scaling, and debug summaries. That is the right structure, but there is no fixture row proving that expected patches, draw groups, instance counts, and estimated cards line up with renderer readback.
 
 ### 3. Gameplay action descriptors are inert
 
 `ARRIVAL_OBJECTIVES` defines `path-progress` and `inspect` requirements, and `ARRIVAL_INTERACTION_TARGETS` defines `arrival-path` and `focal-tree`. `advanceGameState()` currently increments frame and writes `lastTick`; it does not reduce actions, emit action results, complete objectives, or project gameplay proof into snapshots.
 
-### 4. GameHost has no additive proof projection
+### 4. Interaction authority is only descriptor-level
+
+The route has target/action descriptors but no `targetActionPreflight()` or stable reason matrix. Rejected, unchanged, duplicate, unknown-target, and action-target mismatch paths need source-owned reason codes before browser input is attached.
+
+### 5. GameHost has no additive proof projection
 
 `GameHost` exposes state, snapshot, diagnostics, and game reference. It does not expose additive `renderParity`, `grassReadback`, `gameplayAction`, or `objectiveProgress` proof records yet.
 
-### 5. Fixture coverage is not wired into `npm run check`
+### 6. Fixture coverage is not wired into `npm run check`
 
 `package.json` already has `npm run check` for static and render-plan smoke tests. The next fixture scripts should be pure Node/DOM-free and should be added to this existing check path after they exist.
 

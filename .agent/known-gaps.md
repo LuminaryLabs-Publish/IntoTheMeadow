@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T00-50-00-04-00`
+**Timestamp:** `2026-07-09T03-35-07-04-00`
 
 ## Highest-priority gaps
 
@@ -104,6 +104,14 @@ gameplay-action-replay-fixture-smoke
 The external `meadow-webgl-render-kit` may return renderer readback with sparse fields, no grass-specific rows, or no `getSnapshot` at all.
 
 The next implementation should add a source-side compatibility adapter that classifies sparse consumer data as explicit parity rows instead of assuming the renderer is wrong or complete.
+
+### 8. Central tracking is current, but proof contracts are still only docs
+
+This run updated repo-local and central docs.
+
+It did not implement the parity/action modules.
+
+The next code pass must make the documented contract executable.
 
 ## Non-goals for the next pass
 

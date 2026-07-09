@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T20-21-59-04-00`
+**Timestamp:** `2026-07-08T22-38-17-04-00`
 
 ## Highest-priority gaps
 
@@ -49,7 +49,7 @@ Existing `enhancedRenderPlan`, `render`, `state`, `snapshot`, and `diagnostics` 
 
 ### 3. Grass readback rows are not proven
 
-The game has a texture-driven grass descriptor stack, but renderer-facing readback is not yet stable.
+The game has a texture-driven grass descriptor stack, but renderer-facing readback is not stable.
 
 The next pass must prove or explicitly classify:
 
@@ -75,89 +75,36 @@ Silent descriptor drop remains the main render failure mode.
 
 The external renderer may not expose a complete consumption snapshot.
 
-That should not block the fixture.
+A missing or sparse renderer snapshot must produce a stable report with specific reason rows, not an exception and not a silent pass.
 
-A missing or sparse renderer snapshot must produce a stable failed report with specific reason rows, not an exception and not a silent pass.
+### 5. Gameplay descriptors are inert
 
-### 5. Gameplay action authority is still inert
-
-`createInitialGameState()` has player, progression, world, session, and DSK state.
-
-`advanceGameState()` only increments `frame` and records `lastTick`.
-
-There is no typed action frame, action result journal, path-progress reducer, inspect reducer, or idempotent objective completion resolver.
-
-### 6. Snapshot gameplay branch is absent
-
-`createGameSnapshot()` returns manifest, state, render plan, and diagnostics.
-
-It does not expose:
+`ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS` define the first gameplay loop:
 
 ```txt
-snapshot.renderParity
-snapshot.gameplay.activeObjectiveId
-snapshot.gameplay.completedObjectiveIds
-snapshot.gameplay.storyBeatIds
-snapshot.gameplay.lastActionResults
-snapshot.gameplay.actionJournal
+path-progress -> arrival-path -> walk-the-path
+inspect -> focal-tree -> inspect-tree
 ```
 
-### 7. The first objective proof set exists but is not wired
+`advanceGameState()` does not consume actions, so those descriptors never become `ActionResult`, `completedObjectiveIds`, or `snapshot.gameplay` records.
 
-The data already contains the right first proof targets:
+### 6. The check script does not cover the next proof seam
+
+`npm run check` currently covers static, registry, render-plan, and deterministic-scene smokes.
+
+It does not yet run:
 
 ```txt
-walk-the-path -> arrival-path -> path-progress -> progressAtLeast 0.35
-inspect-tree  -> focal-tree   -> inspect       -> inspected true
+render-parity-fixture-smoke
+gameplay-action-replay-fixture-smoke
 ```
 
-The gap is not content.
-
-The gap is a deterministic reducer path from optional actions into objective completion and snapshot projection.
-
-### 8. Fixture smoke coverage is not yet wired
-
-`npm run check` currently runs the existing smoke suite, but it does not include render-parity or gameplay-authority fixtures.
-
-Needed next:
+## Non-goals for the next pass
 
 ```txt
-tests/render-parity-fixture-smoke.mjs
-tests/gameplay-authority-fixture-smoke.mjs
-package.json check script inclusion
-```
-
-### 9. Runtime compatibility needs explicit protection
-
-`game.tick({ time, dt })` is already used by the host loop.
-
-Any action input upgrade must preserve that call shape and only add optional support for:
-
-```txt
-game.tick({ time, dt, actions })
-```
-
-`exposeGameHost()` should also keep the currently exposed fields intact while adding `renderParity` and `gameplay` branches.
-
-### 10. The publish repo should not absorb reusable renderer responsibility permanently
-
-The next work can live locally long enough to prove the contract, but reusable render parity, grass readback, and gameplay authority concepts should remain cleanly bounded so they can later be promoted or mirrored into Nexus-style kit repos.
-
-## Do not do yet
-
-```txt
-- do not add new authored meadow locations
-- do not add inventory
-- do not add first-person controls
-- do not add audio
-- do not add more grass visuals without renderer readback
-- do not move kits to NexusEngine or ProtoKits until local proof is fixture-stable
-- do not replace the external renderer just to make parity pass
-- do not make renderer parity depend on browser-only WebGL state
-```
-
-## Next safe ledge
-
-```txt
-IntoTheMeadow RenderParity + Gameplay ActionResult Source Contract Fixture Gate
+Do not rewrite renderer visuals.
+Do not change meadow content placement.
+Do not change external CDN kit URLs.
+Do not move reusable renderer systems into this publish repo permanently.
+Do not add browser-only test dependencies before pure fixture coverage exists.
 ```

@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T03-38-54-04-00`
+**Timestamp:** `2026-07-09T03-50-12-04-00`
 
 ## Goal
 
@@ -9,7 +9,7 @@ Move `IntoTheMeadow` from descriptor-rich prototype toward a fixture-proven mead
 The immediate path is:
 
 ```txt
-renderer readback consumer freeze
+render readback parity source contracts
 -> grass descriptor consumption rows
 -> DOM-free render parity fixture
 -> ActionFrame support
@@ -23,7 +23,7 @@ renderer readback consumer freeze
 ## Current ledge name
 
 ```txt
-IntoTheMeadow Renderer Readback Consumer Freeze + Action Replay Fixture Gate
+IntoTheMeadow Render Readback Parity + Action Result Replay Fixture Gate
 ```
 
 ## Ordered next implementation ledges
@@ -218,7 +218,5 @@ Stop when:
 npm run check covers render parity and gameplay replay fixture rows
 GameHost snapshot has additive renderParity
 game snapshot has additive gameplay branch
-missing/sparse renderer snapshots are explicit reason rows
-path-progress and inspect produce deterministic ActionResult rows
-legacy GameHost snapshot fields remain stable
+legacy snapshot fields remain present
 ```

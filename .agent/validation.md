@@ -1,6 +1,6 @@
 # Validation — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T09-41-24-04-00`
+**Timestamp:** `2026-07-09T09-50-00-04-00`
 
 ## Validation performed this run
 
@@ -12,9 +12,14 @@ Files inspected:
 
 ```txt
 LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/HorrorCorridor.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/AetherVale.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/ZombieOrchard.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/TheUnmappedHouse.md
 LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/MyCozyIsland.md
-LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/PrehistoricRush.md
 LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/TheOpenAbove.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/PhantomCommand.md
+LuminaryLabs-Dev/LuminaryLabs:repo-ledger/LuminaryLabs-Publish/PrehistoricRush.md
 .agent/START_HERE.md
 .agent/current-audit.md
 .agent/known-gaps.md
@@ -27,8 +32,13 @@ src/boot/boot-game.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
 src/game/game-state.js
+src/game/game-snapshot.js
 src/game/enhance-render-plan.js
+src/boot/install-dsks.js
 src/boot/expose-game-host.js
+src/dsks/index.js
+src/content/dsk-registry.js
+src/content/game-manifest.js
 src/content/objectives/arrival-objectives.js
 src/content/interaction-targets/arrival-targets.js
 ```

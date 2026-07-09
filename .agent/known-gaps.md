@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T03-38-54-04-00`
+**Timestamp:** `2026-07-09T03-50-12-04-00`
 
 ## Highest-priority gaps
 
@@ -120,6 +120,10 @@ gameplay-action-replay-fixture-smoke
 The external `meadow-webgl-render-kit` may return renderer readback with sparse fields, no grass-specific rows, or no `getSnapshot` at all.
 
 The next implementation should add a source-side compatibility adapter that classifies sparse consumer data as explicit parity rows instead of assuming the renderer is wrong or complete.
+
+### 9. Central/docs freshness can drift from repo-local state
+
+A same-hour repo-local pointer had advanced beyond the central ledger. Keep the central `LuminaryLabs-Dev/LuminaryLabs` ledger updated in the same pass whenever root `.agent` files are refreshed.
 
 ## Non-goals for the next pass
 

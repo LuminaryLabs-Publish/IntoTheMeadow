@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-08T20-21-59-04-00`
+**Last aligned:** `2026-07-08T22-38-17-04-00`
 
 ## Purpose
 
@@ -12,34 +12,17 @@ Read this folder before changing implementation code.
 
 ## Latest selection result
 
-The current accessible `LuminaryLabs-Publish` installation list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
+The accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
 
-All non-Cavalry Publish repos were already represented in the central ledger. No checked repo was fully new, absent from tracking, undocumented, recently added but undocumented, or missing known root `.agent` state.
+All non-Cavalry Publish repos were already represented in the central ledger and had sampled root `.agent` state.
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest central-ledger eligible fallback by last documented alignment. Its previous central alignment was `2026-07-08T18-09-21-04-00`, older than the other checked non-excluded repos.
-
-This pass keeps the same high-value next ledge but tightens it into an implementation-ready contract for descriptor parity, grass readback, action result authority, and fixture smoke ownership.
-
-## Publish repos checked
-
-```txt
-LuminaryLabs-Publish/HorrorCorridor      tracked / root .agent known / central alignment 2026-07-08T18-19-43-04-00
-LuminaryLabs-Publish/AetherVale          tracked / root .agent known / central alignment 2026-07-08T18-58-10-04-00
-LuminaryLabs-Publish/TheOpenAbove        tracked / root .agent known / central alignment 2026-07-08T20-01-23-04-00
-LuminaryLabs-Publish/TheCavalryOfRome    excluded by rule
-LuminaryLabs-Publish/PhantomCommand      tracked / root .agent known / central alignment 2026-07-08T18-41-41-04-00
-LuminaryLabs-Publish/PrehistoricRush     tracked / root .agent known / central alignment 2026-07-08T19-30-31-04-00
-LuminaryLabs-Publish/ZombieOrchard       tracked / root .agent known / central alignment 2026-07-08T19-21-15-04-00
-LuminaryLabs-Publish/IntoTheMeadow       selected / oldest central alignment 2026-07-08T18-09-21-04-00
-LuminaryLabs-Publish/MyCozyIsland        tracked / root .agent known / central alignment 2026-07-08T19-50-20-04-00
-LuminaryLabs-Publish/TheUnmappedHouse    tracked / root .agent known / central alignment 2026-07-08T18-51-55-04-00
-```
+`IntoTheMeadow` was selected as the oldest eligible tracked fallback by central alignment timestamp. Its previous central alignment was `2026-07-08T20-21-59-04-00`, older than the other checked non-excluded repos.
 
 ## Current product read
 
-`IntoTheMeadow` is a DSK-composed static browser meadow exploration game.
+`IntoTheMeadow` is a static DSK-composed meadow exploration game.
 
 It boots from:
 
@@ -57,7 +40,7 @@ The runtime imports external meadow kits from `GAME_MANIFEST.externalKits`, buil
 index.html
   -> boot-game.js
   -> startWebHost
-  -> load external meadow-area-kit and meadow-webgl-render-kit
+  -> load meadow-area-kit and meadow-webgl-render-kit from GAME_MANIFEST.externalKits
   -> createIntoTheMeadowGame
   -> install local DSK descriptors
   -> create arrival meadow area kit
@@ -67,26 +50,30 @@ index.html
   -> game.getRenderPlan(time)
   -> enhanceRenderPlan(rawPlan)
   -> renderer.render(plan)
-  -> expose GameHost state/snapshot/diagnostics/enhancedRenderPlan/render snapshot
+  -> GameHost exposes state, snapshot, diagnostics, enhanced plan, and renderer snapshot
 ```
 
 ## Target proof loop
 
 ```txt
-frame start
-  -> game.tick({ time, dt, actions? })
-  -> ActionFrame[]
-  -> ActionResult[]
-  -> objective completion resolver
-  -> snapshot.gameplay
-  -> raw render plan
-  -> enhanced render plan
-  -> expected render descriptors
-  -> renderer.render(plan)
-  -> renderer snapshot normalization
-  -> RenderParityReport
-  -> GameHost.renderParity
-  -> DOM-free fixture rows
+frame input
+  -> optional actions[]
+  -> normalize ActionFrame rows
+  -> reduce path-progress and inspect commands into ActionResult rows
+  -> resolve objective completion
+  -> project snapshot.gameplay additively
+  -> collect expected render descriptors from enhanced plan
+  -> normalize renderer.getSnapshot?.() readback
+  -> classify descriptor parity rows
+  -> classify grass readback rows
+  -> project GameHost.renderParity additively
+  -> run DOM-free fixture rows for render parity and gameplay authority
+```
+
+## Next safe ledge
+
+```txt
+IntoTheMeadow RenderParity Consumer Fixture + Gameplay Action Replay Gate
 ```
 
 ## First files to read
@@ -97,12 +84,13 @@ frame start
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-08T20-21-59-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-08T20-21-59-04-00.md
-.agent/architecture-audit/2026-07-08T20-21-59-04-00-renderparity-actionresult-source-contract.md
-.agent/render-audit/2026-07-08T20-21-59-04-00-descriptor-consumption-contract.md
-.agent/grass-system-audit/2026-07-08T20-21-59-04-00-grass-readback-row-contract.md
-.agent/gameplay-audit/2026-07-08T20-21-59-04-00-objective-actionresult-source-contract.md
+.agent/trackers/2026-07-08T22-38-17-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-08T22-38-17-04-00.md
+.agent/architecture-audit/2026-07-08T22-38-17-04-00-renderparity-consumer-action-replay-dsk-map.md
+.agent/render-audit/2026-07-08T22-38-17-04-00-renderer-consumption-readback-fixture.md
+.agent/grass-system-audit/2026-07-08T22-38-17-04-00-grass-consumption-row-fixture.md
+.agent/gameplay-audit/2026-07-08T22-38-17-04-00-action-replay-objective-result-loop.md
+.agent/deploy-audit/2026-07-08T22-38-17-04-00-check-script-fixture-wire-map.md
 ```
 
 ## Source files to inspect before implementation
@@ -118,34 +106,3 @@ src/content/objectives/arrival-objectives.js
 src/content/interaction-targets/arrival-targets.js
 package.json
 ```
-
-## Source files to add next
-
-```txt
-src/render-parity/render-parity-reasons.js
-src/render-parity/collect-expected-render-descriptors.js
-src/render-parity/normalize-renderer-snapshot-consumption.js
-src/render-parity/compare-render-descriptor-parity.js
-src/render-parity/create-gamehost-render-parity.js
-src/render-parity/create-grass-consumption-rows.js
-src/gameplay-authority/action-reasons.js
-src/gameplay-authority/action-frame.js
-src/gameplay-authority/action-result.js
-src/gameplay-authority/action-journal.js
-src/gameplay-authority/reduce-path-progress.js
-src/gameplay-authority/reduce-inspect-target.js
-src/gameplay-authority/resolve-objective-completion.js
-src/gameplay-authority/create-gameplay-snapshot.js
-tests/render-parity-fixture-smoke.mjs
-tests/gameplay-authority-fixture-smoke.mjs
-```
-
-## Current next safe ledge
-
-```txt
-IntoTheMeadow RenderParity + Gameplay ActionResult Source Contract Fixture Gate
-```
-
-## Main rule
-
-Do not add new meadow areas, grass density, inventory, first-person controls, audio, or renderer extraction until renderer descriptor parity and first-objective gameplay action fixtures prove the current source surface.

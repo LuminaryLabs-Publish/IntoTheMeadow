@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-09T03-50-12-04-00`
+**Last aligned:** `2026-07-09T06-28-53-04-00`
 
 ## Purpose
 
@@ -10,15 +10,30 @@ This `.agent/` folder is the repo-local operating memory for scheduled and manua
 
 Read this folder before changing implementation code.
 
-## Latest selection result
+## Current selection result
 
-The accessible `LuminaryLabs-Publish` repository list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
+The accessible `LuminaryLabs-Publish` repository list was compared against the tracked/documented repo ledger in `LuminaryLabs-Dev/LuminaryLabs` and sampled repo-local root `.agent` state.
 
-All non-Cavalry Publish repos were already represented in the central ledger and had sampled root `.agent` state.
+No checked non-Cavalry Publish repo was fully new, central-ledger absent, undocumented, recently added but undocumented, or missing sampled root `.agent/START_HERE.md` state.
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected for this pass because its repo-local `.agent` state had advanced beyond central ledger state and its renderer-readback / gameplay-action proof seam is still unresolved. This run keeps the work to one repo, refreshes the root `.agent` pointer, and catches the central ledger up to the latest source contract framing.
+`IntoTheMeadow` was selected as the oldest eligible documented fallback after same-day catch-up passes. The unresolved source seam is still the render-readback/action-replay proof boundary: the route already emits rich grass, wind, postprocess, performance, objective, and interaction descriptors, but those descriptors are not fixture-proven as renderer consumption rows or gameplay `ActionResult` rows.
+
+## Publish repos checked
+
+```txt
+LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central latest before this pass 2026-07-09T03-50-12-04-00
+LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T04-30-54-04-00
+LuminaryLabs-Publish/AetherVale           tracked / root .agent present / central latest 2026-07-09T05-51-49-04-00
+LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T05-11-22-04-00
+LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T05-20-42-04-00
+LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T05-30-27-04-00
+LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T06-20-00-04-00
+LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T04-50-00-04-00
+LuminaryLabs-Publish/TheCavalryOfRome     excluded by rule
+LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T06-10-35-04-00
+```
 
 ## Current product read
 
@@ -59,23 +74,23 @@ index.html
 
 ```txt
 frame input
-  -> optional actions[]
-  -> normalize ActionFrame rows
+  -> optional ActionFrame rows
+  -> normalize target/action/progress inputs
   -> reduce path-progress and inspect commands into ActionResult rows
   -> resolve objective completion
   -> project snapshot.gameplay additively
   -> collect expected render descriptors from enhanced plan
   -> normalize renderer.getSnapshot?.() readback
-  -> classify descriptor parity rows
-  -> classify grass readback rows
+  -> classify renderer descriptor consumption rows
+  -> classify grass descriptor consumption rows
   -> project GameHost.renderParity additively
-  -> run DOM-free fixture rows for render parity and gameplay authority
+  -> run DOM-free fixture rows for renderer absence, sparse readback, grass count parity, path progress, inspect, and objective completion
 ```
 
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Render Readback Parity + Action Result Replay Fixture Gate
+IntoTheMeadow Render Readback + Action Replay Proof Freeze Fixture Gate
 ```
 
 ## First files to read
@@ -86,14 +101,14 @@ IntoTheMeadow Render Readback Parity + Action Result Replay Fixture Gate
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-09T03-50-12-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T03-50-12-04-00.md
-.agent/architecture-audit/2026-07-09T03-50-12-04-00-render-readback-action-result-dsk-map.md
-.agent/render-audit/2026-07-09T03-50-12-04-00-render-readback-parity-contract.md
-.agent/grass-system-audit/2026-07-09T03-50-12-04-00-grass-consumer-row-freeze.md
-.agent/gameplay-audit/2026-07-09T03-50-12-04-00-action-result-replay-loop.md
-.agent/interaction-audit/2026-07-09T03-50-12-04-00-target-action-result-contract.md
-.agent/deploy-audit/2026-07-09T03-50-12-04-00-fixture-check-gate-map.md
+.agent/trackers/2026-07-09T06-28-53-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T06-28-53-04-00.md
+.agent/architecture-audit/2026-07-09T06-28-53-04-00-render-readback-action-replay-proof-dsk-map.md
+.agent/render-audit/2026-07-09T06-28-53-04-00-renderer-consumption-readback-contract.md
+.agent/grass-system-audit/2026-07-09T06-28-53-04-00-grass-descriptor-consumption-row-contract.md
+.agent/gameplay-audit/2026-07-09T06-28-53-04-00-action-frame-objective-replay-loop.md
+.agent/interaction-audit/2026-07-09T06-28-53-04-00-target-action-result-reason-contract.md
+.agent/deploy-audit/2026-07-09T06-28-53-04-00-fixture-check-freeze-map.md
 ```
 
 ## Source files to inspect before implementation

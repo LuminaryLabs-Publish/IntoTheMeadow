@@ -1,13 +1,13 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-09T09-50-00-04-00",
-  "status": "render-consumption-ledger-action-replay-fixture-gate-planned",
+  "generatedAt": "2026-07-09T12-08-46-04-00",
+  "status": "render-consumption-gameplay-action-fixture-gate-planned",
   "selection": {
     "excludedRepos": [
       "LuminaryLabs-Publish/TheCavalryOfRome"
     ],
-    "reason": "The accessible LuminaryLabs-Publish repository list was compared against the central LuminaryLabs-Dev/LuminaryLabs repo ledger and sampled root .agent state. Every non-excluded Publish repo was represented in the central ledger and had sampled root .agent state. IntoTheMeadow was selected as the oldest eligible central-ledger fallback, with a partial 2026-07-09T09-41-24-04-00 repo-local refresh but no matching central-ledger alignment or timestamped audit set.",
+    "reason": "The accessible LuminaryLabs-Publish repository list was compared against the central LuminaryLabs-Dev/LuminaryLabs repo ledger and sampled root .agent state. Every non-excluded Publish repo was represented in the central ledger and had sampled root .agent state. IntoTheMeadow was selected as the oldest eligible central-ledger fallback because central tracking still pointed to 2026-07-09T09-50-00-04-00.",
     "checkedRepos": [
       "LuminaryLabs-Publish/IntoTheMeadow",
       "LuminaryLabs-Publish/HorrorCorridor",
@@ -21,16 +21,16 @@
       "LuminaryLabs-Publish/PrehistoricRush"
     ]
   },
-  "latestTracker": ".agent/trackers/2026-07-09T09-50-00-04-00/project-breakdown.md",
-  "previousTracker": ".agent/trackers/2026-07-09T09-41-24-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-09T09-50-00-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-09T09-50-00-04-00-render-consumption-ledger-action-fixture-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-09T09-50-00-04-00-renderer-consumption-readback-ledger.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-09T09-50-00-04-00-grass-readback-consumption-ledger.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-09T09-50-00-04-00-action-replay-objective-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-09T09-50-00-04-00-target-action-reason-matrix.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-09T09-50-00-04-00-check-script-fixture-wire-gate.md",
-  "nextBuildTarget": "IntoTheMeadow Render Consumption Ledger + Action Replay Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-09T12-08-46-04-00/project-breakdown.md",
+  "previousTracker": ".agent/trackers/2026-07-09T09-50-00-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-09T12-08-46-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-09T12-08-46-04-00-render-consumption-gameplay-fixture-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-09T12-08-46-04-00-renderer-consumption-gamehost-readback.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-09T12-08-46-04-00-grass-descriptor-readback-proof-map.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-09T12-08-46-04-00-action-result-objective-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-09T12-08-46-04-00-target-action-preflight-reason-map.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-09T12-08-46-04-00-npm-check-fixture-wire-plan.md",
+  "nextBuildTarget": "IntoTheMeadow Render Consumption + Gameplay Action Fixture Gate",
   "runtimeSurfaces": {
     "entry": "index.html -> src/boot/boot-game.js -> src/hosts/web-host.js",
     "webHost": "src/hosts/web-host.js",

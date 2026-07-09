@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-09T03-35-07-04-00`
+**Last aligned:** `2026-07-09T03-38-54-04-00`
 
 ## Purpose
 
@@ -12,13 +12,15 @@ Read this folder before changing implementation code.
 
 ## Latest selection result
 
-The accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger and sampled root `.agent` state.
+The accessible `LuminaryLabs-Publish` repo list was compared against the central `LuminaryLabs-Dev/LuminaryLabs` repo ledger.
 
 All non-Cavalry Publish repos were already represented in the central ledger and had sampled root `.agent` state.
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible central-alignment fallback after recent same-night catch-up passes advanced the other tracked repos.
+`IntoTheMeadow` was selected as the oldest eligible tracked fallback by central alignment timestamp. Its previous central alignment was `2026-07-09T00-50-00-04-00`, older than the other checked non-excluded repos.
+
+A repo-local `03:35` same-hour pointer was observed in root `.agent` state while central tracking still lagged at `00:50`; this pass preserves that context and advances the central ledger to the fresh `03:38` tracker.
 
 ## Current product read
 
@@ -40,18 +42,19 @@ The runtime imports external meadow kits from `GAME_MANIFEST.externalKits`, buil
 index.html
   -> boot-game.js
   -> startWebHost
-  -> load meadow-area-kit and meadow-webgl-render-kit from GAME_MANIFEST.externalKits
+  -> load external meadow-area-kit and meadow-webgl-render-kit
   -> createIntoTheMeadowGame
   -> install local DSK descriptors
   -> create arrival meadow area kit
+  -> create meadow WebGL renderer
+  -> expose GameHost state/snapshot/diagnostics/enhanced plan/render snapshot
   -> requestAnimationFrame
   -> game.tick({ time, dt })
   -> advanceGameState increments frame and lastTick only
   -> game.getRenderPlan(time)
   -> enhanceRenderPlan(rawPlan)
   -> renderer.render(plan)
-  -> optional debug HUD reads diagnostics and render counts
-  -> GameHost exposes state, snapshot, diagnostics, enhanced plan, and renderer snapshot
+  -> optional debug HUD reports validation/object/grass/render counts
 ```
 
 ## Target proof loop
@@ -74,7 +77,7 @@ frame input
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow RenderParity + Gameplay Source Contract Freeze
+IntoTheMeadow Renderer Readback Consumer Freeze + Action Replay Fixture Gate
 ```
 
 ## First files to read
@@ -85,13 +88,14 @@ IntoTheMeadow RenderParity + Gameplay Source Contract Freeze
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-09T03-35-07-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T03-35-07-04-00.md
-.agent/architecture-audit/2026-07-09T03-35-07-04-00-renderparity-gameplay-source-contract.md
-.agent/render-audit/2026-07-09T03-35-07-04-00-render-consumer-readback-freeze.md
-.agent/grass-system-audit/2026-07-09T03-35-07-04-00-grass-consumption-row-contract.md
-.agent/gameplay-audit/2026-07-09T03-35-07-04-00-action-result-source-contract.md
-.agent/deploy-audit/2026-07-09T03-35-07-04-00-fixture-check-wire-map.md
+.agent/trackers/2026-07-09T03-38-54-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T03-38-54-04-00.md
+.agent/architecture-audit/2026-07-09T03-38-54-04-00-renderer-readback-consumer-freeze-dsk-map.md
+.agent/render-audit/2026-07-09T03-38-54-04-00-renderer-consumption-readback-contract.md
+.agent/grass-system-audit/2026-07-09T03-38-54-04-00-grass-render-consumption-row-contract.md
+.agent/gameplay-audit/2026-07-09T03-38-54-04-00-action-replay-consumer-freeze.md
+.agent/interaction-audit/2026-07-09T03-38-54-04-00-target-action-contract.md
+.agent/deploy-audit/2026-07-09T03-38-54-04-00-check-script-fixture-map.md
 ```
 
 ## Source files to inspect before implementation
@@ -102,17 +106,10 @@ src/game/enhance-render-plan.js
 src/game/create-into-the-meadow-game.js
 src/game/game-state.js
 src/game/game-snapshot.js
+src/boot/install-dsks.js
+src/dsks/index.js
 src/content/game-manifest.js
 src/content/objectives/arrival-objectives.js
 src/content/interaction-targets/arrival-targets.js
 package.json
-```
-
-## Do not do next
-
-```txt
-Do not rewrite visuals before render parity exists.
-Do not change external CDN kit URLs before source contracts are fixture-proven.
-Do not move shared meadow renderer logic into this publish repo permanently.
-Do not add browser-only validation before DOM-free fixture rows exist.
 ```

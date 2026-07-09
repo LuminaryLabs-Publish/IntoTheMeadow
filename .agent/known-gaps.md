@@ -2,17 +2,17 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-09T15-39-08-04-00`
+**Updated:** `2026-07-09T18-20-18-04-00`
 
 ## Selection gap handled
 
 ```txt
-- accessible LuminaryLabs-Publish repos were checked.
+- current public LuminaryLabs-Publish repos were checked.
 - TheCavalryOfRome was excluded.
-- all checked non-Cavalry repos were tracked in central ledger state.
-- sampled root .agent state was present for the selected repo.
-- IntoTheMeadow was selected as the oldest eligible central-ledger fallback.
-- central tracking is refreshed to 2026-07-09T15-39-08-04-00.
+- all checked public non-Cavalry repos were tracked in central ledger state.
+- sampled root .agent/START_HERE.md state was present for all checked public non-Cavalry repos.
+- IntoTheMeadow was selected as the oldest eligible documented fallback.
+- central tracking is refreshed to 2026-07-09T18-20-18-04-00 by this run.
 ```
 
 ## Render proof gaps
@@ -55,4 +55,15 @@
 - npm run check does not include grass-consumption rows.
 - npm run check does not include action-result fixture rows.
 - central ledger sync is manual documentation only.
+```
+
+## Explicit deferrals
+
+```txt
+- visual fidelity pass
+- renderer replacement
+- external CDN migration
+- new meadow content
+- shared-kit promotion
+- browser input wiring before DOM-free action rows
 ```

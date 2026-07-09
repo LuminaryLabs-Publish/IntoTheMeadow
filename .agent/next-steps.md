@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T09-50-00-04-00`
+**Timestamp:** `2026-07-09T12-08-46-04-00`
 
 ## Goal
 
@@ -9,7 +9,7 @@ Move `IntoTheMeadow` from descriptor-rich prototype toward a fixture-proven mead
 ## Immediate ledge
 
 ```txt
-IntoTheMeadow Render Consumption Ledger + Action Replay Fixture Gate
+IntoTheMeadow Render Consumption + Gameplay Action Fixture Gate
 ```
 
 ## Implementation checklist for the next code pass
@@ -40,6 +40,7 @@ src/gameplay/action-result.js
 src/gameplay/target-action-preflight.js
 src/gameplay/reduce-meadow-action.js
 src/gameplay/resolve-objective-progress.js
+src/gameplay/project-gameplay-snapshot.js
 scripts/into-the-meadow-render-action-fixture.mjs
 src/hosts/web-host.js
 src/game/game-state.js
@@ -47,6 +48,18 @@ src/game/game-snapshot.js
 package.json
 ```
 
-## Stop condition for the next pass
+## Stop condition for the next code pass
 
 Stop when `npm run check` proves DOM-free fixture rows for render consumption and gameplay action replay, while the browser route still boots through the existing external meadow kits and the existing visual output path.
+
+## Do not start with
+
+```txt
+visual meadow expansion
+external CDN kit changes
+renderer replacement
+grass renderer rewrite
+new gameplay content
+shared kit promotion
+route/UI redesign
+```

@@ -1,65 +1,73 @@
-# Next Steps — IntoTheMeadow
+# IntoTheMeadow Next Steps
 
-**Timestamp:** `2026-07-09T12-08-46-04-00`
+**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-## Goal
+**Updated:** `2026-07-09T15-39-08-04-00`
 
-Move `IntoTheMeadow` from descriptor-rich prototype toward a fixture-proven meadow game without turning the publish repo into the permanent home for reusable renderer systems.
-
-## Immediate ledge
+## Current next build slice
 
 ```txt
-IntoTheMeadow Render Consumption + Gameplay Action Fixture Gate
+IntoTheMeadow Render Consumption Ledger Central Refresh + Action Fixture Gate
 ```
 
-## Implementation checklist for the next code pass
-
-- [ ] Add pure `src/render-consumption/` modules for expected descriptor collection.
-- [ ] Add pure `src/render-consumption/` modules for renderer snapshot normalization.
-- [ ] Add render consumption row classification: `consumed`, `unsupported`, `missing`, `sparse`, `fallback-rendered`.
-- [ ] Add grass consumption row classification for density texture, static batches, patches, draw groups, estimated instances, and estimated cards.
-- [ ] Add pure `src/gameplay/` modules for `ActionFrame`, `ActionResult`, and target/action reason catalog.
-- [ ] Add `targetActionPreflight()` before mutation.
-- [ ] Add `path-progress` reducer using the existing `arrival-path` target and `walk-the-path` objective.
-- [ ] Add `inspect` reducer using the existing `focal-tree` target and `inspect-tree` objective.
-- [ ] Add objective completion projection without changing current route visuals.
-- [ ] Add additive `GameHost.getSnapshot().renderParity` and `GameHost.getSnapshot().gameplay` proof records.
-- [ ] Add DOM-free fixture rows for empty renderer snapshot, sparse renderer snapshot, grass count parity, valid path progress, valid inspect, repeated inspect/no-op, rejected unknown target, rejected action-target mismatch, and objective completion.
-- [ ] Wire fixture script into `npm run check` only after the fixture exists.
-
-## First files to edit next
+## Build checklist
 
 ```txt
-src/render-consumption/collect-render-expectations.js
-src/render-consumption/normalize-renderer-snapshot.js
-src/render-consumption/classify-render-consumption.js
-src/render-consumption/classify-grass-consumption.js
-src/render-consumption/create-render-consumption-ledger.js
+[ ] Preserve current route shell, external kit URLs, renderer behavior, grass visuals, and GameHost legacy shape.
+[ ] Add render expectation row helpers for objects, grassSystem, grassPatches, windField, postProcess, performance, and stats.
+[ ] Add renderer snapshot normalizer that tolerates missing optional renderer.getSnapshot.
+[ ] Add render consumption ledger rows with consumed / ignored / unsupported / fallback status.
+[ ] Add grass consumption rows for density texture, static batches, patches, draw groups, shader wind, and LOD.
+[ ] Add GameHost render proof projection additively without replacing existing getState/getSnapshot/getDiagnostics.
+[ ] Add ActionFrame contract for path-progress and inspect actions.
+[ ] Add target/action preflight helper for arrival-path and focal-tree.
+[ ] Add ActionResult contract with accepted/rejected/skipped/unchanged statuses.
+[ ] Add objective progress helper for walk-the-path and inspect-tree.
+[ ] Add DOM-free fixture rows before wiring browser input.
+[ ] Extend npm run check only after new fixture scripts exist.
+[ ] Update central LuminaryLabs ledger after implementation lands.
+[ ] Defer visual rewrite, renderer replacement, shared-kit promotion, and external CDN changes.
+```
+
+## Suggested file targets
+
+```txt
+src/render-proof/render-expectations.js
+src/render-proof/renderer-snapshot-normalizer.js
+src/render-proof/render-consumption-ledger.js
+src/render-proof/grass-consumption-ledger.js
+src/render-proof/gamehost-render-proof.js
 src/gameplay/action-frame.js
-src/gameplay/action-result.js
 src/gameplay/target-action-preflight.js
-src/gameplay/reduce-meadow-action.js
-src/gameplay/resolve-objective-progress.js
-src/gameplay/project-gameplay-snapshot.js
-scripts/into-the-meadow-render-action-fixture.mjs
-src/hosts/web-host.js
-src/game/game-state.js
-src/game/game-snapshot.js
+src/gameplay/action-result.js
+src/gameplay/objective-progress.js
+src/gameplay/gameplay-fixture-rows.js
+tests/render-consumption-ledger-smoke.mjs
+tests/grass-consumption-ledger-smoke.mjs
+tests/action-result-fixture-smoke.mjs
 package.json
+src/boot/expose-game-host.js
+src/game/game-snapshot.js
 ```
 
-## Stop condition for the next code pass
-
-Stop when `npm run check` proves DOM-free fixture rows for render consumption and gameplay action replay, while the browser route still boots through the existing external meadow kits and the existing visual output path.
-
-## Do not start with
+## Implementation order
 
 ```txt
-visual meadow expansion
-external CDN kit changes
-renderer replacement
-grass renderer rewrite
-new gameplay content
-shared kit promotion
-route/UI redesign
+1. render-expectations.js
+2. renderer-snapshot-normalizer.js
+3. render-consumption-ledger.js
+4. grass-consumption-ledger.js
+5. render ledger smoke test
+6. action-frame.js
+7. target-action-preflight.js
+8. action-result.js
+9. objective-progress.js
+10. gameplay fixture rows and smoke test
+11. additive GameHost/game snapshot proof fields
+12. package.json check wiring
+13. central ledger implementation log
 ```
+
+## Stop condition
+
+Stop the implementation slice when DOM-free rows prove descriptor consumption and action/objective mutation. Do not continue into visual fidelity or renderer extraction in the same cut.

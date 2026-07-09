@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-09T09-50-00-04-00`
+**Last aligned:** `2026-07-09T12-08-46-04-00`
 
 ## Purpose
 
@@ -18,80 +18,70 @@ No checked non-Cavalry Publish repo was fully new, central-ledger absent, undocu
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible central-ledger fallback. The previous repo-local `.agent` state had a partial `2026-07-09T09-41-24-04-00` refresh, but central tracking and matching timestamped audit files still needed alignment.
+`IntoTheMeadow` was selected as the oldest eligible central-ledger fallback. Central tracking still pointed to `2026-07-09T09-50-00-04-00`, older than the other checked non-Cavalry Publish repos at read time.
 
 ## Publish repos checked
 
 ```txt
-LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central-ledger fallback
-LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T07-05-52-04-00
-LuminaryLabs-Publish/AetherVale           tracked / root .agent present / central latest 2026-07-09T08-50-00-04-00
-LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T07-41-29-04-00
-LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T08-02-33-04-00
-LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T08-29-38-04-00
-LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T09-18-29-04-00
-LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T07-19-41-04-00
+LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central-ledger fallback / central latest 2026-07-09T09-50-00-04-00
+LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T10-10-32-04-00
+LuminaryLabs-Publish/AetherVale           tracked / root .agent present / central latest 2026-07-09T11-30-50-04-00
+LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T10-40-00-04-00
+LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T11-00-39-04-00
+LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T11-39-50-04-00
+LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T11-50-08-04-00
+LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T10-29-02-04-00
 LuminaryLabs-Publish/TheCavalryOfRome     excluded by rule
-LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T09-10-50-04-00
+LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T11-46-08-04-00
 ```
 
 ## Current product read
 
-`IntoTheMeadow` is a static DSK-composed meadow exploration route.
-
-It boots from:
-
-```txt
-index.html
-  -> src/boot/boot-game.js
-  -> src/hosts/web-host.js
-```
-
-The runtime imports external meadow kits from `GAME_MANIFEST.externalKits`, builds the game through `createIntoTheMeadowGame`, enhances external meadow-area render plans through local DSK descriptors, and renders the enhanced plan through the external `meadow-webgl-render-kit`.
+`IntoTheMeadow` is a static DSK-composed meadow exploration route. It boots from `index.html` into `src/boot/boot-game.js`, then `src/hosts/web-host.js` loads external meadow kits, creates the local game composition, enhances the render plan, renders through the external WebGL renderer kit, and exposes partial diagnostics through `GameHost`.
 
 ## Current interaction loop
 
 ```txt
 index.html
-  -> canvas#scene, HUD, and loading DOM mount
-  -> src/boot/boot-game.js captures DOM nodes and debug query flag
+  -> canvas#scene, HUD, loading panel, and status DOM
+  -> src/boot/boot-game.js
   -> startWebHost({ canvas, hud, statusEl, loadingEl, debug })
-  -> load meadow-area-kit and meadow-webgl-render-kit from GAME_MANIFEST.externalKits
+  -> loadExternalKits() imports meadow-area-kit and meadow-webgl-render-kit from GAME_MANIFEST.externalKits
   -> createIntoTheMeadowGame({ externalKits })
-  -> install local DSK descriptors
-  -> create arrival meadow area kit
+  -> installDsks() validates local and external DSK descriptors
+  -> create arrival meadow area kit from ARRIVAL_MEADOW_CONFIG
   -> create meadow WebGL renderer
-  -> expose GameHost state/snapshot/diagnostics/enhanced render plan/render snapshot
+  -> exposeGameHost({ game, renderer, getRenderPlan, getSnapshot })
   -> requestAnimationFrame(frame)
   -> game.tick({ time, dt: 1 / 60 })
-  -> advanceGameState increments frame and writes lastTick only
+  -> advanceGameState() increments frame and records lastTick only
   -> game.getRenderPlan(time)
   -> enhanceRenderPlan(rawPlan)
-  -> renderer.render(plan)
+  -> createGrassSystem() produces texture-driven grass descriptors
+  -> renderer.render(enhancedPlan)
   -> optional debug HUD reports validation/object/grass/render counts
+  -> GameHost exposes state, snapshot, diagnostics, enhanced render plan, and optional renderer snapshot
 ```
 
 ## Target proof loop
 
 ```txt
-frame input
-  -> optional ActionFrame rows
-  -> normalize target/action/progress inputs
-  -> reduce path-progress and inspect commands into ActionResult rows
-  -> resolve objective completion
-  -> project snapshot.gameplay additively
-  -> collect expected render descriptors from enhanced plan
-  -> normalize renderer.getSnapshot?.() readback
-  -> classify renderer descriptor consumption rows
-  -> classify grass descriptor consumption rows
-  -> project GameHost.renderParity additively
-  -> run DOM-free fixture rows for renderer absence, sparse readback, grass count parity, path progress, inspect, objective completion, and unchanged/no-op cases
+frame or fixture input
+  -> expected render descriptor collection
+  -> renderer snapshot normalization
+  -> render consumption ledger rows
+  -> grass readback rows
+  -> ActionFrame and target/action preflight rows
+  -> ActionResult and objective progress rows
+  -> snapshot.renderParity and snapshot.gameplay projections
+  -> GameHost additive readback
+  -> DOM-free fixture rows
 ```
 
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Render Consumption Ledger + Action Replay Fixture Gate
+IntoTheMeadow Render Consumption + Gameplay Action Fixture Gate
 ```
 
 ## First files to read
@@ -102,14 +92,14 @@ IntoTheMeadow Render Consumption Ledger + Action Replay Fixture Gate
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-09T09-50-00-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T09-50-00-04-00.md
-.agent/architecture-audit/2026-07-09T09-50-00-04-00-render-consumption-ledger-action-fixture-dsk-map.md
-.agent/render-audit/2026-07-09T09-50-00-04-00-renderer-consumption-readback-ledger.md
-.agent/grass-system-audit/2026-07-09T09-50-00-04-00-grass-readback-consumption-ledger.md
-.agent/gameplay-audit/2026-07-09T09-50-00-04-00-action-replay-objective-loop.md
-.agent/interaction-audit/2026-07-09T09-50-00-04-00-target-action-reason-matrix.md
-.agent/deploy-audit/2026-07-09T09-50-00-04-00-check-script-fixture-wire-gate.md
+.agent/trackers/2026-07-09T12-08-46-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T12-08-46-04-00.md
+.agent/architecture-audit/2026-07-09T12-08-46-04-00-render-consumption-gameplay-fixture-dsk-map.md
+.agent/render-audit/2026-07-09T12-08-46-04-00-renderer-consumption-gamehost-readback.md
+.agent/grass-system-audit/2026-07-09T12-08-46-04-00-grass-descriptor-readback-proof-map.md
+.agent/gameplay-audit/2026-07-09T12-08-46-04-00-action-result-objective-loop.md
+.agent/interaction-audit/2026-07-09T12-08-46-04-00-target-action-preflight-reason-map.md
+.agent/deploy-audit/2026-07-09T12-08-46-04-00-npm-check-fixture-wire-plan.md
 ```
 
 ## Source files to inspect before implementation
@@ -120,9 +110,7 @@ src/game/enhance-render-plan.js
 src/game/create-into-the-meadow-game.js
 src/game/game-state.js
 src/game/game-snapshot.js
-src/boot/install-dsks.js
 src/boot/expose-game-host.js
-src/dsks/index.js
 src/content/game-manifest.js
 src/content/objectives/arrival-objectives.js
 src/content/interaction-targets/arrival-targets.js

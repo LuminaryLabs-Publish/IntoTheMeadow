@@ -1,6 +1,6 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T09-41-24-04-00`
+**Timestamp:** `2026-07-09T09-50-00-04-00`
 
 ## Current state
 
@@ -13,19 +13,19 @@ The repo should remain a publishable game/deploy repo with local proof kits. Sha
 The accessible `LuminaryLabs-Publish` repo list checked this run contained:
 
 ```txt
+IntoTheMeadow
 HorrorCorridor
 AetherVale
-TheOpenAbove
-TheCavalryOfRome
-PhantomCommand
-PrehistoricRush
 ZombieOrchard
-IntoTheMeadow
-MyCozyIsland
 TheUnmappedHouse
+MyCozyIsland
+TheOpenAbove
+PhantomCommand
+TheCavalryOfRome
+PrehistoricRush
 ```
 
-`TheCavalryOfRome` was excluded. All checked non-Cavalry repos were represented in central tracking and had sampled root `.agent` state. `IntoTheMeadow` was selected as the oldest eligible central-ledger fallback.
+`TheCavalryOfRome` was excluded. All checked non-Cavalry repos were represented in central tracking and had sampled root `.agent` state. `IntoTheMeadow` was selected as the oldest eligible central-ledger fallback and because a previous partial `09-41` repo-local refresh lacked matching audit files plus central ledger alignment.
 
 ## Interaction loop
 
@@ -59,11 +59,15 @@ external kit import authority
 manifest / external kit source authority
 DSK install validation
 meadow area descriptor generation
+fallback meadow area descriptor generation
 game state / tick state
 snapshot projection
 diagnostics projection
 render plan enhancement
 renderer consumer boundary
+renderer readback projection
+terrain texture descriptors
+path corridor descriptors
 grass density texture
 grass clump archetypes
 grass static batch
@@ -71,6 +75,7 @@ grass patch placement
 grass instanced draw groups
 grass shader wind
 grass LOD and scaling
+grass debug visualization
 postprocess descriptor policy
 performance budget policy
 object outline/style policy
@@ -98,6 +103,7 @@ enhanceRenderPlan() -> adds grass, wind, postprocess, performance, outline/style
 createGrassSystem() -> derives density texture, archetypes, static batches, placement patches, draw groups, shader wind, LOD, scaling, and debug summary
 advanceGameState() -> currently ticks frame/lastTick only
 createGameSnapshot() -> projects game state/content/render diagnostics
+validateGameSnapshot() -> validates minimal manifest/state/render/diagnostics shape
 exposeGameHost() -> exposes build, state, snapshot, diagnostics, and game reference
 renderer.render(plan) -> consumes the enhanced plan but has no local parity ledger yet
 renderer.getSnapshot?.() -> optional readback surface exposed through GameHost snapshot but not classified yet

@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T03-35-07-04-00`
+**Timestamp:** `2026-07-09T03-38-54-04-00`
 
 ## Highest-priority gaps
 
@@ -21,7 +21,7 @@ stats.estimatedGrassInstances
 stats.estimatedGrassCards
 ```
 
-`src/hosts/web-host.js` sends the enhanced plan into `renderer.render(plan)` and exposes a renderer snapshot through `GameHost`, but there is still no normalized parity report showing which descriptors were consumed, unconsumed, unsupported, fallback-rendered, or missing.
+`src/hosts/web-host.js` sends the enhanced plan into `renderer.render(plan)` and exposes a renderer snapshot through `GameHost`, but there is still no normalized parity report showing which descriptors were consumed, unconsumed, unsupported, fallback-rendered, sparse, or missing.
 
 ### 2. The GameHost render parity splice point is known but not implemented
 
@@ -61,6 +61,7 @@ grassSystem.drawGroups
 grassSystem.shaderWind
 grassSystem.lodPolicy
 grassSystem.densityScale
+grassSystem.debug
 grassPatches
 stats.grassPatchCount
 stats.grassStaticBatchCount
@@ -75,7 +76,7 @@ Silent descriptor drop remains the main render failure mode.
 
 The external renderer may not expose a complete consumption snapshot.
 
-A missing or sparse renderer snapshot must produce a stable report with specific reason rows, not an exception and not a silent pass.
+A missing or sparse renderer snapshot must produce stable reason rows, not an exception and not a silent pass.
 
 ### 5. Gameplay descriptors are inert
 
@@ -88,7 +89,22 @@ inspect -> focal-tree -> inspect-tree
 
 `advanceGameState()` does not consume actions, so those descriptors never become `ActionResult`, `completedObjectiveIds`, or `snapshot.gameplay` records.
 
-### 6. The check script does not cover the next proof seam
+### 6. Interaction target authority has no reducer
+
+`arrival-targets.js` knows which target accepts which action, but the runtime has no pure reducer that validates target/action pairs.
+
+Missing rows:
+
+```txt
+unknown-target
+wrong-action-for-target
+invalid-progress
+objective-already-complete
+accepted
+no-state-change
+```
+
+### 7. The check script does not cover the next proof seam
 
 `npm run check` currently covers static, registry, render-plan, and deterministic-scene smokes.
 
@@ -99,19 +115,11 @@ render-parity-fixture-smoke
 gameplay-action-replay-fixture-smoke
 ```
 
-### 7. Consumer snapshot compatibility needs an explicit adapter
+### 8. Consumer snapshot compatibility needs an explicit adapter
 
 The external `meadow-webgl-render-kit` may return renderer readback with sparse fields, no grass-specific rows, or no `getSnapshot` at all.
 
 The next implementation should add a source-side compatibility adapter that classifies sparse consumer data as explicit parity rows instead of assuming the renderer is wrong or complete.
-
-### 8. Central tracking is current, but proof contracts are still only docs
-
-This run updated repo-local and central docs.
-
-It did not implement the parity/action modules.
-
-The next code pass must make the documented contract executable.
 
 ## Non-goals for the next pass
 

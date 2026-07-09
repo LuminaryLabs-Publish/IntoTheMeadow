@@ -1,6 +1,6 @@
 # Current Audit — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T03-38-54-04-00`
+**Timestamp:** `2026-07-09T03-50-12-04-00`
 
 ## Current state
 
@@ -13,16 +13,16 @@ The repo should stay a publishable game/deploy repo with local proof kits, not t
 The accessible `LuminaryLabs-Publish` repo list checked this run contained:
 
 ```txt
-IntoTheMeadow
 HorrorCorridor
 AetherVale
-ZombieOrchard
-TheUnmappedHouse
-MyCozyIsland
 TheOpenAbove
-PhantomCommand
 TheCavalryOfRome
+PhantomCommand
 PrehistoricRush
+ZombieOrchard
+IntoTheMeadow
+MyCozyIsland
+TheUnmappedHouse
 ```
 
 `TheCavalryOfRome` was excluded.
@@ -31,9 +31,7 @@ The central ledger already tracks every non-Cavalry repo in that list.
 
 No non-excluded Publish repo was found to be fully new, absent from the central ledger, undocumented, recently added but undocumented, or missing sampled root `.agent` state.
 
-`IntoTheMeadow` was selected because its central ledger timestamp, `2026-07-09T00-50-00-04-00`, was the oldest eligible non-Cavalry fallback among the checked ledgers.
-
-A same-hour repo-local `03:35` root-agent pointer existed before this pass, but central tracking still pointed to `00:50`, so this run refreshed the central ledger and repo-local required docs together.
+`IntoTheMeadow` was selected because its repo-local `.agent` state had advanced beyond the central ledger while the renderer parity / gameplay action proof seam remained unresolved.
 
 ## Current interaction loop
 
@@ -58,6 +56,10 @@ index.html
 
 ## Source-backed facts
 
+`index.html` owns the static canvas/HUD shell and boots `./src/boot/boot-game.js`.
+
+`src/boot/boot-game.js` reads the canvas/HUD/loading DOM nodes and delegates to `startWebHost`.
+
 `src/content/game-manifest.js` defines the route, public URL, default scene, and two external CDN kits: `meadow-area-kit` and `meadow-webgl-render-kit`.
 
 `src/hosts/web-host.js` loads both external kits from `GAME_MANIFEST.externalKits`, creates the game and renderer, stores `lastPlan`, passes the enhanced plan to `renderer.render(plan)`, and exposes `enhancedRenderPlan` plus `renderer.getSnapshot?.()` through `GameHost`.
@@ -75,6 +77,49 @@ index.html
 `src/game/game-snapshot.js` exposes `manifest`, `state`, `renderPlan`, and `diagnostics`, but does not expose `renderParity` or `gameplay` branches.
 
 `ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS` define the first gameplay proof seam: `path-progress` for `arrival-path` and `inspect` for `focal-tree`.
+
+## Domains in use
+
+```txt
+route-shell-domain
+web-host-domain
+external-kit-loading-domain
+game-composition-domain
+meadow-area-domain
+render-enhancement-domain
+grass-system-domain
+wind-field-domain
+post-process-domain
+performance-policy-domain
+render-host-domain
+gameplay-state-domain
+objective-interaction-domain
+diagnostics-domain
+deploy-validation-domain
+```
+
+## Current service surface
+
+```txt
+manifest route service
+external kit URL service
+external kit import service
+game factory service
+fallback meadow render-plan service
+DSK registry service
+DSK validation service
+meadow area render-plan service
+render-plan enhancement service
+grass density texture service
+grass archetype/static-batch/placement/instancing services
+wind-field descriptor service
+post-process descriptor service
+performance policy service
+tick state service
+game snapshot service
+diagnostics service
+GameHost exposure service
+```
 
 ## Current gap summary
 

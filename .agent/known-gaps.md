@@ -1,6 +1,6 @@
 # Known Gaps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T22-38-17-04-00`
+**Timestamp:** `2026-07-09T00-50-00-04-00`
 
 ## Highest-priority gaps
 
@@ -98,6 +98,12 @@ It does not yet run:
 render-parity-fixture-smoke
 gameplay-action-replay-fixture-smoke
 ```
+
+### 7. Consumer snapshot compatibility needs an explicit adapter
+
+The external `meadow-webgl-render-kit` may return renderer readback with sparse fields, no grass-specific rows, or no `getSnapshot` at all.
+
+The next implementation should add a source-side compatibility adapter that classifies sparse consumer data as explicit parity rows instead of assuming the renderer is wrong or complete.
 
 ## Non-goals for the next pass
 

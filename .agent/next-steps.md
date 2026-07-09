@@ -1,247 +1,49 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T06-28-53-04-00`
+**Timestamp:** `2026-07-09T09-41-24-04-00`
 
 ## Goal
 
 Move `IntoTheMeadow` from descriptor-rich prototype toward a fixture-proven meadow game without turning the publish repo into the permanent home for reusable renderer systems.
 
-The immediate path is:
+## Immediate ledge
 
 ```txt
-render readback parity source contracts
--> grass descriptor consumption rows
--> DOM-free render parity fixture
--> ActionFrame support
--> target/action reason catalog
--> path-progress and inspect ActionResult reducers
--> objective completion projection
--> snapshot.gameplay projection
--> DOM-free gameplay action replay fixture
--> package check-script gate
--> then visual/gameplay expansion
+IntoTheMeadow Render Consumption Ledger + Action Replay Fixture Gate
 ```
 
-## Current ledge name
+## Implementation checklist for the next code pass
+
+- [ ] Add pure `src/render-consumption/` modules for expected descriptor collection.
+- [ ] Add pure `src/render-consumption/` modules for renderer snapshot normalization.
+- [ ] Add render consumption row classification: `consumed`, `unsupported`, `missing`, `sparse`, `fallback-rendered`.
+- [ ] Add grass consumption row classification for density texture, static batches, patches, draw groups, estimated instances, and estimated cards.
+- [ ] Add pure `src/gameplay/` modules for `ActionFrame`, `ActionResult`, and target/action reason catalog.
+- [ ] Add `path-progress` reducer using the existing `arrival-path` target and `walk-the-path` objective.
+- [ ] Add `inspect` reducer using the existing `focal-tree` target and `inspect-tree` objective.
+- [ ] Add objective completion projection without changing current route visuals.
+- [ ] Add additive `GameHost.getSnapshot().renderParity` and `GameHost.getSnapshot().gameplay` proof records.
+- [ ] Add DOM-free fixture rows for empty renderer snapshot, sparse renderer snapshot, grass count parity, valid path progress, valid inspect, repeated inspect/no-op, and objective completion.
+- [ ] Wire fixture script into `npm run check` only after the fixture exists.
+
+## First files to edit next
 
 ```txt
-IntoTheMeadow Render Readback + Action Replay Proof Freeze Fixture Gate
+src/render-consumption/collect-render-expectations.js
+src/render-consumption/normalize-renderer-snapshot.js
+src/render-consumption/classify-render-consumption.js
+src/render-consumption/classify-grass-consumption.js
+src/gameplay/action-frame.js
+src/gameplay/action-result.js
+src/gameplay/reduce-meadow-action.js
+src/gameplay/resolve-objective-progress.js
+scripts/into-the-meadow-render-action-fixture.mjs
+src/hosts/web-host.js
+src/game/game-state.js
+src/game/game-snapshot.js
+package.json
 ```
 
-## Ordered next implementation ledges
+## Stop condition for the next pass
 
-### 1. Render parity reason catalog
-
-Add stable reason constants.
-
-Target file:
-
-```txt
-src/render-parity/render-parity-reasons.js
-```
-
-Reasons:
-
-```txt
-consumed
-unconsumed
-unsupported
-fallback-rendered
-missing-renderer-snapshot
-missing-renderer-field
-invalid-plan-descriptor
-count-mismatch
-not-applicable
-```
-
-### 2. Expected descriptor collector
-
-Collect expected descriptors from an enhanced render plan.
-
-Target file:
-
-```txt
-src/render-parity/collect-expected-render-descriptors.js
-```
-
-Expected groups:
-
-```txt
-base objects
-outline policy / renderStyle
-windField
-postProcess
-performance
-grassSystem.densityTexture
-grassSystem.staticBatches
-grassSystem.patches
-grassSystem.drawGroups
-grassSystem.shaderWind
-grassSystem.lodPolicy
-grassSystem.densityScale
-grassSystem.debug
-grassPatches
-stats grass counts
-```
-
-### 3. Renderer snapshot consumption normalizer
-
-Normalize renderer snapshot fields without requiring a specific renderer version.
-
-Target file:
-
-```txt
-src/render-parity/normalize-renderer-snapshot-consumption.js
-```
-
-Return a stable unsupported/readback-absent shape when `renderer.getSnapshot?.()` is missing or sparse.
-
-### 4. Descriptor parity report
-
-Compare expected descriptors to normalized renderer readback.
-
-Target file:
-
-```txt
-src/render-parity/create-render-parity-report.js
-```
-
-Output:
-
-```txt
-RenderParityReport {
-  id,
-  passed,
-  summary,
-  rows,
-  reasons
-}
-```
-
-### 5. Grass consumption rows
-
-Create grass-specific parity rows from expected descriptors and renderer snapshot consumption.
-
-Target file:
-
-```txt
-src/render-parity/create-grass-consumption-rows.js
-```
-
-Rows must classify density texture, static batches, patches, draw groups, shader wind, LOD policy, density scale, debug summary, grassPatches, and stats estimates.
-
-### 6. GameHost render parity projection
-
-Wire additively in `src/hosts/web-host.js` after:
-
-```txt
-const render = renderer.render(plan);
-```
-
-Expose:
-
-```txt
-GameHost.getSnapshot().renderParity
-GameHost.getState?.().renderParity
-```
-
-Do not remove existing snapshot/readback fields.
-
-### 7. Action frame and result contracts
-
-Add pure action/result contracts.
-
-Target files:
-
-```txt
-src/gameplay/create-action-frame.js
-src/gameplay/create-action-result.js
-src/gameplay/action-result-reasons.js
-```
-
-Initial reason catalog:
-
-```txt
-accepted
-rejected
-unknown-action
-unknown-target
-wrong-action-for-target
-invalid-progress
-objective-already-complete
-no-state-change
-objective-completed
-```
-
-### 8. Path progress and inspect reducers
-
-Add the first two gameplay reducers.
-
-Target files:
-
-```txt
-src/gameplay/reduce-path-progress-action.js
-src/gameplay/reduce-inspect-target-action.js
-src/gameplay/resolve-objective-completion.js
-```
-
-Reducers must consume `ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS`, not duplicate objective/target constants.
-
-### 9. Snapshot gameplay projection
-
-Additively expose:
-
-```txt
-snapshot.gameplay
-```
-
-Do not remove:
-
-```txt
-manifest
-state
-renderPlan
-diagnostics
-```
-
-### 10. Fixture scripts
-
-Add DOM-free smokes:
-
-```txt
-tests/render-parity-fixture-smoke.mjs
-tests/gameplay-action-replay-fixture-smoke.mjs
-```
-
-Then append both to `npm run check`.
-
-### 11. Fixture manifest rows
-
-Add explicit fixture rows for:
-
-```txt
-renderer snapshot absent
-renderer snapshot sparse
-grass density texture expected but not consumed
-grass draw group count mismatch
-path-progress accepted
-path-progress rejected out of range
-inspect accepted for focal-tree
-inspect rejected for unknown target
-wrong action rejected for target
-objective completion after accepted actions
-legacy snapshot compatibility preserved
-```
-
-## Stop condition
-
-Stop when:
-
-```txt
-npm run check covers render parity and gameplay replay fixture rows
-GameHost snapshot has additive renderParity
-game snapshot has additive gameplay branch
-legacy snapshot fields remain present
-renderer absence/sparse snapshot paths produce stable rows
-first objective completion is reproducible from pure ActionFrame rows
-```
+Stop when `npm run check` proves DOM-free fixture rows for render consumption and gameplay action replay, while the browser route still boots through the existing external meadow kits and the existing visual output path.

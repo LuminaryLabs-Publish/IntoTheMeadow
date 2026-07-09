@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-09T03-50-12-04-00`
+**Timestamp:** `2026-07-09T06-28-53-04-00`
 
 ## Goal
 
@@ -13,7 +13,9 @@ render readback parity source contracts
 -> grass descriptor consumption rows
 -> DOM-free render parity fixture
 -> ActionFrame support
--> first objective ActionResult reducers
+-> target/action reason catalog
+-> path-progress and inspect ActionResult reducers
+-> objective completion projection
 -> snapshot.gameplay projection
 -> DOM-free gameplay action replay fixture
 -> package check-script gate
@@ -23,7 +25,7 @@ render readback parity source contracts
 ## Current ledge name
 
 ```txt
-IntoTheMeadow Render Readback Parity + Action Result Replay Fixture Gate
+IntoTheMeadow Render Readback + Action Replay Proof Freeze Fixture Gate
 ```
 
 ## Ordered next implementation ledges
@@ -77,6 +79,7 @@ grassSystem.drawGroups
 grassSystem.shaderWind
 grassSystem.lodPolicy
 grassSystem.densityScale
+grassSystem.debug
 grassPatches
 stats grass counts
 ```
@@ -125,6 +128,8 @@ Target file:
 src/render-parity/create-grass-consumption-rows.js
 ```
 
+Rows must classify density texture, static batches, patches, draw groups, shader wind, LOD policy, density scale, debug summary, grassPatches, and stats estimates.
+
 ### 6. GameHost render parity projection
 
 Wire additively in `src/hosts/web-host.js` after:
@@ -137,6 +142,7 @@ Expose:
 
 ```txt
 GameHost.getSnapshot().renderParity
+GameHost.getState?.().renderParity
 ```
 
 Do not remove existing snapshot/readback fields.
@@ -153,6 +159,20 @@ src/gameplay/create-action-result.js
 src/gameplay/action-result-reasons.js
 ```
 
+Initial reason catalog:
+
+```txt
+accepted
+rejected
+unknown-action
+unknown-target
+wrong-action-for-target
+invalid-progress
+objective-already-complete
+no-state-change
+objective-completed
+```
+
 ### 8. Path progress and inspect reducers
 
 Add the first two gameplay reducers.
@@ -164,6 +184,8 @@ src/gameplay/reduce-path-progress-action.js
 src/gameplay/reduce-inspect-target-action.js
 src/gameplay/resolve-objective-completion.js
 ```
+
+Reducers must consume `ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS`, not duplicate objective/target constants.
 
 ### 9. Snapshot gameplay projection
 
@@ -206,6 +228,7 @@ path-progress accepted
 path-progress rejected out of range
 inspect accepted for focal-tree
 inspect rejected for unknown target
+wrong action rejected for target
 objective completion after accepted actions
 legacy snapshot compatibility preserved
 ```
@@ -219,4 +242,6 @@ npm run check covers render parity and gameplay replay fixture rows
 GameHost snapshot has additive renderParity
 game snapshot has additive gameplay branch
 legacy snapshot fields remain present
+renderer absence/sparse snapshot paths produce stable rows
+first objective completion is reproducible from pure ActionFrame rows
 ```

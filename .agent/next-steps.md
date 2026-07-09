@@ -1,6 +1,6 @@
 # Next Steps — IntoTheMeadow
 
-**Timestamp:** `2026-07-08T20-21-59-04-00`
+**Timestamp:** `2026-07-08T22-38-17-04-00`
 
 ## Goal
 
@@ -15,21 +15,21 @@ GameHost render parity consumer boundary
 -> optional ActionFrame support
 -> first objective ActionResult reducers
 -> snapshot.gameplay projection
--> DOM-free gameplay authority fixture
+-> DOM-free gameplay action replay fixture
 -> then visual/gameplay expansion
 ```
 
 ## Current ledge name
 
 ```txt
-IntoTheMeadow RenderParity + Gameplay ActionResult Source Contract Fixture Gate
+IntoTheMeadow RenderParity Consumer Fixture + Gameplay Action Replay Gate
 ```
 
 ## Ordered next implementation ledges
 
 ### 1. Render parity reason catalog
 
-Add stable reason constants for renderer parity classification.
+Add stable reason constants.
 
 Target file:
 
@@ -37,7 +37,7 @@ Target file:
 src/render-parity/render-parity-reasons.js
 ```
 
-Reason families:
+Reasons:
 
 ```txt
 consumed
@@ -48,6 +48,7 @@ missing-renderer-snapshot
 missing-renderer-field
 invalid-plan-descriptor
 count-mismatch
+not-applicable
 ```
 
 ### 2. Expected descriptor collector
@@ -60,7 +61,7 @@ Target file:
 src/render-parity/collect-expected-render-descriptors.js
 ```
 
-Expected descriptor groups:
+Expected groups:
 
 ```txt
 base objects
@@ -89,9 +90,31 @@ Target file:
 src/render-parity/normalize-renderer-snapshot-consumption.js
 ```
 
-The normalizer must return a stable unsupported/readback-absent shape when `renderer.getSnapshot?.()` is missing or sparse.
+Return a stable unsupported/readback-absent shape when `renderer.getSnapshot?.()` is missing or sparse.
 
-### 4. Grass consumption rows
+### 4. Descriptor parity report
+
+Compare expected descriptors to normalized renderer readback.
+
+Target file:
+
+```txt
+src/render-parity/create-render-parity-report.js
+```
+
+Output:
+
+```txt
+RenderParityReport {
+  id
+  passed
+  summary
+  rows
+  reasons
+}
+```
+
+### 5. Grass consumption rows
 
 Create grass-specific parity rows from expected descriptors and renderer snapshot consumption.
 
@@ -101,181 +124,83 @@ Target file:
 src/render-parity/create-grass-consumption-rows.js
 ```
 
-Required row groups:
+### 6. GameHost render parity projection
 
-```txt
-grass-density-texture
-static-batch-count
-patch-count
-draw-group-count
-shader-wind
-lod-policy
-density-scale
-estimated-instances
-estimated-cards
-validation-summary
-```
-
-### 5. Descriptor parity comparator
-
-Compare expected plan descriptors against consumed snapshot descriptors.
-
-Target file:
-
-```txt
-src/render-parity/compare-render-descriptor-parity.js
-```
-
-Output shape:
-
-```txt
-RenderParityReport
-  id
-  planId
-  rendererId
-  passed
-  generatedAtFrame
-  expectedCount
-  consumedCount
-  unconsumedCount
-  unsupportedCount
-  fallbackCount
-  missingCount
-  rows[]
-```
-
-### 6. GameHost renderParity projection
-
-Keep existing GameHost fields and add parity diagnostics additively.
-
-Target files:
-
-```txt
-src/render-parity/create-gamehost-render-parity.js
-src/hosts/web-host.js
-```
-
-Splice point:
+Wire additively in `src/hosts/web-host.js` after:
 
 ```txt
 const render = renderer.render(plan);
-const rendererSnapshot = renderer.getSnapshot?.();
-const renderParity = createGameHostRenderParity({ plan, render, rendererSnapshot });
 ```
 
-Expose through `GameHost.getSnapshot()` and any existing `GameHost.getState()` path without removing `enhancedRenderPlan` or `render`.
+Expose:
 
-### 7. Gameplay action contracts
+```txt
+GameHost.getSnapshot().renderParity
+```
 
-Add optional action input while preserving `game.tick({ time, dt })`.
+Do not remove existing snapshot/readback fields.
+
+### 7. Action frame and result contracts
+
+Add pure action/result contracts.
 
 Target files:
 
 ```txt
-src/gameplay-authority/action-reasons.js
-src/gameplay-authority/action-frame.js
-src/gameplay-authority/action-result.js
-src/gameplay-authority/action-journal.js
+src/gameplay/create-action-frame.js
+src/gameplay/create-action-result.js
+src/gameplay/action-result-reasons.js
 ```
 
-### 8. Objective reducers
+### 8. Path progress and inspect reducers
 
-Reduce existing descriptors into deterministic results.
+Add the first two gameplay reducers.
 
 Target files:
 
 ```txt
-src/gameplay-authority/reduce-path-progress.js
-src/gameplay-authority/reduce-inspect-target.js
-src/gameplay-authority/resolve-objective-completion.js
-```
-
-First fixture rows:
-
-```txt
-path-progress accepted below threshold
-path-progress accepted and completes walk-the-path
-repeat path-progress does not duplicate walk-the-path
-inspect focal-tree accepted and completes inspect-tree
-repeat inspect focal-tree returns unchanged/idempotent
-unknown target returns rejected
-wrong action for target returns rejected
+src/gameplay/reduce-path-progress-action.js
+src/gameplay/reduce-inspect-target-action.js
+src/gameplay/resolve-objective-completion.js
 ```
 
 ### 9. Snapshot gameplay projection
 
-Expose gameplay proof through snapshots.
-
-Target files:
+Additively expose:
 
 ```txt
-src/gameplay-authority/create-gameplay-snapshot.js
-src/game/game-state.js
-src/game/game-snapshot.js
+snapshot.gameplay
 ```
 
-Required branch:
+Do not remove:
 
 ```txt
-snapshot.gameplay.activeObjectiveId
-snapshot.gameplay.completedObjectiveIds
-snapshot.gameplay.storyBeatIds
-snapshot.gameplay.lastActionResults
-snapshot.gameplay.actionJournal
+manifest
+state
+renderPlan
+diagnostics
 ```
 
-### 10. Fixture smoke tests
+### 10. Fixture scripts
 
-Add DOM-free fixtures before runtime visuals.
-
-Target files:
+Add DOM-free smokes:
 
 ```txt
 tests/render-parity-fixture-smoke.mjs
-tests/gameplay-authority-fixture-smoke.mjs
-package.json
+tests/gameplay-action-replay-fixture-smoke.mjs
 ```
 
-### 11. Keep publish-host compatibility explicit
+Then append both to `npm run check`.
 
-The host currently calls `game.tick({ time, dt })`, then asks for a render plan and passes the enhanced plan to `renderer.render(plan)`.
+## Stop condition
 
-Any source contract work must preserve that path.
-
-Allowed additive changes:
+Stop when:
 
 ```txt
-lastRenderParity
-GameHost.renderParity
-snapshot.renderParity
-snapshot.gameplay
-game.tick({ time, dt, actions }) optional support
+npm run check covers render parity and gameplay replay fixture rows
+GameHost snapshot has additive renderParity
+game snapshot has additive gameplay branch
+missing/sparse renderer snapshots are explicit reason rows
+path-progress and inspect-tree produce ActionResult rows
+legacy snapshot fields remain stable
 ```
-
-Disallowed changes in this slice:
-
-```txt
-renderer replacement
-new meadow content
-new interaction UI
-new visual density
-browser-only parity assertions
-breaking existing GameHost fields
-```
-
-## Acceptance checklist
-
-- [ ] Renderer descriptors classify as consumed, unconsumed, unsupported, fallback-rendered, missing-renderer-snapshot, missing-renderer-field, invalid-plan-descriptor, or count-mismatch.
-- [ ] Grass descriptor readback has stable report rows.
-- [ ] Renderer parity failures are visible through `GameHost`.
-- [ ] `game.tick({ time, dt })` remains compatible.
-- [ ] `game.tick({ time, dt, actions })` produces deterministic action results.
-- [ ] `walk-the-path` completes idempotently.
-- [ ] `inspect-tree` completes idempotently.
-- [ ] Invalid action and unknown target return stable rejected results.
-- [ ] `snapshot.gameplay` exists.
-- [ ] `npm run check` includes the new fixtures.
-
-## Stop conditions
-
-Do not proceed into new art, new areas, audio, inventory, first-person controls, renderer replacement, or DSK extraction until the fixture gate above is passing.

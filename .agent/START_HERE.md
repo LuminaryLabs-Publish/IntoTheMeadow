@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-09T09-41-24-04-00`
+**Last aligned:** `2026-07-09T09-50-00-04-00`
 
 ## Purpose
 
@@ -18,21 +18,21 @@ No checked non-Cavalry Publish repo was fully new, central-ledger absent, undocu
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible documented fallback. Its central ledger was still at `2026-07-09T06-28-53-04-00`, while other checked non-excluded repos had newer same-day central ledger alignment.
+`IntoTheMeadow` was selected as the oldest eligible central-ledger fallback. The previous repo-local `.agent` state had a partial `2026-07-09T09-41-24-04-00` refresh, but central tracking and matching timestamped audit files still needed alignment.
 
 ## Publish repos checked
 
 ```txt
+LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central-ledger fallback
 LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T07-05-52-04-00
-LuminaryLabs-Publish/AetherVale           tracked / root .agent present / central latest 2026-07-09T08-40-00-04-00
-LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T09-18-29-04-00
-LuminaryLabs-Publish/TheCavalryOfRome     excluded by rule
-LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T07-19-41-04-00
-LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T09-10-50-04-00
+LuminaryLabs-Publish/AetherVale           tracked / root .agent present / central latest 2026-07-09T08-50-00-04-00
 LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T07-41-29-04-00
-LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central latest before this pass 2026-07-09T06-28-53-04-00
-LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T08-29-38-04-00
 LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T08-02-33-04-00
+LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T08-29-38-04-00
+LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T09-18-29-04-00
+LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T07-19-41-04-00
+LuminaryLabs-Publish/TheCavalryOfRome     excluded by rule
+LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T09-10-50-04-00
 ```
 
 ## Current product read
@@ -102,14 +102,14 @@ IntoTheMeadow Render Consumption Ledger + Action Replay Fixture Gate
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-09T09-41-24-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-09T09-41-24-04-00.md
-.agent/architecture-audit/2026-07-09T09-41-24-04-00-render-consumption-action-replay-dsk-map.md
-.agent/render-audit/2026-07-09T09-41-24-04-00-renderer-readback-consumer-freeze.md
-.agent/grass-system-audit/2026-07-09T09-41-24-04-00-grass-consumption-fixture-contract.md
-.agent/gameplay-audit/2026-07-09T09-41-24-04-00-action-result-objective-replay-loop.md
-.agent/interaction-audit/2026-07-09T09-41-24-04-00-target-action-actionresult-contract.md
-.agent/deploy-audit/2026-07-09T09-41-24-04-00-check-script-fixture-wire-map.md
+.agent/trackers/2026-07-09T09-50-00-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-09T09-50-00-04-00.md
+.agent/architecture-audit/2026-07-09T09-50-00-04-00-render-consumption-ledger-action-fixture-dsk-map.md
+.agent/render-audit/2026-07-09T09-50-00-04-00-renderer-consumption-readback-ledger.md
+.agent/grass-system-audit/2026-07-09T09-50-00-04-00-grass-readback-consumption-ledger.md
+.agent/gameplay-audit/2026-07-09T09-50-00-04-00-action-replay-objective-loop.md
+.agent/interaction-audit/2026-07-09T09-50-00-04-00-target-action-reason-matrix.md
+.agent/deploy-audit/2026-07-09T09-50-00-04-00-check-script-fixture-wire-gate.md
 ```
 
 ## Source files to inspect before implementation

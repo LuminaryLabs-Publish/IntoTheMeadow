@@ -2,12 +2,12 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-09T15-39-08-04-00`
+**Updated:** `2026-07-09T18-20-18-04-00`
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow Render Consumption Ledger Central Refresh + Action Fixture Gate
+IntoTheMeadow Render Action Readback + DOM-Free Fixture Gate
 ```
 
 ## Build checklist
@@ -26,7 +26,7 @@ IntoTheMeadow Render Consumption Ledger Central Refresh + Action Fixture Gate
 [ ] Add DOM-free fixture rows before wiring browser input.
 [ ] Extend npm run check only after new fixture scripts exist.
 [ ] Update central LuminaryLabs ledger after implementation lands.
-[ ] Defer visual rewrite, renderer replacement, shared-kit promotion, and external CDN changes.
+[ ] Defer visual rewrite, renderer replacement, shared-kit promotion, external CDN changes, and new content.
 ```
 
 ## Suggested file targets

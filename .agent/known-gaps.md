@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T06-30-49-04-00`
+**Updated:** `2026-07-10T07-59-27-04-00`
 
 ## Selection gap handled
 
@@ -52,15 +52,15 @@ no DOM-free action fixture exists
 no editor command row is tied to objective/action proof
 ```
 
-## Headless editor proof gaps
+## GameHost and editor proof gaps
 
 ```txt
-headless editor smoke exists
-headless editor proof ledger does not exist
+GameHost has aggregate getState/getSnapshot/getDiagnostics/getRenderPlan/getRenderSnapshot fields
+GameHost has no additive proof projection rows
+headless editor bridge has command reachability but no source-backed observation ledger
 editor observation rows are not tied to render proof rows
 editor observation rows are not tied to grass proof rows
 editor observation rows are not tied to action/objective rows
-GameHost has no additive proof projection for editor observations
 ```
 
 ## Validation gaps

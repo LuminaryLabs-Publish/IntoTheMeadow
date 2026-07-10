@@ -1,0 +1,9 @@
+{
+  "id": "meadow-baseline",
+  "steps": [
+    { "action": "runtime.reset" },
+    { "action": "scene.getStatistics" },
+    { "action": "renderer.capture", "arguments": { "label": "meadow-baseline", "width": 1200, "height": 675 } },
+    { "action": "renderer.getErrors" }
+  ]
+}

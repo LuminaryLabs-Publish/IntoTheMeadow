@@ -32,7 +32,7 @@ jobs:
           name: into-the-meadow-headless-editor-evidence
           path: .artifacts/headless-editor
           if-no-files-found: warn
-      - run: rm -rf node_modules
+      - run: rm -rf node_modules .artifacts
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

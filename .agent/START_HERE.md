@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-10T03-01-42-04-00`
+**Last aligned:** `2026-07-10T04-58-56-04-00`
 
 ## Purpose
 
@@ -18,7 +18,7 @@ No checked non-Cavalry Publish repo was new, missing from the central ledger, mi
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible documented fallback after recent central-ledger advancement by other Publish repos.
+`IntoTheMeadow` was selected as the oldest eligible documented fallback after `PrehistoricRush` advanced.
 
 ## Current product read
 
@@ -39,7 +39,7 @@ index.html
   -> createIntoTheMeadowGame({ externalKits })
   -> installDsks() validates local and external DSK descriptors
   -> create arrival meadow area render plan
-  -> create local meadow WebGL renderer v2 compatible adapter
+  -> create local WebGL renderer v2 compatible adapter
   -> create render plan enhancer
   -> exposeGameHost with state, snapshot, diagnostics, render plan, renderer snapshot, enhancer snapshot, and game reference
   -> installIntoTheMeadowEditorBridge({ gameHost, canvas })
@@ -67,13 +67,12 @@ frame, fixture, or editor command input
   -> project additive GameHost proof state
   -> emit headless editor observation rows
   -> run DOM-free fixture rows through npm run check
-  -> run headless editor proof rows through npm run check
 ```
 
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Headless Editor Render Action Ledger Refresh + GameHost Fixture Gate
+IntoTheMeadow Proof Row Ledger Refresh + Headless Editor Fixture Gate
 ```
 
 ## First files to read
@@ -84,14 +83,14 @@ IntoTheMeadow Headless Editor Render Action Ledger Refresh + GameHost Fixture Ga
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-10T03-01-42-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-10T03-01-42-04-00.md
-.agent/architecture-audit/2026-07-10T03-01-42-04-00-headless-editor-render-action-ledger-dsk-map.md
-.agent/render-audit/2026-07-10T03-01-42-04-00-renderer-readback-consumption-ledger.md
-.agent/grass-system-audit/2026-07-10T03-01-42-04-00-grass-render-consumption-journal.md
-.agent/gameplay-audit/2026-07-10T03-01-42-04-00-objective-action-result-loop.md
-.agent/interaction-audit/2026-07-10T03-01-42-04-00-target-action-preflight-fixture.md
-.agent/deploy-audit/2026-07-10T03-01-42-04-00-headless-editor-check-gate.md
+.agent/trackers/2026-07-10T04-58-56-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-10T04-58-56-04-00.md
+.agent/architecture-audit/2026-07-10T04-58-56-04-00-proof-row-ledger-dsk-map.md
+.agent/render-audit/2026-07-10T04-58-56-04-00-renderer-proof-row-gap.md
+.agent/grass-system-audit/2026-07-10T04-58-56-04-00-grass-proof-row-parity.md
+.agent/gameplay-audit/2026-07-10T04-58-56-04-00-action-objective-proof-loop.md
+.agent/interaction-audit/2026-07-10T04-58-56-04-00-target-action-preflight-proof.md
+.agent/deploy-audit/2026-07-10T04-58-56-04-00-proof-row-check-gate.md
 ```
 
 ## Source files to inspect before implementation

@@ -2,31 +2,31 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-10T10-49-23-04-00`
+**Last aligned:** `2026-07-10T12-19-05-04-00`
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow GameHost Proof Row Consumer Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Consumer Proof Attribution Ledger Refresh + Headless Editor Fixture Gate
 ```
 
 ## Read first
 
 ```txt
-.agent/trackers/2026-07-10T10-49-23-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-10T10-49-23-04-00.md
+.agent/trackers/2026-07-10T12-19-05-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-10T12-19-05-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-10T10-49-23-04-00-gamehost-proof-row-consumer-ledger-dsk-map.md
-.agent/render-audit/2026-07-10T10-49-23-04-00-render-consumption-proof-row-gap.md
-.agent/grass-system-audit/2026-07-10T10-49-23-04-00-grass-render-parity-proof-ledger.md
-.agent/gameplay-audit/2026-07-10T10-49-23-04-00-action-objective-consumer-proof-loop.md
-.agent/interaction-audit/2026-07-10T10-49-23-04-00-target-action-preflight-result-map.md
-.agent/editor-proof-audit/2026-07-10T10-49-23-04-00-headless-editor-proof-observation-ledger.md
-.agent/deploy-audit/2026-07-10T10-49-23-04-00-proof-row-fixture-check-gate.md
+.agent/architecture-audit/2026-07-10T12-19-05-04-00-consumer-proof-attribution-ledger-dsk-map.md
+.agent/render-audit/2026-07-10T12-19-05-04-00-render-consumption-attribution-gap.md
+.agent/grass-system-audit/2026-07-10T12-19-05-04-00-grass-source-render-attribution-ledger.md
+.agent/gameplay-audit/2026-07-10T12-19-05-04-00-action-objective-attribution-loop.md
+.agent/interaction-audit/2026-07-10T12-19-05-04-00-target-action-preflight-attribution-map.md
+.agent/editor-proof-audit/2026-07-10T12-19-05-04-00-headless-editor-attribution-observation-ledger.md
+.agent/deploy-audit/2026-07-10T12-19-05-04-00-attribution-fixture-check-gate.md
 ```
 
 ## Current route
@@ -63,13 +63,13 @@ boot DOM nodes
 
 Do not start with visual fidelity, renderer replacement, external CDN changes, new meadow content, grass tuning, camera/control rewiring, shared-kit promotion, or editor command expansion.
 
-The missing layer is source-owned consumer proof rows through `GameHost` and the headless editor:
+The missing layer is consumer attribution proof rows:
 
 ```txt
-render descriptor consumption rows
-grass source/render parity rows
-action/result rows
-objective progress rows
+render descriptor consumed / ignored / unsupported / fallback rows
+grass source/render parity attribution rows
+ActionFrame and ActionResult rows
+ObjectiveProgress rows
 GameHost proof projection rows
 headless editor observation rows
 ```

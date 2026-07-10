@@ -1,16 +1,16 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-09T22-40-25-04-00",
-  "status": "render-proof-action-fixture-refresh-planned",
-  "latestTracker": ".agent/trackers/2026-07-09T22-40-25-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-09T22-40-25-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-09T22-40-25-04-00-render-proof-action-fixture-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-09T22-40-25-04-00-renderer-v2-consumption-proof-gap.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-09T22-40-25-04-00-grass-row-consumption-ledger.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-09T22-40-25-04-00-objective-action-fixture-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-09T22-40-25-04-00-target-action-preflight-gap.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-09T22-40-25-04-00-check-fixture-wire-map.md",
+  "generatedAt": "2026-07-10T00-09-51-04-00",
+  "status": "renderer-snapshot-action-fixture-catchup-planned",
+  "latestTracker": ".agent/trackers/2026-07-10T00-09-51-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T00-09-51-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T00-09-51-04-00-renderer-snapshot-action-fixture-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-10T00-09-51-04-00-renderer-snapshot-consumption-proof.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-10T00-09-51-04-00-grass-render-parity-ledger.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T00-09-51-04-00-objective-action-result-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T00-09-51-04-00-target-action-preflight-fixture.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T00-09-51-04-00-check-fixture-gate.md",
   "sourceRoots": [
     "src/boot",
     "src/hosts",
@@ -23,9 +23,9 @@
   "selection": {
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "No checked public non-Cavalry repo was new, central-ledger absent, undocumented, recently added but undocumented, or missing sampled root .agent state. IntoTheMeadow was selected as the oldest eligible documented fallback because central tracking was at 2026-07-09T18-20-18-04-00."
+    "reason": "No checked public non-Cavalry repo was new, central-ledger absent, undocumented, recently added but undocumented, or missing sampled root .agent state. IntoTheMeadow was selected as the oldest eligible documented fallback because central tracking was at 2026-07-09T22-40-25-04-00."
   },
-  "currentNextSlice": "IntoTheMeadow Render Proof + Action Fixture Refresh",
+  "currentNextSlice": "IntoTheMeadow Renderer Snapshot Action Fixture Catch-up + DOM-Free Proof Gate",
   "interactionLoop": [
     "index.html mounts canvas, HUD, status, and loading panel",
     "boot-game captures DOM nodes and debug flag",

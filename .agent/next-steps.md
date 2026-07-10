@@ -2,12 +2,12 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T07-59-27-04-00`
+**Updated:** `2026-07-10T09-28-40-04-00`
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow GameHost Proof Row Readback Refresh + Headless Fixture Gate
+IntoTheMeadow GameHost Proof Row Ledger Refresh + Headless Editor Fixture Gate
 ```
 
 ## Build checklist
@@ -78,5 +78,3 @@ src/editor/install-editor-bridge.js
 ## Stop condition for the next implementation slice
 
 Stop when DOM-free rows prove renderer descriptor consumption, grass source/render parity, path/inspect action results, objective progress, additive GameHost proof projection, and headless editor proof observation.
-
-Do not continue into visual fidelity, renderer extraction, route/content expansion, camera/control rewiring, or shared-kit promotion in the same cut.

@@ -1,16 +1,16 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-10T00-09-51-04-00",
-  "status": "renderer-snapshot-action-fixture-catchup-planned",
-  "latestTracker": ".agent/trackers/2026-07-10T00-09-51-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T00-09-51-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T00-09-51-04-00-renderer-snapshot-action-fixture-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-10T00-09-51-04-00-renderer-snapshot-consumption-proof.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-10T00-09-51-04-00-grass-render-parity-ledger.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T00-09-51-04-00-objective-action-result-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T00-09-51-04-00-target-action-preflight-fixture.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T00-09-51-04-00-check-fixture-gate.md",
+  "generatedAt": "2026-07-10T01-38-16-04-00",
+  "status": "headless-render-action-proof-catchup-planned",
+  "latestTracker": ".agent/trackers/2026-07-10T01-38-16-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T01-38-16-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T01-38-16-04-00-headless-render-action-proof-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-10T01-38-16-04-00-renderer-snapshot-headless-proof.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-10T01-38-16-04-00-grass-consumption-headless-ledger.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T01-38-16-04-00-objective-action-headless-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T01-38-16-04-00-target-action-editor-fixture.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T01-38-16-04-00-check-headless-fixture-gate.md",
   "sourceRoots": [
     "src/boot",
     "src/hosts",
@@ -23,19 +23,23 @@
   "selection": {
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "No checked public non-Cavalry repo was new, central-ledger absent, undocumented, recently added but undocumented, or missing sampled root .agent state. IntoTheMeadow was selected as the oldest eligible documented fallback because central tracking was at 2026-07-09T22-40-25-04-00."
+    "reason": "No checked public non-Cavalry repo was new, central-ledger absent, undocumented, recently added but undocumented, or missing sampled root .agent state. IntoTheMeadow was selected as the oldest eligible documented fallback after PrehistoricRush advanced to 2026-07-10T01-31-29-04-00."
   },
-  "currentNextSlice": "IntoTheMeadow Renderer Snapshot Action Fixture Catch-up + DOM-Free Proof Gate",
+  "currentNextSlice": "IntoTheMeadow Headless Render Action Proof Catch-up + GameHost Ledger Gate",
   "interactionLoop": [
     "index.html mounts canvas, HUD, status, and loading panel",
     "boot-game captures DOM nodes and debug flag",
     "startWebHost imports the external meadow-area-kit",
     "createIntoTheMeadowGame installs DSK descriptors and creates the meadow kit",
+    "createMeadowWebglRendererV2 compatible adapter creates renderer v2",
+    "createRenderPlanEnhancer prepares grass/wind/postprocess/performance descriptors",
+    "exposeGameHost publishes state, snapshot, diagnostics, render plan, renderer snapshot, and enhancer snapshot",
+    "installIntoTheMeadowEditorBridge exposes headless editor command and loop reachability",
     "requestAnimationFrame ticks state",
     "advanceGameState increments frame and lastTick only",
     "enhanceRenderPlan emits grass, wind, postprocess, performance, and stats descriptors",
     "meadow-webgl-renderer-v2 renders the enhanced plan and returns aggregate readback",
-    "GameHost exposes state, snapshot, diagnostics, enhanced render plan, renderer snapshot, and enhancer snapshot"
+    "debug HUD and GameHost expose aggregate readback without proof rows"
   ],
   "domains": [
     "static-browser-shell",
@@ -73,10 +77,13 @@
     "interaction-target-domain",
     "frame-tick-domain",
     "GameHost-debug-surface",
+    "headless-editor-runtime",
+    "editor-bridge",
     "render-proof-next",
     "grass-proof-next",
     "action-fixture-next",
     "objective-progress-next",
+    "headless-observation-proof-next",
     "central-ledger-sync"
   ],
   "services": {
@@ -86,11 +93,13 @@
     "snapshot-service": ["manifest", "state", "render plan", "diagnostics", "validation"],
     "render-enhancement-service": ["filtered objects", "outline policy", "grass system", "wind field", "postprocess", "performance", "stats"],
     "grass-system-service": ["density texture", "archetypes", "static batches", "patches", "draw groups", "shader wind", "lod", "debug", "validation"],
-    "renderer-v2-service": ["WebGL context", "shader program", "mesh buffer cache", "topology-key rebuild", "outline pass", "main cel-fog pass", "renderer snapshot"],
+    "renderer-v2-service": ["WebGL context", "shader program", "mesh buffer cache", "topology-key rebuild", "outline pass", "main cel-fog pass", "aggregate renderer snapshot"],
     "content-service": ["story beats", "arrival objectives", "arrival interaction targets"],
     "GameHost-service": ["getState", "getSnapshot", "getDiagnostics", "getRenderPlan", "getRenderSnapshot", "getRenderEnhancerSnapshot", "game reference"],
+    "headless-editor-service": ["environment smoke", "command smoke", "loop smoke", "browser bridge smoke"],
     "planned-render-proof-service": ["expectation rows", "snapshot normalization", "consumption ledger", "GameHost projection"],
-    "planned-action-fixture-service": ["ActionFrame", "preflight", "ActionResult", "objective progress", "fixture rows"]
+    "planned-action-fixture-service": ["ActionFrame", "preflight", "ActionResult", "objective progress", "fixture rows"],
+    "planned-headless-proof-service": ["editor command proof rows", "editor loop proof rows", "GameHost headless proof projection"]
   },
   "kits": [
     { "id": "meadow-area-kit", "status": "external-implemented", "kind": "domain-kit", "provides": ["arrival meadow render plan"] },
@@ -109,6 +118,7 @@
     { "id": "grass-lod-policy-kit", "status": "implemented-source", "kind": "grass-kit", "provides": ["lod policy"] },
     { "id": "grass-density-scaling-kit", "status": "implemented-source", "kind": "grass-kit", "provides": ["density scale"] },
     { "id": "grass-debug-visualization-kit", "status": "implemented-source", "kind": "diagnostic-kit", "provides": ["grass debug summary"] },
+    { "id": "headless-editor-bridge-kit", "status": "implemented-source", "kind": "editor-kit", "provides": ["environment", "command", "loop", "browser smoke reachability"] },
     { "id": "render-expectation-row-kit", "status": "planned-next", "kind": "proof-kit", "provides": ["descriptor expectation rows"] },
     { "id": "renderer-snapshot-normalizer-kit", "status": "planned-next", "kind": "proof-kit", "provides": ["renderer v2 snapshot normalization"] },
     { "id": "render-consumption-ledger-kit", "status": "planned-next", "kind": "proof-kit", "provides": ["descriptor consumption rows"] },
@@ -119,6 +129,7 @@
     { "id": "action-result-kit", "status": "planned-next", "kind": "gameplay-kit", "provides": ["path-progress and inspect results"] },
     { "id": "objective-progress-kit", "status": "planned-next", "kind": "gameplay-kit", "provides": ["objective mutation"] },
     { "id": "DOM-free-action-fixture-kit", "status": "planned-next", "kind": "fixture-kit", "provides": ["action replay rows"] },
+    { "id": "headless-editor-proof-ledger-kit", "status": "planned-next", "kind": "fixture-kit", "provides": ["editor command and loop proof rows"] },
     { "id": "central-ledger-sync-kit", "status": "documentation-source", "kind": "ledger-kit", "provides": ["repo-local tracker", "central ledger", "internal change log"] }
   ],
   "validation": {
@@ -126,6 +137,7 @@
     "localValidationRun": false,
     "browserValidationRun": false,
     "fixtureRun": false,
-    "nextCommand": "npm run check after fixture scripts are added"
+    "headlessEditorSmokeRun": false,
+    "nextCommand": "npm run check after proof fixture scripts are added"
   }
 }

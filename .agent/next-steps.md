@@ -2,21 +2,22 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-09T18-20-18-04-00`
+**Updated:** `2026-07-09T22-40-25-04-00`
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow Render Action Readback + DOM-Free Fixture Gate
+IntoTheMeadow Render Proof + Action Fixture Refresh
 ```
 
 ## Build checklist
 
 ```txt
-[ ] Preserve current route shell, external kit URLs, renderer behavior, grass visuals, and GameHost legacy shape.
-[ ] Add render expectation row helpers for objects, grassSystem, grassPatches, windField, postProcess, performance, and stats.
-[ ] Add renderer snapshot normalizer that tolerates missing optional renderer.getSnapshot.
+[ ] Preserve current route shell, external meadow-area-kit URL, renderer v2 behavior, grass visuals, and GameHost legacy shape.
+[ ] Add render expectation row helpers for source objects, grassSystem, grassPatches, windField, postProcess, performance, and stats.
+[ ] Add renderer snapshot normalizer for meadow-webgl-renderer-v2 snapshots.
 [ ] Add render consumption ledger rows with consumed / ignored / unsupported / fallback status.
+[ ] Tie primitiveFallbackCount back to descriptor ids or fallback classes.
 [ ] Add grass consumption rows for density texture, static batches, patches, draw groups, shader wind, and LOD.
 [ ] Add GameHost render proof projection additively without replacing existing getState/getSnapshot/getDiagnostics.
 [ ] Add ActionFrame contract for path-progress and inspect actions.
@@ -24,7 +25,7 @@ IntoTheMeadow Render Action Readback + DOM-Free Fixture Gate
 [ ] Add ActionResult contract with accepted/rejected/skipped/unchanged statuses.
 [ ] Add objective progress helper for walk-the-path and inspect-tree.
 [ ] Add DOM-free fixture rows before wiring browser input.
-[ ] Extend npm run check only after new fixture scripts exist.
+[ ] Extend npm run check after the new fixture scripts exist.
 [ ] Update central LuminaryLabs ledger after implementation lands.
 [ ] Defer visual rewrite, renderer replacement, shared-kit promotion, external CDN changes, and new content.
 ```
@@ -68,6 +69,8 @@ src/game/game-snapshot.js
 13. central ledger implementation log
 ```
 
-## Stop condition
+## Stop condition for the next implementation slice
 
-Stop the implementation slice when DOM-free rows prove descriptor consumption and action/objective mutation. Do not continue into visual fidelity or renderer extraction in the same cut.
+Stop when DOM-free rows prove descriptor consumption and action/objective mutation.
+
+Do not continue into visual fidelity or renderer extraction in the same cut.

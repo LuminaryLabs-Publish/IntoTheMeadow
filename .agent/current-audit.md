@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-10T04-58-56-04-00`
+**Audit timestamp:** `2026-07-10T06-30-49-04-00`
 
 ## Summary
 
@@ -11,23 +11,6 @@
 This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: source-backed proof rows that connect renderer readback, grass descriptors, objective/action results, GameHost projections, and headless editor observations.
 
 Runtime source was not changed.
-
-## Evidence checked
-
-```txt
-current public LuminaryLabs-Publish repository list
-LuminaryLabs-Dev/LuminaryLabs repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
-LuminaryLabs-Publish/IntoTheMeadow:.agent/START_HERE.md
-LuminaryLabs-Publish/IntoTheMeadow:.agent/kit-registry.json
-LuminaryLabs-Publish/IntoTheMeadow:package.json
-LuminaryLabs-Publish/IntoTheMeadow:src/hosts/web-host.js
-LuminaryLabs-Publish/IntoTheMeadow:src/game/create-into-the-meadow-game.js
-LuminaryLabs-Publish/IntoTheMeadow:src/game/game-state.js
-LuminaryLabs-Publish/IntoTheMeadow:src/game/enhance-render-plan.js
-LuminaryLabs-Publish/IntoTheMeadow:src/boot/expose-game-host.js
-LuminaryLabs-Publish/IntoTheMeadow:src/editor/install-editor-bridge.js
-LuminaryLabs-Publish/IntoTheMeadow:src/renderers/meadow-webgl-renderer-v2.js
-```
 
 ## Current interaction loop
 
@@ -86,6 +69,7 @@ mesh-builder-v2
 webgl-renderer-v2
 renderer-topology-cache
 inline-cel-fog-render-pass
+renderer-precision-compatibility
 state-snapshot-diagnostics
 objective-descriptor-domain
 interaction-target-domain
@@ -105,11 +89,9 @@ central-ledger-sync
 
 See `.agent/kit-registry.json` for the machine-readable kit inventory.
 
-The important implemented seam is descriptor production plus aggregate renderer readback.
+The implemented seam is descriptor production plus aggregate renderer/editor readback.
 
-The useful runtime seam is the headless editor command/smoke path.
-
-The important next seam is row-level source-to-consumer proof across render, grass, gameplay action, objective progress, GameHost, and headless observation.
+The next seam is row-level source-to-consumer proof across render, grass, gameplay action, objective progress, GameHost, and headless editor observations.
 
 ## Main finding
 
@@ -122,5 +104,5 @@ The next implementation should add render rows, grass parity rows, action/object
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Proof Row Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Proof Row Ledger Catch-up + Headless Editor Observation Gate
 ```

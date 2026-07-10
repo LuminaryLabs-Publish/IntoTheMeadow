@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-10T01-38-16-04-00`
+**Last aligned:** `2026-07-10T03-01-42-04-00`
 
 ## Purpose
 
@@ -18,22 +18,22 @@ No checked non-Cavalry Publish repo was new, missing from the central ledger, mi
 
 `LuminaryLabs-Publish/TheCavalryOfRome` remains excluded by standing rule.
 
-`IntoTheMeadow` was selected as the oldest eligible central-ledger fallback after `PrehistoricRush` advanced to `2026-07-10T01-31-29-04-00`.
+`IntoTheMeadow` was selected as the oldest eligible documented fallback after recent central-ledger advancement by other Publish repos.
 
 ## Current product read
 
-`IntoTheMeadow` is a static DSK-composed meadow route.
+`IntoTheMeadow` is a static DSK-composed meadow route operated through the NexusEngine Headless Editor Runtime.
 
-The route uses a local `meadow-webgl-renderer-v2` compatible adapter, exposes aggregate renderer readback through `GameHost`, and now has a headless editor command/smoke path.
+The route uses a local `meadow-webgl-renderer-v2` compatible adapter, exposes aggregate renderer readback through `GameHost`, and has headless editor environment/command/loop smoke paths.
 
-The useful next step is proof rows, not a visual rewrite.
+The useful next step is source-backed proof rows, not a visual rewrite.
 
 ## Current interaction loop
 
 ```txt
 index.html
   -> canvas#scene, HUD, loading panel, and status DOM
-  -> src/boot/boot-game.js
+  -> src/boot/boot-game.js?v=0.3.0-headless-editor
   -> startWebHost({ canvas, hud, statusEl, loadingEl, debug })
   -> loadExternalKits() imports meadow-area-kit from GAME_MANIFEST.externalKits
   -> createIntoTheMeadowGame({ externalKits })
@@ -65,14 +65,15 @@ frame, fixture, or editor command input
   -> run ActionFrame through target/action preflight
   -> emit ActionResult and objective progress rows
   -> project additive GameHost proof state
+  -> emit headless editor observation rows
   -> run DOM-free fixture rows through npm run check
-  -> run headless editor observation rows through npm run check
+  -> run headless editor proof rows through npm run check
 ```
 
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Headless Render Action Proof Catch-up + GameHost Ledger Gate
+IntoTheMeadow Headless Editor Render Action Ledger Refresh + GameHost Fixture Gate
 ```
 
 ## First files to read
@@ -83,14 +84,14 @@ IntoTheMeadow Headless Render Action Proof Catch-up + GameHost Ledger Gate
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/trackers/2026-07-10T01-38-16-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-10T01-38-16-04-00.md
-.agent/architecture-audit/2026-07-10T01-38-16-04-00-headless-render-action-proof-dsk-map.md
-.agent/render-audit/2026-07-10T01-38-16-04-00-renderer-snapshot-headless-proof.md
-.agent/grass-system-audit/2026-07-10T01-38-16-04-00-grass-consumption-headless-ledger.md
-.agent/gameplay-audit/2026-07-10T01-38-16-04-00-objective-action-headless-loop.md
-.agent/interaction-audit/2026-07-10T01-38-16-04-00-target-action-editor-fixture.md
-.agent/deploy-audit/2026-07-10T01-38-16-04-00-check-headless-fixture-gate.md
+.agent/trackers/2026-07-10T03-01-42-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-10T03-01-42-04-00.md
+.agent/architecture-audit/2026-07-10T03-01-42-04-00-headless-editor-render-action-ledger-dsk-map.md
+.agent/render-audit/2026-07-10T03-01-42-04-00-renderer-readback-consumption-ledger.md
+.agent/grass-system-audit/2026-07-10T03-01-42-04-00-grass-render-consumption-journal.md
+.agent/gameplay-audit/2026-07-10T03-01-42-04-00-objective-action-result-loop.md
+.agent/interaction-audit/2026-07-10T03-01-42-04-00-target-action-preflight-fixture.md
+.agent/deploy-audit/2026-07-10T03-01-42-04-00-headless-editor-check-gate.md
 ```
 
 ## Source files to inspect before implementation

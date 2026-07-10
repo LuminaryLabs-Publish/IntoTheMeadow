@@ -1,23 +1,23 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-10T12-19-05-04-00",
-  "status": "consumer-proof-attribution-ledger-headless-editor-fixture-gate-planned",
-  "latestTracker": ".agent/trackers/2026-07-10T12-19-05-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T12-19-05-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T12-19-05-04-00-consumer-proof-attribution-ledger-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-10T12-19-05-04-00-render-consumption-attribution-gap.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-10T12-19-05-04-00-grass-source-render-attribution-ledger.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T12-19-05-04-00-action-objective-attribution-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T12-19-05-04-00-target-action-preflight-attribution-map.md",
-  "latestEditorProofAudit": ".agent/editor-proof-audit/2026-07-10T12-19-05-04-00-headless-editor-attribution-observation-ledger.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T12-19-05-04-00-attribution-fixture-check-gate.md",
+  "generatedAt": "2026-07-10T13-50-05-04-00",
+  "status": "renderer-proof-attribution-readback-headless-editor-fixture-gate-planned",
+  "latestTracker": ".agent/trackers/2026-07-10T13-50-05-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T13-50-05-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T13-50-05-04-00-renderer-proof-attribution-readback-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-10T13-50-05-04-00-renderer-v2-consumption-proof-gap.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-10T13-50-05-04-00-grass-render-attribution-readback.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T13-50-05-04-00-action-objective-proof-attribution-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T13-50-05-04-00-target-action-result-attribution-map.md",
+  "latestEditorProofAudit": ".agent/editor-proof-audit/2026-07-10T13-50-05-04-00-headless-editor-proof-attribution-ledger.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T13-50-05-04-00-renderer-proof-fixture-check-gate.md",
   "selection": {
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
     "reason": "No checked public non-Cavalry repo was new, central-ledger absent, undocumented, recently added, or missing sampled root .agent state. IntoTheMeadow was selected as the oldest eligible documented fallback after PrehistoricRush advanced."
   },
-  "currentNextSlice": "IntoTheMeadow Consumer Proof Attribution Ledger Refresh + Headless Editor Fixture Gate",
+  "currentNextSlice": "IntoTheMeadow Renderer Proof Attribution Readback Refresh + Headless Editor Fixture Gate",
   "interactionLoop": [
     "index.html mounts canvas, HUD, status, and loading panel",
     "boot-game captures DOM nodes and debug flag",
@@ -65,7 +65,7 @@
     "action-result-proof-next",
     "objective-progress-proof-next",
     "headless-editor-proof-row-next",
-    "consumer-attribution-ledger-next"
+    "renderer-proof-attribution-ledger-next"
   ],
   "services": {
     "external-kit-service": ["dynamic import", "meadow area factory"],

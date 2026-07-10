@@ -1,0 +1,6 @@
+{
+  "wide-arrival": { "position": { "x": 0, "y": 5.3, "z": -52 }, "target": { "x": 0, "y": 5.7, "z": 24 }, "fov": 45 },
+  "ground-grass": { "position": { "x": -4, "y": 1.2, "z": -24 }, "target": { "x": 0, "y": 1.8, "z": 2 }, "fov": 52 },
+  "hero-tree": { "position": { "x": 8, "y": 5.5, "z": 5 }, "target": { "x": 0, "y": 8, "z": 24 }, "fov": 42 },
+  "path-transition": { "position": { "x": 3, "y": 1.6, "z": -8 }, "target": { "x": 0, "y": 0.5, "z": 8 }, "fov": 50 }
+}

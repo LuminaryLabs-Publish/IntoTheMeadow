@@ -1,5 +1,6 @@
 import { GAME_MANIFEST } from "../content/game-manifest.js";
 import { ARRIVAL_MEADOW_CONFIG } from "../content/meadow-areas/arrival-meadow.js";
+import { createLocalMeadowSourcePlan } from "../content/meadow-areas/create-local-meadow-source-plan.js";
 import { STORY_BEATS } from "../content/story/story-beats.js";
 import { ARRIVAL_OBJECTIVES } from "../content/objectives/arrival-objectives.js";
 import { ARRIVAL_INTERACTION_TARGETS } from "../content/interaction-targets/arrival-targets.js";
@@ -11,33 +12,19 @@ function createFallbackMeadowAreaKit(config = {}) {
   return Object.freeze({
     id: config.area?.id ?? "fallback-meadow",
     getRenderPlan({ time = 0 } = {}) {
-      return Object.freeze({
-        id: config.area?.id ?? "fallback-meadow",
-        type: "meadow-area-render-plan",
-        time,
-        seed: config.seed,
-        area: config.area,
-        style: config.style,
-        wind: config.features?.wind,
-        objects: Object.freeze([
-          Object.freeze({ id: "fallback-ground", type: "ground" }),
-          Object.freeze({ id: "fallback-path", type: "path", ...(config.features?.path ?? {}) }),
-          Object.freeze({
-            id: "fallback-focal-tree",
-            type: "focal-tree",
-            position: config.features?.focalTree?.position ?? { x: 0, y: 0, z: 24 },
-            ...(config.features?.focalTree ?? {})
-          })
-        ]),
-        stats: Object.freeze({ objectCount: 3, counts: Object.freeze({ ground: 1, path: 1, focalTree: 1 }) }),
-        validation: Object.freeze({ passed: true, failures: [], fallback: true })
-      });
+      return createLocalMeadowSourcePlan(config, { time });
     },
     getSnapshot() {
-      return Object.freeze({ id: config.area?.id ?? "fallback-meadow", fallback: true });
+      const plan = createLocalMeadowSourcePlan(config, { time: 0 });
+      return Object.freeze({
+        id: config.area?.id ?? "fallback-meadow",
+        fallback: true,
+        sourcePlanVersion: plan.version,
+        objectCount: plan.stats.objectCount
+      });
     },
     validate() {
-      return Object.freeze({ passed: true, failures: [], fallback: true });
+      return Object.freeze({ passed: true, failures: [], fallback: true, representative: true });
     }
   });
 }
@@ -80,7 +67,8 @@ export async function createIntoTheMeadowGame(options = {}) {
       renderPlan: Object.freeze({
         policy: "static-topology-with-time-overlay",
         sourcePlanCached: true,
-        sourcePlanId: plan.id
+        sourcePlanId: plan.id,
+        sourcePlanVersion: plan.version ?? null
       }),
       content: Object.freeze({
         storyBeats: STORY_BEATS.length,

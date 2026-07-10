@@ -2,12 +2,12 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T04-58-56-04-00`
+**Updated:** `2026-07-10T06-30-49-04-00`
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow Proof Row Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Proof Row Ledger Catch-up + Headless Editor Observation Gate
 ```
 
 ## Build checklist

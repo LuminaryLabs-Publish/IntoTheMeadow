@@ -2,32 +2,33 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T00-09-51-04-00`
+**Updated:** `2026-07-10T01-38-16-04-00`
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow Renderer Snapshot Action Fixture Catch-up + DOM-Free Proof Gate
+IntoTheMeadow Headless Render Action Proof Catch-up + GameHost Ledger Gate
 ```
 
 ## Build checklist
 
 ```txt
-[ ] Preserve current route shell, external meadow-area-kit URL, renderer v2 behavior, grass visuals, and GameHost legacy shape.
-[ ] Add render expectation row helpers for source objects, grassSystem, grassPatches, windField, postProcess, performance, and stats.
-[ ] Add renderer snapshot normalizer for meadow-webgl-renderer-v2 snapshots.
+[ ] Preserve the current route shell, external meadow-area URL, local renderer v2 adapter, grass visuals, GameHost legacy shape, and headless editor bridge.
+[ ] Add render expectation row helpers for source objects, grassSystem, grassPatches, windField, postProcess, performance, stats, and editor-visible render facts.
+[ ] Add renderer snapshot normalization for meadow-webgl-renderer-v2 aggregate snapshots.
 [ ] Add render consumption ledger rows with consumed / ignored / unsupported / fallback status.
 [ ] Tie primitiveFallbackCount back to descriptor ids or fallback classes.
-[ ] Add grass consumption rows for density texture, static batches, patches, draw groups, shader wind, and LOD.
-[ ] Add GameHost render proof projection additively without replacing existing getState/getSnapshot/getDiagnostics.
+[ ] Add grass consumption rows for density texture, static batches, patches, draw groups, shader wind, LOD, and debug summaries.
+[ ] Add additive GameHost render/action/headless proof projection without replacing existing getState/getSnapshot/getDiagnostics.
 [ ] Add ActionFrame contract for path-progress and inspect actions.
 [ ] Add target/action preflight helper for arrival-path and focal-tree.
 [ ] Add ActionResult contract with accepted/rejected/skipped/unchanged statuses.
 [ ] Add objective progress helper for walk-the-path and inspect-tree.
 [ ] Add DOM-free fixture rows before wiring browser input.
+[ ] Add headless editor proof rows so editor command/loop smokes can assert source-backed proof, not just bridge reachability.
 [ ] Extend npm run check after the new fixture scripts exist.
 [ ] Update central LuminaryLabs ledger after implementation lands.
-[ ] Defer visual rewrite, renderer replacement, shared-kit promotion, external CDN changes, and new content.
+[ ] Defer visual rewrite, renderer replacement, shared-kit promotion, external CDN changes, new content, grass art tuning, and camera/control rewiring.
 ```
 
 ## Suggested file targets
@@ -43,9 +44,11 @@ src/gameplay/target-action-preflight.js
 src/gameplay/action-result.js
 src/gameplay/objective-progress.js
 src/gameplay/gameplay-fixture-rows.js
+src/editor-proof/headless-editor-proof-ledger.js
 tests/render-consumption-ledger-smoke.mjs
 tests/grass-consumption-ledger-smoke.mjs
 tests/action-result-fixture-smoke.mjs
+tests/headless-editor-proof-ledger-smoke.mjs
 package.json
 src/boot/expose-game-host.js
 src/game/game-snapshot.js
@@ -54,23 +57,24 @@ src/game/game-snapshot.js
 ## Implementation order
 
 ```txt
-1. render-expectations.js
-2. renderer-snapshot-normalizer.js
-3. render-consumption-ledger.js
-4. grass-consumption-ledger.js
-5. render ledger smoke test
-6. action-frame.js
-7. target-action-preflight.js
-8. action-result.js
-9. objective-progress.js
-10. gameplay fixture rows and smoke test
-11. additive GameHost/game snapshot proof fields
-12. package.json check wiring
-13. central ledger implementation log
+1. Add render-expectations.js.
+2. Add renderer-snapshot-normalizer.js.
+3. Add render-consumption-ledger.js.
+4. Add grass-consumption-ledger.js.
+5. Add render and grass ledger smoke tests.
+6. Add action-frame.js.
+7. Add target-action-preflight.js.
+8. Add action-result.js.
+9. Add objective-progress.js.
+10. Add gameplay fixture rows and smoke test.
+11. Add headless-editor-proof-ledger.js and smoke test.
+12. Add additive GameHost/game snapshot proof fields.
+13. Wire package.json check commands after proof tests exist.
+14. Log implementation centrally.
 ```
 
 ## Stop condition for the next implementation slice
 
-Stop when DOM-free rows prove descriptor consumption and action/objective mutation.
+Stop when DOM-free rows prove renderer descriptor consumption, grass source/render parity, path/inspect action results, objective progress, and headless editor proof projection.
 
-Do not continue into visual fidelity or renderer extraction in the same cut.
+Do not continue into visual fidelity, renderer extraction, route/content expansion, or shared-kit promotion in the same cut.

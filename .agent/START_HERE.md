@@ -2,31 +2,31 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-10T06-30-49-04-00`
+**Last aligned:** `2026-07-10T07-59-27-04-00`
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow Proof Row Ledger Catch-up + Headless Editor Observation Gate
+IntoTheMeadow GameHost Proof Row Readback Refresh + Headless Fixture Gate
 ```
 
 ## Read first
 
 ```txt
-.agent/trackers/2026-07-10T06-30-49-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-10T06-30-49-04-00.md
+.agent/trackers/2026-07-10T07-59-27-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-10T07-59-27-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-10T06-30-49-04-00-proof-row-ledger-catchup-dsk-map.md
-.agent/render-audit/2026-07-10T06-30-49-04-00-render-consumption-proof-row-gap.md
-.agent/grass-system-audit/2026-07-10T06-30-49-04-00-grass-consumption-proof-row-gap.md
-.agent/gameplay-audit/2026-07-10T06-30-49-04-00-action-objective-proof-row-loop.md
-.agent/interaction-audit/2026-07-10T06-30-49-04-00-target-action-preflight-proof-row-map.md
-.agent/editor-proof-audit/2026-07-10T06-30-49-04-00-headless-editor-observation-ledger.md
-.agent/deploy-audit/2026-07-10T06-30-49-04-00-proof-row-check-gate.md
+.agent/architecture-audit/2026-07-10T07-59-27-04-00-gamehost-proof-row-readback-dsk-map.md
+.agent/render-audit/2026-07-10T07-59-27-04-00-render-consumption-gamehost-proof-gap.md
+.agent/grass-system-audit/2026-07-10T07-59-27-04-00-grass-parity-proof-row-readback.md
+.agent/gameplay-audit/2026-07-10T07-59-27-04-00-action-objective-result-row-loop.md
+.agent/interaction-audit/2026-07-10T07-59-27-04-00-target-action-result-fixture-map.md
+.agent/editor-proof-audit/2026-07-10T07-59-27-04-00-headless-editor-gamehost-proof-readback.md
+.agent/deploy-audit/2026-07-10T07-59-27-04-00-proof-row-check-fixture-gate.md
 ```
 
 ## Current route
@@ -61,9 +61,9 @@ boot DOM nodes
 
 ## Main finding
 
-Do not start with visual fidelity, renderer replacement, external CDN changes, new meadow content, grass tuning, camera/control rewiring, or shared-kit promotion.
+Do not start with visual fidelity, renderer replacement, external CDN changes, new meadow content, grass tuning, camera/control rewiring, shared-kit promotion, or editor command expansion.
 
-The missing layer is row-level proof:
+The missing layer is row-level proof through GameHost and headless editor:
 
 ```txt
 render descriptor consumption rows

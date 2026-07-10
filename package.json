@@ -16,7 +16,7 @@
     "editor:smoke": "node tests/headless-editor-environment-smoke.mjs && node tests/headless-editor-command-smoke.mjs && node tests/headless-editor-loop-smoke.mjs"
   },
   "devDependencies": {
-    "nexusengine": "github:LuminaryLabs-Dev/NexusEngine#ea2d65139eab8a9b68fd9e0b33d7bb43fe9ebd35"
+    "nexusengine": "github:LuminaryLabs-Dev/NexusEngine#55b7f33f6d008b2e3b120e370f09b96ed73105e9"
   },
   "license": "UNLICENSED"
 }

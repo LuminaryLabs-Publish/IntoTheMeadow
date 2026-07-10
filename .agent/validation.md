@@ -19,7 +19,7 @@ browser smoke: not run
 DOM-free proof-row fixtures: not run because proof files do not exist yet
 headless editor smoke: not run in this pass
 pushed to main: yes
-central ledger updated: pending central sync
+central ledger updated: yes
 ```
 
 ## Existing validation commands

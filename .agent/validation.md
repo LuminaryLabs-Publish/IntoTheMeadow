@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T03-01-42-04-00`
+**Updated:** `2026-07-10T04-58-56-04-00`
 
 ## Validation performed this pass
 
@@ -16,7 +16,7 @@ npm install: not run
 npm run check: not run
 npm test: not run
 browser smoke: not run
-DOM-free render/action fixture: not run because proof files do not exist yet
+DOM-free proof-row fixtures: not run because proof files do not exist yet
 headless editor smoke: not run in this pass
 pushed to main: yes
 central ledger updated: yes

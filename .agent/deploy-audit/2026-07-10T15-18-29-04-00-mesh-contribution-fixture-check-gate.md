@@ -56,5 +56,5 @@ npm run check: not run
 browser smoke: not run
 new fixtures: not run because they do not exist yet
 pushed to main: yes
-central ledger updated: pending until central sync completes
+central ledger updated: yes
 ```

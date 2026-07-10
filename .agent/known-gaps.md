@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T18-22-01-04-00`
+**Updated:** `2026-07-10T19-48-09-04-00`
 
 ## Selection state
 
@@ -13,109 +13,110 @@ TheCavalryOfRome excluded by rule
 IntoTheMeadow selected as oldest eligible documented fallback
 ```
 
+## Runtime lifecycle gaps
+
+```txt
+boot-game.js discards the resolved host controller
+no session id or run id exists
+no lifecycle state machine exists
+requestAnimationFrame id is not retained
+stop() only changes a boolean
+start() can schedule while an older callback remains pending
+no coordinated restart operation exists
+no ordered resource ownership ledger exists
+no startup rollback exists
+no terminal idempotent dispose exists
+```
+
+## Cleanup and ownership gaps
+
+```txt
+renderer.dispose() exists but web-host never calls it
+editorBridge.dispose() exists but web-host never calls it
+planEnhancer.invalidate() exists but terminal cleanup does not call it
+GameHost assignment has no lease/release service
+NexusEditorEnvironment cleanup is not coordinated by the host
+manual stop and render failure leave resources and globals unaccounted for
+repeated host construction can leave old listeners active
+```
+
+## Lifecycle proof gaps
+
+```txt
+no result contract for start, stop, restart, or dispose
+no bounded lifecycle journal
+no GameHost lifecycle snapshot
+no editor lifecycle commands
+no one-RAF invariant fixture
+no stop/start race fixture
+no renderer/editor disposal fixture
+no listener/global cleanup fixture
+no fatal-start rollback fixture
+no start-after-dispose rejection fixture
+```
+
 ## Interaction authority gaps
 
 ```txt
-web-host submits only time and a fixed dt to game.tick
+web-host submits only time and fixed dt to game.tick
 advanceGameState ignores movement and action inputs
-no browser keyboard/pointer input adapter reaches game state
-no typed gameplay command contract exists
-no target lookup or range/precondition check exists
-no accepted/rejected/no-op result contract exists
-no ordered command/result/event journal exists
+no typed gameplay command contract
+no browser input adapter
+no target lookup or preflight
+no accepted/rejected/no-op gameplay result contract
+no ordered gameplay journal
 ```
 
 ## Objective authority gaps
 
 ```txt
-walk-the-path and inspect-tree are static descriptors
-arrival-path and focal-tree are static target descriptors
+walk-the-path and inspect-tree remain static descriptors
 player.pathProgress never changes
 no inspected-target state exists
 completedObjectiveIds never changes
 activeObjectiveId never advances
-no reducer links requiredAction to completion rules
-no duplicate-action policy exists
-```
-
-## Host and editor proof gaps
-
-```txt
-GameHost exposes the raw game object instead of a bounded gameplay command surface
-GameHost has no gameplay observation or journal method
-editor bridge supports runtime.tick/reset but not gameplay.dispatch
-editor command completion proves invocation only
-no frame/sequence/state fingerprint links a command to progression and render readback
+no reducer links actions to objective completion
 ```
 
 ## Timing gaps
 
 ```txt
 web-host passes dt: 1/60 regardless of actual frame duration
-state frame count is render-loop iteration count rather than committed simulation step authority
-absolute requestAnimationFrame time and fixed dt use different clocks
-no pause/resume or visibility-gap policy is documented
-no fixture proves equal command sequences remain stable across frame cadence
+frame count is tied to render callback count
+absolute RAF time and fixed dt use different clock authority
+no pause/resume or visibility-gap policy
+no cadence-parity fixture
 ```
 
-## External source provenance and fallback gaps
+## External source, mesh, and registry proof gaps
 
 ```txt
-runtime drops external source URL, commit, and exported version after import
-install status is inferred from function presence
-browser startup hard-fails before local fallback selection
-fallback validation claims representative without parity evidence
-external/fallback descriptor differences are not classified
-source plan is cached at time 0 and later receives only a time-field overlay
-```
-
-## Mesh and registry truth gaps
-
-```txt
+external source provenance is dropped after import
+fallback parity is not proven
+source plan remains cached at time 0 with a time-only overlay
 mesh builder lacks per-stage contribution rows
-descriptor ids are not retained in renderer readback
-attempted/consumed/skipped/unsupported/fallback counts are absent
+descriptor ids do not survive renderer readback
 primitiveFallbackCount is hard-coded to 0
-registry active-v0.1 status is list membership, not implementation proof
-```
-
-## Grass proof gaps
-
-```txt
-grass expectations are not reconciled with measured emitted geometry
-source and enhanced grass ids do not survive into render observations
-patch/draw-group contribution is not attributed
-external and fallback grass populations have no shared parity row
-```
-
-## Validation gaps
-
-```txt
-no interaction command fixture
-no target preflight fixture
-no objective progression fixture
-no duplicate-command fixture
-no same-command replay fingerprint fixture
-no source provenance/fallback parity fixtures
-no mesh contribution or registry truth fixtures
+registry active status is not implementation proof
 ```
 
 ## Do not solve first
 
 ```txt
 visual fidelity or asset expansion
-renderer replacement or WebGPU cutover
+renderer replacement or WebGPU migration
 new meadow content
 postprocess expansion
 shared-kit promotion
 CDN migration
-audio/save/UI expansion before command authority
+audio/save/UI expansion
+interaction reducers before lifecycle idempotency
 ```
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow Interaction Command Authority + Objective Progress Fixture Gate
+IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate
 ```
 
-External-source provenance/fallback parity, mesh contribution, and registry truth remain required companion gates.
+After lifecycle proof, resume `IntoTheMeadow Interaction Command Authority + Objective Progress Fixture Gate`. External-source provenance/fallback parity, mesh contribution, and registry truth remain required companion gates.

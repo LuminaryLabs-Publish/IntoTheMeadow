@@ -2,7 +2,8 @@ import { GAME_MANIFEST } from "../content/game-manifest.js";
 import { createIntoTheMeadowGame } from "../game/create-into-the-meadow-game.js";
 import { exposeGameHost } from "../boot/expose-game-host.js";
 import { createRenderPlanEnhancer } from "../game/enhance-render-plan.js";
-import { createMeadowWebglRendererV2 } from "../renderers/meadow-webgl-renderer-v2-compatible.js?v=0.2.1-shader-precision";
+import { createMeadowWebglRendererV2 } from "../renderers/meadow-webgl-renderer-v2-compatible.js?v=0.3.0-headless-editor";
+import { installIntoTheMeadowEditorBridge } from "../editor/install-editor-bridge.js?v=0.3.0-headless-editor";
 
 async function loadExternalKits() {
   const meadowAreaEntry = GAME_MANIFEST.externalKits.find((entry) => entry.id === "meadow-area-kit");
@@ -24,7 +25,7 @@ export async function startWebHost({ canvas, hud, statusEl, loadingEl, debug = f
   let lastRender = null;
   let stopped = false;
 
-  exposeGameHost({
+  const gameHost = exposeGameHost({
     ...game,
     renderer,
     planEnhancer,
@@ -38,6 +39,7 @@ export async function startWebHost({ canvas, hud, statusEl, loadingEl, debug = f
       renderEnhancer: planEnhancer.getSnapshot()
     })
   });
+  const editorBridge = installIntoTheMeadowEditorBridge({ gameHost, canvas });
 
   if (hud) hud.hidden = !debug;
   if (loadingEl) loadingEl.hidden = true;
@@ -77,7 +79,8 @@ export async function startWebHost({ canvas, hud, statusEl, loadingEl, debug = f
           `rocks:${counts.rocks}`,
           `vertices:${lastRender.vertexCount}`,
           `gpu:${lastRender.cacheState}`,
-          `plan:${plan.runtime?.enhancerCache?.state ?? "warming"}`
+          `plan:${plan.runtime?.enhancerCache?.state ?? "warming"}`,
+          `editor:${editorBridge.protocol}`
         ].join(" · ");
       }
       requestAnimationFrame(frame);
@@ -91,6 +94,7 @@ export async function startWebHost({ canvas, hud, statusEl, loadingEl, debug = f
     game,
     renderer,
     planEnhancer,
+    editorBridge,
     stop() { stopped = true; },
     start() {
       if (!stopped) return;

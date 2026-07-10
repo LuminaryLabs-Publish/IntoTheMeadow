@@ -28,8 +28,8 @@ interaction command fixture: not run because it does not exist yet
 objective progress fixture: not run because it does not exist yet
 command replay fixture: not run because it does not exist yet
 pushed to main: yes
-central ledger updated: pending central sync
-central change log updated: pending central sync
+central ledger updated: yes
+central change log updated: yes
 ```
 
 ## Source inspection completed

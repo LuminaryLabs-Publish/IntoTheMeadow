@@ -1,12 +1,18 @@
 export const GAME_MANIFEST = Object.freeze({
   id: "into-the-meadow",
   title: "Into The Meadow",
-  version: "0.2.0",
-  build: "0.2.0-render-contract-v2",
+  version: "0.3.0",
+  build: "0.3.0-headless-editor-runtime",
   route: "./index.html",
   publicUrl: "https://luminarylabs-publish.github.io/IntoTheMeadow/",
   defaultScene: "arrival-meadow",
   renderContract: "meadow-render-plan/v2",
+  editorRuntime: Object.freeze({
+    id: "core-headless-editor-kit",
+    environment: "into-the-meadow-headless",
+    browserBridge: "NexusEditorEnvironment",
+    mode: "permissive-capability-control-surface"
+  }),
   localRenderer: Object.freeze({
     id: "meadow-webgl-renderer-v2",
     module: "./src/renderers/meadow-webgl-renderer-v2.js",

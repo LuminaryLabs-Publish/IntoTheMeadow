@@ -22,7 +22,17 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
+      - run: npm install --no-audit --no-fund
       - run: npm run check
+      - run: npm run editor:loop
+      - run: npm run editor:browser
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: into-the-meadow-headless-editor-evidence
+          path: .artifacts/headless-editor
+          if-no-files-found: warn
+      - run: rm -rf node_modules
       - uses: actions/upload-pages-artifact@v3
         with:
           path: .

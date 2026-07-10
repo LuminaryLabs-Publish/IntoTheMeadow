@@ -35,5 +35,5 @@ browser smoke: not run
 headless editor smoke: not run
 DOM-free renderer proof attribution fixtures: not run because proof files do not exist yet
 pushed to main: yes
-central ledger updated: pending in this turn
+central ledger updated: yes
 ```

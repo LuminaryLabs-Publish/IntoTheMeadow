@@ -1,4 +1,11 @@
-import { createMeadowWebglRendererV2 as createBaseRenderer } from "./meadow-webgl-renderer-v2.js";
+import { createMeadowWebglRendererV2 as createBaseRenderer } from "./meadow-webgl-renderer-v2.js?v=0.2.1-shader-precision";
+
+const FLOAT_PRECISION_PATTERN = /^\s*precision\s+(?:lowp|mediump|highp)\s+float\s*;\s*/gm;
+
+function normalizeFloatPrecision(source = "") {
+  const body = String(source).replace(FLOAT_PRECISION_PATTERN, "");
+  return `precision mediump float;\n${body}`;
+}
 
 function createPrecisionSafeContext(gl) {
   const shaderTypes = new WeakMap();
@@ -16,12 +23,8 @@ function createPrecisionSafeContext(gl) {
       if (property === "shaderSource") {
         return (shader, source) => {
           const type = shaderTypes.get(shader);
-          const isVertexShader = type === target.VERTEX_SHADER;
-          const hasFloatPrecision = /precision\s+(?:lowp|mediump|highp)\s+float\s*;/.test(source);
-          const normalizedSource = isVertexShader && !hasFloatPrecision
-            ? `precision mediump float;\n${source}`
-            : source;
-          target.shaderSource(shader, normalizedSource);
+          const isGraphicsShader = type === target.VERTEX_SHADER || type === target.FRAGMENT_SHADER;
+          target.shaderSource(shader, isGraphicsShader ? normalizeFloatPrecision(source) : source);
         };
       }
 

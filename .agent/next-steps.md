@@ -2,92 +2,102 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T18-22-01-04-00`
+**Updated:** `2026-07-10T19-48-09-04-00`
 
 ## Goal
 
-Turn the existing path, tree, player, interaction, and objective descriptors into one deterministic gameplay slice while preserving the current meadow source, renderer, visual output, and legacy readback surfaces.
+Create one authoritative browser/editor runtime session that can start, stop, restart, fail, and dispose deterministically while preserving the current source plan, renderer output, GameHost legacy reads, and editor protocol.
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow Interaction Command Authority + Objective Progress Fixture Gate
+IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate
 ```
 
 ## Plan ledger
 
 ```txt
-[ ] Preserve the current external meadow source URL, fallback path, render-plan schema, topologyKey behavior, renderer output, GameHost legacy methods, and editor protocol.
-[ ] Define typed commands for move, path-progress, inspect, and reset.
-[ ] Add a command adapter that normalizes keyboard/editor/fixture inputs into the same command contract.
-[ ] Add target lookup and deterministic preflight for target existence, action support, range, state, and objective eligibility.
-[ ] Return accepted, rejected, or no-op results with stable status and reason codes.
-[ ] Move player/path-progress mutation into a pure reducer.
-[ ] Add inspected target state and prevent duplicate inspection mutation.
-[ ] Evaluate walk-the-path at progress >= 0.35.
-[ ] Evaluate inspect-tree after focal-tree inspection.
-[ ] Advance active objective and completedObjectiveIds deterministically.
-[ ] Retain a bounded ordered command/result/event journal with sequence and frame ids.
-[ ] Add canonical gameplay state fingerprints.
-[ ] Project gameplay observations through GameHost additively.
-[ ] Add editor capabilities for gameplay.dispatch and gameplay.getJournal.
-[ ] Add DOM-free fixtures for accepted movement, rejected target, out-of-range inspect, successful inspect, objective completion, duplicate command, reset, and replay.
-[ ] Prove the same command list produces the same results, progression, and fingerprint.
-[ ] Keep external-source provenance/fallback parity, mesh contribution, and registry truth as companion gates.
-[ ] Wire fixtures into npm run check.
+[ ] Preserve the current external meadow source URL and commit pin.
+[ ] Preserve render-plan schema, topology keys, shaders, mesh output, screenshots, and existing read methods.
+[ ] Add a session id and run id.
+[ ] Add explicit lifecycle states: created, starting, running, stopped, disposing, disposed, failed.
+[ ] Retain the active requestAnimationFrame id.
+[ ] Make start, stop, restart, and dispose return accepted/rejected/no-op results with stable reasons.
+[ ] Cancel the retained RAF before stop/dispose/restart transitions complete.
+[ ] Prevent stop/start races from creating multiple recursive frame loops.
+[ ] Add a resource ownership ledger for game, enhancer, renderer, and editor bridge.
+[ ] Add a global lease ledger for GameHost and NexusEditorEnvironment.
+[ ] Add ordered reverse cleanup for partial startup and first-frame failure.
+[ ] Invoke editorBridge.dispose() and renderer.dispose() from the session owner.
+[ ] Invalidate enhancer cache during terminal disposal.
+[ ] Make disposal idempotent and terminal.
+[ ] Add lifecycle status and bounded result-journal readback through GameHost.
+[ ] Add runtime.getLifecycle, runtime.stop, runtime.restart, runtime.dispose, and runtime.getLifecycleJournal editor capabilities.
+[ ] Add DOM-free lifecycle state/result fixtures.
+[ ] Add focused browser fixtures for RAF cancellation, listener cleanup, global ownership, and WebGL disposal.
+[ ] Prove repeated restart produces exactly one active frame loop.
+[ ] Wire lifecycle fixtures into npm run check.
+[ ] Keep interaction-command/objective-progress work queued immediately after lifecycle proof.
+[ ] Preserve external-source, mesh-contribution, and registry-truth companion gates.
 [ ] Update repo-local and central ledgers after implementation lands.
 ```
 
 ## Suggested files
 
 ```txt
-src/game/commands/meadow-command-contract.js
-src/game/commands/dispatch-meadow-command.js
-src/game/interaction/preflight-meadow-target.js
-src/game/reducers/reduce-player-movement.js
-src/game/reducers/reduce-objective-progress.js
-src/game/observations/create-gameplay-observation.js
-src/game/game-state.js
-src/game/create-into-the-meadow-game.js
+src/runtime/create-runtime-session.js
+src/runtime/lifecycle-state.js
+src/runtime/lifecycle-results.js
+src/runtime/resource-ownership-ledger.js
+src/runtime/global-exposure-lease.js
 src/hosts/web-host.js
+src/boot/boot-game.js
 src/boot/expose-game-host.js
 src/editor/install-editor-bridge.js
-tests/meadow-interaction-command-smoke.mjs
-tests/meadow-objective-progress-smoke.mjs
-tests/meadow-command-replay-smoke.mjs
+src/game/enhance-render-plan.js
+tests/runtime-session-lifecycle-smoke.mjs
+tests/runtime-stop-restart-smoke.mjs
+tests/runtime-dispose-idempotency-smoke.mjs
+tests/runtime-fatal-rollback-smoke.mjs
+tests/editor-listener-cleanup-smoke.mjs
+tests/global-exposure-lease-smoke.mjs
 package.json
 ```
 
-## Expected result row
+## Lifecycle result row
 
 ```txt
 {
+  sessionId,
+  runId,
   sequence,
-  frameId,
-  command: { type, targetId, value },
+  command,
   status: accepted | rejected | no-op,
   reason,
-  mutations,
-  events,
-  objectiveBefore,
-  objectiveAfter,
-  stateFingerprint
+  stateBefore,
+  stateAfter,
+  rafOwned,
+  disposedResources,
+  releasedGlobals,
+  errors
 }
 ```
 
 ## Implementation order
 
 ```txt
-1. Define command, status, reason, mutation, event, and observation schemas.
-2. Add pure target preflight and reducers.
-3. Add dispatch and bounded journal ownership to the game domain.
-4. Wire browser/editor/fixture inputs through the same adapter.
-5. Project readback through GameHost and NexusEditorEnvironment.
-6. Add deterministic command, objective, reset, and replay fixtures.
-7. Preserve source/render proof surfaces and run npm run check.
-8. Update central tracking.
+1. Define session identity, lifecycle states, and result schemas.
+2. Retain and cancel RAF ownership.
+3. Add resource and global lease ledgers.
+4. Add idempotent stop and terminal dispose.
+5. Add reverse-order startup rollback.
+6. Add coordinated restart.
+7. Project lifecycle readback through GameHost and the editor bridge.
+8. Add DOM-free and browser lifecycle fixtures.
+9. Wire fixtures into npm run check.
+10. Resume the interaction-command/objective-progress slice.
 ```
 
 ## Stop condition
 
-Stop when a DOM-free fixture can walk the path, inspect the focal tree, complete both objectives, prove rejection/no-op behavior, reset, replay the same commands, and obtain identical ordered results and final fingerprints through GameHost/editor readback.
+Stop when repeated start/stop/restart/dispose cycles prove one active RAF while running, zero active RAFs while stopped/disposed, one-time renderer/editor cleanup, no session-owned globals or listeners after disposal, stable lifecycle result rows, and unchanged normal render output.

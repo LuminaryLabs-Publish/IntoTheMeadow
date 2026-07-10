@@ -1,0 +1,8 @@
+{
+  "id": "atmosphere-pass",
+  "steps": [
+    { "action": "scene.getRenderPlan", "arguments": { "focus": "atmosphere" } },
+    { "action": "renderer.capture", "arguments": { "label": "atmosphere-pass", "width": 1200, "height": 675 } },
+    { "action": "renderer.compare" }
+  ]
+}

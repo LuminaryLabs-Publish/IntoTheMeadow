@@ -2,31 +2,31 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-10T09-28-40-04-00`
+**Last aligned:** `2026-07-10T10-49-23-04-00`
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow GameHost Proof Row Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow GameHost Proof Row Consumer Ledger Refresh + Headless Editor Fixture Gate
 ```
 
 ## Read first
 
 ```txt
-.agent/trackers/2026-07-10T09-28-40-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-10T09-28-40-04-00.md
+.agent/trackers/2026-07-10T10-49-23-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-10T10-49-23-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-10T09-28-40-04-00-gamehost-proof-row-ledger-dsk-map.md
-.agent/render-audit/2026-07-10T09-28-40-04-00-render-consumption-gamehost-ledger-gap.md
-.agent/grass-system-audit/2026-07-10T09-28-40-04-00-grass-source-render-proof-ledger.md
-.agent/gameplay-audit/2026-07-10T09-28-40-04-00-action-objective-proof-ledger-loop.md
-.agent/interaction-audit/2026-07-10T09-28-40-04-00-target-action-result-readback-map.md
-.agent/editor-proof-audit/2026-07-10T09-28-40-04-00-headless-editor-proof-row-ledger.md
-.agent/deploy-audit/2026-07-10T09-28-40-04-00-proof-row-check-headless-fixture-gate.md
+.agent/architecture-audit/2026-07-10T10-49-23-04-00-gamehost-proof-row-consumer-ledger-dsk-map.md
+.agent/render-audit/2026-07-10T10-49-23-04-00-render-consumption-proof-row-gap.md
+.agent/grass-system-audit/2026-07-10T10-49-23-04-00-grass-render-parity-proof-ledger.md
+.agent/gameplay-audit/2026-07-10T10-49-23-04-00-action-objective-consumer-proof-loop.md
+.agent/interaction-audit/2026-07-10T10-49-23-04-00-target-action-preflight-result-map.md
+.agent/editor-proof-audit/2026-07-10T10-49-23-04-00-headless-editor-proof-observation-ledger.md
+.agent/deploy-audit/2026-07-10T10-49-23-04-00-proof-row-fixture-check-gate.md
 ```
 
 ## Current route
@@ -48,7 +48,7 @@ index.html
 ```txt
 boot DOM nodes
   -> load external meadow-area-kit
-  -> create game and local DSK descriptors
+  -> create game and install local/external DSK descriptors
   -> create renderer v2 and render enhancer
   -> expose GameHost
   -> install NexusEditorEnvironment bridge
@@ -63,7 +63,7 @@ boot DOM nodes
 
 Do not start with visual fidelity, renderer replacement, external CDN changes, new meadow content, grass tuning, camera/control rewiring, shared-kit promotion, or editor command expansion.
 
-The missing layer is row-level proof through GameHost and headless editor:
+The missing layer is source-owned consumer proof rows through `GameHost` and the headless editor:
 
 ```txt
 render descriptor consumption rows
@@ -96,4 +96,4 @@ tests/headless-editor-proof-ledger-smoke.mjs
 
 ## Validation state
 
-Docs only. Runtime source did not change. No branch or PR was created. Local `npm run check`, browser smoke, editor smoke, and proof fixtures were not run.
+Docs only. Runtime source did not change. No branch or PR was created. `npm run check`, `npm test`, browser smoke, editor smoke, and proof fixtures were not run.

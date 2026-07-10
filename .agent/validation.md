@@ -2,13 +2,16 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T13-50-05-04-00`
+**Updated:** `2026-07-10T15-18-29-04-00`
 
 ## Validation performed this pass
 
-This was a documentation-only breakdown pass through authenticated GitHub file updates.
+This was a documentation-only breakdown using authenticated GitHub reads and direct updates to `main`.
 
 ```txt
+full accessible Publish inventory reviewed: yes
+central ledger comparison performed: yes
+selected repository root .agent reviewed: yes
 runtime source changed: no
 branch created: no
 pull request created: no
@@ -17,14 +20,30 @@ npm run check: not run
 npm test: not run
 browser smoke: not run
 headless editor smoke: not run
-DOM-free renderer proof attribution fixtures: not run because proof files do not exist yet
+mesh contribution fixtures: not run because they do not exist yet
+registry truth fixture: not run because it does not exist yet
 pushed to main: yes
-central ledger updated: yes
+central ledger updated: pending until the final central sync in this pass
 ```
 
-## Existing validation commands
+## Source inspection completed
 
-From `package.json`:
+```txt
+package.json
+AGENTS.md
+dsk-registry.json
+src/dsks/index.js
+src/game/create-into-the-meadow-game.js
+src/game/enhance-render-plan.js
+src/hosts/web-host.js
+src/boot/expose-game-host.js
+src/renderers/meadow-mesh-builder-v2.js
+src/renderers/meadow-webgl-renderer-v2.js
+src/editor/install-editor-bridge.js
+tests/static-smoke.mjs
+```
+
+## Existing checks
 
 ```txt
 npm run check
@@ -34,43 +53,36 @@ npm run editor:loop
 npm run editor:browser
 ```
 
-`npm run check` currently covers static, DSK registry, render plan, renderer v2, deterministic scene, and headless editor environment/command/loop smoke scripts. That is useful reachability coverage, but it is not yet proof-row attribution coverage.
+`npm run check` currently covers static structure, DSK registry, render plan, renderer v2, deterministic scene, and editor environment/command/loop reachability. It does not prove measured mesh contribution or registry implementation truth.
 
-## Required next validation commands
-
-After the next source slice exists, add and run:
+## Required next checks
 
 ```txt
-node tests/render-consumption-ledger-smoke.mjs
-node tests/grass-consumption-ledger-smoke.mjs
-node tests/action-result-fixture-smoke.mjs
-node tests/headless-editor-proof-ledger-smoke.mjs
+node tests/mesh-contribution-ledger-smoke.mjs
+node tests/mesh-contribution-edge-cases-smoke.mjs
+node tests/dsk-registry-truth-smoke.mjs
 npm run check
 npm test
 npm run editor:smoke
 ```
 
-## Required fixture coverage
+## Required fixture assertions
 
 ```txt
-render object descriptor consumed / ignored / unsupported rows
-grass density texture readback rows
-grass static batch and draw group rows
-windField and postProcess rows
-primitive fallback attribution row
-missing renderer snapshot fallback row
-path progress below threshold row
-path progress complete objective row
-inspect focal tree row
-missing target row
-wrong action for target row
-unknown action row
-GameHost legacy shape preserved row
-GameHost proof projection row
-headless editor command proof row
-headless editor loop proof row
+all eight geometry families have deterministic rows
+expected descriptor counts remain separate from measured counts
+vertex deltas sum to final vertexCount
+triangle deltas sum to final triangleCount
+empty families report absent rather than consumed
+malformed entries report skipped with stable reasons
+unknown families report unsupported or fail contract validation explicitly
+primitiveFallbackCount equals fallback-row total
+GameHost preserves legacy methods and adds proof projection
+editor bridge exposes the same serializable contribution rows
+all 45 registry entries have explicit external/source-backed/descriptor-shell/planned/unresolved classification
+active-v0.1 cannot silently imply implementation-backed source
 ```
 
 ## Validation warning
 
-Do not treat a passing browser route or editor bridge smoke as proof that renderer descriptors, grass descriptors, objectives, actions, or editor observations were consumed correctly. The next gate needs serializable rows that can be compared without the DOM.
+A successful rendered frame, nonzero vertex count, or matching echoed descriptor count is not proof that each descriptor family was consumed. The next gate must measure contribution at the mesh-builder boundary.

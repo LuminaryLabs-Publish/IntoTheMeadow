@@ -1,0 +1,8 @@
+{
+  "id": "hero-tree-pass",
+  "steps": [
+    { "action": "scene.inspect", "arguments": { "target": "focal-tree" } },
+    { "action": "renderer.capture", "arguments": { "label": "hero-tree-pass", "width": 1200, "height": 675 } },
+    { "action": "renderer.compare" }
+  ]
+}

@@ -1,35 +1,43 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-10T15-18-29-04-00",
-  "status": "mesh-contribution-ledger-registry-truth-fixture-gate-planned",
-  "currentNextSlice": "IntoTheMeadow Mesh Contribution Ledger + Registry Truth Fixture Gate",
-  "latestTracker": ".agent/trackers/2026-07-10T15-18-29-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T15-18-29-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T15-18-29-04-00-mesh-contribution-ledger-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-10T15-18-29-04-00-descriptor-count-echo-vs-measured-consumption.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-10T15-18-29-04-00-grass-draw-group-contribution-proof.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T15-18-29-04-00-static-state-loop-deferral.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T15-18-29-04-00-editor-command-proof-readback.md",
-  "latestEditorProofAudit": ".agent/editor-proof-audit/2026-07-10T15-18-29-04-00-renderer-observation-row-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T15-18-29-04-00-mesh-contribution-fixture-check-gate.md",
+  "generatedAt": "2026-07-10T16-51-37-04-00",
+  "status": "external-source-provenance-fallback-parity-fixture-gate-planned",
+  "currentNextSlice": "IntoTheMeadow External Meadow Source Provenance + Fallback Parity Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-10T16-51-37-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T16-51-37-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T16-51-37-04-00-external-source-provenance-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-10T16-51-37-04-00-external-fallback-plan-parity-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T16-51-37-04-00-static-source-cache-time-overlay-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T16-51-37-04-00-startup-failure-recovery-result-map.md",
+  "latestExternalKitAudit": ".agent/external-kit-audit/2026-07-10T16-51-37-04-00-meadow-area-kit-provenance-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T16-51-37-04-00-external-kit-provenance-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "All eligible repositories were centrally tracked with sampled root .agent state. IntoTheMeadow was the oldest eligible documented fallback."
+    "reason": "All eligible repositories were centrally tracked with root .agent state. IntoTheMeadow was the oldest eligible documented fallback based on the latest central change-log sequence."
   },
   "interactionLoop": [
-    "browser boot and external meadow-area-kit import",
-    "DSK descriptor install and deterministic source plan creation",
+    "browser boot and external source resolution",
+    "dynamic import of commit-pinned meadow-area-kit",
+    "DSK descriptor installation and source-plan creation",
+    "time-0 source-plan cache with later time-field overlay",
     "grass/wind/postprocess/performance enhancement",
-    "frame and lastTick state update",
     "combined CPU mesh construction",
     "topology-keyed WebGL buffer reuse or rebuild",
     "outline and cel-fog render passes",
     "aggregate GameHost and editor readback"
   ],
+  "externalSource": {
+    "id": "meadow-area-kit",
+    "repository": "LuminaryLabs-Agents/NexusEngine-ProtoKits",
+    "commit": "11d245913ba4d30f3ce950eb5a17e1cc6e4aa1f5",
+    "exportedVersion": "0.1.0",
+    "runtimeStatusProof": "function-presence-only",
+    "fallbackOperationalInWebHost": false
+  },
   "runtimeSourceBackedKits": [
     "meadow-area-kit",
     "fallback-meadow-area-kit",
@@ -103,6 +111,7 @@
     ]
   },
   "serviceGroups": {
+    "sourceAuthority": ["external source resolution", "dynamic import", "factory export validation", "source-plan creation", "local fallback creation"],
     "composition": ["manifest", "registry", "install validation", "source plan", "snapshot"],
     "terrainPath": ["terrain sampling", "path corridor", "material layers", "topology hashing"],
     "grass": ["density", "archetypes", "static batches", "patches", "draw groups", "wind", "LOD", "scaling", "debug"],
@@ -112,19 +121,23 @@
     "deployment": ["static route", "Pages workflow", "smoke checks"]
   },
   "plannedProofKits": [
-    "mesh-contribution-row-kit",
+    "meadow-source-provenance-row-kit",
+    "meadow-source-load-result-kit",
+    "meadow-source-plan-fingerprint-kit",
+    "meadow-source-fallback-parity-kit",
+    "meadow-source-time-policy-kit",
     "mesh-contribution-ledger-kit",
     "registry-truth-snapshot-kit",
-    "GameHost-render-proof-projection-kit",
-    "headless-editor-render-observation-kit"
+    "GameHost-source-proof-projection-kit",
+    "headless-editor-source-observation-kit"
   ],
-  "mainFinding": "Renderer descriptorCounts are echoed expectations, primitiveFallbackCount is constant, and no mesh stage emits measured contribution rows. Registry active-v0.1 status is list-derived rather than implementation-proof-derived.",
+  "mainFinding": "The external kit is commit-pinned but runtime readback discards its identity and version. Browser startup hard-fails before the local fallback can be selected, fallback representativeness is unproven, external and fallback plans materially differ, and static source-plan caching bypasses any future source-owned time behavior.",
   "validation": {
     "runtimeSourceChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
     "fixtureRun": false,
     "headlessEditorSmokeRun": false,
-    "nextCommand": "npm run check after mesh contribution and registry truth fixtures are added"
+    "nextCommand": "npm run check after source provenance, failure policy, fallback parity, time policy, mesh contribution, and registry truth fixtures are added"
   }
 }

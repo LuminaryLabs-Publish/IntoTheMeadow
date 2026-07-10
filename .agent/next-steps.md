@@ -2,12 +2,12 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T01-38-16-04-00`
+**Updated:** `2026-07-10T03-01-42-04-00`
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow Headless Render Action Proof Catch-up + GameHost Ledger Gate
+IntoTheMeadow Headless Editor Render Action Ledger Refresh + GameHost Fixture Gate
 ```
 
 ## Build checklist
@@ -28,7 +28,7 @@ IntoTheMeadow Headless Render Action Proof Catch-up + GameHost Ledger Gate
 [ ] Add headless editor proof rows so editor command/loop smokes can assert source-backed proof, not just bridge reachability.
 [ ] Extend npm run check after the new fixture scripts exist.
 [ ] Update central LuminaryLabs ledger after implementation lands.
-[ ] Defer visual rewrite, renderer replacement, shared-kit promotion, external CDN changes, new content, grass art tuning, and camera/control rewiring.
+[ ] Defer visual rewrite, renderer replacement, shared-kit promotion, external CDN changes, new content, grass art tuning, camera/control rewiring, and editor command expansion.
 ```
 
 ## Suggested file targets
@@ -52,6 +52,7 @@ tests/headless-editor-proof-ledger-smoke.mjs
 package.json
 src/boot/expose-game-host.js
 src/game/game-snapshot.js
+src/editor/install-editor-bridge.js
 ```
 
 ## Implementation order
@@ -69,12 +70,13 @@ src/game/game-snapshot.js
 10. Add gameplay fixture rows and smoke test.
 11. Add headless-editor-proof-ledger.js and smoke test.
 12. Add additive GameHost/game snapshot proof fields.
-13. Wire package.json check commands after proof tests exist.
-14. Log implementation centrally.
+13. Tie editor bridge observations to proof ledger rows.
+14. Wire package.json check commands after proof tests exist.
+15. Log implementation centrally.
 ```
 
 ## Stop condition for the next implementation slice
 
-Stop when DOM-free rows prove renderer descriptor consumption, grass source/render parity, path/inspect action results, objective progress, and headless editor proof projection.
+Stop when DOM-free rows prove renderer descriptor consumption, grass source/render parity, path/inspect action results, objective progress, additive GameHost proof projection, and headless editor proof observation.
 
-Do not continue into visual fidelity, renderer extraction, route/content expansion, or shared-kit promotion in the same cut.
+Do not continue into visual fidelity, renderer extraction, route/content expansion, camera/control rewiring, or shared-kit promotion in the same cut.

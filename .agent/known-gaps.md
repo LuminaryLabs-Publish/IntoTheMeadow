@@ -2,87 +2,95 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T13-50-05-04-00`
+**Updated:** `2026-07-10T15-18-29-04-00`
 
-## Selection gap handled
+## Selection state
 
 ```txt
-current public LuminaryLabs-Publish repos were checked
-TheCavalryOfRome was excluded
-all checked public non-Cavalry repos were tracked in central ledger state
-sampled root .agent state was present
-IntoTheMeadow was selected as the oldest eligible documented fallback
-central tracking is refreshed by this pass
+10 accessible LuminaryLabs-Publish repositories observed
+TheCavalryOfRome excluded by rule
+9 eligible repositories centrally tracked
+sampled root .agent state present
+IntoTheMeadow selected as oldest eligible documented fallback
 ```
 
-## Render proof gaps
+## Mesh contribution gaps
 
 ```txt
-renderer v2 returns aggregate readback, not per-descriptor proof rows
-postProcess descriptors are emitted, but renderer snapshot only reports aggregate postProcess facts
-primitiveFallbackCount is visible, but not tied back to descriptor ids or fallback classes
-descriptorCounts are visible, but not classified as consumed / ignored / unsupported / fallback
-renderer.getSnapshot output is not normalized into a source-owned ledger
-GameHost exposes render snapshots, but not render proof rows
-headless editor smokes can read renderer data but do not assert descriptor consumption rows
+buildMeadowMeshData has no per-stage contribution counters
+source descriptor ids are not retained in mesh readback
+attempted, consumed, skipped, and unsupported counts are absent
+emitted vertex and triangle counts are not attributed by descriptor family
+renderPlan.contract.descriptorCounts is copied into mesh.descriptorCounts
+primitiveFallbackCount is hard-coded to 0
+unsupported/fallback behavior cannot be proven from the returned snapshot
+one combined mesh prevents downstream attribution unless construction records rows while building
 ```
 
 ## Grass proof gaps
 
 ```txt
-grass density texture rows are not compared against render readback
-static batch and archetype card counts are not proven against renderer state
-patch instance counts are not fixture-proven
-draw group card/instance totals are not normalized into rows
-shader wind and LOD policy consumption are not visible as proof rows
-headless editor observation does not yet emit grass parity rows
+grass density texture, static batches, patches, and draw groups are created and validated before rendering
+the mesh builder iterates rendered grass descriptors without contribution rows
+source patch/draw-group ids are not visible in renderer readback
+estimatedGrassInstances and estimatedGrassCards are expectations, not measured mesh output
+shader-wind and LOD descriptors are not reported as consumed, ignored, or unsupported
 ```
 
-## Gameplay and interaction proof gaps
+## Registry truth gaps
 
 ```txt
-advanceGameState increments frame and lastTick only
-no ActionFrame contract
-no TargetActionPreflight contract
-no ActionResult contract
-no ObjectiveProgress contract
-no accepted/rejected/skipped/unchanged reason rows
-no DOM-free gameplay fixture rows
+dsk-registry.json declares 44 local kits and one external kit
+src/dsks/index.js marks requiredForV01 entries active-v0.1 by list membership
+active descriptor status is not the same as an implementation-backed module
+planned player/input/interaction/story/objective/audio/save and postprocess-pass families can look more complete than runtime source proves
+no fixture reconciles registry ids, descriptor status, imported implementation modules, and runtime consumers
 ```
 
-## GameHost/editor proof gaps
+## GameHost/editor readback gaps
 
 ```txt
-GameHost exposes aggregate state/render diagnostics, not proof projection rows
-NexusEditorEnvironment exposes command reachability, not proof observations
-editor loop smoke proves bridge access, not render/grass/action/objective consumption
+GameHost forwards aggregate render and enhancer snapshots only
+NexusEditorEnvironment renderer.getSnapshot forwards the same aggregate snapshot
+renderer.capture adds a data URL but no descriptor-consumption rows
+editor command completion proves invocation, not semantic consumption
+no stable observation row links editor action -> renderer snapshot -> mesh contribution ledger
 ```
 
-## Renderer proof attribution gaps
+## Gameplay gaps
 
 ```txt
-no source descriptor id to renderer decision row
-no fallback attribution row per fallback class
-no grass source id to draw group row
-no action id to objective-progress row
-no editor command id to proof observation row
+advanceGameState only updates frame and lastTick
+objectives and interaction targets remain content descriptors rather than an active player loop
+no movement, target preflight, action result, or objective mutation runtime exists yet
+these are valid later slices but should not be mixed into the mesh-proof implementation
+```
+
+## Validation gaps
+
+```txt
+existing renderer smoke proves schema acceptance and aggregate counts
+existing editor smokes prove environment reachability
+no fixture injects missing, empty, unsupported, or partially consumed descriptor families
+no fixture verifies descriptor counts against measured emitted geometry
+no fixture verifies registry active/planned truth against source-backed implementations
 ```
 
 ## Do not solve first
 
 ```txt
-visual fidelity
-renderer replacement
+visual fidelity or asset expansion
+camera and movement
+new meadow content
+renderer replacement or WebGPU cutover
 external CDN migration
 shared-kit promotion
-new meadow content
-grass art tuning
-camera/control rewiring
+postprocess expansion
 editor command expansion
 ```
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow Renderer Proof Attribution Readback Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Mesh Contribution Ledger + Registry Truth Fixture Gate
 ```

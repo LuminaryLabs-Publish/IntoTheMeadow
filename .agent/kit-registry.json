@@ -1,16 +1,16 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-10T03-01-42-04-00",
-  "status": "headless-editor-render-action-ledger-refresh-planned",
-  "latestTracker": ".agent/trackers/2026-07-10T03-01-42-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T03-01-42-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T03-01-42-04-00-headless-editor-render-action-ledger-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-10T03-01-42-04-00-renderer-readback-consumption-ledger.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-10T03-01-42-04-00-grass-render-consumption-journal.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T03-01-42-04-00-objective-action-result-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T03-01-42-04-00-target-action-preflight-fixture.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T03-01-42-04-00-headless-editor-check-gate.md",
+  "generatedAt": "2026-07-10T04-58-56-04-00",
+  "status": "proof-row-ledger-headless-editor-fixture-gate-planned",
+  "latestTracker": ".agent/trackers/2026-07-10T04-58-56-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T04-58-56-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T04-58-56-04-00-proof-row-ledger-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-10T04-58-56-04-00-renderer-proof-row-gap.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-10T04-58-56-04-00-grass-proof-row-parity.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T04-58-56-04-00-action-objective-proof-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T04-58-56-04-00-target-action-preflight-proof.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T04-58-56-04-00-proof-row-check-gate.md",
   "sourceRoots": [
     "src/boot",
     "src/hosts",
@@ -24,9 +24,9 @@
   "selection": {
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "No checked public non-Cavalry repo was new, central-ledger absent, undocumented, recently added but undocumented, or missing sampled root .agent state. IntoTheMeadow was selected as the oldest eligible documented fallback after recent central-ledger advancement by other repos."
+    "reason": "No checked public non-Cavalry repo was new, central-ledger absent, undocumented, recently added but undocumented, or missing sampled root .agent state. IntoTheMeadow was selected as the oldest eligible documented fallback after PrehistoricRush advanced."
   },
-  "currentNextSlice": "IntoTheMeadow Headless Editor Render Action Ledger Refresh + GameHost Fixture Gate",
+  "currentNextSlice": "IntoTheMeadow Proof Row Ledger Refresh + Headless Editor Fixture Gate",
   "interactionLoop": [
     "index.html mounts canvas, HUD, status, and loading panel",
     "boot-game captures DOM nodes and debug flag",
@@ -80,11 +80,11 @@
     "GameHost-debug-surface",
     "headless-editor-runtime",
     "editor-bridge",
-    "render-consumption-proof-next",
-    "grass-consumption-proof-next",
+    "render-proof-row-next",
+    "grass-proof-row-next",
     "action-result-proof-next",
     "objective-progress-proof-next",
-    "headless-editor-observation-proof-next",
+    "headless-editor-proof-row-next",
     "central-ledger-sync"
   ],
   "services": {
@@ -98,10 +98,7 @@
     "content-service": ["story beats", "arrival objectives", "arrival interaction targets"],
     "GameHost-service": ["getState", "getSnapshot", "getDiagnostics", "getRenderPlan", "getRenderSnapshot", "getRenderEnhancerSnapshot", "game reference"],
     "headless-editor-service": ["runtime status", "runtime tick/reset", "scene stats", "renderer snapshots", "canvas capture", "viewport/errors", "environment smoke", "command smoke", "loop smoke", "browser bridge smoke"],
-    "planned-render-proof-service": ["expectation rows", "snapshot normalization", "consumption ledger", "GameHost projection"],
-    "planned-grass-proof-service": ["density rows", "static batch rows", "patch rows", "draw group rows", "wind and LOD rows"],
-    "planned-action-fixture-service": ["ActionFrame", "preflight", "ActionResult", "objective progress", "fixture rows"],
-    "planned-headless-proof-service": ["editor command proof rows", "editor loop proof rows", "GameHost headless proof projection"]
+    "planned-proof-service": ["render rows", "grass rows", "action rows", "objective rows", "editor observation rows", "additive GameHost proof projection"]
   },
   "kits": [
     { "id": "meadow-area-kit", "status": "external-implemented", "kind": "domain-kit", "provides": ["arrival meadow render plan"] },

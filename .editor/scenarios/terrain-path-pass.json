@@ -1,0 +1,8 @@
+{
+  "id": "terrain-path-pass",
+  "steps": [
+    { "action": "scene.getStatistics", "arguments": { "focus": "terrain-path" } },
+    { "action": "renderer.capture", "arguments": { "label": "terrain-path-pass", "width": 1200, "height": 675 } },
+    { "action": "renderer.compare" }
+  ]
+}

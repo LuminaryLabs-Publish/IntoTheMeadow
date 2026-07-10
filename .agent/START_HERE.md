@@ -2,31 +2,31 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-10T07-59-27-04-00`
+**Last aligned:** `2026-07-10T09-28-40-04-00`
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow GameHost Proof Row Readback Refresh + Headless Fixture Gate
+IntoTheMeadow GameHost Proof Row Ledger Refresh + Headless Editor Fixture Gate
 ```
 
 ## Read first
 
 ```txt
-.agent/trackers/2026-07-10T07-59-27-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-10T07-59-27-04-00.md
+.agent/trackers/2026-07-10T09-28-40-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-10T09-28-40-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-10T07-59-27-04-00-gamehost-proof-row-readback-dsk-map.md
-.agent/render-audit/2026-07-10T07-59-27-04-00-render-consumption-gamehost-proof-gap.md
-.agent/grass-system-audit/2026-07-10T07-59-27-04-00-grass-parity-proof-row-readback.md
-.agent/gameplay-audit/2026-07-10T07-59-27-04-00-action-objective-result-row-loop.md
-.agent/interaction-audit/2026-07-10T07-59-27-04-00-target-action-result-fixture-map.md
-.agent/editor-proof-audit/2026-07-10T07-59-27-04-00-headless-editor-gamehost-proof-readback.md
-.agent/deploy-audit/2026-07-10T07-59-27-04-00-proof-row-check-fixture-gate.md
+.agent/architecture-audit/2026-07-10T09-28-40-04-00-gamehost-proof-row-ledger-dsk-map.md
+.agent/render-audit/2026-07-10T09-28-40-04-00-render-consumption-gamehost-ledger-gap.md
+.agent/grass-system-audit/2026-07-10T09-28-40-04-00-grass-source-render-proof-ledger.md
+.agent/gameplay-audit/2026-07-10T09-28-40-04-00-action-objective-proof-ledger-loop.md
+.agent/interaction-audit/2026-07-10T09-28-40-04-00-target-action-result-readback-map.md
+.agent/editor-proof-audit/2026-07-10T09-28-40-04-00-headless-editor-proof-row-ledger.md
+.agent/deploy-audit/2026-07-10T09-28-40-04-00-proof-row-check-headless-fixture-gate.md
 ```
 
 ## Current route
@@ -96,4 +96,4 @@ tests/headless-editor-proof-ledger-smoke.mjs
 
 ## Validation state
 
-Docs only. Runtime source did not change. No branch or PR was created. Local `npm run check`, browser smoke, and proof fixtures were not run.
+Docs only. Runtime source did not change. No branch or PR was created. Local `npm run check`, browser smoke, editor smoke, and proof fixtures were not run.

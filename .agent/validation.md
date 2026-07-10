@@ -25,7 +25,7 @@ source provenance fixtures: not run because they do not exist yet
 fallback parity fixture: not run because it does not exist yet
 source failure policy fixture: not run because it does not exist yet
 pushed to main: yes
-central ledger updated: pending until central sync completes
+central ledger updated: yes
 ```
 
 ## Source inspection completed

@@ -2,80 +2,88 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T13-50-05-04-00`
+**Updated:** `2026-07-10T15-18-29-04-00`
+
+## Goal
+
+Add a serializable, measured ledger that proves how each render descriptor family contributes to the built mesh, then reconcile DSK registry status with implementation-backed source truth. Preserve the current route and visuals while making renderer, GameHost, and editor readback authoritative enough for automated inspection.
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow Renderer Proof Attribution Readback Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Mesh Contribution Ledger + Registry Truth Fixture Gate
 ```
 
-## Build checklist
+## Plan ledger
 
 ```txt
-[ ] Preserve the current route shell, external meadow-area URL, local renderer v2 adapter, grass visuals, GameHost legacy shape, and headless editor bridge.
-[ ] Add render expectation row helpers for source objects, grassSystem, grassPatches, windField, postProcess, performance, stats, and editor-visible render facts.
-[ ] Add renderer snapshot normalization for meadow-webgl-renderer-v2 aggregate snapshots.
-[ ] Add render consumption ledger rows with consumed / ignored / unsupported / fallback status.
-[ ] Tie primitiveFallbackCount back to descriptor ids or fallback classes.
-[ ] Add grass consumption rows for density texture, static batches, patches, draw groups, shader wind, LOD, and debug summaries.
-[ ] Add source-to-consumer attribution ids across render, grass, gameplay, GameHost, and editor observations.
-[ ] Add additive GameHost render/action/headless proof projection without replacing existing getState/getSnapshot/getDiagnostics.
-[ ] Add ActionFrame contract for path-progress and inspect actions.
-[ ] Add target/action preflight helper for arrival-path and focal-tree.
-[ ] Add ActionResult contract with accepted/rejected/skipped/unchanged statuses.
-[ ] Add objective progress helper for walk-the-path and inspect-tree.
-[ ] Add DOM-free fixture rows before wiring browser input.
-[ ] Add headless editor proof rows so editor command/loop smokes can assert source-backed proof, not just bridge reachability.
-[ ] Extend npm run check after the new fixture scripts exist.
-[ ] Update central LuminaryLabs ledger after implementation lands.
-[ ] Defer visual rewrite, renderer replacement, shared-kit promotion, external CDN changes, new content, grass art tuning, camera/control rewiring, and editor command expansion.
+[ ] Preserve the external meadow-area-kit URL, render-plan v2 schema, topologyKey behavior, current visual output, GameHost legacy methods, and editor protocol.
+[ ] Add a mesh contribution ledger owned by the mesh-builder boundary.
+[ ] Give every geometry stage a stable family id: atmosphere, terrain, grass, flowers, ground-cover, rocks, distant-trees, focal-tree.
+[ ] Record expected descriptor count, attempted count, consumed count, skipped count, unsupported count, emitted vertices, emitted triangles, and reason rows.
+[ ] Retain source ids where cardinality is practical and summarize deterministically where it is not.
+[ ] Derive primitiveFallbackCount from actual fallback rows instead of returning a constant.
+[ ] Stop treating input descriptorCounts as measured renderer counts; keep them as expectations and expose measured counts separately.
+[ ] Add a renderer snapshot contribution block without removing existing snapshot fields.
+[ ] Add additive GameHost getRenderContributionLedger or equivalent proof projection.
+[ ] Add additive editor capability renderer.getContributionLedger and include the ledger in renderer.capture metadata.
+[ ] Add a registry truth snapshot that classifies every registry entry as external, source-backed implementation, descriptor shell, planned, or unresolved.
+[ ] Cross-check dsk-registry.json, REQUIRED_V01_DSK_IDS, src/dsks/index.js, and concrete imported modules.
+[ ] Add DOM-free fixtures for full consumption, empty family, unsupported family, skipped malformed row, and fallback accounting.
+[ ] Add registry fixtures that fail when active-v0.1 claims are not backed by an explicit classification.
+[ ] Wire the new fixtures into npm run check.
+[ ] Keep gameplay movement/action/objective implementation deferred to a separate slice.
+[ ] Update repo-local .agent docs and the central LuminaryLabs ledger after implementation lands.
 ```
 
-## Suggested file targets
+## Suggested files
 
 ```txt
-src/render-proof/render-expectations.js
-src/render-proof/renderer-snapshot-normalizer.js
-src/render-proof/render-consumption-ledger.js
-src/render-proof/grass-consumption-ledger.js
-src/render-proof/gamehost-render-proof.js
-src/gameplay/action-frame.js
-src/gameplay/target-action-preflight.js
-src/gameplay/action-result.js
-src/gameplay/objective-progress.js
-src/gameplay/gameplay-fixture-rows.js
-src/editor-proof/headless-editor-proof-ledger.js
-tests/render-consumption-ledger-smoke.mjs
-tests/grass-consumption-ledger-smoke.mjs
-tests/action-result-fixture-smoke.mjs
-tests/headless-editor-proof-ledger-smoke.mjs
-package.json
+src/render-proof/create-mesh-contribution-ledger.js
+src/render-proof/mesh-contribution-types.js
+src/render-proof/create-registry-truth-snapshot.js
+src/renderers/meadow-mesh-builder-v2.js
+src/renderers/meadow-webgl-renderer-v2.js
 src/boot/expose-game-host.js
-src/game/game-snapshot.js
 src/editor/install-editor-bridge.js
+tests/mesh-contribution-ledger-smoke.mjs
+tests/mesh-contribution-edge-cases-smoke.mjs
+tests/dsk-registry-truth-smoke.mjs
+package.json
+```
+
+## Expected row shape
+
+```txt
+{
+  familyId,
+  sourceId,
+  status: consumed | skipped | unsupported | fallback | absent,
+  expectedCount,
+  attemptedCount,
+  consumedCount,
+  emittedVertices,
+  emittedTriangles,
+  reason
+}
 ```
 
 ## Implementation order
 
 ```txt
-1. Add render-expectations.js.
-2. Add renderer-snapshot-normalizer.js.
-3. Add render-consumption-ledger.js.
-4. Add grass-consumption-ledger.js.
-5. Add render and grass ledger smoke tests.
-6. Add action-frame.js.
-7. Add target-action-preflight.js.
-8. Add action-result.js.
-9. Add objective-progress.js.
-10. Add gameplay fixture rows and smoke test.
-11. Add headless-editor-proof-ledger.js and smoke test.
-12. Add additive GameHost/game snapshot proof fields.
-13. Tie editor bridge observations to proof ledger rows.
-14. Wire package.json check commands after proof tests exist.
-15. Log implementation centrally.
+1. Define contribution row/status contracts.
+2. Instrument mesh collector with before/after vertex counters.
+3. Wrap each mesh-builder stage with deterministic contribution accounting.
+4. Split expected descriptor counts from measured contribution counts.
+5. Derive fallback totals from rows.
+6. Extend renderer snapshot additively.
+7. Extend GameHost and editor bridge additively.
+8. Build registry truth classification.
+9. Add DOM-free fixtures and edge cases.
+10. Wire package checks and run validation.
+11. Update central tracking.
 ```
 
-## Stop condition for the next implementation slice
+## Stop condition
 
-Stop when DOM-free rows prove renderer descriptor consumption, grass source/render parity, path/inspect action results, objective progress, additive GameHost proof projection, and headless editor proof observation.
+Stop when tests can prove, without a browser, which descriptor families were expected, consumed, skipped, unsupported, or fallback-rendered; how much geometry each produced; and whether every registry kit has an explicit implementation-truth classification.

@@ -2,11 +2,11 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-09T18-20-18-04-00`
+**Updated:** `2026-07-09T22-40-25-04-00`
 
-## Validation performed this run
+## Validation performed this pass
 
-This was a documentation-only breakdown pass through the GitHub connector.
+This was a documentation-only breakdown pass through authenticated GitHub file updates.
 
 ```txt
 runtime source changed: no
@@ -17,7 +17,7 @@ npm run check: not run
 browser smoke: not run
 DOM-free fixture: not run because render/action fixture files do not exist yet
 pushed to main: yes
-central ledger updated: yes
+central ledger updated: pending in same pass
 ```
 
 ## Existing validation commands
@@ -35,6 +35,7 @@ npm test
 node tests/static-smoke.mjs
 node tests/dsk-registry-smoke.mjs
 node tests/render-plan-smoke.mjs
+node tests/renderer-v2-smoke.mjs
 node tests/deterministic-scene-smoke.mjs
 ```
 
@@ -56,6 +57,7 @@ render object descriptor consumed / ignored / unsupported rows
 grass density texture readback rows
 grass static batch and draw group rows
 windField and postProcess rows
+primitive fallback attribution row
 missing renderer snapshot fallback row
 path progress below threshold row
 path progress complete objective row

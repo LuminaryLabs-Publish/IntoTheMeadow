@@ -1,42 +1,35 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-10T18-22-01-04-00",
-  "status": "interaction-command-objective-progress-fixture-gate-planned",
-  "currentNextSlice": "IntoTheMeadow Interaction Command Authority + Objective Progress Fixture Gate",
-  "latestTracker": ".agent/trackers/2026-07-10T18-22-01-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T18-22-01-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T18-22-01-04-00-interaction-objective-authority-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-10T18-22-01-04-00-render-loop-without-gameplay-commit.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T18-22-01-04-00-path-inspect-objective-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T18-22-01-04-00-command-preflight-result-journal-gap.md",
-  "latestEditorProofAudit": ".agent/editor-proof-audit/2026-07-10T18-22-01-04-00-gameplay-command-readback-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T18-22-01-04-00-interaction-objective-fixture-gate.md",
+  "generatedAt": "2026-07-10T19-48-09-04-00",
+  "status": "runtime-session-lifecycle-authority-fixture-gate-planned",
+  "currentNextSlice": "IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-10T19-48-09-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T19-48-09-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T19-48-09-04-00-runtime-session-lifecycle-authority-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-10T19-48-09-04-00-renderer-disposal-orphaned-context-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T19-48-09-04-00-frame-loop-stop-start-session-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T19-48-09-04-00-host-control-surface-lifecycle-map.md",
+  "latestLifecycleAudit": ".agent/lifecycle-audit/2026-07-10T19-48-09-04-00-runtime-session-stop-dispose-restart-contract.md",
+  "latestEditorProofAudit": ".agent/editor-proof-audit/2026-07-10T19-48-09-04-00-editor-listener-global-cleanup-gap.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T19-48-09-04-00-lifecycle-idempotency-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "All eligible repositories were centrally tracked with root .agent state. IntoTheMeadow was the oldest eligible documented fallback after AetherVale advanced at 2026-07-10T18-08-37-04-00."
+    "reason": "All eligible repositories were centrally tracked with root .agent state. AetherVale advanced at 2026-07-10T19-38-41-04-00, leaving IntoTheMeadow as the oldest stable documented fallback from 2026-07-10T18-22-01-04-00."
   },
   "interactionLoop": [
     "browser boot and external source resolution",
-    "static game-state and source-plan creation",
-    "requestAnimationFrame tick with time and fixed dt",
-    "frame and lastTick mutation only",
+    "static game-state and cached source-plan creation",
+    "renderer, enhancer, GameHost, and editor-bridge construction",
+    "recursive requestAnimationFrame scheduling",
+    "fixed-delta frame/time mutation",
     "cached plan enhancement",
-    "combined CPU mesh construction",
-    "topology-keyed WebGL rendering",
+    "combined CPU mesh construction or reuse",
+    "two-pass WebGL rendering",
     "aggregate GameHost and editor readback"
-  ],
-  "authoredButInactiveGameplay": [
-    "player movement",
-    "path-progress action",
-    "focal-tree inspect action",
-    "target preflight",
-    "objective evaluation",
-    "story progression",
-    "command/result/event journal"
   ],
   "runtimeSourceBackedKits": [
     "meadow-area-kit",
@@ -46,6 +39,7 @@
     "meadow-render-plan-enhancer-v2",
     "meadow-mesh-builder-v2",
     "meadow-webgl-renderer-v2",
+    "precision-safe-webgl-compatibility-adapter",
     "tree-object-dsk",
     "wind-field-dsk",
     "meadow-performance-dsk",
@@ -112,15 +106,29 @@
   },
   "serviceGroups": {
     "sourceAuthority": ["external import", "fallback creation", "source plan", "validation", "snapshot"],
-    "composition": ["manifest", "registry", "install validation", "game state", "reset"],
+    "composition": ["manifest", "registry", "install validation", "game state", "tick", "reset"],
     "terrainPath": ["terrain sampling", "path corridor", "material layers", "topology hashing"],
     "grass": ["density", "archetypes", "static batches", "patches", "draw groups", "wind", "LOD", "scaling", "debug"],
-    "render": ["mesh construction", "WebGL context", "shader", "buffer cache", "outline", "cel-fog", "snapshot", "dispose"],
+    "render": ["WebGL context", "precision normalization", "shader", "mesh construction", "buffer cache", "outline", "cel-fog", "snapshot", "dispose"],
     "diagnostics": ["GameHost state", "game snapshot", "render plan", "renderer snapshot", "enhancer snapshot"],
-    "editor": ["runtime", "scene", "renderer", "capture", "viewport", "errors"],
+    "editor": ["runtime", "scene", "renderer", "capture", "viewport", "errors", "invoke", "snapshot", "listener disposal"],
     "deployment": ["static route", "Pages workflow", "smoke checks"]
   },
-  "plannedGameplayProofKits": [
+  "plannedLifecycleProofKits": [
+    "meadow-runtime-session-authority-kit",
+    "meadow-lifecycle-state-kit",
+    "meadow-animation-frame-owner-kit",
+    "meadow-resource-ownership-ledger-kit",
+    "meadow-global-exposure-lease-kit",
+    "meadow-start-rollback-kit",
+    "meadow-ordered-disposal-kit",
+    "meadow-lifecycle-result-kit",
+    "meadow-restart-policy-kit",
+    "GameHost-lifecycle-observation-kit",
+    "headless-editor-lifecycle-command-kit",
+    "meadow-lifecycle-fixture-kit"
+  ],
+  "queuedGameplayProofKits": [
     "meadow-command-contract-kit",
     "meadow-input-command-adapter-kit",
     "meadow-target-preflight-kit",
@@ -140,13 +148,13 @@
     "mesh-contribution-ledger-kit",
     "registry-truth-snapshot-kit"
   ],
-  "mainFinding": "The repository declares player, input, interaction, story, and objective services, but the runtime only advances frame and lastTick. No input adapter, command dispatch, target preflight, result journal, objective reducer, or gameplay readback makes the authored path and tree interactions executable.",
+  "mainFinding": "The route constructs a game, renderer, enhancer, GameHost, editor bridge, browser listeners, and recursive RAF loop, but the boot path discards the host controller and the host does not retain RAF ownership or coordinate existing renderer/editor cleanup services. Stop, restart, fatal rollback, global release, and terminal disposal are therefore not authoritative or provable.",
   "validation": {
     "runtimeSourceChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
     "fixtureRun": false,
     "headlessEditorSmokeRun": false,
-    "nextCommand": "npm run check after interaction command, target preflight, objective progress, replay, source provenance, mesh contribution, and registry truth fixtures are added"
+    "nextCommand": "npm run check after runtime-session, stop/restart, disposal-idempotency, fatal-rollback, editor-listener, and global-lease fixtures are added"
   }
 }

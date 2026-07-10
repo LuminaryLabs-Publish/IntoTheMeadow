@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T09-28-40-04-00`
+**Updated:** `2026-07-10T10-49-23-04-00`
 
 ## Selection gap handled
 
@@ -19,12 +19,12 @@ central tracking is refreshed by this pass
 
 ```txt
 renderer v2 returns aggregate readback, not per-descriptor proof rows
-postProcess descriptors are emitted, but renderer snapshot only reports postProcessMode inline-cel-fog
+postProcess descriptors are emitted, but renderer snapshot only reports aggregate postProcess facts
 primitiveFallbackCount is visible, but not tied back to descriptor ids or fallback classes
 descriptorCounts are visible, but not classified as consumed / ignored / unsupported / fallback
 renderer.getSnapshot output is not normalized into a source-owned ledger
 GameHost exposes render snapshots, but not render proof rows
-headless editor smokes can read renderer data but do not yet assert descriptor consumption rows
+headless editor smokes can read renderer data but do not assert descriptor consumption rows
 ```
 
 ## Grass proof gaps
@@ -54,7 +54,7 @@ no DOM-free gameplay fixture rows
 
 ```txt
 GameHost exposes aggregate state/render diagnostics, not proof projection rows
-NexusEditorEnvironment exposes useful command reachability, not proof observations
+NexusEditorEnvironment exposes command reachability, not proof observations
 editor loop smoke proves bridge access, not render/grass/action/objective consumption
 ```
 
@@ -74,5 +74,5 @@ editor command expansion
 ## Current ledge
 
 ```txt
-IntoTheMeadow GameHost Proof Row Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow GameHost Proof Row Consumer Ledger Refresh + Headless Editor Fixture Gate
 ```

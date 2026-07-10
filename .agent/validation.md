@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T10-49-23-04-00`
+**Updated:** `2026-07-10T12-19-05-04-00`
 
 ## Validation performed this pass
 
@@ -16,8 +16,8 @@ npm install: not run
 npm run check: not run
 npm test: not run
 browser smoke: not run
-DOM-free proof-row fixtures: not run because proof files do not exist yet
-headless editor smoke: not run in this pass
+headless editor smoke: not run
+DOM-free attribution fixtures: not run because proof files do not exist yet
 pushed to main: yes
 central ledger updated: yes
 ```
@@ -34,7 +34,7 @@ npm run editor:loop
 npm run editor:browser
 ```
 
-`npm run check` currently covers static, DSK registry, render plan, renderer v2, deterministic scene, and headless editor environment/command/loop smoke scripts. That is useful reachability coverage, but it is not yet proof-row coverage.
+`npm run check` currently covers static, DSK registry, render plan, renderer v2, deterministic scene, and headless editor environment/command/loop smoke scripts. That is useful reachability coverage, but it is not yet proof-row attribution coverage.
 
 ## Required next validation commands
 

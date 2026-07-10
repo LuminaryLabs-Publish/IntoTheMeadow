@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T12-19-05-04-00`
+**Updated:** `2026-07-10T13-50-05-04-00`
 
 ## Selection gap handled
 
@@ -58,7 +58,7 @@ NexusEditorEnvironment exposes command reachability, not proof observations
 editor loop smoke proves bridge access, not render/grass/action/objective consumption
 ```
 
-## Consumer attribution gaps
+## Renderer proof attribution gaps
 
 ```txt
 no source descriptor id to renderer decision row
@@ -84,5 +84,5 @@ editor command expansion
 ## Current ledge
 
 ```txt
-IntoTheMeadow Consumer Proof Attribution Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Renderer Proof Attribution Readback Refresh + Headless Editor Fixture Gate
 ```

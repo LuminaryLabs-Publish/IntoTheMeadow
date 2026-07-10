@@ -2,12 +2,12 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T12-19-05-04-00`
+**Updated:** `2026-07-10T13-50-05-04-00`
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow Consumer Proof Attribution Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Renderer Proof Attribution Readback Refresh + Headless Editor Fixture Gate
 ```
 
 ## Build checklist

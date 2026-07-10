@@ -67,6 +67,10 @@ try {
   const fatal = fatalText.find((text) => html.includes(text));
   if (fatal) throw new Error(`Observed fatal browser state: ${fatal}`);
   if (!html.includes("Into The Meadow")) throw new Error("Observed browser DOM does not contain the game title.");
+  if (html.includes("booting DSK stack...")) throw new Error("The browser never advanced beyond the boot state.");
+  const editorMarker = "editor:nexus-headless-editor-environment/v1";
+  if (!html.includes(editorMarker)) throw new Error("The rendered page did not install the Nexus editor environment bridge.");
+  if (!html.includes("gpu:")) throw new Error("The rendered page did not report a completed renderer frame.");
 
   const screenshotBytes = (await readFile(screenshotPath)).byteLength;
   if (screenshotBytes < 10000) throw new Error(`Browser screenshot is unexpectedly small: ${screenshotBytes} bytes.`);
@@ -77,6 +81,8 @@ try {
     screenshot: ".artifacts/headless-editor/browser/arrival-wide.png",
     screenshotBytes,
     domContainsGameTitle: true,
+    editorBridgeObserved: true,
+    completedRendererFrameObserved: true,
     fatalTextFound: null
   };
   await writeFile(resolve(artifactRoot, "report.json"), `${JSON.stringify(report, null, 2)}\n`);

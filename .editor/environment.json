@@ -1,0 +1,8 @@
+{
+  "id": "into-the-meadow-headless",
+  "label": "Into The Meadow Headless Environment",
+  "adapter": "./scripts/into-the-meadow-environment.mjs",
+  "artifactRoot": ".artifacts/headless-editor",
+  "domains": ["runtime", "scene", "renderer", "camera", "browser", "workspace"],
+  "policy": "permissive-observation"
+}

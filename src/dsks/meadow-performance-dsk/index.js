@@ -1,11 +1,11 @@
-export const MEADOW_PERFORMANCE_DSK_VERSION = "0.1.0";
+export const MEADOW_PERFORMANCE_DSK_VERSION = "0.2.0";
 
 export const QUALITY_PROFILES = Object.freeze({
-  low: Object.freeze({ outline: 0.5, grassScale: 0.35, flowerScale: 0.35, terrainResolution: "low", postProcess: false }),
-  medium: Object.freeze({ outline: 0.75, grassScale: 0.55, flowerScale: 0.55, terrainResolution: "medium", postProcess: true }),
-  high: Object.freeze({ outline: 0.9, grassScale: 0.72, flowerScale: 0.55, terrainResolution: "medium-high", postProcess: true }),
-  ultra: Object.freeze({ outline: 1.0, grassScale: 1.0, flowerScale: 0.8, terrainResolution: "high", postProcess: true }),
-  auto: Object.freeze({ outline: 0.85, grassScale: 0.68, flowerScale: 0.5, terrainResolution: "medium-high", postProcess: true })
+  low: Object.freeze({ outline: 0.35, grassScale: 0.35, flowerScale: 0.35, terrainResolution: "low", postProcess: false }),
+  medium: Object.freeze({ outline: 0.5, grassScale: 0.55, flowerScale: 0.55, terrainResolution: "medium", postProcess: true }),
+  high: Object.freeze({ outline: 0.62, grassScale: 0.72, flowerScale: 0.55, terrainResolution: "medium-high", postProcess: true }),
+  ultra: Object.freeze({ outline: 0.72, grassScale: 1.0, flowerScale: 0.8, terrainResolution: "high", postProcess: true }),
+  auto: Object.freeze({ outline: 0.58, grassScale: 0.68, flowerScale: 0.5, terrainResolution: "medium-high", postProcess: true })
 });
 
 export function createMeadowPerformancePolicy(options = {}) {
@@ -23,10 +23,10 @@ export function createMeadowPerformancePolicy(options = {}) {
       maxTreeLineObjects: Number(options.maxTreeLineObjects ?? 28)
     }),
     outlinePolicy: Object.freeze({
-      hero: 0.55 * profile.outline,
-      soft: 0.18 * profile.outline,
-      tiny: 0.02 * profile.outline,
-      far: 0.06 * profile.outline
+      hero: 0.2 * profile.outline,
+      soft: 0.055 * profile.outline,
+      tiny: 0,
+      far: 0
     }),
     validate() {
       const failures = [];

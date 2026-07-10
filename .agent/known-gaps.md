@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T19-48-09-04-00`
+**Updated:** `2026-07-10T19-48-39-04-00`
 
 ## Selection state
 
@@ -10,7 +10,8 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as oldest eligible documented fallback
+IntoTheMeadow remained the single selected product repository
+near-simultaneous audits stayed scoped to the same repository
 ```
 
 ## Runtime lifecycle gaps
@@ -55,6 +56,54 @@ no fatal-start rollback fixture
 no start-after-dispose rejection fixture
 ```
 
+## Source-provider selection gaps
+
+```txt
+browser startup requires the external CDN provider
+external import failure stops before local fallback selection
+Node/headless construction silently selects the local fallback when externalKits is omitted
+provider choice has no accepted/rejected/fallback result row
+fallback policy is implicit and differs by host path
+install status proves function presence only
+no source epoch or provider-selection journal exists
+```
+
+## Source provenance gaps
+
+```txt
+external module URL and pinned commit are not retained in runtime source observations
+external factory version and plan version are not normalized into one contract
+local fallback uses local-source-plan-v1 and a different snapshot shape
+source plan fingerprint is absent
+rebuildRenderPlan has no source lineage or reason row
+GameHost/editor snapshots cannot identify the selected provider
+render snapshots cannot identify the source plan consumed
+```
+
+## External/fallback parity gaps
+
+```txt
+external and fallback placement algorithms differ
+object ID formats differ
+normalization rules differ
+validation strength differs
+feature coverage and snapshot fields differ
+fallback validate() claims representative without measured evidence
+no schema, semantic, count, topology, visual, or gameplay parity classification exists
+no external-provider smoke is wired into npm run check
+current Node render/determinism checks primarily exercise the fallback path
+```
+
+## Gameplay source-binding gaps
+
+```txt
+arrival-path and focal-tree targets are separate content descriptors
+no canonical source target index binds gameplay ids to rendered source objects
+no source epoch invalidates stale target references
+no command result can prove which path/tree facts were used
+browser and Node fixtures could preflight against different provider geometry
+```
+
 ## Interaction authority gaps
 
 ```txt
@@ -88,16 +137,35 @@ no pause/resume or visibility-gap policy
 no cadence-parity fixture
 ```
 
-## External source, mesh, and registry proof gaps
+## Mesh and registry proof gaps
 
 ```txt
-external source provenance is dropped after import
-fallback parity is not proven
-source plan remains cached at time 0 with a time-only overlay
 mesh builder lacks per-stage contribution rows
 descriptor ids do not survive renderer readback
+attempted/consumed/skipped/unsupported/fallback counts are absent
 primitiveFallbackCount is hard-coded to 0
-registry active status is not implementation proof
+registry active status is list membership rather than implementation proof
+```
+
+## Required missing fixtures
+
+```txt
+runtime-session-lifecycle-smoke
+runtime-stop-restart-smoke
+runtime-dispose-idempotency-smoke
+runtime-fatal-rollback-smoke
+editor-listener-cleanup-smoke
+global-exposure-lease-smoke
+meadow-source-provider-contract-smoke
+meadow-external-provider-smoke
+meadow-source-fallback-parity-smoke
+meadow-source-render-consumption-smoke
+meadow-source-target-index-smoke
+meadow-interaction-command-smoke
+meadow-objective-progress-smoke
+meadow-command-replay-smoke
+mesh-contribution-ledger-smoke
+dsk-registry-truth-smoke
 ```
 
 ## Do not solve first
@@ -108,15 +176,17 @@ renderer replacement or WebGPU migration
 new meadow content
 postprocess expansion
 shared-kit promotion
-CDN migration
+CDN migration before provider authority
+source-kit promotion before parity evidence
 audio/save/UI expansion
-interaction reducers before lifecycle idempotency
+interaction reducers before lifecycle idempotency and source target identity
 ```
 
-## Current ledge
+## Current order
 
 ```txt
-IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate
+1. IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate
+2. IntoTheMeadow Source Provider Authority + External/Fallback Parity Fixture Gate
+3. IntoTheMeadow Interaction Command Authority + Objective Progress Fixture Gate
+4. Mesh Contribution Ledger + Registry Truth Fixture Gate
 ```
-
-After lifecycle proof, resume `IntoTheMeadow Interaction Command Authority + Objective Progress Fixture Gate`. External-source provenance/fallback parity, mesh contribution, and registry truth remain required companion gates.

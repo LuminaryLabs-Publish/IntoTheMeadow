@@ -17,7 +17,7 @@ npm run check: not run
 browser smoke: not run
 DOM-free fixture: not run because render/action fixture files do not exist yet
 pushed to main: yes
-central ledger updated: pending in same pass
+central ledger updated: yes
 ```
 
 ## Existing validation commands

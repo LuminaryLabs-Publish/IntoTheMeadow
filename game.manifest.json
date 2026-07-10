@@ -1,13 +1,19 @@
 {
   "id": "into-the-meadow",
   "title": "Into The Meadow",
-  "version": "0.2.0",
-  "build": "0.2.0-render-contract-v2",
+  "version": "0.3.0",
+  "build": "0.3.0-headless-editor-runtime",
   "route": "./index.html",
   "publicUrl": "https://luminarylabs-publish.github.io/IntoTheMeadow/",
   "role": "publishable-game-repo",
   "defaultScene": "arrival-meadow",
   "renderContract": "meadow-render-plan/v2",
+  "editorRuntime": {
+    "id": "core-headless-editor-kit",
+    "environment": "into-the-meadow-headless",
+    "browserBridge": "NexusEditorEnvironment",
+    "mode": "permissive-capability-control-surface"
+  },
   "localRenderer": {
     "id": "meadow-webgl-renderer-v2",
     "module": "./src/renderers/meadow-webgl-renderer-v2.js",
@@ -22,7 +28,8 @@
   ],
   "validation": {
     "requiredGlobal": "GameHost",
-    "requiredScripts": ["npm run check"],
+    "requiredEditorGlobal": "NexusEditorEnvironment",
+    "requiredScripts": ["npm run check", "npm run editor:loop", "npm run editor:browser"],
     "snapshotRequired": true,
     "primitiveFallbackAllowed": false
   }

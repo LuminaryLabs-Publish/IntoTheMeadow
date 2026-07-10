@@ -2,28 +2,28 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-09T22-40-25-04-00`
+**Audit timestamp:** `2026-07-10T00-09-51-04-00`
 
 ## Summary
 
 `IntoTheMeadow` is a static DSK-composed meadow route.
 
-This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: render consumption rows plus DOM-free action fixture rows.
+This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: renderer snapshot normalization, render/grass consumption rows, and DOM-free objective/action fixture rows.
 
 Runtime source was not changed.
 
 ## Repo selection
 
 ```txt
-LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T19-09-44-04-00
-LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T19-00-15-04-00
-LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T18-49-13-04-00
-LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T18-41-55-04-00
-LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T18-30-30-04-00
-LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T19-29-23-04-00
-LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible documented fallback / central latest 2026-07-09T18-20-18-04-00
+LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T23-41-15-04-00
+LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T23-28-35-04-00
+LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T23-20-43-04-00
+LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T23-02-05-04-00
+LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T22-50-53-04-00
+LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T23-58-41-04-00
+LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central-ledger fallback / central latest 2026-07-09T22-40-25-04-00
 LuminaryLabs-Publish/TheCavalryOfRome     excluded by rule
-LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T19-21-19-04-00
+LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T23-51-04-04-00
 ```
 
 ## Evidence checked
@@ -34,15 +34,11 @@ LuminaryLabs-Dev/LuminaryLabs repo-ledger/LuminaryLabs-Publish/*.md sampled by d
 LuminaryLabs-Publish/IntoTheMeadow:.agent/START_HERE.md
 LuminaryLabs-Publish/IntoTheMeadow:.agent/kit-registry.json
 LuminaryLabs-Publish/IntoTheMeadow:package.json
-LuminaryLabs-Publish/IntoTheMeadow:index.html
-LuminaryLabs-Publish/IntoTheMeadow:src/boot/boot-game.js
 LuminaryLabs-Publish/IntoTheMeadow:src/hosts/web-host.js
 LuminaryLabs-Publish/IntoTheMeadow:src/game/create-into-the-meadow-game.js
 LuminaryLabs-Publish/IntoTheMeadow:src/game/game-state.js
 LuminaryLabs-Publish/IntoTheMeadow:src/game/enhance-render-plan.js
-LuminaryLabs-Publish/IntoTheMeadow:src/game/game-snapshot.js
 LuminaryLabs-Publish/IntoTheMeadow:src/boot/expose-game-host.js
-LuminaryLabs-Publish/IntoTheMeadow:src/content/game-manifest.js
 LuminaryLabs-Publish/IntoTheMeadow:src/content/objectives/arrival-objectives.js
 LuminaryLabs-Publish/IntoTheMeadow:src/content/interaction-targets/arrival-targets.js
 LuminaryLabs-Publish/IntoTheMeadow:src/renderers/meadow-webgl-renderer-v2.js
@@ -66,7 +62,7 @@ index.html
 -> get raw render plan
 -> enhance render plan with grass/wind/postprocess/performance/stats
 -> renderer.render(enhancedPlan)
--> renderer snapshot reports aggregate readback
+-> renderer snapshot reports aggregate topology/cache/count/fallback facts
 -> optional debug HUD writes validation/object/grass/render counts
 ```
 
@@ -121,7 +117,7 @@ See `.agent/kit-registry.json` for the machine-readable kit inventory.
 
 The important implemented seam is descriptor production plus aggregate renderer readback.
 
-The important next seam is row-level consumer proof.
+The important next seam is row-level source-to-consumer proof.
 
 ## Main finding
 
@@ -129,4 +125,4 @@ The renderer v2 snapshot is useful, but it is not yet a proof ledger.
 
 The route exposes objectives and interaction targets, but the game state reducer does not consume them.
 
-The next implementation should add render rows and action rows before visual or control changes.
+The next implementation should add render rows, grass parity rows, and action rows before visual or control changes.

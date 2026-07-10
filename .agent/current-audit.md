@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-10T07-59-27-04-00`
+**Audit timestamp:** `2026-07-10T09-28-40-04-00`
 
 ## Summary
 
@@ -44,15 +44,9 @@ boot-dom-adapter
 web-host-orchestration
 external-kit-imports
 dsk-install-validation
-manifest-and-build-metadata
 arrival-meadow-source-config
 meadow-area-render-plan
-fallback-meadow-area-render-plan
 render-plan-enhancement
-source-topology-cache
-object-outline-policy
-tiny-clutter-reduction
-tree-object-enhancement
 grass-density-texture
 grass-clump-archetype
 grass-static-batch
@@ -65,44 +59,27 @@ grass-debug-visualization
 wind-field
 postprocess-stack
 meadow-performance-policy
-mesh-builder-v2
 webgl-renderer-v2
-renderer-topology-cache
-inline-cel-fog-render-pass
-renderer-precision-compatibility
 state-snapshot-diagnostics
 objective-descriptor-domain
 interaction-target-domain
-frame-tick-domain
-headless-editor-runtime
-editor-bridge
 GameHost-debug-surface
+headless-editor-runtime
 render-proof-row-next
 grass-proof-row-next
 action-result-proof-next
 objective-progress-proof-next
 headless-editor-proof-row-next
-central-ledger-sync
 ```
-
-## Services and kits
-
-See `.agent/kit-registry.json` for the machine-readable kit inventory.
-
-The implemented seam is descriptor production plus aggregate renderer/editor readback.
-
-The next seam is row-level source-to-consumer proof across render, grass, gameplay action, objective progress, GameHost, and headless editor observations.
 
 ## Main finding
 
-The route should not be visually rewritten next.
+The route has rich descriptors and aggregate readback, but not proof-row readback.
 
-The renderer v2 snapshot is useful, but it is not yet a proof ledger. Grass descriptors are rich, but not normalized into renderer parity rows. Objectives and interaction targets exist, but `advanceGameState()` only increments `frame` and writes `lastTick`. The headless editor bridge proves runtime reachability, but not source-backed observation rows.
+`advanceGameState()` still only increments frame and lastTick. `GameHost` and `NexusEditorEnvironment` expose useful aggregate state, render, scene, and editor snapshots, but not source-owned rows that prove consumption, fallback, action, objective, or editor observation outcomes.
 
-The next implementation should add render rows, grass parity rows, action/objective rows, additive `GameHost` proof projections, and headless editor proof rows before visual or control changes.
-
-## Next safe ledge
+## Current ledge
 
 ```txt
-IntoTheMeadow GameHost Proof Row Readback Refresh + Headless Fixture Gate
+IntoTheMeadow GameHost Proof Row Ledger Refresh + Headless Editor Fixture Gate
 ```

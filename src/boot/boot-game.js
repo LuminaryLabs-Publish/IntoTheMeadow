@@ -1,4 +1,4 @@
-import { startWebHost } from "../hosts/web-host.js?v=0.2.1-shader-precision";
+import { startWebHost } from "../hosts/web-host.js?v=0.3.0-headless-editor";
 
 const canvas = document.querySelector("#scene");
 const hud = document.querySelector("#hud");

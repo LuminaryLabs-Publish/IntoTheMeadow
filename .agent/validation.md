@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T16-51-37-04-00`
+**Updated:** `2026-07-10T18-22-01-04-00`
 
 ## Validation performed this pass
 
@@ -12,8 +12,11 @@ This was a documentation-only breakdown using authenticated GitHub reads and dir
 full accessible Publish inventory reviewed: yes
 central ledger comparison performed: yes
 selected repository root .agent reviewed: yes
-external ProtoKit source at the pinned commit inspected: yes
+runtime interaction/state/host/editor sources inspected: yes
 runtime source changed: no
+dependencies changed: no
+package scripts changed: no
+deploy workflow changed: no
 branch created: no
 pull request created: no
 npm install: not run
@@ -21,26 +24,27 @@ npm run check: not run
 npm test: not run
 browser smoke: not run
 headless editor smoke: not run
-source provenance fixtures: not run because they do not exist yet
-fallback parity fixture: not run because it does not exist yet
-source failure policy fixture: not run because it does not exist yet
+interaction command fixture: not run because it does not exist yet
+objective progress fixture: not run because it does not exist yet
+command replay fixture: not run because it does not exist yet
 pushed to main: yes
-central ledger updated: yes
+central ledger updated: pending central sync
+central change log updated: pending central sync
 ```
 
 ## Source inspection completed
 
 ```txt
 package.json
-src/content/game-manifest.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
-src/content/meadow-areas/create-local-meadow-source-plan.js
-src/boot/install-dsks.js
-src/content/dsk-registry.js
-tests/static-smoke.mjs
+src/game/game-state.js
+src/content/interaction-targets/arrival-targets.js
+src/content/objectives/arrival-objectives.js
+src/boot/expose-game-host.js
+src/editor/install-editor-bridge.js
 .agent current audit set
-LuminaryLabs-Agents/NexusEngine-ProtoKits/protokits/meadow-area-kit/index.js at 11d245913ba4d30f3ce950eb5a17e1cc6e4aa1f5
+central repo ledger and latest AetherVale selection sequence
 ```
 
 ## Existing checks
@@ -53,15 +57,17 @@ npm run editor:loop
 npm run editor:browser
 ```
 
-`npm run check` currently covers static structure, DSK registry, render plan, renderer v2, deterministic scene, and editor environment/command/loop reachability. It does not prove external source identity, import failure behavior, fallback selection, fallback parity, source-plan fingerprints, source-time semantics, measured mesh contribution, or registry implementation truth.
+Existing checks cover static structure, DSK registry, render plan, renderer v2, deterministic scene reachability, and editor environment/command/loop reachability. They do not prove gameplay command dispatch, target preflight, objective mutation, result retention, duplicate behavior, or replay fingerprints.
 
 ## Required next checks
 
 ```txt
+node tests/meadow-interaction-command-smoke.mjs
+node tests/meadow-target-preflight-smoke.mjs
+node tests/meadow-objective-progress-smoke.mjs
+node tests/meadow-command-replay-smoke.mjs
 node tests/meadow-source-provenance-smoke.mjs
-node tests/meadow-source-failure-policy-smoke.mjs
 node tests/meadow-source-fallback-parity-smoke.mjs
-node tests/meadow-source-time-policy-smoke.mjs
 node tests/mesh-contribution-ledger-smoke.mjs
 node tests/dsk-registry-truth-smoke.mjs
 npm run check
@@ -72,22 +78,20 @@ npm run editor:smoke
 ## Required fixture assertions
 
 ```txt
-external success records the exact source id, URL, repository, commit, export version, plan version, and validation result
-missing URL has a stable load-result status and reason
-rejected import has a stable load-result status and reason
-missing createMeadowAreaKit export has a stable load-result status and reason
-hard-fail versus fallback behavior is policy-driven and deterministic
-fallback selection is visible in DSK install, GameHost, and editor readback
-fallback validate cannot claim representative without parity evidence
-external and fallback outputs both satisfy a shared minimum render-plan consumer contract
-permitted degradation is explicit for descriptor families and counts
-source-plan fingerprints are stable for the same seed/config/source version
-static source-plan caching and time overlay are either fixture-proven or replaced with source re-query behavior
-source provenance survives enhancement, mesh, renderer, GameHost, and capture projection
-mesh contribution counts remain measured rather than echoed
-registry active status remains distinct from implementation and external provenance truth
+move/path-progress commands use stable status and reason codes
+unknown target and unsupported action reject without mutation
+out-of-range inspect rejects without mutation
+successful path progress updates player and completes walk-the-path at 0.35
+successful focal-tree inspection records inspected state and completes inspect-tree
+duplicate inspect is an explicit no-op or rejection
+command sequence and frame ids are ordered and bounded
+reset restores canonical initial progression
+same initial state plus same commands produces identical results and fingerprint
+GameHost and editor return the same gameplay observation rows
+renderer behavior and topology remain unchanged by gameplay authority work
+source provenance, fallback parity, mesh contribution, and registry truth remain additive
 ```
 
 ## Validation warning
 
-A commit-pinned URL is not sufficient runtime provenance when the host discards the commit and version after import. A local fallback function is not a recovery path when the web host fails before game creation. The next gate must prove selection, identity, failure policy, parity, and downstream propagation without requiring a browser.
+The current route can render and report frames while never executing its authored gameplay actions. A frame counter and editor `runtime.tick` capability are not evidence of an interaction loop. The next gate must prove command acceptance/rejection, state mutation, objective completion, replay stability, and bounded readback without depending on DOM input.

@@ -2,13 +2,13 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-10T06-30-49-04-00`
+**Audit timestamp:** `2026-07-10T07-59-27-04-00`
 
 ## Summary
 
 `IntoTheMeadow` is a static DSK-composed meadow route with a local WebGL renderer v2, `GameHost` diagnostics, and a Nexus headless editor bridge.
 
-This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: source-backed proof rows that connect renderer readback, grass descriptors, objective/action results, GameHost projections, and headless editor observations.
+This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: additive source-backed rows that connect renderer readback, grass descriptors, objective/action results, GameHost projections, and headless editor observations.
 
 Runtime source was not changed.
 
@@ -104,5 +104,5 @@ The next implementation should add render rows, grass parity rows, action/object
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Proof Row Ledger Catch-up + Headless Editor Observation Gate
+IntoTheMeadow GameHost Proof Row Readback Refresh + Headless Fixture Gate
 ```

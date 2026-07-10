@@ -2,13 +2,13 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-10T03-01-42-04-00`
+**Audit timestamp:** `2026-07-10T04-58-56-04-00`
 
 ## Summary
 
 `IntoTheMeadow` is a static DSK-composed meadow route with a local WebGL renderer v2, `GameHost` diagnostics, and a Nexus headless editor bridge.
 
-This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: a source-backed ledger that connects renderer readback, grass descriptors, objective/action results, GameHost projections, and headless editor observations.
+This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: source-backed proof rows that connect renderer readback, grass descriptors, objective/action results, GameHost projections, and headless editor observations.
 
 Runtime source was not changed.
 
@@ -20,17 +20,13 @@ LuminaryLabs-Dev/LuminaryLabs repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 LuminaryLabs-Publish/IntoTheMeadow:.agent/START_HERE.md
 LuminaryLabs-Publish/IntoTheMeadow:.agent/kit-registry.json
 LuminaryLabs-Publish/IntoTheMeadow:package.json
-LuminaryLabs-Publish/IntoTheMeadow:index.html
-LuminaryLabs-Publish/IntoTheMeadow:src/boot/boot-game.js
 LuminaryLabs-Publish/IntoTheMeadow:src/hosts/web-host.js
 LuminaryLabs-Publish/IntoTheMeadow:src/game/create-into-the-meadow-game.js
 LuminaryLabs-Publish/IntoTheMeadow:src/game/game-state.js
 LuminaryLabs-Publish/IntoTheMeadow:src/game/enhance-render-plan.js
 LuminaryLabs-Publish/IntoTheMeadow:src/boot/expose-game-host.js
-LuminaryLabs-Publish/IntoTheMeadow:src/content/objectives/arrival-objectives.js
-LuminaryLabs-Publish/IntoTheMeadow:src/content/interaction-targets/arrival-targets.js
-LuminaryLabs-Publish/IntoTheMeadow:src/renderers/meadow-webgl-renderer-v2.js
 LuminaryLabs-Publish/IntoTheMeadow:src/editor/install-editor-bridge.js
+LuminaryLabs-Publish/IntoTheMeadow:src/renderers/meadow-webgl-renderer-v2.js
 ```
 
 ## Current interaction loop
@@ -97,11 +93,11 @@ frame-tick-domain
 headless-editor-runtime
 editor-bridge
 GameHost-debug-surface
-render-consumption-proof-next
-grass-consumption-proof-next
+render-proof-row-next
+grass-proof-row-next
 action-result-proof-next
 objective-progress-proof-next
-headless-editor-observation-proof-next
+headless-editor-proof-row-next
 central-ledger-sync
 ```
 
@@ -126,5 +122,5 @@ The next implementation should add render rows, grass parity rows, action/object
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Headless Editor Render Action Ledger Refresh + GameHost Fixture Gate
+IntoTheMeadow Proof Row Ledger Refresh + Headless Editor Fixture Gate
 ```

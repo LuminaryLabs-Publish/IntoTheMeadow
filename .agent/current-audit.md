@@ -2,29 +2,15 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-10T00-09-51-04-00`
+**Audit timestamp:** `2026-07-10T01-38-16-04-00`
 
 ## Summary
 
 `IntoTheMeadow` is a static DSK-composed meadow route.
 
-This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: renderer snapshot normalization, render/grass consumption rows, and DOM-free objective/action fixture rows.
+This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: renderer snapshot normalization, render/grass consumption rows, DOM-free objective/action fixture rows, and headless editor observation rows.
 
 Runtime source was not changed.
-
-## Repo selection
-
-```txt
-LuminaryLabs-Publish/MyCozyIsland         tracked / root .agent present / central latest 2026-07-09T23-41-15-04-00
-LuminaryLabs-Publish/TheUnmappedHouse     tracked / root .agent present / central latest 2026-07-09T23-28-35-04-00
-LuminaryLabs-Publish/ZombieOrchard        tracked / root .agent present / central latest 2026-07-09T23-20-43-04-00
-LuminaryLabs-Publish/PhantomCommand       tracked / root .agent present / central latest 2026-07-09T23-02-05-04-00
-LuminaryLabs-Publish/HorrorCorridor       tracked / root .agent present / central latest 2026-07-09T22-50-53-04-00
-LuminaryLabs-Publish/PrehistoricRush      tracked / root .agent present / central latest 2026-07-09T23-58-41-04-00
-LuminaryLabs-Publish/IntoTheMeadow        selected / oldest eligible central-ledger fallback / central latest 2026-07-09T22-40-25-04-00
-LuminaryLabs-Publish/TheCavalryOfRome     excluded by rule
-LuminaryLabs-Publish/TheOpenAbove         tracked / root .agent present / central latest 2026-07-09T23-51-04-04-00
-```
 
 ## Evidence checked
 
@@ -54,8 +40,9 @@ index.html
 -> createIntoTheMeadowGame
 -> install local/external DSK descriptors
 -> create arrival meadow area render plan
--> create local WebGL renderer v2
+-> create local WebGL renderer v2 compatible adapter
 -> expose GameHost
+-> install editor bridge
 -> requestAnimationFrame
 -> game.tick({ time, dt })
 -> advanceGameState increments frame and writes lastTick only
@@ -63,7 +50,7 @@ index.html
 -> enhance render plan with grass/wind/postprocess/performance/stats
 -> renderer.render(enhancedPlan)
 -> renderer snapshot reports aggregate topology/cache/count/fallback facts
--> optional debug HUD writes validation/object/grass/render counts
+-> optional debug HUD writes validation/object/grass/render/editor counts
 ```
 
 ## Domains in use
@@ -103,11 +90,14 @@ state-snapshot-diagnostics
 objective-descriptor-domain
 interaction-target-domain
 frame-tick-domain
+headless-editor-runtime
+editor-bridge
 GameHost-debug-surface
 render-proof-next
 grass-proof-next
 action-fixture-next
 objective-progress-next
+headless-observation-proof-next
 central-ledger-sync
 ```
 
@@ -117,7 +107,9 @@ See `.agent/kit-registry.json` for the machine-readable kit inventory.
 
 The important implemented seam is descriptor production plus aggregate renderer readback.
 
-The important next seam is row-level source-to-consumer proof.
+The useful new seam is the headless editor command/smoke path.
+
+The important next seam is row-level source-to-consumer proof across render, grass, gameplay action, and headless observation.
 
 ## Main finding
 
@@ -125,4 +117,12 @@ The renderer v2 snapshot is useful, but it is not yet a proof ledger.
 
 The route exposes objectives and interaction targets, but the game state reducer does not consume them.
 
-The next implementation should add render rows, grass parity rows, and action rows before visual or control changes.
+The headless editor smoke path exists and should become the route observation harness, but it still needs proof rows tied to `GameHost` readback.
+
+The next implementation should add render rows, grass parity rows, action rows, and headless observation rows before visual or control changes.
+
+## Next safe ledge
+
+```txt
+IntoTheMeadow Headless Render Action Proof Catch-up + GameHost Ledger Gate
+```

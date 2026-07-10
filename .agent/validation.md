@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T04-58-56-04-00`
+**Updated:** `2026-07-10T06-30-49-04-00`
 
 ## Validation performed this pass
 
@@ -19,7 +19,7 @@ browser smoke: not run
 DOM-free proof-row fixtures: not run because proof files do not exist yet
 headless editor smoke: not run in this pass
 pushed to main: yes
-central ledger updated: yes
+central ledger updated: pending central sync
 ```
 
 ## Existing validation commands

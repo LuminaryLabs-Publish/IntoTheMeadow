@@ -2,31 +2,31 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-10T12-19-05-04-00`
+**Last aligned:** `2026-07-10T13-50-05-04-00`
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow Consumer Proof Attribution Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Renderer Proof Attribution Readback Refresh + Headless Editor Fixture Gate
 ```
 
 ## Read first
 
 ```txt
-.agent/trackers/2026-07-10T12-19-05-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-10T12-19-05-04-00.md
+.agent/trackers/2026-07-10T13-50-05-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-10T13-50-05-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-10T12-19-05-04-00-consumer-proof-attribution-ledger-dsk-map.md
-.agent/render-audit/2026-07-10T12-19-05-04-00-render-consumption-attribution-gap.md
-.agent/grass-system-audit/2026-07-10T12-19-05-04-00-grass-source-render-attribution-ledger.md
-.agent/gameplay-audit/2026-07-10T12-19-05-04-00-action-objective-attribution-loop.md
-.agent/interaction-audit/2026-07-10T12-19-05-04-00-target-action-preflight-attribution-map.md
-.agent/editor-proof-audit/2026-07-10T12-19-05-04-00-headless-editor-attribution-observation-ledger.md
-.agent/deploy-audit/2026-07-10T12-19-05-04-00-attribution-fixture-check-gate.md
+.agent/architecture-audit/2026-07-10T13-50-05-04-00-renderer-proof-attribution-readback-dsk-map.md
+.agent/render-audit/2026-07-10T13-50-05-04-00-renderer-v2-consumption-proof-gap.md
+.agent/grass-system-audit/2026-07-10T13-50-05-04-00-grass-render-attribution-readback.md
+.agent/gameplay-audit/2026-07-10T13-50-05-04-00-action-objective-proof-attribution-loop.md
+.agent/interaction-audit/2026-07-10T13-50-05-04-00-target-action-result-attribution-map.md
+.agent/editor-proof-audit/2026-07-10T13-50-05-04-00-headless-editor-proof-attribution-ledger.md
+.agent/deploy-audit/2026-07-10T13-50-05-04-00-renderer-proof-fixture-check-gate.md
 ```
 
 ## Current route
@@ -55,15 +55,16 @@ boot DOM nodes
   -> requestAnimationFrame
   -> tick state frame and lastTick only
   -> enhance render plan with grass/wind/postprocess/performance/stats
-  -> render enhanced plan
-  -> expose aggregate renderer/editor diagnostics
+  -> renderer v2 consumes enhanced plan and emits aggregate snapshot
+  -> debug HUD and GameHost expose aggregate diagnostics
+  -> editor bridge exposes runtime, scene, renderer, capture, viewport, and error commands
 ```
 
 ## Main finding
 
 Do not start with visual fidelity, renderer replacement, external CDN changes, new meadow content, grass tuning, camera/control rewiring, shared-kit promotion, or editor command expansion.
 
-The missing layer is consumer attribution proof rows:
+The missing layer is renderer proof attribution readback:
 
 ```txt
 render descriptor consumed / ignored / unsupported / fallback rows

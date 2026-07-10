@@ -1,0 +1,8 @@
+{
+  "id": "grass-pass",
+  "steps": [
+    { "action": "scene.getStatistics", "arguments": { "focus": "grass" } },
+    { "action": "renderer.capture", "arguments": { "label": "grass-pass", "width": 1200, "height": 675 } },
+    { "action": "renderer.compare" }
+  ]
+}

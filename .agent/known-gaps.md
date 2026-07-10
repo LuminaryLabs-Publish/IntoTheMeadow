@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T00-09-51-04-00`
+**Updated:** `2026-07-10T01-38-16-04-00`
 
 ## Selection gap handled
 
@@ -24,6 +24,7 @@ primitiveFallbackCount is visible, but not tied back to descriptor ids.
 descriptorCounts are visible, but not classified as consumed / ignored / unsupported / fallback.
 renderer.getSnapshot output is not normalized into a source-owned ledger.
 GameHost exposes render snapshots, but not render proof rows.
+headless editor smokes do not yet assert descriptor consumption rows.
 ```
 
 ## Grass proof gaps
@@ -34,6 +35,7 @@ static batch and archetype card counts are not proven against renderer state.
 patch instance counts are not fixture-proven.
 draw group card/instance totals are not normalized into rows.
 shader wind and LOD policy consumption are not visible as proof rows.
+headless editor observation does not yet emit grass parity rows.
 ```
 
 ## Gameplay/action gaps
@@ -47,15 +49,28 @@ no target/action preflight helper exists.
 no ActionResult contract exists.
 no objective progress helper exists.
 no DOM-free action fixture exists.
+no editor command row is tied to objective/action proof.
+```
+
+## Headless editor proof gaps
+
+```txt
+headless editor smoke exists.
+headless editor proof ledger does not exist.
+editor observation rows are not tied to render proof rows.
+editor observation rows are not tied to action/objective rows.
+GameHost has no additive proof projection for editor observations.
 ```
 
 ## Validation gaps
 
 ```txt
 npm run check exists and is useful.
+npm run check includes headless editor smokes.
 npm run check does not include render-consumption ledger rows.
 npm run check does not include grass-consumption rows.
 npm run check does not include action-result fixture rows.
+npm run check does not include headless editor proof ledger rows.
 central ledger sync is still documentation-only.
 ```
 

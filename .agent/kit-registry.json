@@ -1,43 +1,43 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-10T16-51-37-04-00",
-  "status": "external-source-provenance-fallback-parity-fixture-gate-planned",
-  "currentNextSlice": "IntoTheMeadow External Meadow Source Provenance + Fallback Parity Fixture Gate",
-  "latestTracker": ".agent/trackers/2026-07-10T16-51-37-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T16-51-37-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T16-51-37-04-00-external-source-provenance-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-10T16-51-37-04-00-external-fallback-plan-parity-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T16-51-37-04-00-static-source-cache-time-overlay-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T16-51-37-04-00-startup-failure-recovery-result-map.md",
-  "latestExternalKitAudit": ".agent/external-kit-audit/2026-07-10T16-51-37-04-00-meadow-area-kit-provenance-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T16-51-37-04-00-external-kit-provenance-fixture-gate.md",
+  "generatedAt": "2026-07-10T18-22-01-04-00",
+  "status": "interaction-command-objective-progress-fixture-gate-planned",
+  "currentNextSlice": "IntoTheMeadow Interaction Command Authority + Objective Progress Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-10T18-22-01-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T18-22-01-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T18-22-01-04-00-interaction-objective-authority-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-10T18-22-01-04-00-render-loop-without-gameplay-commit.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T18-22-01-04-00-path-inspect-objective-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T18-22-01-04-00-command-preflight-result-journal-gap.md",
+  "latestEditorProofAudit": ".agent/editor-proof-audit/2026-07-10T18-22-01-04-00-gameplay-command-readback-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T18-22-01-04-00-interaction-objective-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "All eligible repositories were centrally tracked with root .agent state. IntoTheMeadow was the oldest eligible documented fallback based on the latest central change-log sequence."
+    "reason": "All eligible repositories were centrally tracked with root .agent state. IntoTheMeadow was the oldest eligible documented fallback after AetherVale advanced at 2026-07-10T18-08-37-04-00."
   },
   "interactionLoop": [
     "browser boot and external source resolution",
-    "dynamic import of commit-pinned meadow-area-kit",
-    "DSK descriptor installation and source-plan creation",
-    "time-0 source-plan cache with later time-field overlay",
-    "grass/wind/postprocess/performance enhancement",
+    "static game-state and source-plan creation",
+    "requestAnimationFrame tick with time and fixed dt",
+    "frame and lastTick mutation only",
+    "cached plan enhancement",
     "combined CPU mesh construction",
-    "topology-keyed WebGL buffer reuse or rebuild",
-    "outline and cel-fog render passes",
+    "topology-keyed WebGL rendering",
     "aggregate GameHost and editor readback"
   ],
-  "externalSource": {
-    "id": "meadow-area-kit",
-    "repository": "LuminaryLabs-Agents/NexusEngine-ProtoKits",
-    "commit": "11d245913ba4d30f3ce950eb5a17e1cc6e4aa1f5",
-    "exportedVersion": "0.1.0",
-    "runtimeStatusProof": "function-presence-only",
-    "fallbackOperationalInWebHost": false
-  },
+  "authoredButInactiveGameplay": [
+    "player movement",
+    "path-progress action",
+    "focal-tree inspect action",
+    "target preflight",
+    "objective evaluation",
+    "story progression",
+    "command/result/event journal"
+  ],
   "runtimeSourceBackedKits": [
     "meadow-area-kit",
     "fallback-meadow-area-kit",
@@ -111,33 +111,42 @@
     ]
   },
   "serviceGroups": {
-    "sourceAuthority": ["external source resolution", "dynamic import", "factory export validation", "source-plan creation", "local fallback creation"],
-    "composition": ["manifest", "registry", "install validation", "source plan", "snapshot"],
+    "sourceAuthority": ["external import", "fallback creation", "source plan", "validation", "snapshot"],
+    "composition": ["manifest", "registry", "install validation", "game state", "reset"],
     "terrainPath": ["terrain sampling", "path corridor", "material layers", "topology hashing"],
     "grass": ["density", "archetypes", "static batches", "patches", "draw groups", "wind", "LOD", "scaling", "debug"],
-    "render": ["mesh construction", "WebGL context", "shader", "buffer cache", "outline pass", "cel-fog pass", "snapshot", "dispose"],
+    "render": ["mesh construction", "WebGL context", "shader", "buffer cache", "outline", "cel-fog", "snapshot", "dispose"],
     "diagnostics": ["GameHost state", "game snapshot", "render plan", "renderer snapshot", "enhancer snapshot"],
-    "editor": ["runtime", "scene", "renderer", "capture", "viewport", "error capabilities"],
+    "editor": ["runtime", "scene", "renderer", "capture", "viewport", "errors"],
     "deployment": ["static route", "Pages workflow", "smoke checks"]
   },
-  "plannedProofKits": [
-    "meadow-source-provenance-row-kit",
-    "meadow-source-load-result-kit",
-    "meadow-source-plan-fingerprint-kit",
-    "meadow-source-fallback-parity-kit",
-    "meadow-source-time-policy-kit",
-    "mesh-contribution-ledger-kit",
-    "registry-truth-snapshot-kit",
-    "GameHost-source-proof-projection-kit",
-    "headless-editor-source-observation-kit"
+  "plannedGameplayProofKits": [
+    "meadow-command-contract-kit",
+    "meadow-input-command-adapter-kit",
+    "meadow-target-preflight-kit",
+    "meadow-command-result-kit",
+    "meadow-player-path-reducer-kit",
+    "meadow-inspection-state-kit",
+    "meadow-objective-reducer-kit",
+    "meadow-command-journal-kit",
+    "meadow-gameplay-fingerprint-kit",
+    "GameHost-gameplay-observation-kit",
+    "headless-editor-gameplay-command-kit",
+    "meadow-command-replay-fixture-kit"
   ],
-  "mainFinding": "The external kit is commit-pinned but runtime readback discards its identity and version. Browser startup hard-fails before the local fallback can be selected, fallback representativeness is unproven, external and fallback plans materially differ, and static source-plan caching bypasses any future source-owned time behavior.",
+  "companionProofKits": [
+    "meadow-source-provenance-row-kit",
+    "meadow-source-fallback-parity-kit",
+    "mesh-contribution-ledger-kit",
+    "registry-truth-snapshot-kit"
+  ],
+  "mainFinding": "The repository declares player, input, interaction, story, and objective services, but the runtime only advances frame and lastTick. No input adapter, command dispatch, target preflight, result journal, objective reducer, or gameplay readback makes the authored path and tree interactions executable.",
   "validation": {
     "runtimeSourceChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
     "fixtureRun": false,
     "headlessEditorSmokeRun": false,
-    "nextCommand": "npm run check after source provenance, failure policy, fallback parity, time policy, mesh contribution, and registry truth fixtures are added"
+    "nextCommand": "npm run check after interaction command, target preflight, objective progress, replay, source provenance, mesh contribution, and registry truth fixtures are added"
   }
 }

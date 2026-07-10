@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T07-59-27-04-00`
+**Updated:** `2026-07-10T09-28-40-04-00`
 
 ## Selection gap handled
 
@@ -38,54 +38,41 @@ shader wind and LOD policy consumption are not visible as proof rows
 headless editor observation does not yet emit grass parity rows
 ```
 
-## Gameplay/action gaps
+## Gameplay and interaction proof gaps
 
 ```txt
-ARRIVAL_OBJECTIVES defines path-progress and inspect objectives
-ARRIVAL_INTERACTION_TARGETS defines focal-tree and arrival-path targets
-advanceGameState only increments frame and lastTick
-no ActionFrame contract exists
-no target/action preflight helper exists
-no ActionResult contract exists
-no objective progress helper exists
-no DOM-free action fixture exists
-no editor command row is tied to objective/action proof
+advanceGameState increments frame and lastTick only
+no ActionFrame contract
+no TargetActionPreflight contract
+no ActionResult contract
+no ObjectiveProgress contract
+no accepted/rejected/skipped/unchanged reason rows
+no DOM-free gameplay fixture rows
 ```
 
-## GameHost and editor proof gaps
+## GameHost/editor proof gaps
 
 ```txt
-GameHost has aggregate getState/getSnapshot/getDiagnostics/getRenderPlan/getRenderSnapshot fields
-GameHost has no additive proof projection rows
-headless editor bridge has command reachability but no source-backed observation ledger
-editor observation rows are not tied to render proof rows
-editor observation rows are not tied to grass proof rows
-editor observation rows are not tied to action/objective rows
+GameHost exposes aggregate state/render diagnostics, not proof projection rows
+NexusEditorEnvironment exposes useful command reachability, not proof observations
+editor loop smoke proves bridge access, not render/grass/action/objective consumption
 ```
 
-## Validation gaps
+## Do not solve first
 
 ```txt
-npm run check exists and is useful
-npm run check includes headless editor smokes
-npm run check does not include render-consumption ledger rows
-npm run check does not include grass-consumption rows
-npm run check does not include action-result fixture rows
-npm run check does not include objective-progress rows
-npm run check does not include headless editor proof ledger rows
-central ledger sync is still documentation-only
-```
-
-## Explicit deferrals
-
-```txt
-visual fidelity pass
+visual fidelity
 renderer replacement
 external CDN migration
+shared-kit promotion
 new meadow content
 grass art tuning
-camera/control wiring
-shared-kit promotion
-browser input wiring before DOM-free action rows
-editor command expansion before source-backed observation rows
+camera/control rewiring
+editor command expansion
+```
+
+## Current ledge
+
+```txt
+IntoTheMeadow GameHost Proof Row Ledger Refresh + Headless Editor Fixture Gate
 ```

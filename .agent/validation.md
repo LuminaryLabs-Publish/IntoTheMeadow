@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T00-09-51-04-00`
+**Updated:** `2026-07-10T01-38-16-04-00`
 
 ## Validation performed this pass
 
@@ -16,7 +16,8 @@ npm install: not run
 npm run check: not run
 npm test: not run
 browser smoke: not run
-DOM-free fixture: not run because render/action fixture files do not exist yet
+DOM-free render/action fixture: not run because proof files do not exist yet
+headless editor smoke: not run in this pass
 pushed to main: yes
 central ledger updated: yes
 ```
@@ -28,17 +29,12 @@ From `package.json`:
 ```txt
 npm run check
 npm test
+npm run editor:smoke
+npm run editor:loop
+npm run editor:browser
 ```
 
-`npm run check` currently runs:
-
-```txt
-node tests/static-smoke.mjs
-node tests/dsk-registry-smoke.mjs
-node tests/render-plan-smoke.mjs
-node tests/renderer-v2-smoke.mjs
-node tests/deterministic-scene-smoke.mjs
-```
+`npm run check` currently covers static, DSK registry, render plan, renderer v2, deterministic scene, and headless editor environment/command/loop smoke scripts. That is useful reachability coverage, but it is not yet proof-row coverage.
 
 ## Required next validation commands
 
@@ -48,6 +44,7 @@ After the next source slice exists, add and run:
 node tests/render-consumption-ledger-smoke.mjs
 node tests/grass-consumption-ledger-smoke.mjs
 node tests/action-result-fixture-smoke.mjs
+node tests/headless-editor-proof-ledger-smoke.mjs
 npm run check
 ```
 
@@ -66,4 +63,11 @@ inspect focal tree row
 missing target row
 unknown action row
 GameHost legacy shape preserved row
+GameHost proof projection row
+headless editor command proof row
+headless editor loop proof row
 ```
+
+## Validation warning
+
+Do not treat a passing browser route or editor bridge smoke as proof that renderer descriptors, grass descriptors, objectives, or actions were consumed correctly. The next gate needs serializable rows that can be compared without the DOM.

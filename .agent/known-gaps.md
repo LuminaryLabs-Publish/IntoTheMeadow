@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T01-38-16-04-00`
+**Updated:** `2026-07-10T03-01-42-04-00`
 
 ## Selection gap handled
 
@@ -20,11 +20,11 @@ central tracking is refreshed by this pass.
 ```txt
 renderer v2 returns aggregate readback, not per-descriptor proof rows.
 postProcess descriptors are emitted, but renderer snapshot only reports postProcessMode inline-cel-fog.
-primitiveFallbackCount is visible, but not tied back to descriptor ids.
+primitiveFallbackCount is visible, but not tied back to descriptor ids or fallback classes.
 descriptorCounts are visible, but not classified as consumed / ignored / unsupported / fallback.
 renderer.getSnapshot output is not normalized into a source-owned ledger.
 GameHost exposes render snapshots, but not render proof rows.
-headless editor smokes do not yet assert descriptor consumption rows.
+headless editor smokes can read renderer data but do not yet assert descriptor consumption rows.
 ```
 
 ## Grass proof gaps
@@ -58,6 +58,7 @@ no editor command row is tied to objective/action proof.
 headless editor smoke exists.
 headless editor proof ledger does not exist.
 editor observation rows are not tied to render proof rows.
+editor observation rows are not tied to grass proof rows.
 editor observation rows are not tied to action/objective rows.
 GameHost has no additive proof projection for editor observations.
 ```
@@ -70,6 +71,7 @@ npm run check includes headless editor smokes.
 npm run check does not include render-consumption ledger rows.
 npm run check does not include grass-consumption rows.
 npm run check does not include action-result fixture rows.
+npm run check does not include objective-progress rows.
 npm run check does not include headless editor proof ledger rows.
 central ledger sync is still documentation-only.
 ```
@@ -85,4 +87,5 @@ grass art tuning
 camera/control wiring
 shared-kit promotion
 browser input wiring before DOM-free action rows
+editor command expansion before source-backed observation rows
 ```

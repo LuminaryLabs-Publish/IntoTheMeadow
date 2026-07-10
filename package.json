@@ -1,12 +1,22 @@
 {
   "name": "into-the-meadow",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "private": true,
   "type": "module",
-  "description": "DSK-composed meadow exploration game with a persistent v2 render contract.",
+  "description": "DSK-composed meadow exploration game operated through the NexusEngine Headless Editor Runtime.",
   "scripts": {
-    "check": "node tests/static-smoke.mjs && node tests/dsk-registry-smoke.mjs && node tests/render-plan-smoke.mjs && node tests/renderer-v2-smoke.mjs && node tests/deterministic-scene-smoke.mjs",
-    "test": "npm run check"
+    "check": "node tests/static-smoke.mjs && node tests/dsk-registry-smoke.mjs && node tests/render-plan-smoke.mjs && node tests/renderer-v2-smoke.mjs && node tests/deterministic-scene-smoke.mjs && node tests/headless-editor-environment-smoke.mjs && node tests/headless-editor-command-smoke.mjs && node tests/headless-editor-loop-smoke.mjs",
+    "test": "npm run check",
+    "editor": "node scripts/nexus-editor.mjs",
+    "editor:status": "node scripts/nexus-editor.mjs status",
+    "editor:inspect": "node scripts/nexus-editor.mjs inspect scene",
+    "editor:capture": "node scripts/nexus-editor.mjs run .editor/scenarios/meadow-baseline.json",
+    "editor:loop": "node scripts/run-meadow-visual-loop.mjs",
+    "editor:browser": "node scripts/run-browser-observation.mjs",
+    "editor:smoke": "node tests/headless-editor-environment-smoke.mjs && node tests/headless-editor-command-smoke.mjs && node tests/headless-editor-loop-smoke.mjs"
+  },
+  "devDependencies": {
+    "nexusengine": "github:LuminaryLabs-Dev/NexusEngine#ea2d65139eab8a9b68fd9e0b33d7bb43fe9ebd35"
   },
   "license": "UNLICENSED"
 }

@@ -2,13 +2,13 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-10T10-49-23-04-00`
+**Audit timestamp:** `2026-07-10T12-19-05-04-00`
 
 ## Summary
 
 `IntoTheMeadow` is a static DSK-composed meadow route with a local WebGL renderer v2, aggregate `GameHost` diagnostics, and a Nexus headless editor bridge.
 
-This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: additive source-owned rows that connect render descriptors, grass descriptors, objective/action outcomes, `GameHost` projection, and headless editor observations.
+This pass refreshed repo-local `.agent` docs and central tracking around the next proof cut: additive attribution rows that connect render descriptors, grass descriptors, objective/action outcomes, `GameHost` projection, and headless editor observations.
 
 Runtime source was not changed.
 
@@ -70,16 +70,17 @@ grass-source-render-parity-next
 action-result-proof-next
 objective-progress-proof-next
 headless-editor-proof-row-next
+consumer-attribution-ledger-next
 ```
 
 ## Main finding
 
-The route has rich descriptors and aggregate readback, but not consumer proof-row readback.
+The route has rich descriptors and aggregate readback, but not consumer attribution proof-row readback.
 
 `advanceGameState()` still only increments `frame` and `lastTick`. `GameHost` and `NexusEditorEnvironment` expose useful aggregate state, render, scene, and editor snapshots, but not source-owned rows that prove descriptor consumption, fallback, action, objective, or editor observation outcomes.
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow GameHost Proof Row Consumer Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Consumer Proof Attribution Ledger Refresh + Headless Editor Fixture Gate
 ```

@@ -12,6 +12,15 @@ function safePath(root, path = "") {
   return target;
 }
 
+function toEditorSafeValue(value) {
+  if (value === undefined) return null;
+  return JSON.parse(JSON.stringify(value, (_key, current) => {
+    if (typeof current === "function") return undefined;
+    if (typeof current === "bigint") return current.toString();
+    return current;
+  }));
+}
+
 function escapeXml(value) {
   return String(value).replace(/[&<>"']/g, (character) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&apos;" }[character]));
 }
@@ -99,6 +108,10 @@ export async function createEnvironment(options = {}) {
     return { rawPlan, plan, mesh, metrics };
   }
 
+  function inspectablePlan() {
+    return toEditorSafeValue(build().plan);
+  }
+
   async function capture({ label = "capture", width = 1200, height = 675 } = {}) {
     const current = build();
     const captureId = `${label}-${current.plan.contract.topologyKey}`;
@@ -144,15 +157,15 @@ export async function createEnvironment(options = {}) {
       { id: "runtime.getSnapshot", domain: "runtime", execute: () => ({ data: game.getSnapshot() }) },
       { id: "runtime.tick", domain: "runtime", execute: ({ dt = 1 / 60, ticks = 1 } = {}) => { for (let index = 0; index < Number(ticks); index += 1) { time += Number(dt); game.tick({ dt, time }); } return { data: { time, state: game.getState() } }; } },
       { id: "runtime.reset", domain: "runtime", execute: () => { time = 0; enhancer.invalidate(); return { data: game.reset() }; } },
-      { id: "scene.getRenderPlan", domain: "scene", execute: () => ({ data: build().plan }) },
+      { id: "scene.getRenderPlan", domain: "scene", execute: () => ({ data: inspectablePlan() }) },
       { id: "scene.getStatistics", domain: "scene", execute: () => { const current = build(); return { data: { stats: current.plan.stats, metrics: current.metrics } }; } },
-      { id: "scene.inspect", domain: "scene", execute: ({ target = "scene" } = {}) => { const current = build(); return { data: target === "scene" ? current.plan : { target, descriptors: current.plan.contract?.descriptorCounts } }; } },
+      { id: "scene.inspect", domain: "scene", execute: ({ target = "scene" } = {}) => { const current = build(); return { data: target === "scene" ? toEditorSafeValue(current.plan) : { target, descriptors: toEditorSafeValue(current.plan.contract?.descriptorCounts) } }; } },
       { id: "scene.listDescriptors", domain: "scene", execute: () => { const plan = build().plan; return { data: { fields: Object.keys(plan.fields ?? {}), assets: Object.keys(plan.assets ?? {}), effects: Object.keys(plan.effects ?? {}) } }; } },
       { id: "renderer.getSnapshot", domain: "renderer", execute: () => { const current = build(); return { data: { mesh: { vertexCount: current.mesh.vertexCount, triangleCount: current.mesh.triangleCount, primitiveFallbackCount: current.mesh.primitiveFallbackCount }, metrics: current.metrics } }; } },
       { id: "renderer.capture", domain: "renderer", execute: capture },
       { id: "renderer.getErrors", domain: "renderer", execute: () => ({ data: { errors: [], observations: build().metrics.observations } }) },
       { id: "renderer.compare", domain: "renderer", execute: () => ({ data: { previous: lastCapture, current: build().metrics, changed: Boolean(lastCapture) } }) },
-      { id: "camera.get", domain: "camera", execute: () => ({ data: build().plan.style?.camera ?? null }) },
+      { id: "camera.get", domain: "camera", execute: () => ({ data: toEditorSafeValue(build().plan.style?.camera ?? null) }) },
       { id: "browser.getViewport", domain: "browser", execute: () => ({ data: { width: 1200, height: 675, kind: "headless-observation" } }) },
       { id: "browser.getErrors", domain: "browser", execute: () => ({ data: { errors: [], note: "Real browser errors are exposed by window.NexusEditorEnvironment when a browser driver is connected." } }) },
       { id: "workspace.list", domain: "workspace", execute: async ({ path = "." } = {}) => ({ data: await readdir(safePath(root, path)) }) },

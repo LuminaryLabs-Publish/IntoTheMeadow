@@ -13,6 +13,14 @@ const requiredFiles = [
   "src/render-contract/meadow-render-plan-v2.js",
   "src/renderers/meadow-mesh-builder-v2.js",
   "src/renderers/meadow-webgl-renderer-v2.js",
+  "src/editor/install-editor-bridge.js",
+  "src/editor/meadow-visual-metrics.js",
+  "scripts/into-the-meadow-environment.mjs",
+  "scripts/nexus-editor.mjs",
+  "scripts/run-meadow-visual-loop.mjs",
+  "scripts/run-browser-observation.mjs",
+  ".editor/environment.json",
+  ".editor/scenarios/meadow-baseline.json",
   "src/dsks/index.js"
 ];
 
@@ -25,6 +33,15 @@ if (!index.includes("Game") && !index.includes("scene")) throw new Error("index.
 
 const webHost = readFileSync("src/hosts/web-host.js", "utf8");
 if (!webHost.includes("createMeadowWebglRendererV2")) throw new Error("web host must use the local renderer v2");
+if (!webHost.includes("installIntoTheMeadowEditorBridge")) throw new Error("web host must install the editor environment bridge");
 if (webHost.includes("createMeadowWebglRenderKit")) throw new Error("web host must not use the primitive external renderer");
+
+const packageJson = JSON.parse(readFileSync("package.json", "utf8"));
+for (const script of ["editor", "editor:loop", "editor:browser", "editor:smoke"]) {
+  if (!packageJson.scripts?.[script]) throw new Error(`package.json missing ${script}`);
+}
+if (!String(packageJson.devDependencies?.nexusengine ?? "").includes("LuminaryLabs-Dev/NexusEngine")) {
+  throw new Error("NexusEngine must be pinned as the editor runtime dependency");
+}
 
 console.log(`static smoke ok · files:${requiredFiles.length}`);

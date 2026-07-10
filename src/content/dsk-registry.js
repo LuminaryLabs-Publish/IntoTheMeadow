@@ -33,6 +33,7 @@ export const LOCAL_DSK_IDS = Object.freeze([
   "meadow-diagnostics-dsk",
   "meadow-performance-dsk",
   "meadow-render-host-dsk",
+  "meadow-webgl-renderer-v2-kit",
   "post-process-stack-dsk",
   "render-target-kit",
   "sobel-outline-pass-kit",
@@ -49,6 +50,7 @@ export const REQUIRED_V01_DSK_IDS = Object.freeze([
   "game-composition-dsk",
   "meadow-area-bridge-dsk",
   "meadow-render-host-dsk",
+  "meadow-webgl-renderer-v2-kit",
   "meadow-diagnostics-dsk",
   "meadow-performance-dsk",
   "grass-density-texture-kit",
@@ -60,4 +62,4 @@ export const REQUIRED_V01_DSK_IDS = Object.freeze([
   "static-pages-deploy-dsk"
 ]);
 
-export const EXTERNAL_DSK_IDS = Object.freeze(["meadow-area-kit", "meadow-webgl-render-kit"]);
+export const EXTERNAL_DSK_IDS = Object.freeze(["meadow-area-kit"]);

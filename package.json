@@ -1,11 +1,11 @@
 {
   "name": "into-the-meadow",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "description": "DSK-composed meadow exploration game powered by reusable Nexus meadow kits.",
+  "description": "DSK-composed meadow exploration game with a persistent v2 render contract.",
   "scripts": {
-    "check": "node tests/static-smoke.mjs && node tests/dsk-registry-smoke.mjs && node tests/render-plan-smoke.mjs && node tests/deterministic-scene-smoke.mjs",
+    "check": "node tests/static-smoke.mjs && node tests/dsk-registry-smoke.mjs && node tests/render-plan-smoke.mjs && node tests/renderer-v2-smoke.mjs && node tests/deterministic-scene-smoke.mjs",
     "test": "npm run check"
   },
   "license": "UNLICENSED"

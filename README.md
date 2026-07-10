@@ -2,40 +2,50 @@
 
 `IntoTheMeadow` is a publishable DSK-composed meadow exploration game.
 
-The repo is intentionally split as a game/deploy repo, not a generic kit foundry. It consumes reusable meadow infrastructure from `NexusRealtime-ProtoKits` and owns the game-specific composition, story, progression, content, validation, and deployment surface.
-
 ## Architecture rule
 
 ```txt
-IntoTheMeadow owns the game.
-ProtoKits own reusable meadow systems.
-NexusEngine owns runtime/DSK contracts.
+IntoTheMeadow owns the game-specific composition and visual archetypes.
+NexusEngine-ProtoKits owns reusable meadow generation.
+NexusEngine owns runtime and DSK contracts.
+Renderers consume validated descriptors; they do not invent fallback gameplay objects.
 ```
 
-## Current milestone
+## Current milestone: render contract v2
 
-This first implementation creates the v0.1 DSK scaffold and browser proof:
-
-- root `index.html` route
-- game manifest
-- DSK registry
-- local DSK descriptors
-- meadow area bridge
-- render host bridge
-- diagnostics validation
-- static tests
-- GitHub Pages workflow
-
-## External kits
-
-The launch route imports:
+The live route now uses a local renderer cutover instead of the old external primitive renderer:
 
 ```txt
-https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-area-kit/index.js
-https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusRealtime-ProtoKits@main/protokits/meadow-webgl-render-kit/index.js
+pinned meadow-area-kit
+→ cached deterministic source plan
+→ cached render-plan enhancer
+→ meadow-render-plan/v2
+→ persistent local WebGL renderer
 ```
 
-## Local scripts
+Implemented in v0.2:
+
+- one canonical `meadow-render-plan/v2` contract
+- texture-driven grass clump batches consumed by the renderer
+- source flowers converted into clustered wildflower descriptors
+- irregular rock archetypes rather than ellipsoid fallbacks
+- branch-skeleton hero tree with leaf-card clusters
+- distant tree bands with low-contrast cards
+- decorative mushrooms removed from the arrival scene
+- selective outlines only on the hero tree and rocks
+- static source-plan, enhancement, and GPU-buffer caching
+- explicit validation for unsupported descriptor types
+- DOM-free renderer mesh smoke coverage
+
+## External kit
+
+The game imports only the deterministic meadow-area generator, pinned to a reviewed commit:
+
+```txt
+https://cdn.jsdelivr.net/gh/LuminaryLabs-Agents/NexusEngine-ProtoKits@11d245913ba4d30f3ce950eb5a17e1cc6e4aa1f5/protokits/meadow-area-kit/index.js
+```
+
+## Validation
 
 ```bash
 npm run check
@@ -49,10 +59,15 @@ The browser host exposes:
 window.GameHost.getState()
 window.GameHost.getSnapshot()
 window.GameHost.getDiagnostics()
+window.GameHost.getRenderPlan()
+window.GameHost.getRenderSnapshot()
+window.GameHost.getRenderEnhancerSnapshot()
 ```
+
+Use `?debug` on the live route to display render-contract and cache diagnostics.
 
 ## Next milestones
 
-1. Add explorable first-person player/camera/input DSKs.
-2. Add interaction, objective, and story DSK runtime behavior.
-3. Promote grass patches, shader wind, and terrain texturing into reusable ProtoKits.
+1. Validate the visual result across desktop and mobile WebGL implementations.
+2. Move reusable portions of renderer v2 upstream after the game-specific contract stabilizes.
+3. Add first-person player, camera, input, interaction, story, and objective runtime behavior.

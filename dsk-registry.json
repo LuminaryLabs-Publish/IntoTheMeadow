@@ -1,8 +1,8 @@
 {
   "id": "into-the-meadow-dsk-registry",
-  "version": "0.1.2",
-  "rule": "Game-specific DSKs live here; reusable meadow infrastructure stays in ProtoKits.",
-  "external": ["meadow-area-kit", "meadow-webgl-render-kit"],
+  "version": "0.2.0",
+  "rule": "Game-specific composition and renderer adapters live here; reusable meadow generation remains in ProtoKits.",
+  "external": ["meadow-area-kit"],
   "local": [
     "into-the-meadow-game-dsk",
     "web-host-dsk",
@@ -38,6 +38,7 @@
     "meadow-diagnostics-dsk",
     "meadow-performance-dsk",
     "meadow-render-host-dsk",
+    "meadow-webgl-renderer-v2-kit",
     "post-process-stack-dsk",
     "render-target-kit",
     "sobel-outline-pass-kit",
@@ -53,6 +54,7 @@
     "game-composition-dsk",
     "meadow-area-bridge-dsk",
     "meadow-render-host-dsk",
+    "meadow-webgl-renderer-v2-kit",
     "meadow-diagnostics-dsk",
     "meadow-performance-dsk",
     "grass-density-texture-kit",
@@ -64,8 +66,8 @@
     "static-pages-deploy-dsk"
   ],
   "phases": {
-    "v0.1": "bootable DSK scaffold, browser meadow proof, post-process pass graph, and texture-driven grass descriptors",
-    "v0.2": "first-person exploration, camera, input, interaction, story, objectives",
-    "v0.3": "grass renderer consumes static clump batches with instancing and shader wind"
+    "v0.1": "bootable DSK scaffold and browser meadow proof",
+    "v0.2": "canonical render-plan v2, clustered asset descriptors, persistent mesh buffers, and no primitive fallback",
+    "v0.3": "first-person exploration, input, interaction, story, and objectives"
   }
 }

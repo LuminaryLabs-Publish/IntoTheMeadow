@@ -2,12 +2,12 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T10-49-23-04-00`
+**Updated:** `2026-07-10T12-19-05-04-00`
 
 ## Current next build slice
 
 ```txt
-IntoTheMeadow GameHost Proof Row Consumer Ledger Refresh + Headless Editor Fixture Gate
+IntoTheMeadow Consumer Proof Attribution Ledger Refresh + Headless Editor Fixture Gate
 ```
 
 ## Build checklist
@@ -19,6 +19,7 @@ IntoTheMeadow GameHost Proof Row Consumer Ledger Refresh + Headless Editor Fixtu
 [ ] Add render consumption ledger rows with consumed / ignored / unsupported / fallback status.
 [ ] Tie primitiveFallbackCount back to descriptor ids or fallback classes.
 [ ] Add grass consumption rows for density texture, static batches, patches, draw groups, shader wind, LOD, and debug summaries.
+[ ] Add source-to-consumer attribution ids across render, grass, gameplay, GameHost, and editor observations.
 [ ] Add additive GameHost render/action/headless proof projection without replacing existing getState/getSnapshot/getDiagnostics.
 [ ] Add ActionFrame contract for path-progress and inspect actions.
 [ ] Add target/action preflight helper for arrival-path and focal-tree.

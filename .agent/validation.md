@@ -23,7 +23,7 @@ headless editor smoke: not run
 mesh contribution fixtures: not run because they do not exist yet
 registry truth fixture: not run because it does not exist yet
 pushed to main: yes
-central ledger updated: pending until the final central sync in this pass
+central ledger updated: yes
 ```
 
 ## Source inspection completed

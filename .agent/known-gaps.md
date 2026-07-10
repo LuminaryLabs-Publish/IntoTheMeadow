@@ -2,130 +2,120 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T16-51-37-04-00`
+**Updated:** `2026-07-10T18-22-01-04-00`
 
 ## Selection state
 
 ```txt
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
-9 eligible repositories centrally tracked
-root .agent state present
+9 eligible repositories centrally tracked with root .agent state
 IntoTheMeadow selected as oldest eligible documented fallback
 ```
 
-## External source provenance gaps
+## Interaction authority gaps
 
 ```txt
-GAME_MANIFEST pins meadow-area-kit to a repository commit but runtime readback drops the URL and commit
-loadExternalKits returns only createMeadowAreaKit
-MEADOW_AREA_KIT_VERSION is not captured by the host
-installDsks marks the external kit loaded from function presence only
-no source-mode row distinguishes external, fallback, or failed startup
-no plan fingerprint links source snapshot to enhanced plan, mesh, renderer, GameHost, or editor capture
-no bounded source-load result journal exists
+web-host submits only time and a fixed dt to game.tick
+advanceGameState ignores movement and action inputs
+no browser keyboard/pointer input adapter reaches game state
+no typed gameplay command contract exists
+no target lookup or range/precondition check exists
+no accepted/rejected/no-op result contract exists
+no ordered command/result/event journal exists
 ```
 
-## Fallback and recovery gaps
+## Objective authority gaps
 
 ```txt
-startWebHost hard-fails before game creation when the external URL, import, or export fails
-the local fallback is reachable only when another caller omits externalKits
-fallback validate always passes and labels itself representative
-no fixture proves fallback output satisfies the same consumer contract as the external output
-external and fallback plans differ in path normalization, grass population, mushroom descriptors, atmosphere detail, version, counts, and validation semantics
-no policy declares required parity, permitted degradation, or user-visible recovery behavior
+walk-the-path and inspect-tree are static descriptors
+arrival-path and focal-tree are static target descriptors
+player.pathProgress never changes
+no inspected-target state exists
+completedObjectiveIds never changes
+activeObjectiveId never advances
+no reducer links requiredAction to completion rules
+no duplicate-action policy exists
 ```
 
-## Source-time authority gaps
+## Host and editor proof gaps
 
 ```txt
-the source plan is created once at time 0
-getRenderPlan for later frames only overlays the time field
-external getRenderPlan is not re-queried after startup
-source-owned time-dependent behavior would be silently bypassed
-no fixture proves static topology with time overlay is an intentional contract
+GameHost exposes the raw game object instead of a bounded gameplay command surface
+GameHost has no gameplay observation or journal method
+editor bridge supports runtime.tick/reset but not gameplay.dispatch
+editor command completion proves invocation only
+no frame/sequence/state fingerprint links a command to progression and render readback
 ```
 
-## Mesh contribution gaps
+## Timing gaps
 
 ```txt
-buildMeadowMeshData has no per-stage contribution counters
-source descriptor ids are not retained in mesh readback
-attempted, consumed, skipped, and unsupported counts are absent
-emitted vertex and triangle counts are not attributed by descriptor family
-renderPlan.contract.descriptorCounts is copied into mesh.descriptorCounts
+web-host passes dt: 1/60 regardless of actual frame duration
+state frame count is render-loop iteration count rather than committed simulation step authority
+absolute requestAnimationFrame time and fixed dt use different clocks
+no pause/resume or visibility-gap policy is documented
+no fixture proves equal command sequences remain stable across frame cadence
+```
+
+## External source provenance and fallback gaps
+
+```txt
+runtime drops external source URL, commit, and exported version after import
+install status is inferred from function presence
+browser startup hard-fails before local fallback selection
+fallback validation claims representative without parity evidence
+external/fallback descriptor differences are not classified
+source plan is cached at time 0 and later receives only a time-field overlay
+```
+
+## Mesh and registry truth gaps
+
+```txt
+mesh builder lacks per-stage contribution rows
+descriptor ids are not retained in renderer readback
+attempted/consumed/skipped/unsupported/fallback counts are absent
 primitiveFallbackCount is hard-coded to 0
-unsupported/fallback behavior cannot be proven from the returned snapshot
+registry active-v0.1 status is list membership, not implementation proof
 ```
 
 ## Grass proof gaps
 
 ```txt
-grass density texture, static batches, patches, and draw groups are created and validated before rendering
-the mesh builder iterates rendered grass descriptors without contribution rows
-source patch/draw-group ids are not visible in renderer readback
-estimatedGrassInstances and estimatedGrassCards are expectations, not measured mesh output
-external source grass blades and local enhanced grass groups have no shared provenance row
-```
-
-## Registry truth gaps
-
-```txt
-dsk-registry.json declares 44 local kits and one external kit
-src/dsks/index.js marks requiredForV01 entries active-v0.1 by list membership
-active descriptor status is not the same as an implementation-backed module
-external status loaded/deferred does not capture version, commit, validation, or selected mode
-no fixture reconciles registry ids, descriptor status, implementation modules, external provenance, and runtime consumers
-```
-
-## GameHost/editor readback gaps
-
-```txt
-GameHost forwards aggregate render and enhancer snapshots only
-NexusEditorEnvironment renderer.getSnapshot forwards the same aggregate snapshot
-renderer.capture adds a data URL but no source provenance or descriptor-consumption rows
-editor command completion proves invocation, not semantic consumption
-no stable observation row links source load -> source plan -> enhanced plan -> mesh -> render snapshot
-```
-
-## Gameplay gaps
-
-```txt
-advanceGameState only updates frame and lastTick
-objectives and interaction targets remain content descriptors rather than an active player loop
-no movement, target preflight, action result, or objective mutation runtime exists yet
-these remain later slices and should not be mixed into source-provenance proof
+grass expectations are not reconciled with measured emitted geometry
+source and enhanced grass ids do not survive into render observations
+patch/draw-group contribution is not attributed
+external and fallback grass populations have no shared parity row
 ```
 
 ## Validation gaps
 
 ```txt
-existing static smoke checks import wiring but not source metadata
-existing deterministic smoke does not compare external and fallback output
-no fixture simulates missing URL, rejected import, missing export, invalid plan, or fallback selection
-no fixture asserts acceptable parity and declared degradation between source modes
-no fixture proves static-source caching is compatible with source time semantics
-no fixture verifies descriptor counts against measured emitted geometry
+no interaction command fixture
+no target preflight fixture
+no objective progression fixture
+no duplicate-command fixture
+no same-command replay fingerprint fixture
+no source provenance/fallback parity fixtures
+no mesh contribution or registry truth fixtures
 ```
 
 ## Do not solve first
 
 ```txt
 visual fidelity or asset expansion
-camera and movement
-new meadow content
 renderer replacement or WebGPU cutover
-external CDN migration
-shared-kit promotion
+new meadow content
 postprocess expansion
-editor command expansion
+shared-kit promotion
+CDN migration
+audio/save/UI expansion before command authority
 ```
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow External Meadow Source Provenance + Fallback Parity Fixture Gate
+IntoTheMeadow Interaction Command Authority + Objective Progress Fixture Gate
 ```
 
-Mesh contribution and registry truth remain required companion gates.
+External-source provenance/fallback parity, mesh contribution, and registry truth remain required companion gates.

@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T18-22-01-04-00`
+**Updated:** `2026-07-10T19-48-09-04-00`
 
 ## Validation performed this pass
 
@@ -12,7 +12,12 @@ This was a documentation-only breakdown using authenticated GitHub reads and dir
 full accessible Publish inventory reviewed: yes
 central ledger comparison performed: yes
 selected repository root .agent reviewed: yes
-runtime interaction/state/host/editor sources inspected: yes
+browser boot and host lifecycle sources inspected: yes
+game construction and reset sources inspected: yes
+GameHost global exposure inspected: yes
+editor listener/global cleanup inspected: yes
+renderer disposal inspected: yes
+plan-enhancer invalidation inspected: yes
 runtime source changed: no
 dependencies changed: no
 package scripts changed: no
@@ -23,26 +28,24 @@ npm install: not run
 npm run check: not run
 npm test: not run
 browser smoke: not run
+WebGL smoke: not run
 headless editor smoke: not run
-interaction command fixture: not run because it does not exist yet
-objective progress fixture: not run because it does not exist yet
-command replay fixture: not run because it does not exist yet
-pushed to main: yes
-central ledger updated: yes
-central change log updated: yes
+lifecycle fixtures: not run because they do not exist yet
 ```
 
 ## Source inspection completed
 
 ```txt
 package.json
+index.html
+src/boot/boot-game.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
-src/game/game-state.js
-src/content/interaction-targets/arrival-targets.js
-src/content/objectives/arrival-objectives.js
+src/game/enhance-render-plan.js
 src/boot/expose-game-host.js
 src/editor/install-editor-bridge.js
+src/renderers/meadow-webgl-renderer-v2-compatible.js
+src/renderers/meadow-webgl-renderer-v2.js
 .agent current audit set
 central repo ledger and latest AetherVale selection sequence
 ```
@@ -57,19 +60,17 @@ npm run editor:loop
 npm run editor:browser
 ```
 
-Existing checks cover static structure, DSK registry, render plan, renderer v2, deterministic scene reachability, and editor environment/command/loop reachability. They do not prove gameplay command dispatch, target preflight, objective mutation, result retention, duplicate behavior, or replay fingerprints.
+Existing checks cover static structure, DSK registry, render-plan behavior, renderer v2, deterministic-scene reachability, and editor environment/command/loop reachability. They do not prove lifecycle state, RAF uniqueness, stop/restart behavior, cleanup ordering, global ownership, fatal rollback, or disposal idempotency.
 
 ## Required next checks
 
 ```txt
-node tests/meadow-interaction-command-smoke.mjs
-node tests/meadow-target-preflight-smoke.mjs
-node tests/meadow-objective-progress-smoke.mjs
-node tests/meadow-command-replay-smoke.mjs
-node tests/meadow-source-provenance-smoke.mjs
-node tests/meadow-source-fallback-parity-smoke.mjs
-node tests/mesh-contribution-ledger-smoke.mjs
-node tests/dsk-registry-truth-smoke.mjs
+node tests/runtime-session-lifecycle-smoke.mjs
+node tests/runtime-stop-restart-smoke.mjs
+node tests/runtime-dispose-idempotency-smoke.mjs
+node tests/runtime-fatal-rollback-smoke.mjs
+node tests/editor-listener-cleanup-smoke.mjs
+node tests/global-exposure-lease-smoke.mjs
 npm run check
 npm test
 npm run editor:smoke
@@ -78,20 +79,21 @@ npm run editor:smoke
 ## Required fixture assertions
 
 ```txt
-move/path-progress commands use stable status and reason codes
-unknown target and unsupported action reject without mutation
-out-of-range inspect rejects without mutation
-successful path progress updates player and completes walk-the-path at 0.35
-successful focal-tree inspection records inspected state and completes inspect-tree
-duplicate inspect is an explicit no-op or rejection
-command sequence and frame ids are ordered and bounded
-reset restores canonical initial progression
-same initial state plus same commands produces identical results and fingerprint
-GameHost and editor return the same gameplay observation rows
-renderer behavior and topology remain unchanged by gameplay authority work
-source provenance, fallback parity, mesh contribution, and registry truth remain additive
+one session owns at most one RAF
+stop cancels RAF and blocks tick/render submission
+restart cancels the old RAF before scheduling one new RAF
+stop/start race cannot fork recursive loops
+dispose calls renderer and editor cleanup exactly once
+dispose invalidates enhancer cache and releases retained references
+session-owned GameHost and NexusEditorEnvironment values are released safely
+foreign/replaced global values are not removed
+fatal construction and first-frame errors roll back partial resources
+second stop/dispose returns explicit no-op results
+start after dispose rejects with a stable reason
+GameHost and editor lifecycle journals agree
+normal render topology, vertex counts, and captures remain unchanged
 ```
 
 ## Validation warning
 
-The current route can render and report frames while never executing its authored gameplay actions. A frame counter and editor `runtime.tick` capability are not evidence of an interaction loop. The next gate must prove command acceptance/rejection, state mutation, objective completion, replay stability, and bounded readback without depending on DOM input.
+The existence of `stop()` and lower-level `dispose()` methods is not proof of lifecycle authority. The boot path currently discards the host controller, RAF ownership is not retained, and the host never composes the existing cleanup methods. The next gate must prove lifecycle state and resource/global cleanup through deterministic results and fixtures.

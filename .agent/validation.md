@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T01-38-16-04-00`
+**Updated:** `2026-07-10T03-01-42-04-00`
 
 ## Validation performed this pass
 
@@ -46,6 +46,8 @@ node tests/grass-consumption-ledger-smoke.mjs
 node tests/action-result-fixture-smoke.mjs
 node tests/headless-editor-proof-ledger-smoke.mjs
 npm run check
+npm test
+npm run editor:smoke
 ```
 
 ## Required fixture coverage
@@ -61,6 +63,7 @@ path progress below threshold row
 path progress complete objective row
 inspect focal tree row
 missing target row
+wrong action for target row
 unknown action row
 GameHost legacy shape preserved row
 GameHost proof projection row
@@ -70,4 +73,4 @@ headless editor loop proof row
 
 ## Validation warning
 
-Do not treat a passing browser route or editor bridge smoke as proof that renderer descriptors, grass descriptors, objectives, or actions were consumed correctly. The next gate needs serializable rows that can be compared without the DOM.
+Do not treat a passing browser route or editor bridge smoke as proof that renderer descriptors, grass descriptors, objectives, actions, or editor observations were consumed correctly. The next gate needs serializable rows that can be compared without the DOM.

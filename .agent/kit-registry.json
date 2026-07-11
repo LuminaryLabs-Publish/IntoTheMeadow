@@ -1,22 +1,24 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-11T12-29-49-04-00",
-  "status": "headless-workspace-path-authority-audited",
-  "currentNextSlice": "IntoTheMeadow Headless Workspace Path Authority + Sibling-Prefix / Symlink / Rejected-Write No-Mutation Fixture Gate",
-  "prerequisiteSlices": [
+  "generatedAt": "2026-07-11T14-08-51-04-00",
+  "status": "interaction-objective-command-admission-completion-gate-audited",
+  "currentAuditedSlice": "IntoTheMeadow Interaction Command and Objective Authority + Path Progress / Tree Inspection / Completion Parity Fixture Gate",
+  "implementationPrerequisites": [
     "IntoTheMeadow Runtime Session Lifecycle Authority + Single-RAF / Global-Lease / Rollback Fixture Gate",
-    "IntoTheMeadow Host Capability Gateway + Raw Runtime Quarantine / Observation Isolation Fixture Gate"
+    "IntoTheMeadow Host Capability Gateway + Raw Runtime Quarantine / Observation Isolation Fixture Gate",
+    "IntoTheMeadow Headless Workspace Path Authority + Sibling-Prefix / Symlink / Rejected-Write No-Mutation Fixture Gate",
+    "IntoTheMeadow Runtime Step Admission and Clock Integrity + Finite / Monotonic / Work-Budget Fixture Gate",
+    "IntoTheMeadow Committed Frame Observation Authority + Atomic State / Plan / Render / Canvas Fixture Gate"
   ],
-  "followOnSlice": "IntoTheMeadow Runtime Step Admission and Clock Integrity + Finite / Monotonic / Work-Budget Fixture Gate",
-  "latestTracker": ".agent/trackers/2026-07-11T12-29-49-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-11T12-29-49-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-11T12-29-49-04-00-workspace-path-authority-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-11T12-29-49-04-00-capture-artifact-path-trust-gap.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-11T12-29-49-04-00-workspace-operation-admission-map.md",
-  "latestHeadlessEditorAudit": ".agent/headless-editor-audit/2026-07-11T12-29-49-04-00-workspace-containment-contract.md",
-  "latestWorkspaceSecurityAudit": ".agent/workspace-security-audit/2026-07-11T12-29-49-04-00-sibling-prefix-symlink-escape-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-11T12-29-49-04-00-workspace-path-fixture-gate.md",
+  "latestTracker": ".agent/trackers/2026-07-11T14-08-51-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-11T14-08-51-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-11T14-08-51-04-00-interaction-objective-authority-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-11T14-08-51-04-00-objective-state-visible-frame-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-11T14-08-51-04-00-declared-objective-inert-runtime-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-11T14-08-51-04-00-path-inspect-command-admission-map.md",
+  "latestObjectiveSystemAudit": ".agent/objective-system-audit/2026-07-11T14-08-51-04-00-target-progress-completion-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-11T14-08-51-04-00-interaction-objective-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
@@ -24,24 +26,27 @@
     "rootAgentStateCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "All eligible repositories were tracked and documented. IntoTheMeadow had the oldest eligible central-ledger timestamp at selection."
+    "reason": "AetherVale had a newer repo-local audit already in flight. IntoTheMeadow was the oldest fully aligned eligible repository and was selected to avoid duplicate concurrent work."
   },
   "census": {
     "externalDeclaredCount": 1,
     "localDeclaredCount": 43,
     "totalDeclaredCount": 44,
     "requiredV01LocalCount": 15,
-    "runtimeSourceBackedSurfaceCount": 24
+    "runtimeSourceBackedSurfaceCount": 24,
+    "authoredObjectiveCount": 2,
+    "authoredInteractionTargetCount": 2,
+    "runtimeInteractionCommandCapabilityCount": 0
   },
   "interactionLoop": [
     "browser boot and external provider loading",
     "game, renderer, enhancer and browser editor construction",
-    "browser RAF tick, plan enhancement and WebGL render",
-    "Node headless environment root and artifact-root construction",
-    "workspace or capture capability receives caller path",
-    "safePath resolves the target and applies raw string-prefix membership",
-    "filesystem list, read, write or artifact operation executes",
-    "no segment-aware or symlink-aware containment result is published"
+    "browser RAF calls game.tick with time and dt only",
+    "advanceGameState increments frame and stores lastTick only",
+    "authored path-progress and inspect definitions remain unchanged content",
+    "no browser or editor command resolves a canonical interaction target",
+    "no objective predicate, completion receipt or story transition executes",
+    "render and diagnostics publish no progression revision"
   ],
   "domainsInUse": [
     "browser shell and DOM boot",
@@ -54,8 +59,12 @@
     "browser editor capability routing and error observation",
     "Node headless editor runtime and workspace capabilities",
     "workspace root identity, path containment, symlink policy and I/O admission",
-    "artifact path construction and capture publication",
     "runtime step admission, clock policy and work budget",
+    "player state and authored movement profile",
+    "interaction-target definitions and target indexing",
+    "path-progress and inspection action semantics",
+    "objective definitions, progress ledgers and completion predicates",
+    "story beats and transition projection",
     "terrain, path, materials, grass, scatter, trees, wind and atmosphere",
     "render-plan enhancement, validation and topology identity",
     "performance, LOD and postprocess policy",
@@ -148,17 +157,14 @@
     "browser editor bridge",
     "Node headless-editor environment",
     "workspace list/read/write adapters",
-    "capture artifact writer"
+    "capture artifact writer",
+    "arrival objective definitions",
+    "arrival interaction-target definitions",
+    "frame-only game-state reducer"
   ],
   "workspacePathAuthority": {
     "parentDomain": "meadow-workspace-path-authority-domain",
-    "mainFinding": "The Node editor uses target.startsWith(root) after path.resolve. This is not segment-aware containment and does not verify symlink destinations, so sibling-prefix and symlink escapes can reach workspace or artifact filesystem operations.",
-    "existingOwnersToUpdate": [
-      "scripts/into-the-meadow-environment.mjs",
-      "into-the-meadow-game-dsk",
-      "meadow-diagnostics-dsk",
-      "NexusEngine core-headless-editor-kit"
-    ],
+    "mainFinding": "The Node editor uses target.startsWith(root) after path.resolve. This is not segment-aware containment and does not verify symlink destinations.",
     "plannedKits": [
       "workspace-root-identity-kit",
       "workspace-path-request-kit",
@@ -170,16 +176,51 @@
       "workspace-path-journal-kit",
       "headless-workspace-adapter-kit",
       "workspace-path-fixture-kit"
+    ]
+  },
+  "objectiveInteractionAuthority": {
+    "parentDomain": "meadow-interaction-objective-authority-domain",
+    "mainFinding": "The repository declares two objectives and two matching interaction targets, but browser and editor surfaces expose no interaction command. advanceGameState only increments frame and lastTick, so path progress, inspection, completion and story state remain inert.",
+    "existingOwnersToUpdate": [
+      "into-the-meadow-game-dsk",
+      "meadow-player-dsk",
+      "meadow-input-dsk",
+      "meadow-interaction-dsk",
+      "meadow-objective-dsk",
+      "meadow-story-dsk",
+      "web-host-dsk",
+      "meadow-diagnostics-dsk",
+      "browser editor adapter",
+      "Node headless editor adapter"
+    ],
+    "plannedKits": [
+      "interaction-command-kit",
+      "interaction-command-id-kit",
+      "interaction-admission-kit",
+      "canonical-interaction-target-index-kit",
+      "player-action-state-kit",
+      "path-progress-evaluator-kit",
+      "inspect-target-evaluator-kit",
+      "objective-definition-index-kit",
+      "objective-progress-ledger-kit",
+      "objective-completion-result-kit",
+      "story-beat-transition-kit",
+      "interaction-projection-kit",
+      "interaction-debug-observation-kit",
+      "interaction-command-journal-kit",
+      "interaction-objective-fixture-kit",
+      "browser-interaction-parity-smoke-kit"
     ],
     "requiredProof": [
-      "segment-aware descendant classification",
-      "realpath and symlink containment",
-      "nearest-existing-ancestor validation for writes",
-      "no mutation on rejection",
-      "workspace and artifact policy parity",
-      "relative public paths",
-      "typed session-correlated results",
-      "POSIX and Windows fixture coverage"
+      "path progress below and at threshold",
+      "canonical target lookup and unknown-target rejection",
+      "wrong-action rejection",
+      "tree inspection exactly once",
+      "duplicate no-mutation results",
+      "objective ordering and story transition",
+      "browser and editor ingress parity",
+      "reset and stale-epoch retirement",
+      "state, diagnostics and committed-frame revision parity"
     ]
   },
   "implementationOrder": [
@@ -190,16 +231,18 @@
     "Source Provider Authority",
     "Render Topology Identity Authority",
     "Committed Frame Observation Authority",
-    "Interaction Command Authority",
+    "Interaction Command and Objective Authority",
     "DSK Registry Consumption Proof"
   ],
   "validation": {
     "runtimeSourceChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
-    "workspacePathFixtureRun": false,
-    "symlinkFixtureRun": false,
-    "rejectedWriteFixtureRun": false,
-    "nextCommand": "npm run check after workspace path authority and fixtures are implemented and wired"
+    "interactionObjectiveFixtureRun": false,
+    "interactionIngressParityRun": false,
+    "resetRetirementFixtureRun": false,
+    "localCloneAttempted": true,
+    "localCloneResult": "failed: execution container could not resolve github.com",
+    "nextCommand": "npm run check after interaction/objective authority and fixtures are implemented and wired"
   }
 }

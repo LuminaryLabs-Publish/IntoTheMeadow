@@ -2,42 +2,40 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T10-50-14-04-00`
+**Updated:** `2026-07-11T12-29-49-04-00`
 
 ## Plan ledger
 
-**Goal:** separate completed source inspection from executable proof and define the exact fixture gate required before claiming that `GameHost` or the editor bridge is an authoritative control surface.
+**Goal:** separate completed source inspection from executable filesystem-containment proof and define the exact gate required before calling the Node editor workspace safe.
 
-- [x] Review the complete accessible Publish inventory.
+- [x] Review the full accessible Publish inventory.
 - [x] Compare every eligible repository with the central ledger.
-- [x] Verify root `.agent/START_HERE.md` coverage.
+- [x] Verify root `.agent` coverage.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Select only `IntoTheMeadow`.
-- [x] Read `AGENTS.md` and current `.agent` state.
-- [x] Inspect browser host construction and global exposure.
-- [x] Inspect `GameHost` properties and read methods.
-- [x] Inspect browser editor capability registration and invocation.
-- [x] Inspect direct tick, reset and source-plan rebuild paths.
-- [x] Inspect existing positive-path editor tests.
-- [x] Document host capability authority and required fixtures.
+- [x] Read root instructions and current audit state.
+- [x] Inspect Node editor root and artifact-root construction.
+- [x] Inspect workspace list/read/write callbacks.
+- [x] Inspect capture JSON/SVG paths.
+- [x] Inspect positive editor tests.
+- [x] Document workspace authority and fixture requirements.
 - [x] Change documentation only.
-- [ ] Execute runtime checks after implementation exists.
+- [ ] Execute fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-GameHost exposes raw game: yes
-GameHost exposes mutation methods indirectly: yes
-browser editor calls raw game.tick: yes
-browser editor calls raw game.reset: yes
-page scripts can bypass invoke: yes
-session-fenced host admission: no
-command ID and sequence: no
-typed semantic result: no
-capability lease revocation: no
-bounded command/result journal: no
-clone-safe observation revision: no
-host-command to render-commit correlation: no
+workspace helper uses resolve: yes
+workspace helper uses target.startsWith(root): yes
+segment-aware relative containment: no
+realpath containment: no
+symlink policy: no
+nearest-existing-ancestor write proof: no
+workspace root identity/revision: no
+operation ID and typed result: no
+read/list/write budgets: no
+bounded filesystem journal: no
+artifact pair transaction: no
 ```
 
 ## Existing proof
@@ -49,162 +47,114 @@ required files and host wiring exist
 DSK registry shape is valid
 fallback source plan can be generated
 render plan can be enhanced and validated
-CPU mesh is substantial
-positive headless editor capability names route
-runtime.tick can advance a positive test case
-headless capture can be produced
+CPU mesh metrics satisfy positive thresholds
+positive editor capabilities route
+positive runtime.tick test advances three frames
+headless capture writes two artifacts in the normal case
 ```
 
 Current checks do not prove:
 
 ```txt
-GameHost omits raw authority properties
-all mutations enter capability admission
-old host leases are inert after restart
-stale commands reject without mutation
-transport completion differs from domain acceptance
-duplicate command IDs do not repeat side effects
-read observations are isolated from runtime state
-journals are bounded
-browser and Node result schemas match
-accepted visible commands reach a correlated frame
+parent traversal rejection
+sibling-prefix traversal rejection
+absolute outside path rejection
+symlink traversal rejection
+rejected-write no-mutation behavior
+artifact-root containment
+relative-path-only public results
+cross-platform path semantics
+filesystem journals and budgets
 ```
 
 ## Execution status
 
 ```txt
 npm run check executed in this documentation pass: no
+Node editor smoke executed: no
 browser smoke executed: no
 Pages smoke executed: no
 runtime source changed: no
 package scripts changed: no
 dependencies changed: no
 render output changed: no
+deployment changed: no
+branch created: no
+pull request created: no
 ```
 
 The GitHub connector was used for this documentation audit and does not execute repository commands.
 
-## Required surface allowlist fixture
+## Required workspace containment fixture
 
-Assert the complete public `GameHost` key set.
-
-Allowed:
+Create an isolated temporary filesystem containing:
 
 ```txt
-build
-protocol
-getSessionObservation
-listCapabilities
-invoke
-getStateObservation
-getDiagnosticsObservation
-getCommittedFrameObservation
-getJournalObservation
+project root
+normal child directory and file
+sibling directory whose name begins with the root name
+outside directory and file
+inside-root symlink to outside directory
+inside-root symlink to outside file
+new write target below an outside-pointing symlink
+artifact root
 ```
 
-Forbidden:
+## Acceptance assertions
 
 ```txt
-game
-renderer
-planEnhancer
-meadow
-raw tick/reset/rebuild/dispose functions
-WebGL objects
-DOM objects
-provider instances
+root accepted
+normal child list accepted
+normal child read accepted
+normal child write accepted
+normal capture artifact paths accepted
+public results use relative paths
 ```
 
-## Required admission fixture
-
-Accepted:
+## Rejection assertions
 
 ```txt
-known capability
-valid command ID
-matching active lease and session
-matching expected state frame
-valid payload
-runtime state permits command
-```
-
-Rejected or unavailable:
-
-```txt
-unknown capability
-missing command ID
-stale lease
-stale session
-stale or future expected frame
-stopped runtime
-disposed runtime
-invalid payload
-mutation through read-only capability
+../outside rejected
+../IntoTheMeadow-escape rejected
+outside absolute path rejected
+symlink read rejected
+symlink list rejected
+symlink write rejected
+artifact escape rejected
+stale root revision rejected
 ```
 
 Every rejection must assert:
 
 ```txt
-state unchanged
-source-plan revision unchanged
-render lineage unchanged
-one bounded result row appended
-no new render commit
+no file created
+no directory created
+no file overwritten
+no artifact row published as successful
+one typed result returned
+one bounded redacted journal row appended
 ```
 
-## Required lease-revocation fixture
+## Required cross-platform classifications
 
 ```txt
-start host generation 1
-retain gateway reference
-stop and restart as generation 2
-invoke through generation-1 gateway
-assert stale or disposed result
-assert generation-2 state unchanged
-dispose generation 2
-assert both references cannot mutate
-```
-
-## Required observation-isolation fixture
-
-```txt
-read state observation
-mutate returned nested arrays and objects where possible
-read state again
-assert runtime state and fingerprints unchanged
-repeat for diagnostics, render-plan and journal observations
-assert all values structuredClone successfully
-assert JSON serialization follows documented policy
-```
-
-## Required browser/Node parity fixture
-
-Both adapters must expose equivalent nested fields:
-
-```txt
-commandId
-capabilityId
-hostLeaseId
-sessionId
-status
-reason
-commandSequence
-stateFrame
-renderCommitId
-observationRevision
+POSIX separators
+Windows drive roots
+Windows alternate separators
+case-variant paths on case-insensitive filesystems
+root equality
+root trailing separator
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:host-capability-surface
-npm run fixture:host-capability-admission
-npm run fixture:host-lease-revocation
-npm run fixture:observation-isolation
-npm run fixture:browser-host-capability
+npm run fixture:workspace-path-containment
+npm run fixture:workspace-symlink-containment
+npm run fixture:workspace-rejected-write
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim an authoritative host or editor API because capability names exist. Completion requires raw-runtime quarantine, exclusive admission, revocable leases, truthful semantic results, clone-safe observations, browser/Node parity and render correlation.
+Do not claim that `workspace.list`, `workspace.read`, `workspace.write` or Node `renderer.capture` are confined to their configured roots until segment-aware and realpath-aware fixtures pass. Host capability and lifecycle fixtures remain separate prerequisites.

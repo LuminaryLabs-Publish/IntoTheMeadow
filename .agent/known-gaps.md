@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T12-29-49-04-00`
+**Updated:** `2026-07-11T14-08-51-04-00`
 
 ## Selection state
 
@@ -10,81 +10,122 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as oldest eligible central-ledger entry
-only IntoTheMeadow changed in the Publish organization
+AetherVale had a newer repo-local audit already in flight
+IntoTheMeadow selected as the oldest fully aligned eligible repository
+only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## Headless workspace path gaps
+## Interaction and objective gaps
 
-### String-prefix containment
+### Authored definitions are not executable
 
-`safePath()` accepts a target when `target.startsWith(root)`. This can accept a sibling path whose name begins with the root's characters without being a descendant.
+`ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS` define `path-progress` and `inspect` behavior, but no runtime command accepts either action.
 
-### Symlink containment
+### Game state mutation is frame-only
 
-Lexical path resolution does not verify the target's real filesystem location. An inside-root symlink can redirect list, read, write or capture operations outside the workspace.
-
-### New-write ancestry
-
-`workspace.write` creates parent directories recursively. There is no nearest-existing-ancestor realpath check before creating a new path.
-
-### Shared operation authority
-
-The following use the same incomplete helper but have no shared typed operation authority:
+`advanceGameState()` changes only:
 
 ```txt
-artifactRoot construction
-renderer.capture JSON write
-renderer.capture SVG write
-workspace.list
-workspace.read
-workspace.write
+frame
+lastTick.dt
+lastTick.time
 ```
 
-### Missing root identity
-
-Commands do not carry:
+It does not change:
 
 ```txt
-workspace root ID
-workspace root revision
-editor session ID
-expected capability lease
-operation ID
-path policy revision
+player.position
+player.pathProgress
+inspection state
+completedObjectiveIds
+activeObjectiveId
+storyBeatIds
 ```
 
-### Missing terminal result
+### Browser ingress is absent
 
-Generic capability completion does not distinguish:
+The web host installs no keyboard, pointer, proximity or interaction listeners. Each frame sends only `{ time, dt }` into `game.tick()`.
+
+### Editor ingress is absent
+
+The browser and Node editor capability sets include runtime, scene, renderer, camera, browser and workspace operations, but no interaction, player or objective commands.
+
+### Canonical target admission is absent
+
+There is no command envelope carrying:
 
 ```txt
-accepted
-rejected-parent-escape
-rejected-sibling-prefix
-rejected-symlink
-rejected-operation-policy
-failed-I/O
-partial-artifact-write
+command ID
+session ID
+epoch
+scene ID
+target ID
+action kind
+sequence
+progress or range evidence
+expected objective revision
 ```
 
-### Missing budgets and redaction
+### Target descriptors are not indexed
 
-Read/list/write operations have no explicit byte, entry or recursion budgets. Public results are not governed by one rule that prevents absolute host-path disclosure.
+The target list is exposed as content, but no canonical scene-scoped target index resolves `arrival-path` or `focal-tree` for mutation.
 
-## Required workspace fixture gaps
+### Path progress is absent
+
+The initial state sets `pathProgress: 0`; no runtime computes movement along `arrival-path`, validates finite progress or commits threshold crossings.
+
+### Inspection receipts are absent
+
+There is no inspection ledger, duplicate classification, range policy, target receipt or no-mutation duplicate result.
+
+### Objective evaluation is absent
+
+No service evaluates:
 
 ```txt
-root and normal descendant acceptance
-parent traversal rejection
-sibling-prefix traversal rejection
-absolute outside path rejection
-symlink read/list/write rejection
-nearest-existing-ancestor write proof
-rejected-write no-mutation proof
-artifact root and workspace policy parity
-relative public path projection
-cross-platform path semantics
+progressAtLeast: 0.35
+inspected: true
+requiredAction
+targetId
+objective ordering
+```
+
+### Completion and story transitions are absent
+
+No typed objective completion result exists. Active-objective advancement and story-beat transitions are not connected to gameplay state.
+
+### Render and diagnostics acknowledgement is absent
+
+Diagnostics count objectives and targets but do not expose progress, completion, command result, revision or committed-frame evidence. The render path does not consume progression state.
+
+## Required interaction fixture gaps
+
+```txt
+path progress below threshold
+path progress at threshold
+finite and monotonic progress validation
+canonical target lookup
+unknown target rejection
+wrong action rejection
+focal-tree inspect success
+duplicate inspect no-mutation
+objective completion exactly once
+objective ordering and story transition
+browser/editor ingress parity
+reset and stale epoch rejection
+state/diagnostic/frame revision parity
+```
+
+## Retained workspace path gaps
+
+```txt
+raw target.startsWith(root) membership
+sibling-prefix escape
+symlink escape
+new-write ancestor containment
+root/session/revision identity
+operation budgets and relative-path redaction
+typed filesystem results
 ```
 
 ## Retained host capability gaps
@@ -98,8 +139,6 @@ command identity and bounded journals are absent
 public observations are not revisioned
 host controller ownership is discarded
 ```
-
-The host gateway must become exclusive before workspace operation admission can be trusted.
 
 ## Retained runtime step and clock gaps
 
@@ -153,19 +192,10 @@ editor tick and reset bypass rendering
 state, plan, renderer and canvas lack one commit identity
 ```
 
-## Retained interaction gaps
-
-```txt
-path-progress and inspect commands are authored but cannot be dispatched
-player and path mutation absent
-objective predicates and story triggers not executed
-accepted/rejected result authority absent
-```
-
 ## Registry truth gap
 
-The DSK registry declares host, diagnostics, game, render and workspace-adjacent services, but declaration does not prove runtime consumption or safe filesystem admission.
+The registry declares player, input, interaction, objective and story DSK services, but declarations do not prove runtime consumption. The implemented game exposes authored content only.
 
 ## Deployment risk
 
-Current CI exercises editor capabilities and render metrics but does not attempt sibling-prefix escape, symlink escape, rejected-write no-mutation or artifact-root containment. Headless-editor workspace safety is therefore unproven.
+Current checks validate DSK declarations, render plans, renderer behavior and editor loops, but they do not prove that a player can complete either authored objective. A static Pages deployment can therefore appear healthy while the gameplay loop remains inert.

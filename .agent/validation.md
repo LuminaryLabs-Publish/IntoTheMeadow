@@ -2,169 +2,168 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T02-28-12-04-00`
+**Updated:** `2026-07-11T04-39-58-04-00`
 
 ## Plan ledger
 
-**Goal:** Separate completed source/documentation inspection from runtime proof, and define the checks required before claiming safe stop, restart, rollback, fatal handling, or disposal.
+**Goal:** Separate completed source inspection from executable proof and define the exact gates required before claiming safe external loading, fallback behavior, provider parity or production boot reliability.
 
 ```txt
-[x] Review the full accessible Publish inventory.
-[x] Compare the central ledger.
+[x] Review the complete accessible Publish inventory.
+[x] Compare every eligible repository with the central ledger.
 [x] Exclude TheCavalryOfRome.
-[x] Select one product repository.
-[x] Review AGENTS.md and root .agent state.
-[x] Inspect browser boot and host construction.
-[x] Inspect RAF scheduling and lifecycle methods.
-[x] Inspect game state advancement.
-[x] Inspect GameHost global exposure.
-[x] Inspect editor global/listener ownership.
-[x] Inspect WebGL renderer resource disposal.
-[x] Preserve the corrected kit census and service map.
-[x] Add timestamped lifecycle and system audits.
-[x] Update the central ledger and change log.
-[ ] Execute runtime lifecycle fixtures after they exist.
+[x] Select only IntoTheMeadow.
+[x] Read AGENTS.md and current .agent state.
+[x] Inspect GAME_MANIFEST external provider declaration.
+[x] Inspect browser dynamic import and export validation.
+[x] Inspect fallback provider selection.
+[x] Inspect external meadow-area-kit implementation at the pinned commit.
+[x] Inspect local source-plan implementation.
+[x] Compare provider versions, scatter, object shapes, validation and snapshots.
+[x] Inspect package scripts and provider coverage of current Node smoke tests.
+[x] Document required source-provider fixtures and browser smoke coverage.
+[x] Change documentation only.
+[x] Push to main.
+[x] Synchronize the central ledger and internal change log.
 ```
 
-## Documentation validation
+## Source inspection completed
 
 ```txt
-full accessible Publish inventory reviewed: yes
-central ledger comparison completed: yes
-TheCavalryOfRome excluded: yes
-one product repository selected: yes
-concurrent registry-truth update reconciled: yes
-root .agent state refreshed: yes
-new timestamped tracker created: yes
-new timestamped turn ledger created: yes
-architecture audit added: yes
-render audit added: yes
-gameplay audit added: yes
-interaction audit added: yes
-lifecycle audit added: yes
-deploy audit added: yes
+manifest URL is commit-pinned: yes
+expected external export: createMeadowAreaKit
+browser import failure handling: untyped throw
+browser missing-export handling: untyped throw
+production fallback after import failure: no
+local fallback for omitted externalKits: yes
+external provider version: 0.1.0
+local provider version: local-source-plan-v1
+shared raw source-plan schema: no
+provider fingerprint: no
+parity classification: no
+production provider smoke in npm run check: no
 ```
 
-## Source-backed lifecycle checks performed by inspection
+## Current test-path proof
+
+The existing Node tests instantiate the game without `externalKits`. They prove local fallback generation, enhancement, deterministic snapshot behavior, renderer descriptors and headless-editor behavior. They do not prove the external production provider.
 
 ```txt
-boot retains resolved host controller: no
-RAF id retained: no
-stop cancels RAF: no
-start has run-generation fence: no
-restart transaction exists: no
-host dispose exists: no
-startup cleanup stack exists: no
-first-frame rollback exists: no
-fatal path disposes resources: no
-GameHost global lease exists: no
-editor global lease exists: no
-listener lease exists: no
-renderer.dispose primitive exists: yes
-editorBridge.dispose primitive exists: yes
-lifecycle result contract exists: no
-lifecycle journal exists: no
-```
-
-## Source-level race
-
-The current control flow permits:
-
-```txt
-queue RAF A
-stop sets stopped=true
-start sets stopped=false and queues RAF B
-deliver RAF A
-deliver RAF B
-both callbacks tick/render and queue successors
-```
-
-This is a source-backed reachability finding. It was not executed in a browser during this documentation pass.
-
-## Registry census retained
-
-```txt
-LOCAL_DSK_IDS count: 43
-EXTERNAL_DSK_IDS count: 1
-total declared kit count: 44
-REQUIRED_V01_DSK_IDS count: 15
-runtime source-backed surfaces cataloged: 24
-```
-
-## Runtime validation state
-
-```txt
+npm run check executed in this documentation pass: no
+browser smoke executed: no
+Pages smoke executed: no
 runtime source changed: no
-dependencies changed: no
 package scripts changed: no
-render output changed: no
-deployment changed: no
-branch created: no
-pull request created: no
-npm install: not run
-npm run check: not run
-npm test: not run
-browser/WebGL smoke: not run
+dependencies changed: no
 ```
 
-## Required lifecycle checks
+## Required provider-admission fixture
+
+Use an injected loader and deterministic module candidates.
+
+Cases:
 
 ```txt
-node tests/runtime-controller-reachability-smoke.mjs
-node tests/runtime-single-raf-smoke.mjs
-node tests/runtime-stop-cancels-pending-raf-smoke.mjs
-node tests/runtime-stop-start-race-smoke.mjs
-node tests/runtime-restart-generation-smoke.mjs
-node tests/runtime-global-lease-restore-smoke.mjs
-node tests/runtime-first-frame-rollback-smoke.mjs
-node tests/runtime-fatal-disposal-smoke.mjs
-node tests/runtime-dispose-idempotency-smoke.mjs
-node tests/runtime-listener-release-smoke.mjs
-node tests/runtime-render-after-dispose-smoke.mjs
+pinned external module loads and exposes the expected factory
+module load rejects with a network/import failure
+module evaluates and omits createMeadowAreaKit
+factory throws during provider construction
+provider lacks required capabilities
+provider version is incompatible
+provider returns malformed raw plan
+provider returns validation failure
+fallback is admitted when policy allows it
+fallback is rejected when policy is fail-closed
+same request produces same provider fingerprint
 ```
 
-Required assertions:
+Each result must assert:
 
 ```txt
-one running session owns exactly one pending RAF
-stop leaves zero pending RAFs
-stale callback delivery produces no tick or render
-restart creates one new run generation and one RAF chain
-first-frame failure leaves zero pending RAFs and zero active listeners
-renderer and editor resources dispose exactly once
-prior globals restore when leases retain ownership
-newer global owners are never clobbered
-dispose is idempotent
-start, restart, and render after disposal reject consistently
-lifecycle journal is bounded, immutable, detached, and JSON-safe
-GameHost and editor lifecycle adapters return equivalent results
+requestId
+candidateId
+providerId
+providerVersion
+sourceReference and commit
+status: admitted | fallback | degraded | rejected
+failureClass and reason
+capabilities
+providerFingerprint
+sourcePlanFingerprint
+journal sequence
 ```
 
-## Existing checks do not prove
+## Required external/fallback parity fixture
+
+Generate the same `ARRIVAL_MEADOW_CONFIG` through both providers and compare:
 
 ```txt
-one authoritative runtime session
-one-active-RAF invariant
-stop cancellation
-restart generation fencing
-startup rollback
-fatal teardown
-global ownership restoration
-listener release
-renderer disposal coordination
-terminal command idempotency
+area identity and bounds
+seed identity
+required object families
+path points and width
+focal-tree presence and core dimensions
+feature counts
+ground/material semantics
+wind semantics
+raw validation result
+enhanced schema and descriptor families
+topology key stability
+renderer descriptor counts
 ```
 
-## Push validation
+Differences must be classified as:
 
 ```txt
-target product repository: LuminaryLabs-Publish/IntoTheMeadow
-target product branch: main
-central repository: LuminaryLabs-Dev/LuminaryLabs
-central branch: main
-repo-local documentation pushed: yes
-central ledger synchronized: yes
-central internal change log added: yes
+exact
+normalized-equivalent
+intentional-degradation
+incompatible
 ```
 
-Do not claim runtime lifecycle safety from a visually successful meadow render or from the existing smoke suite. The required fake-scheduler and ownership fixtures do not exist yet.
+The fixture must fail on unclassified differences.
+
+## Required production boot fixture
+
+```txt
+load manifest entry
+resolve pinned external source
+validate expected export and version
+construct provider
+validate raw plan
+normalize/enhance plan
+validate meadow-render-plan/v2
+produce one renderer snapshot
+publish provider identity through GameHost
+```
+
+## Required browser failure smoke
+
+Simulate blocked or failed external loading and assert the declared policy:
+
+```txt
+fail-closed -> visible typed failure and complete startup rollback
+fallback-allowed -> explicit degraded state, local provider fingerprint and visible diagnostics
+```
+
+No silent fallback is acceptable.
+
+## Existing command retained
+
+```bash
+npm run check
+```
+
+## Future commands
+
+```bash
+npm run fixture:source-provider
+npm run fixture:source-parity
+npm run fixture:production-provider
+npm run smoke:browser-provider-failure
+npm run check
+```
+
+## Completion boundary
+
+Do not claim source-provider reliability from a successful local render-plan smoke. Completion requires deterministic admission, parity, production boot and browser failure-policy fixtures.

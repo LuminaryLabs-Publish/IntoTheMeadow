@@ -2,73 +2,69 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-11T17-30-56-04-00`
+**Last aligned:** `2026-07-11T19-01-08-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local DSK/kit declarations, a persistent WebGL renderer, a browser editor bridge and a Node headless-editor environment.
+`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local DSK/kit declarations, a persistent WebGL renderer, a browser editor bridge and a Node headless-editor surface.
 
-The current audit establishes a WebGL context-recovery gap. The renderer creates its program, attribute and uniform locations, and GPU buffers once. It installs no context-loss/restoration listeners, records no context or resource generation, and can retain a valid topology cache after the browser invalidates the underlying GPU objects.
+The current audit establishes a fatal-runtime recovery gap. Startup and frame failures are converted into visible text, but they do not enter an authoritative failure state, roll back staged state, quarantine public capabilities, clean up partially acquired resources, or require a cold replacement session before rendering resumes.
 
 ## Plan ledger
 
-**Goal:** make WebGL context loss and restoration an explicit, generation-fenced renderer transaction that commits a new visible frame before renderer readiness, diagnostics or canvas capture return to success.
+**Goal:** make startup and frame failure a typed, terminally owned transaction so the last known-good frame remains truthful, public mutation and capture are fenced, partial acquisitions are cleaned up, and recovery creates a new session and renderer generation rather than resuming a damaged graph.
 
-- [x] Compare all ten accessible `LuminaryLabs-Publish` repositories with central tracking.
+- [x] Compare the ten accessible `LuminaryLabs-Publish` repositories with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories remain centrally tracked with root `.agent` state.
-- [x] Select only `IntoTheMeadow` under the oldest documented-selection rule.
-- [x] Trace browser boot, RAF, renderer creation, program and buffer ownership, snapshots, capture and current smoke coverage.
-- [x] Preserve the complete interaction, domain, kit and service inventory.
-- [x] Define WebGL context state, generation, resource rebuild and recovered-frame proof.
-- [x] Refresh the required root `.agent` state.
-- [ ] Runtime implementation and executable recovery fixtures remain future work.
+- [x] Select only `IntoTheMeadow` as the oldest eligible documented repository.
+- [x] Trace boot rejection, host acquisition, RAF failure, fatal projection, editor capabilities, globals, stop/start and renderer disposal.
+- [x] Preserve the complete interaction loop, domain map, kit inventory and service inventory.
+- [x] Define startup rollback, frame quarantine, capability fencing, cold restart and terminal disposal boundaries.
+- [x] Refresh the required root `.agent` state and add timestamped audits.
+- [ ] Runtime implementation and executable failure-recovery fixtures remain future work.
 
 ## Current audited ledge
 
 ```txt
-IntoTheMeadow WebGL Context Recovery Authority
-+ Context Generation / Resource Rebuild / Recovered Frame Fixture Gate
+IntoTheMeadow Fatal Runtime Failure Recovery Authority
++ Startup Rollback / Frame Quarantine / Cold Restart Fixture Gate
 ```
-
-This ledge fits after render-topology ownership and before committed-frame publication. Earlier lifecycle, host-gateway, workspace, clock and source-provider gates remain prerequisites. The DSK runtime-consumption audit remains downstream and must eventually bind the renderer recovery services through truthful runtime evidence.
 
 ## Main finding
 
 ```txt
-renderer construction
-  -> acquire WebGL context once
-  -> compile/link program once
-  -> resolve attribute and uniform locations once
-  -> build buffers when topology key changes
+startup failure
+  -> boot catch writes error text
+  -> no typed boot result
+  -> no reverse cleanup ledger
+  -> partially published globals/resources may remain
 
-context loss
-  -> no listener
-  -> no state transition
-  -> no resource-generation invalidation
-  -> last renderer snapshot remains readable
+frame failure
+  -> game state may already advance
+  -> lastPlan may already change
+  -> renderer may partially mutate buffers/canvas
+  -> showFatal only sets stopped and updates text
+  -> GameHost and NexusEditorEnvironment remain callable
 
-context restoration
-  -> no listener
-  -> no program rebuild
-  -> no location re-resolution
-  -> no forced buffer upload when topology is unchanged
-  -> no first recovered frame acknowledgement
+restart
+  -> start() reuses the same game, renderer, enhancer and bridge
+  -> no new session, renderer or frame generation
+  -> no admission proving the failed graph is safe to resume
 ```
-
-A restored browser context can therefore be paired with previous-generation program and buffer handles while `cache.topologyKey`, `lastRender`, HUD diagnostics and editor capture still describe the pre-loss frame.
 
 ## Required authority
 
 ```txt
-meadow-webgl-context-recovery-authority-domain
-  -> context state and generation
-  -> loss/restore event admission
-  -> render and capture fences
-  -> GPU resource registry and generation
-  -> staged rebuild and rollback
-  -> first recovered frame acknowledgement
-  -> typed results, diagnostics and bounded journal
+meadow-runtime-failure-recovery-authority-domain
+  -> acquisition ledger and reverse cleanup
+  -> failure identity, phase and classification
+  -> last-known-good committed frame retention
+  -> public capability and capture quarantine
+  -> typed startup/frame/cleanup results
+  -> recoverable-path routing or terminal disposal
+  -> cold restart with new session and renderer generations
+  -> bounded observations, journal and fixtures
 ```
 
 ## Required implementation order
@@ -82,6 +78,7 @@ meadow-webgl-context-recovery-authority-domain
 6. Render Topology Identity Authority
 6a. WebGL Context Recovery Authority
 7. Committed Frame Observation Authority
+7a. Fatal Runtime Failure Recovery Authority
 8. Interaction Command and Objective Authority
 9. DSK Runtime Consumption Authority
 ```
@@ -89,18 +86,19 @@ meadow-webgl-context-recovery-authority-domain
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-11T17-30-56-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-11T17-30-56-04-00.md
+.agent/trackers/2026-07-11T19-01-08-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-11T19-01-08-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-11T17-30-56-04-00-webgl-context-recovery-authority-map.md
-.agent/render-audit/2026-07-11T17-30-56-04-00-context-loss-stale-render-snapshot-gap.md
-.agent/interaction-audit/2026-07-11T17-30-56-04-00-context-loss-restore-event-map.md
-.agent/webgl-context-audit/2026-07-11T17-30-56-04-00-context-generation-resource-rebuild-contract.md
-.agent/deploy-audit/2026-07-11T17-30-56-04-00-webgl-context-recovery-fixture-gate.md
+.agent/architecture-audit/2026-07-11T19-01-08-04-00-fatal-runtime-failure-recovery-dsk-map.md
+.agent/render-audit/2026-07-11T19-01-08-04-00-partial-frame-fatal-state-gap.md
+.agent/gameplay-audit/2026-07-11T19-01-08-04-00-tick-plan-render-failure-loop.md
+.agent/interaction-audit/2026-07-11T19-01-08-04-00-fatal-stop-restart-capability-map.md
+.agent/failure-recovery-audit/2026-07-11T19-01-08-04-00-terminal-failure-quarantine-restart-contract.md
+.agent/deploy-audit/2026-07-11T19-01-08-04-00-fatal-recovery-fixture-gate.md
 ```
 
 ## Exact inventory
@@ -111,13 +109,13 @@ eligible non-Cavalry repositories: 9
 external declared kits: 1
 local declared kits: 43
 total declared kits: 44
-required-v0.1 local kits: 15
-WebGL context listeners: 0
-context generation fields: 0
-resource generation fields: 0
-recovered-frame acknowledgements: 0
+startup acquisition rollback ledgers: 0
+fatal failure IDs: 0
+fatal capability fences: 0
+cold restart transactions: 0
+last-known-good frame receipts retained by failure state: 0
 ```
 
 ## Guardrails
 
-Update existing renderer, render-host, lifecycle, diagnostics, editor and committed-frame owners before creating overlapping packages. Keep meadow-specific adapters local. Promote generic recovery contracts into NexusEngine only after forced context-loss fixtures prove repeated restoration, rollback, capture freshness and disposal.
+Update the existing web host, lifecycle, committed-frame, renderer, context-recovery, diagnostics and editor owners before creating overlapping packages. Keep the product-specific failure adapter local. Promote generic failure-state and cleanup contracts only after deterministic startup, mid-frame, cleanup-failure and cold-restart fixtures pass.

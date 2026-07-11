@@ -2,85 +2,57 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T14-08-51-04-00`
+**Audit timestamp:** `2026-07-11T15-49-49-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local DSK declarations, a WebGL renderer, browser editor bridge and Node headless-editor environment.
+`IntoTheMeadow` declares one external kit and 43 local DSK/kit entries. The registry validates descriptor shape and publishes counts, but it does not compose the active runtime. The game and render-plan enhancer import concrete implementations directly, while generated descriptors expose generic metadata that is not connected to those instances.
 
-This pass audits the authored interaction and objective layer. The content contains a path-progress objective, a tree-inspection objective and matching target descriptors. Those definitions are counted and exposed through `game.content`, but no browser input, editor capability or game command can submit either action. `advanceGameState()` only increments `frame` and stores `lastTick`.
+The result is a registry-truth gap: declared services can appear valid without being implemented or consumed, and implemented services can run without a registry binding, install result, dependency edge, consumption receipt or disposal record.
 
 ## Plan ledger
 
-**Goal:** define one canonical command and objective transaction shared by browser input, browser and Node editor adapters, target lookup, player state, progression, story beats, diagnostics and committed rendering.
+**Goal:** document the exact declaration-to-runtime gap and define one authoritative install and consumption graph shared by game composition, rendering, diagnostics, reset and validation.
 
 - [x] Enumerate the ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Verify nine eligible central ledger entries and root `.agent` states.
-- [x] Avoid duplicating the newer AetherVale repo-local audit already in flight.
-- [x] Select only `IntoTheMeadow` as the oldest fully aligned eligible entry.
+- [x] Compare nine eligible repositories with the central ledger.
+- [x] Select only `IntoTheMeadow` as the oldest eligible documented repository.
 - [x] Read `AGENTS.md` and retained audits.
-- [x] Trace browser, game, content, editor and headless interaction paths.
-- [x] Inventory domains, kits and services.
-- [x] Add architecture, render, gameplay, interaction, objective-system and deploy audits.
+- [x] Inspect `dsk-registry.json` and `src/content/dsk-registry.js`.
+- [x] Inspect descriptor generation in `src/dsks/index.js`.
+- [x] Inspect `installDsks()`, game construction, state snapshots and diagnostics.
+- [x] Inspect direct implementation imports in render-plan enhancement.
+- [x] Inspect registry smoke coverage.
+- [x] Inventory all domains, kits and declared services.
+- [x] Add architecture, render, gameplay, registry and deploy audits.
 - [x] Change documentation only.
 - [ ] Runtime implementation and fixtures remain future work.
 
-## Interaction loops
-
-### Browser render loop
+## Interaction loop
 
 ```txt
-boot
-  -> load pinned meadow-area provider
-  -> create game, plan enhancer and WebGL renderer
-  -> expose GameHost and browser editor bridge
-  -> requestAnimationFrame
+browser boot
+  -> load commit-pinned meadow-area provider
+  -> createIntoTheMeadowGame()
+  -> installDsks()
+  -> return generated local descriptors and external loaded/deferred rows
+  -> instantiate meadow provider separately
+  -> create initial state with a descriptor snapshot
+  -> create render-plan enhancer and WebGL renderer
+  -> expose GameHost and editor surfaces
+
+render-plan composition
+  -> import tree, wind, performance, post and grass factories directly
+  -> instantiate concrete services outside the descriptor registry
+  -> enhance render plan
+  -> renderer consumes the resulting plan
+
+RAF
   -> game.tick({ time, dt })
-  -> enhance static render plan
+  -> enhance cached plan
   -> render
-  -> publish diagnostics
-```
-
-### Authored gameplay loop
-
-```txt
-ARRIVAL_OBJECTIVES
-  -> walk-the-path requires path-progress >= 0.35
-  -> inspect-tree requires inspected=true for focal-tree
-
-ARRIVAL_INTERACTION_TARGETS
-  -> arrival-path / requiredAction=path-progress
-  -> focal-tree / requiredAction=inspect
-```
-
-### Actual state mutation
-
-```txt
-createInitialGameState
-  -> player.pathProgress = 0
-  -> activeObjectiveId = walk-the-path
-  -> completedObjectiveIds = []
-  -> storyBeatIds = [arrival]
-
-advanceGameState(state, input)
-  -> frame += 1
-  -> lastTick = { dt, time }
-  -> all player, objective, inspection and story fields unchanged
-```
-
-### Editor surfaces
-
-```txt
-browser editor
-  -> runtime.tick / runtime.reset
-  -> scene and renderer observation
-  -> no interaction or objective capability
-
-Node headless editor
-  -> runtime.tick / runtime.reset
-  -> scene, renderer, camera, browser and workspace capabilities
-  -> no interaction or objective capability
+  -> publish diagnostics that report registry counts, not per-service consumption
 ```
 
 ## Domains in use
@@ -88,198 +60,299 @@ Node headless editor
 ```txt
 browser shell, DOM boot and fatal projection
 manifest and external dependency declaration
-source-provider loading, fallback, source-plan generation and validation
-DSK registry, descriptor installation and snapshots
+source-provider loading, fallback and source-plan generation
+DSK ID census, descriptor generation and shape validation
+DSK install reporting and game-state snapshots
 game state, tick, reset, snapshot and diagnostics
 runtime lifecycle, RAF ownership and session authority
-public host capability routing, admission and revocation
-browser editor invocation and error observation
-Node headless editor runtime and workspace capabilities
-workspace root identity, path containment, symlink policy and I/O admission
-runtime step admission, clock policy and work budget
-player state and authored movement profile
-interaction-target definitions and target indexing
-path-progress and inspection action semantics
-objective definitions, progress ledger and completion predicates
-story beats and transition projection
-terrain, path, materials, grass, scatter, trees, wind and atmosphere
-render-plan enhancement, validation and topology identity
-performance, LOD and postprocess policy
-CPU mesh construction and contribution accounting
-WebGL resources, caching, rendering, snapshots and disposal
-GameHost and editor observations
+public host capability routing and editor adapters
+headless workspace and filesystem operations
+runtime-step admission and clock policy
+player, input, interaction, objective and story declarations
+terrain, path, materials and source feature composition
+grass density, archetypes, batching, placement, instancing, wind and LOD
+tree enhancement, wind field, performance and post-process composition
+render-plan v2 contracts, topology identity and cache behavior
+CPU mesh construction and WebGL resource ownership
+renderer observation, diagnostics and GameHost readback
 static checks, editor smokes, build and Pages deployment
+missing dependency graph, service binding, install result and consumption authority
 ```
 
-## Kit inventory
+## Complete kit inventory and declared services
+
+### External kit
 
 ```txt
-external declared kits: 1
-local declared kits: 43
-total declared kits: 44
-required-v0.1 local kits: 15
-runtime source-backed surfaces: 24
+meadow-area-kit
+  area normalization
+  path normalization
+  style and material normalization
+  deterministic seeded scatter
+  grass, flower, rock, mushroom and tree descriptors
+  wind and atmosphere descriptors
+  render-plan generation
+  validation, snapshot, reset and optional runtime adapter
 ```
 
-The complete per-kit service inventory remains in `.agent/kit-registry.json` and `src/dsks/index.js`.
-
-## Services offered by the current stack
+### Local game, host and composition
 
 ```txt
-commit-pinned external meadow source loading
-fallback source-plan construction
-DSK descriptor registration and snapshots
-raw game state, tick, reset and render-plan rebuild
-browser RAF hosting
-browser editor capability lookup and invocation
-Node headless runtime, scene, renderer, camera and workspace capabilities
-workspace list/read/write and capture artifacts
-render-plan enhancement and descriptor validation
-CPU mesh generation
-WebGL buffer caching and two-pass drawing
-GameHost and editor observations
-static checks and Pages deployment
-authored objective, story and target descriptors
+into-the-meadow-game-dsk
+  game-manifest, kit-stack-registry, game-state-root, boot-sequence, game-snapshot
+web-host-dsk
+  document-shell, browser-loop, host-debug-surface, asset-loading-host, browser-safety
+game-composition-dsk
+  dsk-registry, scene-composition, render-composition, simulation-composition, composition-validation
+meadow-area-bridge-dsk
+  meadow-area-config, meadow-feature-config, meadow-area-kit-adapter, meadow-area-state, meadow-area-validation
 ```
 
-Services not currently offered:
+### Terrain, path and grass
 
 ```txt
-interaction command envelope
-command identity, sequence or session admission
-canonical target resolution from targetId
-player path-progress mutation
-inspection receipt or duplicate classification
-objective progress evaluation
-objective completion result
-story-beat transition result
-browser and editor command parity
-interaction journal
-committed-frame acknowledgement of progression
+meadow-terrain-texture-dsk
+  terrain-surface-model, material-layer-system, path-layer-system, terrain-sampler, terrain-validation
+path-corridor-dsk
+  path-curve-model, walkable-corridor, path-surface-detail, path-progression, path-validation
+grass-density-texture-kit
+  density-texture-model, density-channels, density-compositor, density-sampler, density-validation
+grass-clump-archetype-kit
+  clump-family-registry, card-layout-generator, texture-atlas-binding, clump-variant-generator, archetype-validation
+grass-static-batch-kit
+  clump-mesh-builder, batch-variant-cache, atlas-material, static-batch-lod, batch-validation
+grass-patch-placement-kit
+  patch-grid, density-driven-placement, clump-instance-selection, patch-instance-buffer, placement-validation
+grass-clump-instancing-render-kit
+  batch-registry, instance-stream, draw-group-builder, shader-binding, render-validation
+grass-shader-wind-kit
+  wind-uniforms, tip-bend-model, phase-field, gust-response, wind-validation
+grass-lod-policy-kit
+  near-lod, mid-lod, far-lod, terrain-tint-lod, lod-validation
+grass-density-scaling-kit
+  quality-scale, budget-scale, density-scale, profile-scale, scale-validation
+grass-debug-visualization-kit
+  density-view, patch-view, instance-view, lod-view, debug-validation
+grass-patch-dsk
+  patch-grid, blade-distribution, terrain-awareness, wind-binding, grass-validation
+gpu-grass-render-dsk
+  grass-instance-buffer, grass-blade-mesh, shader-wind, grass-lod-render, grass-render-validation
 ```
 
-## Main finding: authored gameplay is inert
-
-The content layer defines:
+### World, player and experience
 
 ```txt
-walk-the-path
-  requiredAction: path-progress
-  targetId: arrival-path
-  completion: progressAtLeast 0.35
-
-inspect-tree
-  requiredAction: inspect
-  targetId: focal-tree
-  completion: inspected true
+wind-field-dsk
+  wind-state, wind-sampler, wind-zones, wind-consumers, wind-validation
+tree-object-dsk
+  focal-tree-model, tree-line-model, tree-materials, tree-wind-binding, tree-validation
+meadow-scatter-dsk
+  flower-scatter, rock-scatter, mushroom-scatter, placement-rules, scatter-validation
+meadow-atmosphere-dsk
+  sky-gradient, sun-system, cloud-layer, distant-hills, atmosphere-validation
+meadow-player-dsk
+  player-state, movement-profile, terrain-contact, player-actions, player-validation
+meadow-camera-dsk
+  camera-mode, camera-rig, camera-collision, camera-feel, camera-validation
+meadow-input-dsk
+  action-map, device-bindings, input-context, input-normalization, input-validation
+meadow-interaction-dsk
+  interactable-registry, affordance-rules, inspect-state, interaction-events, interaction-validation
+meadow-story-dsk
+  story-state, story-beats, dialogue-text, sequence-runner, story-validation
+meadow-objective-dsk
+  objective-model, objective-flow, completion-ledger, feedback-surface, objective-validation
+meadow-ecology-dsk
+  ambient-life, ecology-zones, ambience-triggers, non-gameplay-agents, ecology-validation
+meadow-audio-dsk
+  ambient-bed, spatial-audio-cues, audio-state, audio-events, audio-validation
+meadow-ui-dsk
+  minimal-hud, story-text-panel, debug-ui, ui-state, ui-validation
+meadow-save-dsk
+  save-model, save-slots, persistence-adapter, migration, save-validation
+meadow-diagnostics-dsk
+  runtime-health, render-health, determinism-checks, smoke-tests, diagnostics-report
+meadow-performance-dsk
+  quality-profile, budget-policy, lod-policy, adaptive-scaling, performance-validation
 ```
 
-The initial state exposes matching progression fields, but the only mutation function is:
-
-```js
-return Object.freeze({
-  ...state,
-  frame: state.frame + 1,
-  lastTick: Object.freeze({ dt, time })
-});
-```
-
-The browser host sends only `{ time, dt }`; it registers no keyboard, pointer, proximity or interaction listeners. The browser and Node editor bridges expose no `interaction.*`, `player.*` or `objective.*` capability.
-
-Consequences:
+### Render and deployment
 
 ```txt
-pathProgress remains 0
-focal-tree cannot be inspected
-completedObjectiveIds remains empty
-activeObjectiveId never advances
-storyBeatIds never changes
-render/HUD cannot acknowledge progression
-editor smokes can pass without exercising gameplay
+meadow-render-host-dsk
+  renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
+meadow-webgl-renderer-v2-kit
+  actual source-backed services exist, but the generated descriptor falls back to model/state/events/validation/snapshot because its service-map row is missing
+post-process-stack-dsk
+  pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
+render-target-kit
+  scene-color-texture, depth-texture, normal-texture, ping-pong-buffer, resize-policy
+sobel-outline-pass-kit
+  color-edge-threshold, depth-edge-threshold, normal-edge-threshold, outline-color, object-mask
+color-grade-pass-kit
+  warmth, contrast, saturation, shadow-tint, highlight-tint
+depth-fog-pass-kit
+  fog-near, fog-far, fog-color, distance-curve, horizon-haze
+vignette-pass-kit
+  radius, softness, strength, center, quality-tier
+final-composite-pass-kit
+  scene-input, post-input, output-target, debug-overlay, fallback-composite
+static-pages-deploy-dsk
+  build-config, github-pages-workflow, release-artifacts, cache-invalidation, deploy-validation
 ```
+
+## Main finding: the registry does not compose runtime services
+
+### Duplicate declaration sources
+
+```txt
+dsk-registry.json
+src/content/dsk-registry.js
+src/dsks/index.js maps
+.agent/kit-registry.json
+```
+
+There is no generated single source of truth or drift check across these surfaces.
+
+### Descriptor generation is metadata-only
+
+Every descriptor is generated from an ID and service-name array. The descriptor:
+
+```txt
+has no implementation module reference
+has no factory or instance identity
+has requires: []
+has one generic provides token
+has status derived from required-v0.1 membership
+validates naming and minimum subdomain count only
+```
+
+### Installation is not installation
+
+`installDsks()`:
+
+```txt
+validates generated local descriptor shape
+marks the external provider loaded when a truthy value exists
+returns descriptor arrays and counts
+creates no local instances
+resolves no dependencies
+binds no services
+calls no lifecycle methods
+records no failures by kit
+returns no disposal plan
+```
+
+### Concrete runtime bypass
+
+`enhance-render-plan.js` imports and instantiates tree, wind, performance, post-process and nine grass factories directly. Those concrete consumers do not query a DSK service registry and do not publish a consumption receipt.
+
+### Status is not implementation truth
+
+```txt
+active-v0.1 = ID appears in REQUIRED_V01_DSK_IDS
+planned = ID is not in that list
+```
+
+This means runtime-used kits such as `tree-object-dsk` and `wind-field-dsk` can be labelled planned, while a required descriptor can validate without proving that its declared services are implemented.
+
+### Concrete service-map drift
+
+`meadow-webgl-renderer-v2-kit` is required for v0.1 and has a real implementation, but it is absent from the `DOMAIN_LABELS` and `SERVICES` tables. Its descriptor therefore receives the generic fallback:
+
+```txt
+model
+state
+events
+validation
+snapshot
+```
+
+The registry does not describe the renderer actually shipped.
+
+### Tests prove shape, not consumption
+
+The DSK smoke asserts:
+
+```txt
+registry validation passed
+local descriptor count >= 26
+each descriptor has five architecture layers
+```
+
+It does not assert implementation bindings, dependency admission, service resolution, runtime consumers, reset/disposal or registry/runtime parity.
 
 ## Required parent domain
 
 ```txt
-meadow-interaction-objective-authority-domain
+meadow-dsk-runtime-consumption-authority-domain
 ```
 
 Update existing owners first:
 
 ```txt
+game-composition-dsk
 into-the-meadow-game-dsk
-meadow-player-dsk
-meadow-input-dsk
-meadow-interaction-dsk
-meadow-objective-dsk
-meadow-story-dsk
-web-host-dsk
 meadow-diagnostics-dsk
-browser and Node editor adapters
+meadow-render-host-dsk
+install-dsks adapter
+descriptor registry
+browser and Node editor observations
+static and runtime fixtures
 ```
 
 Candidate coordinating kits:
 
 ```txt
-interaction-command-kit
-interaction-command-id-kit
-interaction-admission-kit
-canonical-interaction-target-index-kit
-player-action-state-kit
-path-progress-evaluator-kit
-inspect-target-evaluator-kit
-objective-definition-index-kit
-objective-progress-ledger-kit
-objective-completion-result-kit
-story-beat-transition-kit
-interaction-projection-kit
-interaction-debug-observation-kit
-interaction-command-journal-kit
-interaction-objective-fixture-kit
-browser-interaction-parity-smoke-kit
+dsk-definition-source-kit
+dsk-implementation-binding-kit
+dsk-capability-contract-kit
+dsk-dependency-graph-kit
+dsk-install-plan-kit
+dsk-install-admission-kit
+dsk-instance-registry-kit
+dsk-service-registry-kit
+dsk-external-provider-identity-kit
+dsk-runtime-consumption-receipt-kit
+dsk-status-derivation-kit
+dsk-consumer-ack-kit
+dsk-lifecycle-disposal-kit
+dsk-diagnostics-projection-kit
+dsk-registry-drift-fixture-kit
+dsk-consumption-parity-fixture-kit
 ```
 
 ## Required transaction
 
 ```txt
-InteractionCommand C
-  -> validate session, epoch, command sequence and action kind
-  -> resolve canonical target from active scene and targetId
-  -> validate range/progress evidence under one policy
-  -> classify stale, duplicate, rejected or accepted
-  -> prepare player/inspection candidate state
-  -> evaluate objective predicates from canonical definitions
-  -> emit zero or more ObjectiveCompletionResult values
-  -> prepare story-beat transition
-  -> atomically commit state and bounded journal
-  -> project command/result/revision into diagnostics and render state
-  -> acknowledge the first committed frame that consumed the revision
-```
-
-Compatibility targets:
-
-```txt
-path progress threshold: 0.35
-inspect target: focal-tree
-path target: arrival-path
-initial active objective: walk-the-path
-initial story beat: arrival
+canonical DSK definitions
+  -> resolve implementation binding and source identity
+  -> build dependency/capability graph
+  -> reject missing, duplicate or cyclic requirements
+  -> create ordered install plan
+  -> instantiate into staged ownership
+  -> validate provided services
+  -> atomically publish active service registry
+  -> consumers resolve services by capability
+  -> each consumer records a consumption receipt
+  -> diagnostics derive status from receipts and failures
+  -> reset/stop retires instances in reverse dependency order
 ```
 
 ## Required proof
 
 ```txt
-path progress below threshold does not complete
-path progress at threshold completes once
-canonical target lookup rejects unknown target IDs
-tree inspection completes once and duplicates are no-mutation
-wrong action for target is rejected
-stale session/epoch/sequence commands are rejected
-browser and editor ingress produce equivalent results
-objective completion advances active objective deterministically
-story transition cites objective completion receipts
-reset retires old commands and restores initial progression
-state, diagnostics and committed frame cite one revision
+every declared active kit has one implementation binding
+every binding has one source identity and version/fingerprint
+every required capability resolves exactly once
+missing and cyclic dependencies reject without partial activation
+renderer descriptor services match the renderer implementation
+runtime-used tree, wind, grass and post services produce consumption receipts
+player/input/interaction/objective declarations remain declared-only until bound
+external provider identity and validation are recorded
+diagnostics distinguish declared, installed, active, consumed, failed and retired
+reset and stop dispose in reverse dependency order
+registry JSON, source IDs and generated definitions cannot drift
 ```
 
 ## Ordered safe ledges
@@ -293,7 +366,7 @@ state, diagnostics and committed frame cite one revision
 6. Render Topology Identity Authority
 7. Committed Frame Observation Authority
 8. Interaction Command and Objective Authority
-9. DSK Registry Consumption Proof
+9. DSK Runtime Consumption Authority
 ```
 
 ## Validation boundary
@@ -305,7 +378,7 @@ gameplay/render/deployment changed: no
 branch or PR created: no
 npm run check: not run
 browser smoke: not run
-interaction/objective fixtures: unavailable
+DSK consumption fixtures: unavailable
 ```
 
-No gameplay-completion claim is made until a fixture proves command admission, canonical target lookup, state mutation, objective predicates, story transition and committed-frame projection at one session, epoch and revision.
+No claim is made that a declared DSK is operational until an executable fixture proves its implementation binding, dependency admission, service resolution, runtime consumption and lifecycle retirement.

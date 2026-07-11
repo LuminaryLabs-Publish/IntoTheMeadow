@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T17-30-56-04-00`
+**Updated:** `2026-07-11T19-01-08-04-00`
 
 ## Selection state
 
@@ -14,68 +14,86 @@ IntoTheMeadow selected as the oldest eligible documented repository
 only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## Current WebGL context recovery gaps
+## Current fatal-runtime recovery gaps
 
-### Context events are unowned
+### Startup acquisitions are not transactional
 
-No runtime owner registers or admits:
+The external provider, game, renderer, enhancer, `GameHost`, editor bridge and listeners are acquired sequentially without an acquisition ledger or reverse cleanup stack.
 
-```txt
-webglcontextlost
-webglcontextrestored
-```
+### Public globals can be published before full readiness
 
-The host cannot deliberately prevent default loss handling, suspend submissions, sequence restoration or reject stale events.
+`GameHost` is exposed before editor installation and before the first committed rendered frame. A later startup failure has no authoritative global-retirement path.
 
-### No context generation exists
+### Frame state mutates before frame success
 
-The runtime records no context identity or generation. A program, location or buffer cannot prove which browser context lifetime created it.
+`game.tick()` advances state before plan validation and rendering. `lastPlan` is assigned before `renderer.render()` completes. Failed work can leave state, plan, renderer snapshot and canvas representing different phases.
 
-### No resource generation exists
+### Renderer mutation is not staged
 
-The renderer tracks a topology key and CPU mesh but does not track a complete context-bound resource set. Program, locations and buffers are not committed or retired as one generation.
+A render attempt can resize the canvas, replace buffers, clear and issue draws before failing. No candidate resource registry, rollback receipt or last-known-good canvas/frame boundary exists.
 
-### Same topology can conceal invalid GPU resources
+### Fatal handling is only presentation
 
-After restoration, the CPU topology and mesh may remain valid while all GPU objects require recreation. The current cache hit path can skip `bindMesh()` because the topology key did not change.
+`showFatal()` sets `stopped`, writes text and logs the error. It creates no failure ID, lifecycle state, classification, resource-impact record, cleanup result or recovery policy.
 
-### Renderer readiness is not fenced
+### Capabilities survive fatal state
 
-Loss does not invalidate:
+The raw game and editor capabilities remain callable:
 
 ```txt
-lastRender
-renderer snapshot
-HUD gpu status
-GameHost render observations
-editor capture eligibility
-committed-frame eligibility
+runtime.tick
+runtime.reset
+scene.getRenderPlan
+renderer.getSnapshot
+renderer.capture
+GameHost.game.tick/reset/rebuildRenderPlan
 ```
 
-### Restoration is not transactional
+### Capture remains stale-capable
 
-There is no staged recreation, validation, candidate draw, atomic commit or rollback for program, locations and buffers.
+Canvas serialization can continue after fatal state and is paired with the latest renderer snapshot without failure state or committed-frame admission.
 
-### Capture has no freshness contract
+### In-place restart reuses the damaged graph
 
-Canvas pixels and renderer metadata are returned together without a shared frame ID, context generation or resource generation.
+`start()` schedules the same frame callback with the same game, renderer, enhancer, bridge, globals and observations. No new session, renderer, resource or frame generation is allocated.
 
-### Disposal and late events are uncoordinated
+### Disposal is disconnected from failure
 
-Explicit renderer disposal deletes buffers and the program, but listener ownership and stale restore-event rejection do not exist. This must be integrated with the retained runtime lifecycle authority.
+The renderer and editor bridge expose `dispose()`, but boot and frame failure paths do not invoke them. Cleanup failure is also not representable.
 
-## Missing recovery fixtures
+### Late callbacks are not fenced
+
+There is no predecessor-session or callback-generation check to reject work that arrives after fatal retirement or cold restart.
+
+## Missing fatal-recovery fixtures
 
 ```txt
-DOM-free context state transition fixture
-resource-generation fixture
-real browser WEBGL_lose_context fixture
-same-topology restoration fixture
-loss-during-rebuild fixture
-capture freshness fixture
-repeated recovery leak fixture
-dispose-during-restore fixture
+startup acquisition rollback fixture
+partial global-publication fixture
+failure-after-tick rollback fixture
+plan-validation failure fixture
+mesh/buffer/draw failure injection fixture
+fatal capability quarantine fixture
+fatal capture rejection fixture
+cleanup failure fixture
+in-place restart rejection fixture
+cold replacement-session fixture
+repeated failure/restart leak fixture
+terminal disposal idempotency fixture
 ```
+
+## Retained WebGL context recovery gaps
+
+```txt
+context events are unowned
+context and resource generations are absent
+same topology can conceal invalid GPU resources
+renderer readiness and capture are not fenced
+restoration is not transactional
+repeated restoration and late-event fixtures are absent
+```
+
+A recoverable WebGL context loss must route through the context-recovery authority. Unknown, invariant-breaking or cleanup-compromised failures must retire the graph and cold restart.
 
 ## Retained DSK registry truth gaps
 
@@ -122,6 +140,7 @@ capability registration remains bypassable
 session and lifecycle fences absent
 transport success can conceal domain failure
 public observations are not revisioned
+fatal capability quarantine is absent
 ```
 
 ## Retained runtime step and clock gaps
@@ -142,6 +161,7 @@ stop does not cancel pending callbacks
 stop/start can create duplicate RAF chains
 boot discards the host controller
 fatal handling does not coordinate disposal
+cold replacement-session ownership is absent
 ```
 
 ## Retained source-provider gaps
@@ -150,6 +170,7 @@ fatal handling does not coordinate disposal
 provider selection has no typed admission result
 external and fallback plans lack parity classification
 production import/export failure cannot reach the local fallback
+provider failure cleanup and retry policy are absent
 ```
 
 ## Retained render and committed-frame gaps
@@ -161,8 +182,9 @@ enhancer and renderer invalidation are uncoordinated
 state, plan, renderer and canvas lack one commit identity
 editor tick and reset bypass visible rendering
 WebGL context and resource generation are absent
+fatal candidate rollback and last-known-good frame ownership are absent
 ```
 
 ## Deployment risk
 
-A Pages route can pass static, mesh and screenshot checks while remaining unable to recover from a browser WebGL context loss. A pre-loss screenshot and a stale renderer snapshot are not proof that a restored context owns valid resources or that capture describes a current visible frame.
+A Pages route can display a useful fatal message while leaving partially acquired globals, listeners, renderer resources and mutation capabilities alive. A later in-place `start()` or editor command can continue against a graph whose state, plan, buffers, canvas and snapshots no longer share a proven commit. Visible error text is not cleanup, quarantine or recovery proof.

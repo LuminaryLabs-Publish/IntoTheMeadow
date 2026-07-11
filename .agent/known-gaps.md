@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T06-38-59-04-00`
+**Updated:** `2026-07-11T08-31-33-04-00`
 
 ## Selection state
 
@@ -14,144 +14,156 @@ IntoTheMeadow selected as oldest eligible central-ledger entry
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Render cache identity gaps
+## Runtime step and clock gaps
 
-### Source plans have no revision authority
+### Multiple step producers share raw mutation
 
 ```txt
-provider fingerprint: absent from active render lineage
-source revision: absent
-complete source fingerprint: absent
-candidate versus committed raw-plan state: absent
+browser RAF -> game.tick
+browser editor -> GameHost.game.tick
+Node headless editor -> repeated game.tick
 ```
 
-### Source-key projection is incomplete
+There is no shared admission owner.
 
-`sourceTopologyKey()` omits render-affecting fields.
+### Numeric values are coerced, not validated
+
+`advanceGameState()` stores `Number(dt)` and `Number(time)`.
+
+Missing checks:
 
 ```txt
-path enabled, rutCount, pebbleCount
-wildflower color and accent
-rock color and accent
-tree-line color and accent
-focal-tree trunkRadius and trunkHeight
-focal-tree rootCount and leafClusterCount
-focal-tree shadowRadius and renderStyle
-raw wind state
-runtime performance override
+finite dt
+finite time
+non-negative dt
+configured dt range
+monotonic time
+expected prior frame
+session and clock epoch
 ```
 
-A change to one of these values can reuse the prior enhanced plan.
+### Browser editor can regress time
 
-### Cache-key schema is implicit
+`runtime.tick` defaults `time` to zero. It can run while RAF is active and advance `state.frame` outside the RAF path without enhancing or rendering a frame.
+
+### Node step count is unbounded
 
 ```txt
-source key schema ID: absent
-projection version: absent
-static versus dynamic field registry: absent
-unknown static field rejection: absent
-changed-field classification: absent
+Infinity -> non-terminating loop
+fractional count -> implicit extra iteration
+negative count -> zero work with completed response
+NaN count -> zero work with completed response
+very large count -> unbounded synchronous work
 ```
 
-### Rebuild is not a transaction
-
-`rebuildRenderPlan()` replaces the cached raw plan directly.
-
-It does not:
+### Headless local time can be poisoned
 
 ```txt
-validate a detached candidate
-increment a source revision
-compare canonical identities
-invalidate the enhancer
-invalidate the renderer
-return a typed result
-roll back after downstream failure
-wait for visible-frame acknowledgement
+dt = Infinity -> time becomes Infinity
+dt = NaN -> time becomes NaN
+dt < 0 -> time regresses
 ```
 
-### Enhancer and renderer caches are independently mutable
+### Reset ownership diverges
 
 ```txt
-planEnhancer.invalidate(): exposed only through raw owner
-renderer.dispose(): separate lifecycle operation
-coordinated invalidate/rebuild: absent
-cache admission result: absent
-cache journal: absent
+browser reset -> game state only
+Node reset -> game state + local time + enhancer invalidation
 ```
 
-### Mesh and GPU lineage is incomplete
+No shared clock epoch or first-post-reset result exists.
+
+### Capability success is not domain acceptance
+
+The editor protocol reports whether execution threw. It does not return semantic accepted, rejected, stale or duplicate step results.
+
+### No bounded journal or frame correlation
+
+Missing:
 
 ```txt
-sourceRevision -> sourceKey: absent
-sourceKey -> topologyKey: implicit only
-topologyKey -> meshKey: not exposed by renderer snapshot
-meshKey -> bufferGeneration: absent
-bufferGeneration -> committedFrameId: absent
+step command ID
+step sequence
+source identity
+accepted count
+rejection reason
+clock epoch
+bounded journal
+render commit ID
+first post-reset frame acknowledgement
 ```
 
-### Validation proves shape, not identity coverage
-
-Current render validation checks required descriptor families and unknown types.
-
-It does not prove:
+## Required fixture gaps
 
 ```txt
-all render-affecting source fields are hashed
-all source descriptors contribute to expected enhanced descriptors
-all enhanced descriptors contribute to expected mesh families
-mesh payload matches topology identity
-GPU buffers match mesh identity
+finite dt and time rejection
+negative and out-of-range dt rejection
+integer step-count validation
+step budget enforcement
+monotonic time enforcement
+browser RAF/editor concurrency
+session and expected-frame fencing
+duplicate command handling
+reset epoch retirement
+browser/Node result-schema parity
+step-to-render correlation
 ```
 
-### Current tests cover only stable time updates
+## Retained lifecycle gaps
 
 ```txt
-time-only cache hit: covered
-static mutation rebuild matrix: absent
-dynamic-only no-rebuild matrix: absent
-manual invalidation: absent
-failed candidate rollback: absent
-identical deterministic rebuild lineage: absent
-GPU buffer generation: absent
-host/editor lineage agreement: absent
+RAF request handles are not retained
+stop does not cancel a pending callback
+stop/start can create duplicate RAF chains
+boot discards the returned host controller
+GameHost and editor globals have incomplete lease ownership
+fatal handling does not coordinate disposal
+```
+
+Runtime Session Lifecycle Authority remains the prerequisite for the step clock.
+
+## Retained source-provider gaps
+
+```txt
+production fallback is unreachable after external import or export failure
+tests use the local fallback instead of the deployed external provider
+provider selection has no typed admission result
+external and fallback plans lack parity classification
+```
+
+## Retained render-cache gaps
+
+```txt
+source revision absent
+render-affecting projection incomplete
+cache key schema implicit
+rebuild not transactional
+enhancer and renderer invalidation uncoordinated
+mesh and GPU buffer lineage incomplete
+```
+
+## Retained committed-frame gaps
+
+```txt
+state changes before render success
+lastPlan changes before renderer completion
+editor tick and reset bypass rendering
+state, plan, renderer and canvas lack one commit identity
 ```
 
 ## Retained interaction command gaps
 
 ```txt
 path-progress and inspect commands are authored but cannot be dispatched
-player/path mutation is absent
-objective predicates and story triggers are not executed
-accepted/rejected result authority is absent
+player and path mutation absent
+objective predicates and story triggers not executed
+accepted/rejected result authority absent
 ```
-
-Interaction work must consume render lineage when it later projects visible feedback.
-
-## Retained source-provider gaps
-
-```txt
-production fallback is unreachable after import/export failure
-tests use the local fallback rather than the deployed provider
-provider selection has no typed admission result
-external and fallback plans lack parity classification
-```
-
-Provider fingerprint and normalized source contract are prerequisites for authoritative render identity.
-
-## Retained lifecycle and frame gaps
-
-```txt
-RAF ownership and coordinated disposal remain incomplete
-committed state/plan/render/canvas correlation remains absent
-```
-
-The cache authority must integrate with one runtime session and one committed frame authority.
 
 ## Registry truth gap
 
-The DSK registry advertises render host, performance, wind, diagnostics, and renderer services, but declaration does not prove that a versioned identity projection or cache admission service exists.
+The DSK registry declares clock-adjacent responsibilities through game, host, player, input, diagnostics and render-host DSKs, but declaration does not prove a finite, monotonic or bounded runtime-step service exists.
 
 ## Deployment risk
 
-A deployed route can pass current render checks while a changed raw source plan silently reuses old enhanced descriptors and old GPU buffers. The screen may remain valid-looking but stale, and current CI cannot detect that mismatch.
+A headless automation request can hang the Node process with an infinite step count or poison time with a non-finite delta. A browser editor request can regress recorded time and advance state outside the RAF-render path while still returning a successful capability response. Current CI cannot detect these failures.

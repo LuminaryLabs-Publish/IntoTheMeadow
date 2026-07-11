@@ -2,176 +2,192 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T17-30-56-04-00`
+**Updated:** `2026-07-11T19-01-08-04-00`
 
 ## Goal
 
-Preserve the current meadow composition while making context loss, GPU-resource reconstruction, restored-frame commitment and capture freshness explicit. Do not add recovery as an isolated renderer flag; integrate it with lifecycle, topology, committed-frame and diagnostics ownership.
+Preserve the current meadow and renderer while making every startup or frame failure enter a typed lifecycle state with reverse cleanup, last-known-good frame retention, public capability quarantine, deterministic disposal and a cold replacement-session recovery path.
 
 ## Plan ledger
 
-- [ ] Preserve current render-plan and visual composition.
+- [ ] Preserve the current source plan, visual composition and descriptor contract.
 - [ ] Complete Runtime Session Lifecycle Authority first.
-- [ ] Complete Host Capability Gateway and raw runtime quarantine.
-- [ ] Complete workspace path containment and typed filesystem results.
-- [ ] Complete runtime-step admission and monotonic clock policy.
-- [ ] Complete source-provider identity and admission.
-- [ ] Complete render-topology identity and transactional rebuild ownership.
-- [ ] Add renderer instance identity and canvas ownership.
-- [ ] Register leased `webglcontextlost` and `webglcontextrestored` listeners.
-- [ ] Add context phase and strictly increasing context generation.
-- [ ] Add a complete GPU resource registry and resource generation.
-- [ ] Fence render submission and capture during lost/restoring/failed phases.
-- [ ] Invalidate current committed-frame eligibility on loss.
-- [ ] Recreate program, locations and buffers after every restoration.
-- [ ] Force GPU buffer upload even when topology is unchanged.
-- [ ] Stage and validate rebuilt resources before publication.
-- [ ] Submit and commit a first recovered frame.
-- [ ] Correlate renderer, HUD, GameHost and capture with frame/context/resource generations.
-- [ ] Add typed loss, restore, failure and stale-event results.
-- [ ] Add bounded recovery observations and diagnostics.
-- [ ] Add DOM-free state and resource-generation fixtures.
-- [ ] Add real-browser `WEBGL_lose_context` coverage.
-- [ ] Add capture-freshness and repeated-recovery fixtures.
-- [ ] Wire recovery fixtures into `npm run check` or an explicit browser gate.
-- [ ] Continue with committed-frame, interaction/objective and DSK-consumption gates.
+- [ ] Complete Host Capability Gateway and remove raw `GameHost.game` mutation authority.
+- [ ] Complete runtime-step admission and monotonic clock ownership.
+- [ ] Complete source-provider admission and startup result identity.
+- [ ] Complete render-topology and committed-frame transaction ownership.
+- [ ] Integrate WebGL context recovery as the recoverable GPU-specific path.
+- [ ] Add startup candidate identity and phase tracking.
+- [ ] Register reverse cleanup immediately after every acquired provider, game, renderer, enhancer, global and listener lease.
+- [ ] Delay `GameHost` and `NexusEditorEnvironment` publication until startup commit.
+- [ ] Add typed startup failure and cleanup results.
+- [ ] Stage state, plan and render work before public frame commit.
+- [ ] Preserve the previous committed frame when candidate work fails.
+- [ ] Enter a quarantined fatal state after frame failure.
+- [ ] Fence tick, reset, rebuild and capture capabilities during failure.
+- [ ] Classify whether rollback, WebGL recovery or terminal graph retirement is permitted.
+- [ ] Reject in-place `start()` after terminal failure.
+- [ ] Add cold restart with new runtime, session, renderer, context/resource and frame generations.
+- [ ] Require a first committed replacement-session frame before readiness returns.
+- [ ] Make cleanup and disposal idempotent and observable.
+- [ ] Add startup, mid-frame, cleanup-failure, quarantine and repeated-restart fixtures.
+- [ ] Wire fixtures into `npm run check` or an explicit browser gate.
 
 ## Existing owners to update first
 
 ```txt
-meadow-webgl-renderer-v2-kit
-meadow-render-host-dsk
 web-host-dsk
-meadow-diagnostics-dsk
-browser editor renderer.capture adapter
+into-the-meadow-game-dsk
 runtime session lifecycle authority
-render topology identity authority
-committed frame observation authority
-browser observation and deployment fixtures
+Host Capability Gateway and Raw Runtime Quarantine
+Source Provider Authority
+Render Topology Identity Authority
+WebGL Context Recovery Authority
+Committed Frame Observation Authority
+meadow-webgl-renderer-v2-kit
+meadow-diagnostics-dsk
+browser editor bridge
+browser boot projection
+browser and deployment fixtures
 ```
 
 ## Candidate coordinating kits
 
 ```txt
-1. webgl-context-state-kit
-2. webgl-context-generation-kit
-3. webgl-context-event-adapter-kit
-4. webgl-render-admission-kit
-5. webgl-resource-registry-kit
-6. webgl-resource-generation-kit
-7. webgl-resource-rebuild-plan-kit
-8. webgl-context-loss-result-kit
-9. webgl-context-restore-transaction-kit
-10. webgl-recovered-frame-ack-kit
-11. webgl-capture-freshness-kit
-12. webgl-context-observation-kit
-13. webgl-context-recovery-journal-kit
-14. webgl-context-recovery-fixture-kit
+1. runtime-failure-id-kit
+2. runtime-failure-state-kit
+3. startup-acquisition-ledger-kit
+4. reverse-cleanup-stack-kit
+5. failure-classification-kit
+6. fatal-event-admission-kit
+7. frame-failure-result-kit
+8. last-known-good-frame-kit
+9. failure-quarantine-kit
+10. failure-capability-fence-kit
+11. failure-capture-fence-kit
+12. rollback-or-retire-plan-kit
+13. cleanup-result-kit
+14. failure-observation-kit
+15. restart-admission-kit
+16. cold-restart-transaction-kit
+17. terminal-disposal-kit
+18. fatal-recovery-journal-kit
+19. fatal-recovery-fixture-kit
 ```
 
-## Required context record
+## Required failure state
 
 ```txt
-WebglContextState
+RuntimeFailureState
   runtimeSessionId
   rendererInstanceId
-  canvasId
+  failureId
+  failureSequence
   phase
-  contextGeneration
-  resourceGeneration
-  lossSequence
-  restoreSequence
-  latestCommittedFrameId
-  latestRecoveredFrameId
+  classification
+  source
+  frameRequestId
+  lastCommittedFrameId
+  candidateStateRevision
+  candidatePlanRevision
+  resourceImpact
+  capabilitiesQuarantined
+  cleanupStatus
+  recoveryPolicy
+  terminal
   lastResult
 ```
 
-## Required resource record
+## Required startup result
 
 ```txt
-WebglResourceRegistry
-  rendererInstanceId
-  contextGeneration
-  resourceGeneration
-  topologyKey
-  meshKey
-  programReady
-  requiredAttributes
-  requiredUniforms
-  bufferCount
-  validation
+StartupResult
+  startupAttemptId
+  candidateSessionId
+  phaseReached
+  acquiredLeaseIds
+  publishedGlobalIds
   status
+  failure
+  cleanupResult
+  committedSessionId
+  firstCommittedFrameId
 ```
 
-Raw WebGL handles must remain private to the renderer.
-
-## Required loss result
+## Required frame failure result
 
 ```txt
-WebglContextLossResult
-  rendererInstanceId
-  previousContextGeneration
-  invalidatedResourceGeneration
-  invalidatedFrameId
-  lossSequence
-  status
-  reason
+FrameFailureResult
+  failureId
+  sessionId
+  frameRequestId
+  previousCommittedFrameId
+  candidateStateFrame
+  candidatePlanId
+  rendererPhase
+  resourceImpact
+  rollbackStatus
+  quarantineStatus
+  recoveryPolicy
 ```
 
-## Required restore result
+## Required cold restart result
 
 ```txt
-WebglContextRestoreResult
-  rendererInstanceId
-  contextGeneration
-  resourceGeneration
-  topologyKey
-  rebuiltProgram
-  rebuiltBufferCount
-  candidateFrameId
-  committedFrameId
+ColdRestartResult
+  predecessorSessionId
+  predecessorFailureId
+  cleanupResult
+  replacementSessionId
+  replacementRendererInstanceId
+  replacementContextGeneration
+  replacementResourceGeneration
+  replacementCommittedFrameId
   status
-  failures
 ```
 
 ## Acceptance cases
 
 ```txt
-loss before first frame
-loss after first frame
-loss after repeated topology cache hits
-restore with unchanged topology
-restore with changed topology
-loss during staged rebuild
-loss during candidate draw
-capture during lost state rejected
-capture before recovered frame rejected
-capture after recovered frame correlated
-three repeated recovery cycles without leaks
-stop/dispose during lost or restoring state
+external-provider import failure before game construction
+game construction failure
+renderer construction failure
+editor installation failure
+failure immediately after game.tick
+render-plan validation failure
+mesh construction failure
+buffer replacement failure
+first draw failure
+second draw failure
+HUD projection failure
+cleanup callback failure
+fatal state tick/reset/rebuild/capture rejection
+recoverable WebGL context loss routing
+terminal failure cold restart
+three repeated failure/restart cycles
+stop/dispose during failure recovery
 ```
 
 ## Rejection cases
 
 ```txt
-stale renderer or session event
-duplicate event sequence
-restore without accepted loss
-program from prior context generation
-buffer from prior context generation
-partial staged registry
-GL error during upload or draw
-capture with stale frame/context generation
-render after dispose
-late restore after disposal
+stale failure event
+failure from retired session
+in-place restart after terminal failure
+public capability invocation while quarantined
+capture without a current committed frame
+readiness before cleanup completes
+readiness before replacement first frame commits
+late callback from predecessor session
+partial startup global publication
 ```
 
-Every rejected transition must assert:
+Every rejected or failed transition must assert:
 
 ```txt
-no partial active resource registry
-no false renderer readiness
-no successful capture receipt
+no false ready state
+no new public frame commit
+no unowned global or listener lease
 one typed result
 one bounded journal row
 ```
@@ -187,6 +203,7 @@ one bounded journal row
 6. Render Topology Identity Authority
 6a. WebGL Context Recovery Authority
 7. Committed Frame Observation Authority
+7a. Fatal Runtime Failure Recovery Authority
 8. Interaction Command and Objective Authority
 9. DSK Runtime Consumption Authority
 ```
@@ -195,10 +212,10 @@ one bounded journal row
 
 ```txt
 renderer hot replacement
-multi-canvas renderer negotiation
-new post-process render targets
+multi-canvas host recovery
+new post-process passes
 new visual feature families
-promotion of generic recovery contracts into NexusEngine
+shared engine promotion
 ```
 
-Do not mark the renderer recovered because the browser emitted `webglcontextrestored`. Recovery requires a complete new-generation resource registry and a committed visible frame.
+Do not treat visible error text, `stopped = true`, a retained pre-failure snapshot or an in-place RAF restart as recovery proof.

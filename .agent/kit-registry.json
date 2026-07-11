@@ -1,20 +1,20 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-10T21-19-36-04-00",
-  "status": "runtime-lifecycle-then-committed-frame-authority-gates-planned",
-  "currentNextSlice": "IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate",
+  "generatedAt": "2026-07-10T22-58-36-04-00",
+  "status": "runtime-session-lifecycle-authority-gate-planned",
+  "currentNextSlice": "IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate",
   "immediateCompanionSlice": "IntoTheMeadow Committed Frame Observation Authority + Atomic Frame Fixture Gate",
-  "latestTracker": ".agent/trackers/2026-07-10T21-19-36-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T21-19-36-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T21-19-36-04-00-committed-frame-observation-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-10T21-19-36-04-00-atomic-frame-commit-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T21-19-36-04-00-tick-reset-render-commit-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T21-19-36-04-00-editor-tick-capture-commit-map.md",
+  "latestTracker": ".agent/trackers/2026-07-10T22-58-36-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-10T22-58-36-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-10T22-58-36-04-00-runtime-session-lifecycle-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-10T22-58-36-04-00-render-resource-lifecycle-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-10T22-58-36-04-00-stop-restart-frame-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-10T22-58-36-04-00-host-editor-lifecycle-command-map.md",
+  "latestLifecycleAudit": ".agent/lifecycle-audit/2026-07-10T22-58-36-04-00-session-ownership-rollback-contract.md",
   "latestFrameAuthorityAudit": ".agent/frame-authority-audit/2026-07-10T21-19-36-04-00-staged-frame-commit-contract.md",
-  "latestLifecycleAudit": ".agent/lifecycle-audit/2026-07-10T19-48-09-04-00-runtime-session-stop-dispose-restart-contract.md",
   "latestSourceAuthorityAudit": ".agent/source-authority-audit/2026-07-10T19-48-39-04-00-external-fallback-provider-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T21-19-36-04-00-committed-frame-fixture-gate.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-10T22-58-36-04-00-lifecycle-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
@@ -23,16 +23,32 @@
     "reason": "All eligible repositories were centrally tracked with root .agent state. IntoTheMeadow had the oldest central audit timestamp and was selected as the only product repository changed."
   },
   "interactionLoop": [
-    "browser boot and external source resolution",
-    "static game state and cached source-plan creation",
-    "renderer, enhancer, GameHost, and editor bridge construction",
+    "browser boot and DOM lookup",
+    "asynchronous external source resolution",
+    "game, renderer, and enhancer construction",
+    "GameHost global exposure",
+    "headless-editor global exposure and error-listener installation",
     "requestAnimationFrame tick with absolute time and fixed dt",
-    "live state mutation",
-    "source plan time overlay and enhancement",
-    "lastPlan publication before renderer submission",
-    "topology-keyed WebGL render",
-    "lastRender publication after renderer success",
-    "HUD, GameHost, editor, and capture readback"
+    "state mutation, source-plan overlay, enhancement, WebGL render, and HUD projection",
+    "successor RAF scheduling",
+    "controller stop/start surface with no retained RAF or dispose"
+  ],
+  "domainsInUse": [
+    "browser shell and DOM boot",
+    "runtime session construction",
+    "runtime lifecycle and RAF scheduling",
+    "external-kit import and source-provider selection",
+    "DSK registry and install validation",
+    "game/content state and reset",
+    "source-plan caching and render-plan contracts",
+    "terrain/path/environment/grass composition",
+    "wind/performance/postprocess enhancement",
+    "CPU mesh construction",
+    "WebGL program/buffer/cache/render/snapshot/disposal",
+    "GameHost global diagnostics",
+    "headless-editor capability routing and browser-error listeners",
+    "HUD/loading/fatal projection",
+    "Node fixture and Pages deployment"
   ],
   "authoredButInactiveGameplay": [
     "player movement",
@@ -69,7 +85,9 @@
     "headless-editor-bridge"
   ],
   "registryDeclaredKits": {
-    "external": ["meadow-area-kit"],
+    "external": [
+      "meadow-area-kit"
+    ],
     "local": [
       "into-the-meadow-game-dsk",
       "web-host-dsk",
@@ -117,25 +135,97 @@
     ]
   },
   "serviceGroups": {
-    "lifecycle": ["host construction", "RAF scheduling", "stop/start flags", "renderer disposal primitive", "editor bridge disposal primitive", "enhancer invalidation primitive"],
-    "frameAuthority": ["frame request sequencing", "state staging", "plan staging", "render consumption", "atomic commit", "failure retention", "bounded journals", "public projections"],
-    "sourceAuthority": ["external import", "external source generation", "fallback generation", "source validation", "source snapshots", "source-plan caching and rebuild"],
-    "composition": ["manifest", "registry", "install validation", "game state", "tick", "reset"],
-    "terrainPath": ["terrain sampling", "path corridor", "material layers", "topology hashing"],
-    "grass": ["density", "archetypes", "static batches", "patches", "draw groups", "wind", "LOD", "scaling", "debug"],
-    "render": ["mesh construction", "WebGL context", "shader", "buffer cache", "resize", "outline", "cel-fog", "snapshot", "dispose"],
-    "diagnostics": ["GameHost state", "game snapshot", "render plan", "renderer snapshot", "enhancer snapshot"],
-    "editor": ["runtime tick/reset", "scene reads", "renderer reads", "canvas capture", "viewport", "errors", "listener disposal"],
-    "deployment": ["static route", "Pages workflow", "offline Node smoke checks", "production external CDN dependency"]
+    "lifecycle": [
+      "host construction",
+      "Boolean stop/start",
+      "editor disposal primitive",
+      "renderer disposal primitive",
+      "uncoordinated global exposure",
+      "fatal DOM projection"
+    ],
+    "sourceAuthority": [
+      "external import",
+      "external source generation",
+      "fallback generation",
+      "source validation",
+      "source snapshots",
+      "source-plan caching and rebuild"
+    ],
+    "composition": [
+      "manifest",
+      "registry",
+      "install validation",
+      "game state",
+      "tick",
+      "reset"
+    ],
+    "terrainPath": [
+      "terrain sampling",
+      "path corridor",
+      "material layers",
+      "topology hashing"
+    ],
+    "grass": [
+      "density",
+      "archetypes",
+      "static batches",
+      "patches",
+      "draw groups",
+      "wind",
+      "LOD",
+      "scaling",
+      "debug"
+    ],
+    "render": [
+      "mesh construction",
+      "WebGL context",
+      "shader",
+      "buffer cache",
+      "resize",
+      "outline",
+      "cel-fog",
+      "snapshot",
+      "dispose"
+    ],
+    "diagnostics": [
+      "GameHost state",
+      "game snapshot",
+      "render plan",
+      "renderer snapshot",
+      "enhancer snapshot"
+    ],
+    "editor": [
+      "runtime tick/reset",
+      "scene reads",
+      "renderer reads",
+      "canvas capture",
+      "viewport",
+      "errors",
+      "listener disposal"
+    ],
+    "deployment": [
+      "static route",
+      "Pages workflow",
+      "offline Node smoke checks",
+      "production external CDN dependency"
+    ]
   },
   "plannedLifecycleProofKits": [
     "runtime-session-identity-kit",
+    "runtime-lifecycle-state-kit",
+    "runtime-lifecycle-command-kit",
     "runtime-lifecycle-result-kit",
     "raf-ownership-kit",
+    "run-generation-fence-kit",
     "resource-ownership-ledger-kit",
+    "cleanup-stack-kit",
     "global-exposure-lease-kit",
+    "startup-rollback-kit",
+    "fatal-transition-kit",
     "runtime-lifecycle-journal-kit",
-    "runtime-lifecycle-fixture-kit"
+    "GameHost-lifecycle-observation-kit",
+    "headless-editor-lifecycle-capability-kit",
+    "runtime-lifecycle-fixture-adapter-kit"
   ],
   "plannedFrameProofKits": [
     "frame-request-kit",
@@ -176,10 +266,13 @@
     "headless-editor-gameplay-command-kit",
     "meadow-command-replay-fixture-kit"
   ],
-  "remainingCompanionProofKits": ["mesh-contribution-ledger-kit", "registry-truth-snapshot-kit"],
-  "mainFinding": "State, enhanced plan, renderer result, canvas evidence, GameHost, and editor observations are published from separate phases without a committed-frame id. Render failure or editor tick/reset can therefore expose mixed-generation facts.",
+  "remainingCompanionProofKits": [
+    "mesh-contribution-ledger-kit",
+    "registry-truth-snapshot-kit"
+  ],
+  "mainFinding": "The browser discards the resolved host controller, RAF ids are never retained or cancelled, stop/start can fork two frame chains, construction has no rollback ledger, and fatal handling does not release renderer, editor listeners, or global exposures.",
   "implementationOrder": [
-    "Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate",
+    "Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate",
     "Committed Frame Observation Authority + Atomic Frame Fixture Gate",
     "Source Provider Authority + External/Fallback Parity Fixture Gate",
     "Interaction Command Authority + Objective Progress Fixture Gate",

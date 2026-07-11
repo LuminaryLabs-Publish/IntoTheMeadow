@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T14-08-51-04-00`
+**Updated:** `2026-07-11T15-49-49-04-00`
 
 ## Selection state
 
@@ -10,192 +10,194 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-AetherVale had a newer repo-local audit already in flight
-IntoTheMeadow selected as the oldest fully aligned eligible repository
+IntoTheMeadow selected as the oldest eligible documented repository
 only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## Interaction and objective gaps
+## DSK registry truth gaps
 
-### Authored definitions are not executable
+### Multiple declaration sources can drift
 
-`ARRIVAL_OBJECTIVES` and `ARRIVAL_INTERACTION_TARGETS` define `path-progress` and `inspect` behavior, but no runtime command accepts either action.
-
-### Game state mutation is frame-only
-
-`advanceGameState()` changes only:
+The same kit census is represented in:
 
 ```txt
-frame
-lastTick.dt
-lastTick.time
+dsk-registry.json
+src/content/dsk-registry.js
+src/dsks/index.js
+.agent/kit-registry.json
 ```
 
-It does not change:
+There is no generated canonical source or fixture asserting exact parity.
+
+### Descriptor status is policy, not runtime evidence
+
+`active-v0.1` means an ID is listed in `REQUIRED_V01_DSK_IDS`. `planned` means it is not. Neither state proves an implementation factory exists, an instance was created, or any consumer used a service.
+
+### Dependencies are absent
+
+Every generated local descriptor exposes:
 
 ```txt
-player.position
-player.pathProgress
-inspection state
-completedObjectiveIds
-activeObjectiveId
-storyBeatIds
+requires: []
+provides: [game:<derived-domain>]
 ```
 
-### Browser ingress is absent
+The registry cannot detect missing dependencies, duplicate providers, cycles, incompatible versions or activation order.
 
-The web host installs no keyboard, pointer, proximity or interaction listeners. Each frame sends only `{ time, dt }` into `game.tick()`.
+### Service bindings are absent
 
-### Editor ingress is absent
-
-The browser and Node editor capability sets include runtime, scene, renderer, camera, browser and workspace operations, but no interaction, player or objective commands.
-
-### Canonical target admission is absent
-
-There is no command envelope carrying:
+Descriptors contain service-name strings but no:
 
 ```txt
-command ID
-session ID
-epoch
-scene ID
-target ID
-action kind
-sequence
-progress or range evidence
-expected objective revision
+implementation module
+factory reference
+instance ID
+source repository
+commit or version identity
+capability binding
+lifecycle methods
+consumer list
 ```
 
-### Target descriptors are not indexed
+### `installDsks()` does not install local kits
 
-The target list is exposed as content, but no canonical scene-scoped target index resolves `arrival-path` or `focal-tree` for mutation.
+It validates descriptor shape and returns descriptor arrays. It does not instantiate local kits, resolve capabilities, prepare an activation transaction or produce per-kit results.
 
-### Path progress is absent
+### External provider admission is weak
 
-The initial state sets `pathProgress: 0`; no runtime computes movement along `arrival-path`, validates finite progress or commits threshold crossings.
+The external row is marked `loaded` when a truthy function exists. It does not record provider repository, commit, export identity, validation result, fallback parity or service fingerprint.
 
-### Inspection receipts are absent
+### Runtime consumers bypass the registry
 
-There is no inspection ledger, duplicate classification, range policy, target receipt or no-mutation duplicate result.
+The render-plan enhancer imports concrete tree, wind, performance, post-process and grass factories directly. No service lookup or consumption receipt connects those instances to the generated descriptors.
 
-### Objective evaluation is absent
+### Renderer descriptor drift exists
 
-No service evaluates:
+`meadow-webgl-renderer-v2-kit` is required and implemented, but it is missing from the descriptor label and service maps. The generated descriptor receives generic fallback services instead of the renderer's real contract.
+
+### Diagnostics report counts, not truth
+
+Current diagnostics expose local/external counts and aggregate validation. They do not distinguish:
 
 ```txt
-progressAtLeast: 0.35
-inspected: true
-requiredAction
-targetId
-objective ordering
+declared
+implementation-bound
+install-planned
+installed
+active
+consumed
+failed
+degraded
+retired
 ```
 
-### Completion and story transitions are absent
+### Lifecycle retirement is absent
 
-No typed objective completion result exists. Active-objective advancement and story-beat transitions are not connected to gameplay state.
+No registry-owned disposal plan exists. Reset and stop cannot prove reverse dependency retirement or that consumers released active instances.
 
-### Render and diagnostics acknowledgement is absent
+### Registry tests prove shape only
 
-Diagnostics count objectives and targets but do not expose progress, completion, command result, revision or committed-frame evidence. The render path does not consume progression state.
+The DSK smoke checks count and five architecture layers. It does not execute implementation binding, dependency resolution, service consumption, failure rollback or disposal.
 
-## Required interaction fixture gaps
+## Concrete false-positive cases
 
 ```txt
-path progress below threshold
-path progress at threshold
-finite and monotonic progress validation
-canonical target lookup
-unknown target rejection
-wrong action rejection
-focal-tree inspect success
-duplicate inspect no-mutation
-objective completion exactly once
-objective ordering and story transition
-browser/editor ingress parity
-reset and stale epoch rejection
-state/diagnostic/frame revision parity
+player/input/interaction/objective DSKs validate despite inert gameplay
+runtime-used tree and wind DSKs can be labelled planned
+renderer implementation runs while its descriptor advertises fallback services
+all descriptors can pass even when no local kit is instantiated by installDsks()
+```
+
+## Required DSK consumption fixture gaps
+
+```txt
+canonical definition parity across JSON and source
+one implementation binding per active kit
+source identity and version/fingerprint capture
+dependency graph and cycle rejection
+missing and duplicate provider rejection
+ordered staged installation
+atomic activation and rollback
+capability-based service lookup
+consumer acknowledgement receipts
+external provider admission and validation
+status derivation from runtime evidence
+reverse-order reset and disposal
+renderer service-contract parity
+runtime-used grass/tree/wind/post consumption proof
+declared-only classification for inert gameplay domains
+```
+
+## Retained interaction and objective gaps
+
+```txt
+path-progress and inspect commands absent
+player path progress remains zero
+inspection receipts absent
+objective predicates and completion results absent
+story transitions absent
+browser/editor interaction parity absent
+committed-frame progression acknowledgement absent
 ```
 
 ## Retained workspace path gaps
 
 ```txt
-raw target.startsWith(root) membership
-sibling-prefix escape
-symlink escape
-new-write ancestor containment
-root/session/revision identity
-operation budgets and relative-path redaction
-typed filesystem results
+segment-aware containment absent
+symlink escape policy absent
+new-write ancestor containment absent
+root/session/revision identity absent
+operation budgets and typed filesystem results absent
 ```
 
 ## Retained host capability gaps
 
 ```txt
 GameHost exposes raw game authority
-capability registration is bypassable
-session and lifecycle fences are absent
-transport success conceals domain status
-command identity and bounded journals are absent
+capability registration remains bypassable
+session and lifecycle fences absent
+transport success can conceal domain failure
 public observations are not revisioned
-host controller ownership is discarded
 ```
 
 ## Retained runtime step and clock gaps
 
 ```txt
-browser RAF, browser editor and Node editor share raw game.tick
-finite delta validation absent
-integer step-count validation absent
+browser RAF and editor surfaces share raw game.tick
+finite delta and integer step validation absent
 maximum work budget absent
 monotonic simulation clock absent
-reset epoch absent
-step result and journal absent
+reset epoch and step journal absent
 ```
 
 ## Retained lifecycle gaps
 
 ```txt
-RAF request handles are not retained
-stop does not cancel pending callback
+RAF request handles not retained
+stop does not cancel pending callbacks
 stop/start can create duplicate RAF chains
-boot discards returned host controller
-GameHost and editor globals have incomplete lease ownership
+boot discards the host controller
 fatal handling does not coordinate disposal
 ```
 
 ## Retained source-provider gaps
 
 ```txt
-production fallback is unreachable after external import/export failure
-tests use local fallback rather than deployed provider
 provider selection has no typed admission result
 external and fallback plans lack parity classification
+production import/export failure cannot reach the local fallback
 ```
 
-## Retained render-cache gaps
+## Retained render and committed-frame gaps
 
 ```txt
-source revision absent
-render-affecting projection incomplete
-cache key schema implicit
-rebuild not transactional
-enhancer and renderer invalidation uncoordinated
-mesh and GPU buffer lineage incomplete
-```
-
-## Retained committed-frame gaps
-
-```txt
-state changes before render success
-lastPlan changes before renderer completion
-editor tick and reset bypass rendering
+render-affecting cache projection incomplete
+rebuild is not transactional
+enhancer and renderer invalidation are uncoordinated
 state, plan, renderer and canvas lack one commit identity
+editor tick and reset bypass visible rendering
 ```
-
-## Registry truth gap
-
-The registry declares player, input, interaction, objective and story DSK services, but declarations do not prove runtime consumption. The implemented game exposes authored content only.
 
 ## Deployment risk
 
-Current checks validate DSK declarations, render plans, renderer behavior and editor loops, but they do not prove that a player can complete either authored objective. A static Pages deployment can therefore appear healthy while the gameplay loop remains inert.
+A Pages build can report a valid 43-entry local registry while the registry has resolved zero local services and the two authored objectives remain impossible. Deployment proof must require both DSK consumption parity and executable gameplay behavior, not declaration counts alone.

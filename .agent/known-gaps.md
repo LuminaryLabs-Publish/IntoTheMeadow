@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T15-49-49-04-00`
+**Updated:** `2026-07-11T17-30-56-04-00`
 
 ## Selection state
 
@@ -14,118 +14,82 @@ IntoTheMeadow selected as the oldest eligible documented repository
 only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## DSK registry truth gaps
+## Current WebGL context recovery gaps
 
-### Multiple declaration sources can drift
+### Context events are unowned
 
-The same kit census is represented in:
+No runtime owner registers or admits:
 
 ```txt
-dsk-registry.json
-src/content/dsk-registry.js
-src/dsks/index.js
-.agent/kit-registry.json
+webglcontextlost
+webglcontextrestored
 ```
 
-There is no generated canonical source or fixture asserting exact parity.
+The host cannot deliberately prevent default loss handling, suspend submissions, sequence restoration or reject stale events.
 
-### Descriptor status is policy, not runtime evidence
+### No context generation exists
 
-`active-v0.1` means an ID is listed in `REQUIRED_V01_DSK_IDS`. `planned` means it is not. Neither state proves an implementation factory exists, an instance was created, or any consumer used a service.
+The runtime records no context identity or generation. A program, location or buffer cannot prove which browser context lifetime created it.
 
-### Dependencies are absent
+### No resource generation exists
 
-Every generated local descriptor exposes:
+The renderer tracks a topology key and CPU mesh but does not track a complete context-bound resource set. Program, locations and buffers are not committed or retired as one generation.
+
+### Same topology can conceal invalid GPU resources
+
+After restoration, the CPU topology and mesh may remain valid while all GPU objects require recreation. The current cache hit path can skip `bindMesh()` because the topology key did not change.
+
+### Renderer readiness is not fenced
+
+Loss does not invalidate:
 
 ```txt
-requires: []
-provides: [game:<derived-domain>]
+lastRender
+renderer snapshot
+HUD gpu status
+GameHost render observations
+editor capture eligibility
+committed-frame eligibility
 ```
 
-The registry cannot detect missing dependencies, duplicate providers, cycles, incompatible versions or activation order.
+### Restoration is not transactional
 
-### Service bindings are absent
+There is no staged recreation, validation, candidate draw, atomic commit or rollback for program, locations and buffers.
 
-Descriptors contain service-name strings but no:
+### Capture has no freshness contract
+
+Canvas pixels and renderer metadata are returned together without a shared frame ID, context generation or resource generation.
+
+### Disposal and late events are uncoordinated
+
+Explicit renderer disposal deletes buffers and the program, but listener ownership and stale restore-event rejection do not exist. This must be integrated with the retained runtime lifecycle authority.
+
+## Missing recovery fixtures
 
 ```txt
-implementation module
-factory reference
-instance ID
-source repository
-commit or version identity
-capability binding
-lifecycle methods
-consumer list
+DOM-free context state transition fixture
+resource-generation fixture
+real browser WEBGL_lose_context fixture
+same-topology restoration fixture
+loss-during-rebuild fixture
+capture freshness fixture
+repeated recovery leak fixture
+dispose-during-restore fixture
 ```
 
-### `installDsks()` does not install local kits
-
-It validates descriptor shape and returns descriptor arrays. It does not instantiate local kits, resolve capabilities, prepare an activation transaction or produce per-kit results.
-
-### External provider admission is weak
-
-The external row is marked `loaded` when a truthy function exists. It does not record provider repository, commit, export identity, validation result, fallback parity or service fingerprint.
-
-### Runtime consumers bypass the registry
-
-The render-plan enhancer imports concrete tree, wind, performance, post-process and grass factories directly. No service lookup or consumption receipt connects those instances to the generated descriptors.
-
-### Renderer descriptor drift exists
-
-`meadow-webgl-renderer-v2-kit` is required and implemented, but it is missing from the descriptor label and service maps. The generated descriptor receives generic fallback services instead of the renderer's real contract.
-
-### Diagnostics report counts, not truth
-
-Current diagnostics expose local/external counts and aggregate validation. They do not distinguish:
+## Retained DSK registry truth gaps
 
 ```txt
-declared
-implementation-bound
-install-planned
-installed
-active
-consumed
-failed
-degraded
-retired
-```
-
-### Lifecycle retirement is absent
-
-No registry-owned disposal plan exists. Reset and stop cannot prove reverse dependency retirement or that consumers released active instances.
-
-### Registry tests prove shape only
-
-The DSK smoke checks count and five architecture layers. It does not execute implementation binding, dependency resolution, service consumption, failure rollback or disposal.
-
-## Concrete false-positive cases
-
-```txt
-player/input/interaction/objective DSKs validate despite inert gameplay
-runtime-used tree and wind DSKs can be labelled planned
-renderer implementation runs while its descriptor advertises fallback services
-all descriptors can pass even when no local kit is instantiated by installDsks()
-```
-
-## Required DSK consumption fixture gaps
-
-```txt
-canonical definition parity across JSON and source
-one implementation binding per active kit
-source identity and version/fingerprint capture
-dependency graph and cycle rejection
-missing and duplicate provider rejection
-ordered staged installation
-atomic activation and rollback
-capability-based service lookup
-consumer acknowledgement receipts
-external provider admission and validation
-status derivation from runtime evidence
-reverse-order reset and disposal
-renderer service-contract parity
-runtime-used grass/tree/wind/post consumption proof
-declared-only classification for inert gameplay domains
+multiple declaration sources can drift
+descriptor status is policy rather than runtime evidence
+dependency requirements are empty
+implementation and service bindings are absent
+installDsks() creates no local instances
+runtime consumers bypass registry lookup
+renderer descriptor services drift from implementation
+runtime diagnostics report counts rather than consumption truth
+registry-owned reverse disposal is absent
+registry tests prove shape rather than runtime consumption
 ```
 
 ## Retained interaction and objective gaps
@@ -196,8 +160,9 @@ rebuild is not transactional
 enhancer and renderer invalidation are uncoordinated
 state, plan, renderer and canvas lack one commit identity
 editor tick and reset bypass visible rendering
+WebGL context and resource generation are absent
 ```
 
 ## Deployment risk
 
-A Pages build can report a valid 43-entry local registry while the registry has resolved zero local services and the two authored objectives remain impossible. Deployment proof must require both DSK consumption parity and executable gameplay behavior, not declaration counts alone.
+A Pages route can pass static, mesh and screenshot checks while remaining unable to recover from a browser WebGL context loss. A pre-loss screenshot and a stale renderer snapshot are not proof that a restored context owns valid resources or that capture describes a current visible frame.

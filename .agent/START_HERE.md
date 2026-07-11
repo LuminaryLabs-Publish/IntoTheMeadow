@@ -2,64 +2,73 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-11T15-49-49-04-00`
+**Last aligned:** `2026-07-11T17-30-56-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external meadow provider, 43 declared local DSK/kit entries, a WebGL renderer, a browser editor bridge and a Node headless-editor environment.
+`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local DSK/kit declarations, a persistent WebGL renderer, a browser editor bridge and a Node headless-editor environment.
 
-The current audit establishes that the local DSK registry is primarily a declaration census, not proof of runtime composition. `installDsks()` returns generated descriptors and counts, while the actual game and renderer import implementation factories directly. Dependency requirements, service bindings, instance identities, consumption receipts and disposal ownership are not represented by the registry.
+The current audit establishes a WebGL context-recovery gap. The renderer creates its program, attribute and uniform locations, and GPU buffers once. It installs no context-loss/restoration listeners, records no context or resource generation, and can retain a valid topology cache after the browser invalidates the underlying GPU objects.
 
 ## Plan ledger
 
-**Goal:** make the DSK registry truthfully distinguish declared, implemented, installed, active, consumed, failed and retired capabilities without changing current meadow rendering.
+**Goal:** make WebGL context loss and restoration an explicit, generation-fenced renderer transaction that commits a new visible frame before renderer readiness, diagnostics or canvas capture return to success.
 
 - [x] Compare all ten accessible `LuminaryLabs-Publish` repositories with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories remain centrally tracked with root `.agent` state.
 - [x] Select only `IntoTheMeadow` under the oldest documented-selection rule.
-- [x] Trace `dsk-registry.json`, source IDs, generated descriptors, installation, game state, diagnostics and smoke tests.
-- [x] Trace direct runtime imports that bypass descriptor-driven service resolution.
-- [x] Identify all active domains, declared kits and declared services.
-- [x] Define a DSK runtime-consumption authority and executable fixture gate.
-- [x] Refresh the required root `.agent` routing and validation state.
-- [ ] Runtime implementation and executable consumption fixtures remain future work.
+- [x] Trace browser boot, RAF, renderer creation, program and buffer ownership, snapshots, capture and current smoke coverage.
+- [x] Preserve the complete interaction, domain, kit and service inventory.
+- [x] Define WebGL context state, generation, resource rebuild and recovered-frame proof.
+- [x] Refresh the required root `.agent` state.
+- [ ] Runtime implementation and executable recovery fixtures remain future work.
 
 ## Current audited ledge
 
 ```txt
-IntoTheMeadow DSK Runtime Consumption Authority
-+ Declaration / Implementation / Install / Consumption Parity Fixture Gate
+IntoTheMeadow WebGL Context Recovery Authority
++ Context Generation / Resource Rebuild / Recovered Frame Fixture Gate
 ```
 
-This is the final currently documented architecture ledge. Earlier runtime-session, host-gateway, workspace, clock, provider, render-topology, committed-frame and interaction/objective gates remain prerequisites or consumers of this truth model.
+This ledge fits after render-topology ownership and before committed-frame publication. Earlier lifecycle, host-gateway, workspace, clock and source-provider gates remain prerequisites. The DSK runtime-consumption audit remains downstream and must eventually bind the renderer recovery services through truthful runtime evidence.
 
 ## Main finding
 
 ```txt
-dsk-registry.json
-  -> duplicates 43 local IDs
-  -> src/content/dsk-registry.js duplicates the same IDs
-  -> src/dsks/index.js generates metadata descriptors
-  -> installDsks() returns those descriptors and shape validation
-  -> game state stores a descriptor snapshot
-  -> diagnostics report counts
+renderer construction
+  -> acquire WebGL context once
+  -> compile/link program once
+  -> resolve attribute and uniform locations once
+  -> build buffers when topology key changes
 
-actual runtime
-  -> imports implementation factories directly
-  -> does not resolve services through the descriptor registry
-  -> does not record per-kit install or consumption results
+context loss
+  -> no listener
+  -> no state transition
+  -> no resource-generation invalidation
+  -> last renderer snapshot remains readable
+
+context restoration
+  -> no listener
+  -> no program rebuild
+  -> no location re-resolution
+  -> no forced buffer upload when topology is unchanged
+  -> no first recovered frame acknowledgement
 ```
 
-Additional concrete drift:
+A restored browser context can therefore be paired with previous-generation program and buffer handles while `cache.topologyKey`, `lastRender`, HUD diagnostics and editor capture still describe the pre-loss frame.
+
+## Required authority
 
 ```txt
-all local descriptor requires arrays: empty
-all local descriptor provides arrays: one generic game:<domain> token
-status source: required-v0.1 membership, not implementation evidence
-meadow-webgl-renderer-v2-kit service map: missing, so generic fallback services are emitted
-external loaded status: based on function truthiness, not provider identity or validation
-DSK smoke: checks count and five layers, not runtime binding or consumption
+meadow-webgl-context-recovery-authority-domain
+  -> context state and generation
+  -> loss/restore event admission
+  -> render and capture fences
+  -> GPU resource registry and generation
+  -> staged rebuild and rollback
+  -> first recovered frame acknowledgement
+  -> typed results, diagnostics and bounded journal
 ```
 
 ## Required implementation order
@@ -71,6 +80,7 @@ DSK smoke: checks count and five layers, not runtime binding or consumption
 4. Runtime Step Admission and Clock Integrity
 5. Source Provider Authority
 6. Render Topology Identity Authority
+6a. WebGL Context Recovery Authority
 7. Committed Frame Observation Authority
 8. Interaction Command and Objective Authority
 9. DSK Runtime Consumption Authority
@@ -79,18 +89,18 @@ DSK smoke: checks count and five layers, not runtime binding or consumption
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-11T15-49-49-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-11T15-49-49-04-00.md
+.agent/trackers/2026-07-11T17-30-56-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-11T17-30-56-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-11T15-49-49-04-00-dsk-runtime-consumption-authority-map.md
-.agent/render-audit/2026-07-11T15-49-49-04-00-renderer-registry-consumption-gap.md
-.agent/gameplay-audit/2026-07-11T15-49-49-04-00-declared-gameplay-service-consumption-loop.md
-.agent/dsk-registry-audit/2026-07-11T15-49-49-04-00-declaration-install-consumption-contract.md
-.agent/deploy-audit/2026-07-11T15-49-49-04-00-dsk-consumption-parity-fixture-gate.md
+.agent/architecture-audit/2026-07-11T17-30-56-04-00-webgl-context-recovery-authority-map.md
+.agent/render-audit/2026-07-11T17-30-56-04-00-context-loss-stale-render-snapshot-gap.md
+.agent/interaction-audit/2026-07-11T17-30-56-04-00-context-loss-restore-event-map.md
+.agent/webgl-context-audit/2026-07-11T17-30-56-04-00-context-generation-resource-rebuild-contract.md
+.agent/deploy-audit/2026-07-11T17-30-56-04-00-webgl-context-recovery-fixture-gate.md
 ```
 
 ## Exact inventory
@@ -102,9 +112,12 @@ external declared kits: 1
 local declared kits: 43
 total declared kits: 44
 required-v0.1 local kits: 15
-runtime interaction command capabilities: 0
-registry-backed runtime service resolutions: 0
-per-kit consumption receipts: 0
+WebGL context listeners: 0
+context generation fields: 0
+resource generation fields: 0
+recovered-frame acknowledgements: 0
 ```
 
-Update existing DSK owners before creating overlapping local packages. Generic registry, installation, dependency and consumption contracts should move to NexusEngine or ProtoKits only after the product-level fixture proves them.
+## Guardrails
+
+Update existing renderer, render-host, lifecycle, diagnostics, editor and committed-frame owners before creating overlapping packages. Keep meadow-specific adapters local. Promote generic recovery contracts into NexusEngine only after forced context-loss fixtures prove repeated restoration, rollback, capture freshness and disposal.

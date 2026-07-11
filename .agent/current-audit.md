@@ -2,33 +2,29 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T10-50-14-04-00`
+**Audit timestamp:** `2026-07-11T12-29-49-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed static meadow route with one commit-pinned external source kit, one local fallback source, 43 local DSK declarations, a render-plan enhancer, CPU mesh builder, WebGL renderer, browser editor bridge, Node headless editor and authored objective, interaction and story descriptors.
+`IntoTheMeadow` is a DSK-composed static browser meadow with one commit-pinned external provider, 43 local DSK declarations, a WebGL renderer, browser editor bridge and Node headless-editor environment.
 
-This pass audits the missing authority between public host exposure and internal runtime mutation. `GameHost` publishes the complete raw `game` object. Browser editor commands call that object directly, so capability registration is not the exclusive control surface.
+This pass audits the filesystem boundary behind the Node editor. The local `safePath()` helper resolves a path and checks `target.startsWith(root)`. That is a character-prefix check, not segment-aware containment, and it does not inspect symlink destinations.
 
 ## Plan ledger
 
-**Goal:** make all public runtime mutation enter one session-fenced capability gateway and expose only clone-safe, revisioned read models.
+**Goal:** make list, read, write and artifact operations use one canonical workspace authority with typed rejection, no-mutation guarantees and cross-platform fixtures.
 
-- [x] Enumerate the complete accessible Publish inventory.
+- [x] Enumerate ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Compare every eligible repository with the central ledger.
-- [x] Verify root `.agent/START_HERE.md` state for all eligible repositories.
+- [x] Verify nine eligible central ledger entries and root `.agent` states.
 - [x] Select only `IntoTheMeadow` as the oldest eligible entry.
-- [x] Read `AGENTS.md` and current audit history.
-- [x] Trace `startWebHost()`, `exposeGameHost()` and browser boot.
-- [x] Trace editor capability registration and invocation.
-- [x] Trace direct tick, reset and render-plan rebuild access.
-- [x] Trace state, plan, renderer and capture readbacks.
-- [x] Identify interaction loop, domains, kits and services.
-- [x] Add architecture, render, gameplay, interaction, capability and deploy audits.
-- [x] Refresh all required root `.agent` files.
+- [x] Read `AGENTS.md` and retained audits.
+- [x] Trace browser and Node interaction loops.
+- [x] Trace `safePath`, artifact writes and workspace operations.
+- [x] Inventory domains, kits and services.
+- [x] Add architecture, render, interaction, editor, security and deploy audits.
 - [x] Change documentation only.
-- [ ] Runtime implementation and executable fixtures remain future work.
+- [ ] Runtime implementation and fixtures remain future work.
 
 ## Selection state
 
@@ -36,55 +32,48 @@ This pass audits the missing authority between public host exposure and internal
 accessible Publish repos: 10
 eligible after exclusion: 9
 central ledger entries: 9
-root START_HERE files: 9
+root .agent states: 9
 new or missing eligible repos: 0
 selected: LuminaryLabs-Publish/IntoTheMeadow
 selection basis: oldest eligible central-ledger timestamp
 excluded: LuminaryLabs-Publish/TheCavalryOfRome
 ```
 
-## Interaction loop
+## Interaction loops
 
-### Browser route
+### Browser
 
 ```txt
 boot
-  -> import external meadow-area provider
-  -> create game, renderer and enhancer
-  -> expose GameHost with raw game reference
-  -> install NexusEditorEnvironment
-  -> RAF
-  -> game.tick
+  -> load external provider
+  -> create game, enhancer and WebGL renderer
+  -> expose GameHost and browser editor bridge
+  -> RAF tick
   -> enhance plan
-  -> render WebGL
-  -> update diagnostics
-  -> next RAF
+  -> render
+  -> diagnostics
 ```
 
-### Raw public mutation route
+### Node headless editor
 
 ```txt
-page script
-  -> GameHost.game
-  -> tick / reset / rebuildRenderPlan
-  -> direct internal mutation
-  -> no capability admission
-  -> no session or expected-frame fence
-  -> no typed domain result
-  -> no journal
-  -> no render acknowledgement
+createEnvironment
+  -> define project root and artifact root
+  -> create game and enhancer
+  -> register runtime, scene, renderer, browser and workspace capabilities
+  -> editor client invokes capability
+  -> capability executes local callback
 ```
 
-### Browser editor route
+### Workspace operation
 
 ```txt
-NexusEditorEnvironment.invoke
-  -> capability lookup
-  -> structuredClone input arguments
-  -> execute callback
-  -> runtime.tick calls GameHost.game.tick
-  -> runtime.reset calls GameHost.game.reset
-  -> completed means only that no exception occurred
+workspace.list/read/write or renderer.capture
+  -> caller-controlled path
+  -> safePath(root, path)
+  -> resolve(root, path)
+  -> target.startsWith(root)
+  -> filesystem operation
 ```
 
 ## Domains in use
@@ -92,21 +81,23 @@ NexusEditorEnvironment.invoke
 ```txt
 browser shell, DOM boot and fatal projection
 manifest and external dependency declaration
-source-provider discovery, loading, fallback and raw-plan production
-DSK registry, descriptor installation, validation and snapshots
+source-provider loading, fallback, source-plan generation and validation
+DSK registry, descriptor installation and snapshots
 game state, tick, reset, snapshot and diagnostics
-runtime session, RAF ownership and lifecycle
-public host capability registration, admission, sequencing and revocation
-browser editor capability routing and error observation
-Node headless editor runtime, artifacts and workspace capabilities
-runtime step commands, clock policy and work budget
+runtime lifecycle, RAF ownership and session authority
+public host capability routing, admission and revocation
+browser editor invocation and error observation
+Node headless editor runtime and workspace capabilities
+workspace root identity, path containment, symlink policy and I/O admission
+artifact path construction and capture publication
+runtime step admission, clock policy and work budget
 terrain, path, materials, grass, scatter, trees, wind and atmosphere
 render-plan enhancement, validation and topology identity
 performance, LOD and postprocess policy
 CPU mesh construction and contribution accounting
 WebGL resources, caching, rendering, snapshots and disposal
-GameHost and editor read-model projection
-static checks, headless smoke, build and Pages deployment
+GameHost and editor observations
+static checks, editor smokes, build and Pages deployment
 ```
 
 ## Kit inventory
@@ -119,123 +110,133 @@ required-v0.1 local kits: 15
 runtime source-backed surfaces: 24
 ```
 
-The complete per-kit service inventory remains recorded in:
+The complete per-kit service inventory is recorded in:
 
 ```txt
-.agent/trackers/2026-07-11T10-50-14-04-00/project-breakdown.md
+.agent/trackers/2026-07-11T12-29-49-04-00/project-breakdown.md
 .agent/kit-registry.json
+src/dsks/index.js
 ```
 
 ## Services offered by the current stack
 
 ```txt
-commit-pinned external source loading
+commit-pinned external meadow source loading
 fallback source-plan construction
 DSK descriptor registration and snapshots
 raw game state, tick, reset and render-plan rebuild
-browser RAF stepping
+browser RAF hosting
 browser editor capability lookup and invocation
-Node headless multi-step tick and reset
+Node headless runtime, scene and renderer capabilities
+workspace directory listing
+workspace file reading
+workspace directory creation and file writing
+capture JSON and SVG artifact writing
 render-plan enhancement and descriptor validation
 CPU mesh generation
 WebGL buffer caching and two-pass drawing
-GameHost and editor readback
-canvas capture
+GameHost and editor observations
 static checks and Pages deployment
 ```
 
 Services not currently offered:
 
 ```txt
-exclusive capability-owned mutation
-raw runtime quarantine
-session-fenced host command admission
-capability command IDs and sequence numbers
-typed accepted/rejected/duplicate/stale/unavailable results
-capability lease revocation
-bounded command/result journal
-clone-safe observation revisions
-state/read-model fingerprints
-browser/Node capability parity proof
-host-command to render-commit correlation
+segment-aware workspace containment
+realpath and symlink containment
+workspace root identity and revision
+operation-specific path policy
+read/write budgets
+no-mutation rejection proof
+workspace command and result identity
+bounded filesystem journal
+artifact pair transaction result
+cross-platform path fixture proof
 ```
 
-## Main finding: GameHost is an authority leak
+## Main finding: `startsWith` is not path containment
 
-`exposeGameHost()` publishes `game` directly. The object is frozen, but its methods remain callable and mutate closure-owned state or rebuild source-plan lineage.
+Current implementation:
 
-Publicly reachable methods include:
+```js
+function safePath(root, path = "") {
+  const target = resolve(root, path);
+  if (!target.startsWith(root)) throw new Error(`Path escapes editor root: ${path}`);
+  return target;
+}
+```
+
+Concrete sibling-prefix path:
 
 ```txt
-tick
-reset
-rebuildRenderPlan
-getRenderPlan
-getSnapshot
-getDiagnostics
+root:   /workspace/IntoTheMeadow
+input:  ../IntoTheMeadow-escape/out.txt
+target: /workspace/IntoTheMeadow-escape/out.txt
 ```
 
-The browser editor's capability callbacks call `gameHost.game.tick()` and `gameHost.game.reset()`. Therefore the capability registry does not own admission. A caller can bypass `NexusEditorEnvironment.invoke()` entirely.
+The target is outside the root but its string begins with the root string. The current check therefore admits it.
 
-`startWebHost()` also returns raw game, renderer, enhancer and editor bridge references. `boot-game.js` does not retain that controller, so no authoritative public owner can revoke the exposed surface after stop, fatal error, restart or disposal.
+A path under an inside-root symlink can also resolve on disk outside the root because `safePath()` never compares `realpath()` results.
 
-Input arguments are cloned before editor execution, but successful output is not normalized through one revisioned result contract. Read methods lack a shared observation revision, fingerprint, session lease and render commit identity.
+Affected services:
+
+```txt
+artifactRoot construction
+renderer.capture JSON output
+renderer.capture SVG output
+workspace.list
+workspace.read
+workspace.write
+```
+
+`workspace.write` can create parent directories recursively and write caller-controlled content after this incomplete admission check.
 
 ## Required parent domain
 
 ```txt
-meadow-host-capability-authority-domain
+meadow-workspace-path-authority-domain
 ```
 
-Update existing DSKs first:
+Update existing owners first:
 
 ```txt
-web-host-dsk
 into-the-meadow-game-dsk
-meadow-render-host-dsk
 meadow-diagnostics-dsk
+scripts/into-the-meadow-environment.mjs
+NexusEngine core-headless-editor-kit
 ```
 
-Add coordinating kits only:
+Candidate coordinating kits:
 
 ```txt
-host-capability-registry-kit
-host-command-envelope-kit
-host-command-admission-kit
-host-session-fence-kit
-raw-runtime-quarantine-kit
-gamehost-read-model-kit
-clone-safe-observation-kit
-capability-result-kit
-capability-sequence-kit
-capability-journal-kit
-capability-revocation-kit
-browser-editor-capability-adapter-kit
-headless-editor-capability-adapter-kit
-host-capability-fixture-kit
+workspace-root-identity-kit
+workspace-path-request-kit
+workspace-containment-policy-kit
+workspace-symlink-policy-kit
+workspace-operation-admission-kit
+workspace-artifact-path-kit
+workspace-operation-result-kit
+workspace-path-journal-kit
+headless-workspace-adapter-kit
+workspace-path-fixture-kit
 ```
 
-## Required public API
+Reusable containment belongs in NexusEngine. This repository owns allowed roots, operations, budgets and artifact policy.
+
+## Required proof
 
 ```txt
-GameHost.build
-GameHost.getSessionObservation()
-GameHost.listCapabilities()
-GameHost.invoke(command)
-GameHost.getStateObservation()
-GameHost.getDiagnosticsObservation()
-GameHost.getCommittedFrameObservation()
-```
-
-Forbidden public properties:
-
-```txt
-game
-renderer
-planEnhancer
-meadow provider
-WebGL resources
-unfenced tick/reset/rebuild/dispose functions
+accept root and normal descendants
+reject parent traversal
+reject sibling-prefix traversal
+reject outside absolute paths
+reject symlink traversal
+validate nearest existing ancestor for new writes
+perform no I/O on rejection
+use one policy for workspace and artifact operations
+return typed session-correlated results
+publish relative paths only
+run POSIX and Windows path-semantics fixtures where supported
 ```
 
 ## Ordered safe ledges
@@ -243,19 +244,20 @@ unfenced tick/reset/rebuild/dispose functions
 ```txt
 1. Runtime Session Lifecycle Authority
 2. Host Capability Gateway and Raw Runtime Quarantine
-3. Runtime Step Admission and Clock Integrity
-4. Source Provider Authority
-5. Render Topology Identity Authority
-6. Committed Frame Observation Authority
-7. Interaction Command Authority
-8. DSK Registry Consumption Proof
+3. Headless Workspace Path Authority and Filesystem Containment
+4. Runtime Step Admission and Clock Integrity
+5. Source Provider Authority
+6. Render Topology Identity Authority
+7. Committed Frame Observation Authority
+8. Interaction Command Authority
+9. DSK Registry Consumption Proof
 ```
 
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Host Capability Gateway
-+ Raw Runtime Quarantine / Observation Isolation Fixture Gate
+IntoTheMeadow Headless Workspace Path Authority
++ Sibling-Prefix / Symlink / Rejected-Write No-Mutation Fixture Gate
 ```
 
-Runtime Session Lifecycle Authority remains the prerequisite because the gateway lease must be installed, revoked and retired by one session owner.
+Runtime lifecycle and host capability authority remain prerequisites because workspace commands need one session lease and exclusive public command path.

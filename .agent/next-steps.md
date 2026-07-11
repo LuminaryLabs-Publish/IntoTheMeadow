@@ -2,93 +2,126 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T04-49-30-04-00`
+**Updated:** `2026-07-11T06-38-59-04-00`
 
 ## Goal
 
-Implement one narrow deterministic interaction authority for the two existing gameplay actions: path progress and focal-tree inspection. Every action must return a typed result, mutate player/objective/story state atomically when accepted, leave state unchanged when rejected and expose proof through GameHost and editor surfaces.
+Implement a versioned render identity and cache admission chain so every render-affecting source mutation rebuilds enhanced descriptors and GPU buffers exactly once, while time and other dynamic-only changes preserve static buffers.
 
 ## Plan ledger
 
-```txt
-[ ] Preserve the current meadow source, render-plan/v2 contract and visual output.
-[ ] Complete Runtime Session Lifecycle Authority before exposing restart-sensitive commands.
-[ ] Complete Source Provider Authority before claiming production/test parity.
-[ ] Update meadow-input-dsk with normalized action samples.
-[ ] Add a stable InteractionCommand envelope with commandId, sessionId, action, targetId, payload and requestedTick.
-[ ] Add command admission for known actions, known targets, active session and monotonic command sequence.
-[ ] Update meadow-player-dsk with deterministic movement/path-progress state transitions.
-[ ] Add path projection or an explicit normalized pathProgress command policy for the first fixture.
-[ ] Update meadow-interaction-dsk with target registry, range/affordance checks and inspect state.
-[ ] Add objective predicate evaluation for progressAtLeast and inspected.
-[ ] Commit objective completion and active-objective advancement atomically.
-[ ] Execute path-progress:0.25 and inspect:focal-tree story triggers exactly once.
-[ ] Return an InteractionResult for accepted, rejected, duplicate and stale commands.
-[ ] Add a bounded command/result journal.
-[ ] Project objective/story feedback without coupling it to renderer internals.
-[ ] Add GameHost dispatchCommand, getCommandJournal and getObjectiveState reads.
-[ ] Add browser editor interaction.dispatch and objective.getState capabilities.
-[ ] Add equivalent Node headless capabilities.
-[ ] Link command results to session, simulation tick and later committed-frame IDs.
-[ ] Add deterministic path-progress acceptance and rejection fixtures.
-[ ] Add deterministic focal-tree inspect in-range and out-of-range fixtures.
-[ ] Add duplicate/stale command fixtures.
-[ ] Add objective/story exactly-once transition fixtures.
-[ ] Add reset fixture proving command journals and progression reset correctly.
-[ ] Wire fixtures into npm run check.
-[ ] Run npm run check.
-[ ] Run browser and deployed Pages smoke tests.
-```
+- [ ] Preserve the current meadow composition and visible output.
+- [ ] Complete Runtime Session Lifecycle Authority before restart-sensitive rebuild commands.
+- [ ] Complete Source Provider Authority before claiming production/test source parity.
+- [ ] Add a monotonic source revision to accepted raw-plan production events.
+- [ ] Add a provider fingerprint to each source revision.
+- [ ] Define `meadow-source-render-key/v1`.
+- [ ] Create one canonical projection of every render-affecting source field.
+- [ ] Classify static, dynamic-uniform, frame-only, and observation-only fields.
+- [ ] Include path detail, scatter material, focal-tree geometry, performance, and relevant wind inputs.
+- [ ] Return typed cache admission results for hit, rebuild, reject, and invalidate.
+- [ ] Make `rebuildRenderPlan()` validate a candidate before replacing the committed raw plan.
+- [ ] Coordinate enhancer and renderer invalidation.
+- [ ] Add sourceRevision, sourceKey, topologyKey, meshKey, and bufferGeneration lineage.
+- [ ] Add deterministic mesh contribution counts and a mesh fingerprint.
+- [ ] Increment bufferGeneration only after successful GPU upload.
+- [ ] Preserve the last successful visible frame when candidate enhancement, mesh build, upload, or render fails.
+- [ ] Add a bounded cache admission/rebuild journal.
+- [ ] Expose clone-safe lineage through GameHost.
+- [ ] Add browser editor rebuild, invalidate, lineage, and journal capabilities.
+- [ ] Add equivalent Node headless capabilities.
+- [ ] Link future interaction results to source revision and committed frame lineage.
+- [ ] Add the complete static mutation matrix.
+- [ ] Add the dynamic-only no-rebuild matrix.
+- [ ] Add rollback and identical deterministic rebuild fixtures.
+- [ ] Wire all fixtures into `npm run check`.
+- [ ] Run `npm run check`.
+- [ ] Run browser and deployed Pages smoke tests.
 
 ## Required implementation order
 
 ```txt
-1. input-action-normalization update in meadow-input-dsk
-2. interaction-command-envelope-kit
-3. interaction-command-admission-kit
-4. player/path transition update in meadow-player-dsk
-5. interaction-target-query-kit
-6. path-progress-evaluator-kit
-7. inspect-admission-kit
-8. objective-predicate-evaluator-kit
-9. objective-transition-kit
-10. story-trigger-execution-kit
-11. interaction-result-kit
-12. interaction-command-journal-kit
-13. interaction-feedback-projection-kit
-14. interaction-observation-kit
-15. objective-progress-fixture-kit
+1. source-plan-revision-kit
+2. render-affecting-projection-kit
+3. render-cache-key-schema-kit
+4. render-cache-admission-kit
+5. render-cache-invalidation-kit
+6. render-lineage-kit
+7. mesh-contribution-fingerprint-kit
+8. gpu-buffer-generation-kit
+9. render-cache-journal-kit
+10. render-cache-observation-kit
+11. render-cache-mutation-fixture-kit
+```
+
+## Static mutation acceptance cases
+
+```txt
+path enabled changes -> rebuild
+path points or width changes -> rebuild
+path rutCount changes -> rebuild
+path pebbleCount changes -> rebuild
+flower color or accent changes -> rebuild
+rock color or accent changes -> rebuild
+tree-line color or accent changes -> rebuild
+focal-tree trunkRadius or trunkHeight changes -> rebuild
+focal-tree rootCount or branchCount changes -> rebuild
+focal-tree leafClusterCount or canopyRadius changes -> rebuild
+focal-tree shadow or render style changes -> rebuild
+performance density or LOD budget changes -> rebuild when topology changes
+provider output changes -> rebuild when normalized static projection changes
+```
+
+## Dynamic-only acceptance cases
+
+```txt
+time changes -> no static rebuild
+camera transform changes -> no mesh rebuild
+wind phase/time changes -> no mesh rebuild
+wind direction/strength changes -> uniform-only when policy declares it
+viewport resize -> no mesh rebuild
+identical deterministic source rebuild -> cache hit with new source revision lineage
+```
+
+## Rejection and rollback cases
+
+```txt
+unknown source type -> reject before cache mutation
+invalid source plan -> reject and preserve committed identities
+unsupported static field -> reject with field path
+stale expected source revision -> reject
+render after disposal -> reject
+failed enhancement -> preserve prior committed frame
+failed mesh build -> preserve prior committed frame
+failed GPU upload -> preserve prior committed frame
+failed draw -> preserve prior committed frame and record failure
 ```
 
 ## Acceptance criteria
 
 ```txt
-path-progress can advance the player from 0 to at least 0.35
-the 0.25 story beat fires once when the threshold is crossed
-walk-the-path completes once at 0.35 or greater
-inspect is rejected for unknown or out-of-range targets
-inspect:focal-tree is accepted in range
-inspect-tree completes once
-the focal-tree story beat fires once
-accepted commands atomically mutate all required state
-rejected commands mutate nothing
-duplicate command IDs do not repeat transitions
-every result contains stable reason and transition rows
-GameHost and both editor environments expose clone-safe command proof
-same initial state plus same command sequence yields the same final fingerprint
+all registered static mutations change staticRenderKey
+all dynamic-only changes preserve staticRenderKey
+changed staticRenderKey produces one enhanced topology rebuild
+changed mesh payload produces one new meshKey
+new meshKey produces one new bufferGeneration
+cache hits never change bufferGeneration
+failed candidates never replace committed lineage
+GameHost, editor, renderer snapshot, and canvas capture report one lineage
+journals remain bounded and clone-safe
+same source plus same policy yields the same identities
 ```
 
 ## Deferred until after this gate
 
 ```txt
-free-form first-person controls
-camera feel tuning
-new objectives or story beats
-audio
-save/load
-new UI progression
 visual retuning
 renderer replacement
 WebGPU migration
+new meadow content
+free-form controls
+new objectives or story beats
+audio
+save/load
 shared-kit promotion
 ```

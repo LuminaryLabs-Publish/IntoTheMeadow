@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T02-28-12-04-00`
+**Updated:** `2026-07-11T04-39-58-04-00`
 
 ## Selection state
 
@@ -10,200 +10,110 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as the oldest eligible documented fallback when this pass began
-a concurrent registry-truth audit landed during this pass
-only IntoTheMeadow changed by this pass
+IntoTheMeadow selected as the oldest eligible central ledger entry
+only IntoTheMeadow changed in the Publish organization
 ```
 
-## Registry census correction retained
+## Source-provider authority gaps
+
+### Production fallback is unreachable
+
+`startWebHost()` calls `loadExternalKits()` before game construction. A failed dynamic import or missing `createMeadowAreaKit` export throws before `createIntoTheMeadowGame()` can select its local fallback.
+
+### Tests do not exercise the deployed provider path
+
+Current Node tests call `createIntoTheMeadowGame()` without `externalKits`, so they exercise `createFallbackMeadowAreaKit`. A green `npm run check` does not prove the pinned external URL loads, exports the expected factory, produces a compatible raw plan or survives enhancement.
+
+### Provider selection has no typed result
 
 ```txt
-source local registry count: 43
-external registry count: 1
-total declared count: 44
-required-v0.1 local count: 15
-prior docs incorrectly said 44 local plus one external
+request id: absent
+candidate id: absent
+admission status: absent
+failure class: absent
+fallback reason: absent
+provider fingerprint: absent
+source-plan fingerprint: absent
+journal sequence: absent
 ```
 
-## Runtime controller reachability gaps
+### External and fallback contracts differ
 
 ```txt
-boot discards the resolved host controller
-GameHost does not expose lifecycle commands or state
-browser editor exposes no lifecycle capabilities
-no supported stop, restart, dispose, or lifecycle snapshot path
+version: 0.1.0 vs local-source-plan-v1
+scatter: path-relative RNG vs broad hash bands
+path: normalized descriptor vs copied authored config
+grass: normalized motion fields vs reduced placeholder
+atmosphere: normalized feature data vs hard-coded local values
+validation: structural checks vs always passed
+snapshot: full provider state vs minimal fallback summary
 ```
 
-## RAF ownership and multiplication gaps
+No parity policy says whether those differences are acceptable, degraded, incompatible or expected to normalize away.
+
+### No source-plan admission boundary
+
+The enhancer receives whichever raw plan the selected provider returns. Provider identity, expected raw schema, capabilities and compatibility are not checked together before enhancement.
+
+### No production-path fixture
 
 ```txt
-RAF ids are never retained
-stop does not cancel the pending RAF
-start can schedule while the old callback remains queued
-old and new callbacks can both observe stopped=false
-both callbacks tick, render, update HUD, and schedule successors
-no one-active-RAF invariant
-no runId or generation fence
-no restart transaction
+external import success fixture: absent
+network/import failure fixture: absent
+missing export fixture: absent
+module evaluation failure fixture: absent
+provider version mismatch fixture: absent
+invalid raw-plan fixture: absent
+external/fallback parity fixture: absent
+browser offline policy smoke: absent
 ```
 
-## Simulation cadence gaps
+## Retained runtime lifecycle gaps
 
 ```txt
-each callback applies fixed dt=1/60
-state.frame increments per callback
-duplicate RAF chains double frame advancement
-RAF timestamp time and fixed dt can diverge
-no clock authority or callback admission result
+RAF id not retained
+stop/start can multiply RAF chains
+boot discards host controller
+globals are overwritten without leases
+fatal startup does not roll back renderer/editor resources
+no coordinated idempotent dispose
 ```
 
-## Construction and rollback gaps
+Provider work must compose with the lifecycle authority rather than adding a second startup owner.
+
+## Retained frame-observation gaps
 
 ```txt
-resource acquisition has no cleanup stack
-startup phases have no typed results
-first-frame failure has no reverse-order rollback
-showFatal does not dispose renderer or editor bridge
-showFatal does not release or restore globals
-host controller has no dispose method
-renderer.dispose and editorBridge.dispose are not coordinated
-no terminal idempotency proof
+no immutable committed frame identity
+no shared state/plan/render/canvas correlation
+GameHost observations can mix different live moments
 ```
 
-## Global and listener ownership gaps
+Provider fingerprints should become inputs to committed-frame provenance after that authority exists.
+
+## Registry and service-truth gaps
 
 ```txt
-exposeGameHost overwrites target.GameHost without retaining the prior value
-editor bridge overwrites target.NexusEditorEnvironment
-editor disposal deletes its global but does not restore a prior owner
-error and unhandledrejection listeners survive stop and fatal failure
-no lease token, owner generation, conflict result, or release journal
+43 local kits are declared
+1 external kit is declared
+registry membership does not prove implementation
+implementation does not prove active consumption
+mesh contribution and renderer consumption remain unproved
 ```
 
-## Renderer lifetime gaps
+## Gameplay gaps
 
 ```txt
-renderer program and buffers live until renderer.dispose
-web host never coordinates renderer.dispose
-fatal render failure leaves WebGL resources live
-start remains available after fatal stop
-renderer dispose has no disposed guard or typed result
-render-after-dispose is not explicitly rejected
+player/camera/input descriptors are not runtime-authoritative
+interaction targets do not admit commands
+objectives and story do not mutate from player action
+save/audio/UI progression remain descriptor-only
 ```
 
-## Registry authority gaps
+## Validation gaps
 
-```txt
-active-v0.1 is derived from required-list membership
-membership does not prove implementation
-implementation does not prove import
-import does not prove invocation
-invocation does not prove output
-output does not prove consumer use
-consumer use does not survive into a proof ledger
-```
+The current smoke suite is useful for local fallback determinism and render enhancement, but it cannot establish source-provider parity or production dependency health.
 
-## Service-contract gaps
+## Deployment risk
 
-```txt
-meadow-webgl-renderer-v2-kit lacks complete explicit domain/service truth
-required renderer descriptor can diverge from the actual renderer contract
-fallback and adapter surfaces are source-backed but not registry IDs
-many declared gameplay/audio/save/UI kits are descriptor shells
-no automated comparison checks declared services against exports and consumers
-```
-
-## Atomic frame-publication gaps
-
-```txt
-game.tick changes state before render success
-lastPlan changes before renderer.render returns
-lastRender changes only after renderer success
-no frame request id, commit id, failed row, or canvas acknowledgement
-browser editor tick/reset bypass render commitment
-GameHost and capture combine independently sourced facts
-```
-
-## Source-provider gaps
-
-```txt
-browser requires the external CDN provider
-Node/headless can use fallback implicitly
-provider provenance is not one immutable observation
-external/fallback parity is asserted rather than measured
-```
-
-## Interaction and objective gaps
-
-```txt
-movement and action inputs are ignored
-no typed gameplay command/result contract
-walk-the-path and inspect-tree remain descriptors
-player.pathProgress and completedObjectiveIds never change
-```
-
-## Consumption-proof gaps
-
-```txt
-registry snapshot records descriptor status only
-no import or invocation ledger exists
-no producer-to-consumer edge list exists
-mesh builder does not retain per-kit contribution rows
-renderer snapshot does not retain kit or descriptor producer IDs
-gameplay loop does not retain descriptor-consumption rows
-editor and GameHost cannot query kit truth
-```
-
-## Required missing fixtures
-
-```txt
-runtime-controller-reachability-smoke
-runtime-single-raf-smoke
-runtime-stop-cancels-pending-raf-smoke
-runtime-stop-start-race-smoke
-runtime-restart-generation-smoke
-runtime-global-lease-restore-smoke
-runtime-first-frame-rollback-smoke
-runtime-fatal-disposal-smoke
-runtime-dispose-idempotency-smoke
-runtime-listener-release-smoke
-runtime-render-after-dispose-smoke
-committed-frame-coherence-smoke
-render-failure-no-partial-publish-smoke
-editor-tick-frame-commit-smoke
-capture-frame-correlation-smoke
-browser-node-frame-parity-smoke
-meadow-source-provider-contract-smoke
-meadow-interaction-command-smoke
-dsk-registry-census-smoke
-dsk-service-map-completeness-smoke
-dsk-implementation-resolution-smoke
-dsk-import-invocation-smoke
-dsk-producer-consumer-edge-smoke
-renderer-kit-service-contract-smoke
-mesh-contribution-ledger-smoke
-gameplay-descriptor-consumption-smoke
-```
-
-## Do not solve first
-
-```txt
-visual fidelity or asset expansion
-renderer replacement or WebGPU migration
-new meadow content
-postprocess expansion
-CDN migration before provider authority
-shared-kit promotion before proof
-audio/save/UI expansion
-gameplay reducers before lifecycle and frame commitment
-```
-
-## Current order
-
-```txt
-1. Runtime Session Lifecycle Authority + Single-RAF / Global-Lease / Rollback Fixture Gate
-2. Committed Frame Observation Authority + State/Plan/Render/Canvas Coherence Fixture Gate
-3. Source Provider Authority + External/Fallback Parity Fixture Gate
-4. Interaction Command Authority + Objective Progress Fixture Gate
-5. DSK Registry Truth + Mesh Contribution and Consumer Proof Fixture Gate
-```
+The deployed route has a single remote module dependency. A CDN, repository, CORS, module-evaluation or export-contract failure stops boot entirely, while the codebase gives the appearance of having a fallback that production cannot actually reach.

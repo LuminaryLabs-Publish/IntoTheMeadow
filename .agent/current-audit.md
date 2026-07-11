@@ -2,33 +2,33 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T06-38-59-04-00`
+**Audit timestamp:** `2026-07-11T08-31-33-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed static meadow route with one pinned external source kit, one local fallback source implementation, 43 local DSK declarations, a render-plan enhancer, a CPU mesh builder, a WebGL renderer, browser and Node editor surfaces, and authored interaction/objective/story descriptors.
+`IntoTheMeadow` is a DSK-composed static meadow route with one commit-pinned external source kit, one local fallback source, 43 local DSK declarations, a render-plan enhancer, CPU mesh builder, WebGL renderer, browser editor bridge, Node headless editor and authored objective, interaction and story descriptors.
 
-This pass audits the missing authority between raw source identity, enhanced topology, CPU mesh identity, GPU buffer generations, cache invalidation, rendered frames, and host/editor proof.
+This pass audits the missing authority between browser RAF stepping, browser editor stepping, Node headless multi-step execution, reset, simulation time, state frame sequence and rendered-frame observation.
 
 ## Plan ledger
 
-**Goal:** make persistent render caching correct in both directions: every render-affecting source mutation must rebuild exactly once, and every dynamic-only mutation must reuse static mesh buffers.
+**Goal:** make every runtime step finite, monotonic, bounded, session-owned and observable before movement, timed gameplay, replay or deterministic editor automation consumes the clock.
 
-- [x] Enumerate the complete accessible `LuminaryLabs-Publish` inventory.
+- [x] Enumerate the complete accessible Publish inventory.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Compare all eligible repositories with the central ledger.
+- [x] Compare every eligible repository with the central ledger.
+- [x] Verify root `.agent/START_HERE.md` state for all eligible repositories.
 - [x] Select only `IntoTheMeadow` as the oldest eligible entry.
-- [x] Read `AGENTS.md` and the current root `.agent` state.
-- [x] Trace raw source-plan construction and caching.
-- [x] Trace source-key projection and enhancer cache admission.
-- [x] Trace enhanced topology hashing and CPU mesh construction.
-- [x] Trace WebGL mesh/buffer caching, snapshots, and disposal.
-- [x] Trace rebuild, GameHost, and editor observation surfaces.
-- [x] Inspect current render-plan and renderer smoke tests.
-- [x] Identify the interaction loop, domains, kits, and services.
-- [x] Add architecture, render, gameplay, interaction, cache, and deploy audits.
-- [x] Refresh required root `.agent` files.
-- [x] Push documentation only to `main`.
+- [x] Read `AGENTS.md` and current audit history.
+- [x] Trace browser RAF tick production.
+- [x] Trace browser editor tick and reset capabilities.
+- [x] Trace Node headless time, tick loop and reset.
+- [x] Trace state frame and last-tick mutation.
+- [x] Inspect current command smoke coverage.
+- [x] Identify interaction loop, domains, kits and services.
+- [x] Add architecture, render, gameplay, interaction, clock, headless-editor and deploy audits.
+- [x] Refresh all required root `.agent` files.
+- [x] Change documentation only.
 - [ ] Runtime implementation and executable fixtures remain future work.
 
 ## Selection state
@@ -36,10 +36,11 @@ This pass audits the missing authority between raw source identity, enhanced top
 ```txt
 accessible Publish repos: 10
 eligible after exclusion: 9
-new or missing central ledgers: 0
-missing root .agent state: 0
+central ledger entries: 9
+root START_HERE files: 9
+new or missing eligible repos: 0
 selected: LuminaryLabs-Publish/IntoTheMeadow
-selection basis: oldest eligible central ledger
+selection basis: oldest eligible central-ledger timestamp
 excluded: LuminaryLabs-Publish/TheCavalryOfRome
 ```
 
@@ -48,70 +49,58 @@ excluded: LuminaryLabs-Publish/TheCavalryOfRome
 ### Browser route
 
 ```txt
-index.html
-  -> boot-game.js
-  -> startWebHost()
-  -> load pinned source provider
-  -> createIntoTheMeadowGame()
-  -> cache baseRenderPlan
-  -> install DSK descriptors
-  -> RAF
-  -> game.tick({ dt, time })
-  -> get time-overlay raw plan
-  -> enhancer.enhance(rawPlan)
-  -> source key hit or rebuild
-  -> render plan validation
-  -> renderer.render(plan)
-  -> topology key hit or mesh rebuild
-  -> GPU buffer reuse or upload
-  -> outline and color draw passes
-  -> GameHost/editor observations
+boot
+  -> create game, renderer and enhancer
+  -> expose GameHost and editor bridge
+  -> RAF callback
+  -> game.tick({ dt: 1/60, time: now/1000 })
+  -> enhance raw plan
+  -> render WebGL
+  -> update diagnostics
+  -> request next RAF
 ```
 
-### Explicit source rebuild
+### Browser editor route
 
 ```txt
-game.rebuildRenderPlan()
-  -> provider generates new raw plan
-  -> baseRenderPlan is replaced
-  -> no source revision
-  -> no source fingerprint result
-  -> no enhancer invalidation
-  -> no renderer invalidation
-  -> no committed-frame acknowledgement
+runtime.tick({ dt, time })
+  -> defaults dt to 1/60 and time to 0
+  -> calls GameHost.game.tick directly
+  -> mutates state while RAF may still run
+  -> returns state without plan/render/canvas commit
+```
+
+### Node headless route
+
+```txt
+runtime.tick({ dt, ticks })
+  -> Number(ticks)
+  -> synchronous loop
+  -> time += Number(dt)
+  -> game.tick({ dt, time })
+  -> returns time and state
 ```
 
 ## Domains in use
 
 ```txt
-browser shell and DOM boot
+browser shell, DOM boot and fatal projection
 manifest and external dependency declaration
-source-provider discovery, loading, fallback, validation, normalization, and caching
-DSK registry, descriptor registration, installation, validation, and snapshots
-game state, tick, reset, snapshot, and diagnostics
-terrain, path, grass, scatter, tree, wind, atmosphere, materials, and style composition
-render-plan/v2 enhancement, normalization, validation, and topology hashing
-performance, LOD, wind, and postprocess policy
+source-provider discovery, loading, fallback and raw-plan production
+DSK registry, descriptor installation, validation and snapshots
+game state, tick, reset, snapshot and diagnostics
+runtime session, RAF ownership and lifecycle
+runtime step commands, clock policy, work budget and result authority
+browser editor capability routing and error observation
+Node headless editor runtime, artifacts and workspace capabilities
+reset epoch and first-post-reset admission
+terrain, path, materials, grass, scatter, trees, wind and atmosphere
+render-plan enhancement, validation and topology identity
+performance, LOD and postprocess policy
 CPU mesh construction and contribution accounting
-WebGL shader, buffer, cache, render, snapshot, resize, and disposal
-GameHost and browser/Node editor observation
-HUD, loading, fatal projection, checks, build, and Pages deployment
-```
-
-Missing runtime-authoritative domains:
-
-```txt
-source revision and provider fingerprint
-canonical render-affecting projection
-versioned source-key schema
-cache admission and rejection results
-coordinated enhancer/renderer invalidation
-source-to-topology-to-mesh-to-buffer lineage
-mesh contribution fingerprint
-GPU buffer generation identity
-bounded cache journal
-clone-safe cache observation
-source mutation fixture authority
+WebGL resources, caching, rendering, snapshots and disposal
+GameHost, editor and capture observation
+static checks, headless smoke, build and Pages deployment
 ```
 
 ## Kit inventory
@@ -124,60 +113,39 @@ required-v0.1 local kits: 15
 runtime source-backed surfaces: 24
 ```
 
-External kit:
+The complete per-kit service inventory is recorded in:
 
 ```txt
-meadow-area-kit 0.1.0
-source: LuminaryLabs-Agents/NexusEngine-ProtoKits
-commit: 11d245913ba4d30f3ce950eb5a17e1cc6e4aa1f5
+.agent/trackers/2026-07-11T08-31-33-04-00/project-breakdown.md
+.agent/kit-registry.json
 ```
 
-All 43 declared local kit IDs and their services remain in `.agent/kit-registry.json`.
-
-Primary source-backed kits for this audit:
+Primary source-backed surfaces for this audit:
 
 ```txt
-fallback-meadow-area-kit
-  local source-plan generation, snapshot, and validation
-
-meadow-render-plan-enhancer-v2
-  source-key admission, enhancement, cache snapshot, and manual invalidation
-
-meadow-render-plan-v2
-  descriptor normalization, validation, topology projection, stable hashing, and time overlay
-
-meadow-mesh-builder-v2
-  CPU geometry buffers, descriptor contributions, mesh metrics, and mesh identity
-
-meadow-webgl-renderer-v2
-  context, shaders, attribute buffers, topology cache, rendering, snapshot, and disposal
-
-precision-safe WebGL compatibility adapter
-  one float precision declaration per graphics shader
-
+into-the-meadow game state and tick implementation
+web-host RAF adapter
 GameHost diagnostics surface
-  game, state, diagnostics, enhanced plan, enhancer snapshot, and renderer snapshot
-
 browser editor bridge
-  runtime, scene, renderer, viewport, capture, and error capabilities
-
-Node headless editor environment
-  plan, mesh, metrics, SVG, workspace, tick, reset, and observation capabilities
+Node headless-editor environment
+meadow-render-plan enhancer
+meadow-webgl-renderer-v2
+headless editor runtime from pinned NexusEngine dependency
 ```
 
 ## Services offered by the current stack
 
 ```txt
 commit-pinned external source loading
-deterministic external or fallback raw source generation
+fallback source-plan construction
 DSK descriptor registration and snapshots
-raw-plan caching and explicit rebuild
-render-plan enhancement and descriptor-family validation
-source and enhanced topology hashing
-performance, wind, grass, tree, and postprocess descriptor composition
+raw game state, tick and reset
+browser RAF stepping
+browser editor direct tick and reset
+Node headless multi-step tick and reset
+render-plan enhancement and descriptor validation
 CPU mesh generation
-WebGL static buffer caching and two-pass draw
-renderer and enhancer cache snapshots
+WebGL buffer caching and two-pass drawing
 GameHost and editor readback
 static checks and Pages deployment
 ```
@@ -185,77 +153,91 @@ static checks and Pages deployment
 Services not currently offered:
 
 ```txt
-source revision assignment
-complete render-affecting source projection
-versioned cache-key contract
-typed cache admission result
-coordinated rebuild/invalidation transaction
-mesh contribution parity result
-GPU buffer generation ID
-source-to-frame lineage
-cache mutation journal
-source mutation fixture matrix
+runtime-step command schema
+finite delta validation
+bounded integer step-count validation
+monotonic simulation clock
+step source identity
+session and expected-frame admission
+clock epoch retirement
+step sequence and duplicate handling
+typed accepted/rejected/stale/duplicate result
+bounded step journal
+browser/Node result-schema parity
+step-to-render commit correlation
 ```
 
-## Main finding: incomplete source identity can preserve stale output
+## Main finding: raw step calls are not trustworthy authority
 
-`createRenderPlanEnhancer()` caches by `sourceTopologyKey(rawPlan)`.
+`advanceGameState()` increments `state.frame` and records `Number(dt)` and `Number(time)` without semantic validation.
 
-The key includes the plan identity, area, style, and only selected object fields. It omits render-affecting inputs including:
+The browser editor defaults `time` to zero and calls `GameHost.game.tick()` while the RAF can remain active. It can therefore regress recorded time, advance the frame outside scheduler ownership and return success without a rendered-frame acknowledgement.
+
+The Node editor loops while `index < Number(ticks)`. This permits:
 
 ```txt
-path enabled, rutCount, and pebbleCount
-wildflower color and accent
-rock color and accent
-tree-line color and accent
-focal-tree trunkRadius, trunkHeight, rootCount, leafClusterCount, shadowRadius, and renderStyle
-raw wind state
-runtime performance overrides
+Infinity -> non-terminating loop
+fractional counts -> rounded upward by loop behavior
+negative or NaN counts -> zero steps with completed capability response
+very large counts -> unbounded synchronous work
+non-finite dt -> poisoned time and lastTick
+negative dt -> time regression
 ```
 
-A new raw source plan that changes only one of these fields can be classified as a cache hit. The old enhanced plan keeps its old topology key, and the renderer then reuses the old CPU mesh and GPU buffers.
-
-`rebuildRenderPlan()` replaces the raw plan but does not invalidate either cache or return a typed result.
-
-Current tests prove that time-only changes preserve static topology. They do not prove that static mutations rebuild exactly once or that dynamic-only changes avoid unnecessary rebuilds.
+Current smoke coverage proves only a positive request with `ticks: 3` and `dt: 0.016`.
 
 ## Required parent domain
 
 ```txt
-meadow-render-cache-identity-authority-domain
+meadow-runtime-step-authority-domain
 ```
 
 Update existing DSKs first:
 
 ```txt
-meadow-area-bridge-dsk
+into-the-meadow-game-dsk
+web-host-dsk
 meadow-render-host-dsk
-meadow-performance-dsk
-wind-field-dsk
 meadow-diagnostics-dsk
 ```
 
-Add only coordinating kits:
+Add coordinating kits only:
 
 ```txt
-source-plan-revision-kit
-render-affecting-projection-kit
-render-cache-key-schema-kit
-render-cache-admission-kit
-render-cache-invalidation-kit
-render-lineage-kit
-mesh-contribution-fingerprint-kit
-gpu-buffer-generation-kit
-render-cache-journal-kit
-render-cache-observation-kit
-render-cache-mutation-fixture-kit
+runtime-step-command-kit
+runtime-step-admission-kit
+finite-delta-policy-kit
+monotonic-simulation-clock-kit
+step-budget-kit
+step-sequence-kit
+step-result-kit
+step-journal-kit
+session-frame-fence-kit
+browser-raf-step-adapter-kit
+browser-editor-step-adapter-kit
+headless-editor-step-adapter-kit
+reset-clock-transaction-kit
+step-frame-correlation-kit
+runtime-step-fixture-kit
+```
+
+## Ordered safe ledges
+
+```txt
+1. Runtime Session Lifecycle Authority
+2. Runtime Step Admission and Clock Integrity
+3. Source Provider Authority
+4. Render Topology Identity Authority
+5. Committed Frame Observation Authority
+6. Interaction Command Authority
+7. DSK Registry Consumption Proof
 ```
 
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Render Topology Identity Authority
-+ Source Mutation / Cache Rebuild Fixture Gate
+IntoTheMeadow Runtime Step Admission and Clock Integrity
++ Finite / Monotonic / Work-Budget Fixture Gate
 ```
 
-Runtime lifecycle and provider admission remain prerequisites. Committed-frame and interaction-command work should consume this lineage instead of inventing separate render identity.
+Runtime Session Lifecycle Authority remains the prerequisite because session identity, run generation, stale-callback fencing, stop, restart and disposal must own the clock.

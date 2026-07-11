@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T04-39-58-04-00`
+**Updated:** `2026-07-11T04-49-30-04-00`
 
 ## Selection state
 
@@ -10,110 +10,111 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as the oldest eligible central ledger entry
+IntoTheMeadow selected as oldest eligible central ledger entry
+newer repo-local source-provider audit reconciled
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Source-provider authority gaps
+## Interaction command authority gaps
 
-### Production fallback is unreachable
-
-`startWebHost()` calls `loadExternalKits()` before game construction. A failed dynamic import or missing `createMeadowAreaKit` export throws before `createIntoTheMeadowGame()` can select its local fallback.
-
-### Tests do not exercise the deployed provider path
-
-Current Node tests call `createIntoTheMeadowGame()` without `externalKits`, so they exercise `createFallbackMeadowAreaKit`. A green `npm run check` does not prove the pinned external URL loads, exports the expected factory, produces a compatible raw plan or survives enhancement.
-
-### Provider selection has no typed result
+### Authored commands cannot be dispatched
 
 ```txt
-request id: absent
-candidate id: absent
-admission status: absent
-failure class: absent
-fallback reason: absent
-provider fingerprint: absent
-source-plan fingerprint: absent
+path-progress: declared
+inspect: declared
+public command API: absent
+browser input adapter: absent
+headless command capability: absent
+```
+
+### Tick does not mutate gameplay
+
+`advanceGameState()` increments the frame and records `dt` and `time`. It does not read movement, actions, target IDs, positions, path progress or inspect intent.
+
+### Player state is static
+
+```txt
+initial position: x=0, y=0, z=-36
+initial pathProgress: 0
+movement transition: absent
+terrain/path projection: absent
+camera/input ownership: absent
+```
+
+### Interaction targets have no runtime registry
+
+`ARRIVAL_INTERACTION_TARGETS` contains the focal tree and arrival path, but no runtime service indexes them, measures distance, resolves affordances or rejects out-of-range actions.
+
+### Objective predicates are not evaluated
+
+```txt
+walk-the-path completion: pathProgress >= 0.35
+inspect-tree completion: inspected == true
+predicate evaluator: absent
+objective transition: absent
+completion ledger mutation: absent
+active objective advancement: absent
+```
+
+### Story triggers are descriptive only
+
+```txt
+scene-start arrival: preloaded in initial state
+path-progress:0.25: never evaluated
+inspect:focal-tree: never evaluated
+story event journal: absent
+```
+
+### No typed result or causal evidence
+
+```txt
+commandId: absent
+sessionId admission check: absent
+frame/tick admission check: absent
+action: absent from runtime results
+targetId: absent from runtime results
+accepted/rejected status: absent
+reason code: absent
+pre-state fingerprint: absent
+post-state fingerprint: absent
+objective transitions: absent
+story transitions: absent
+feedback row: absent
 journal sequence: absent
 ```
 
-### External and fallback contracts differ
+### Host and editor surfaces are read/tick/reset only
+
+`GameHost` exposes state, snapshot, diagnostics and render observations. The browser and Node editor environments expose tick/reset and render inspection but no gameplay command or objective-progress capability.
+
+### Current tests cannot detect gameplay disconnection
+
+The headless command smoke asserts that three ticks yield frame `3`. It does not assert player movement, path progress, target admission, objective completion, story activation, rejection behavior or deterministic replay.
+
+## Retained source-provider gaps
 
 ```txt
-version: 0.1.0 vs local-source-plan-v1
-scatter: path-relative RNG vs broad hash bands
-path: normalized descriptor vs copied authored config
-grass: normalized motion fields vs reduced placeholder
-atmosphere: normalized feature data vs hard-coded local values
-validation: structural checks vs always passed
-snapshot: full provider state vs minimal fallback summary
+production fallback is unreachable after import/export failure
+tests use the local fallback rather than the deployed provider
+provider selection has no typed admission result
+external and fallback plans lack parity classification
 ```
 
-No parity policy says whether those differences are acceptable, degraded, incompatible or expected to normalize away.
+Interaction fixtures should use an injected deterministic source provider once that gate exists.
 
-### No source-plan admission boundary
-
-The enhancer receives whichever raw plan the selected provider returns. Provider identity, expected raw schema, capabilities and compatibility are not checked together before enhancement.
-
-### No production-path fixture
+## Retained lifecycle and frame gaps
 
 ```txt
-external import success fixture: absent
-network/import failure fixture: absent
-missing export fixture: absent
-module evaluation failure fixture: absent
-provider version mismatch fixture: absent
-invalid raw-plan fixture: absent
-external/fallback parity fixture: absent
-browser offline policy smoke: absent
+RAF ownership and coordinated disposal remain incomplete
+committed state/plan/render/canvas correlation remains absent
 ```
 
-## Retained runtime lifecycle gaps
+Command IDs should be scoped beneath lifecycle session IDs and eventually linked to committed frame IDs.
 
-```txt
-RAF id not retained
-stop/start can multiply RAF chains
-boot discards host controller
-globals are overwritten without leases
-fatal startup does not roll back renderer/editor resources
-no coordinated idempotent dispose
-```
+## Registry truth gap
 
-Provider work must compose with the lifecycle authority rather than adding a second startup owner.
-
-## Retained frame-observation gaps
-
-```txt
-no immutable committed frame identity
-no shared state/plan/render/canvas correlation
-GameHost observations can mix different live moments
-```
-
-Provider fingerprints should become inputs to committed-frame provenance after that authority exists.
-
-## Registry and service-truth gaps
-
-```txt
-43 local kits are declared
-1 external kit is declared
-registry membership does not prove implementation
-implementation does not prove active consumption
-mesh contribution and renderer consumption remain unproved
-```
-
-## Gameplay gaps
-
-```txt
-player/camera/input descriptors are not runtime-authoritative
-interaction targets do not admit commands
-objectives and story do not mutate from player action
-save/audio/UI progression remain descriptor-only
-```
-
-## Validation gaps
-
-The current smoke suite is useful for local fallback determinism and render enhancement, but it cannot establish source-provider parity or production dependency health.
+The interaction DSKs advertise the right service names, but registry membership does not prove implementation, invocation or state mutation.
 
 ## Deployment risk
 
-The deployed route has a single remote module dependency. A CDN, repository, CORS, module-evaluation or export-contract failure stops boot entirely, while the codebase gives the appearance of having a fallback that production cannot actually reach.
+A deployed route can render successfully while every authored objective remains impossible to complete. Current CI treats render and editor reachability as sufficient and therefore cannot catch this product-level failure.

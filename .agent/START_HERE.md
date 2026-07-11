@@ -2,44 +2,46 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-11T04-39-58-04-00`
+**Last aligned:** `2026-07-11T04-49-30-04-00`
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow Source Provider Authority
-+ External/Fallback Admission and Parity Fixture Gate
+IntoTheMeadow Interaction Command Authority
++ Path / Inspect / Objective Progress Fixture Gate
 ```
 
-## Retained prerequisite gates
+## Prerequisite gates retained
 
 ```txt
 1. Runtime Session Lifecycle Authority
 2. Committed Frame Observation Authority
-3. DSK Registry and Service Truth
+3. Source Provider Authority
+4. DSK Registry and Service Truth
 ```
 
 ## Read first
 
 ```txt
-.agent/trackers/2026-07-11T04-39-58-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-11T04-39-58-04-00.md
+.agent/trackers/2026-07-11T04-49-30-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-11T04-49-30-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-11T04-39-58-04-00-source-provider-authority-dsk-map.md
-.agent/render-audit/2026-07-11T04-39-58-04-00-source-plan-topology-parity-gap.md
-.agent/gameplay-audit/2026-07-11T04-39-58-04-00-boot-source-selection-loop.md
-.agent/interaction-audit/2026-07-11T04-39-58-04-00-provider-admission-observation-map.md
-.agent/source-provider-audit/2026-07-11T04-39-58-04-00-external-fallback-contract.md
-.agent/deploy-audit/2026-07-11T04-39-58-04-00-external-fallback-parity-fixture-gate.md
+.agent/architecture-audit/2026-07-11T04-49-30-04-00-interaction-command-authority-dsk-map.md
+.agent/render-audit/2026-07-11T04-49-30-04-00-objective-feedback-consumer-gap.md
+.agent/gameplay-audit/2026-07-11T04-49-30-04-00-path-inspect-objective-loop.md
+.agent/interaction-audit/2026-07-11T04-49-30-04-00-command-admission-result-map.md
+.agent/objective-system-audit/2026-07-11T04-49-30-04-00-objective-story-transition-contract.md
+.agent/deploy-audit/2026-07-11T04-49-30-04-00-objective-progress-fixture-gate.md
 ```
 
 Retained companion context:
 
 ```txt
+.agent/source-provider-audit/2026-07-11T04-39-58-04-00-external-fallback-contract.md
 .agent/lifecycle-audit/2026-07-11T02-28-12-04-00-single-raf-global-lease-rollback-contract.md
 .agent/frame-authority-audit/2026-07-11T00-30-48-04-00-atomic-committed-frame-contract.md
 .agent/registry-truth-audit/2026-07-11T02-20-44-04-00-declared-runtime-consumption-contract.md
@@ -50,7 +52,7 @@ Retained companion context:
 The accessible `LuminaryLabs-Publish` inventory contains ten repositories. `TheCavalryOfRome` remains excluded. All nine eligible repositories are centrally tracked and have root `.agent` state.
 
 ```txt
-IntoTheMeadow       selected / 2026-07-11T02-28-12-04-00
+IntoTheMeadow       selected / 2026-07-11T04-39-58-04-00 repo-local audit, 2026-07-11T02-28-12-04-00 central ledger before this run
 PrehistoricRush      tracked  / 2026-07-11T02-48-17-04-00
 TheOpenAbove         tracked  / 2026-07-11T03-01-38-04-00
 HorrorCorridor       tracked  / 2026-07-11T03-18-44-04-00
@@ -62,47 +64,48 @@ AetherVale           tracked  / 2026-07-11T04-28-33-04-00
 TheCavalryOfRome     excluded by rule
 ```
 
-`IntoTheMeadow` was the oldest eligible documented fallback. Only this Publish repository is in scope for this pass.
+`IntoTheMeadow` remained the oldest eligible central-ledger entry and also had newer repo-local documentation that required central reconciliation. Only this Publish repository is in scope for this pass.
 
 ## Product read
 
-`IntoTheMeadow` is a static DSK-composed browser meadow. Production boot imports a commit-pinned external `meadow-area-kit`, while Node tests and direct game construction omit the external provider and therefore use a local fallback source plan.
+`IntoTheMeadow` already authors two objectives, two interaction targets and three story beats, but the running game has no action command path. Runtime ticks increment only the frame and last-tick fields. Browser and headless editor surfaces can tick and reset, but they cannot move the player, report path progress, inspect the tree or commit objective/story transitions.
 
-## Actual source-selection loop
+## Actual interaction loop
 
 ```txt
-browser
-  -> GAME_MANIFEST external URL
-  -> dynamic import must succeed
-  -> createMeadowAreaKit must exist
-  -> createIntoTheMeadowGame({ externalKits })
-  -> external source plan
+browser or headless host
+  -> tick { dt, time }
+  -> advanceGameState()
+  -> increment frame
+  -> record lastTick
+  -> render unchanged meadow state
 
-Node tests and direct callers
-  -> createIntoTheMeadowGame()
-  -> no externalKits supplied
-  -> createFallbackMeadowAreaKit
-  -> local source plan
+authored gameplay intent
+  -> walk-the-path objective
+  -> arrival-path target
+  -> path-progress action
+  -> 0.35 completion threshold
+
+authored inspect intent
+  -> inspect-tree objective
+  -> focal-tree target
+  -> inspect action
+  -> inspected=true completion
+
+current runtime result
+  -> no command admission
+  -> no target query
+  -> no player or path mutation
+  -> no objective transition
+  -> no story-trigger transition
+  -> no feedback or journal row
 ```
 
 ## Current finding
 
-The code contains a fallback provider, but production cannot reach it when CDN import or export validation fails because `loadExternalKits()` throws before game construction. Tests exercise the fallback path and do not prove the production provider path.
+The repository has declarations for `meadow-player-dsk`, `meadow-input-dsk`, `meadow-interaction-dsk`, `meadow-objective-dsk` and `meadow-story-dsk`, but those descriptors are not runtime implementations. The game exposes `tick()` and `reset()` only. `GameHost`, the browser editor bridge and the Node headless editor expose no gameplay command capability.
 
-The two providers also emit materially different raw contracts:
-
-```txt
-external version: 0.1.0
-local version:    local-source-plan-v1
-
-external scatter: seeded path-relative placement
-local scatter:    hash-based broad side bands
-
-external objects: normalized path, wind, atmosphere, grass, focal tree and feature fields
-local objects:    reduced placeholder shapes with hard-coded atmosphere and always-passing validation
-```
-
-No typed provider-admission result, provider fingerprint, raw-plan parity classification, capability negotiation, or browser fallback policy exists.
+The next implementation boundary should update those existing DSKs first and add one coordinating parent authority only where cross-domain admission, mutation and proof cannot belong to a single child DSK.
 
 ## Exact inventory retained
 
@@ -119,9 +122,9 @@ runtime source-backed surfaces cataloged: 24
 ```txt
 1. Runtime Session Lifecycle Authority
 2. Committed Frame Observation Authority
-3. Source Provider Authority + External/Fallback Admission and Parity Fixture Gate
-4. Interaction Command Authority + Objective Progress Fixture Gate
-5. DSK Registry Truth + Mesh Contribution and Consumer Proof Fixture Gate
+3. Source Provider Authority + External/Fallback Admission and Parity Gate
+4. Interaction Command Authority + Path/Inspect/Objective Progress Gate
+5. DSK Registry Truth + Mesh Contribution and Consumer Proof Gate
 ```
 
-Do not begin with visual tuning, renderer replacement, CDN removal, WebGPU migration, new content, or shared-kit promotion. Preserve the external commit pin and current rendered output while making provider selection explicit and testable.
+Do not begin with visual tuning, renderer replacement, new meadow content, audio, save/load or UI progression. First make one input/command/result path mutate player, objective and story state deterministically and expose the committed result through host and editor observations.

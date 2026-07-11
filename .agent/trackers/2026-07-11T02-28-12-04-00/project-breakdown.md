@@ -28,6 +28,7 @@ Map the actual runtime session lifecycle, prove where RAF, global, listener, and
 [x] Inventory external, runtime-backed, registry-declared, and planned kits.
 [x] Inventory kit-provided services.
 [x] Document controller reachability, RAF multiplication, global lease, listener, rollback, fatal, and disposal gaps.
+[x] Reconcile the concurrent registry-truth audit and corrected 43-local-kit census.
 [x] Add architecture, render, gameplay, interaction, lifecycle, and deploy audits.
 [x] Refresh all required root .agent files.
 [x] Push documentation only to main.
@@ -44,12 +45,12 @@ HorrorCorridor       tracked  / 2026-07-11T01-10-28-04-00
 PhantomCommand       tracked  / 2026-07-11T01-20-51-04-00
 ZombieOrchard        tracked  / 2026-07-11T01-31-15-04-00
 TheUnmappedHouse     tracked  / 2026-07-11T01-38-28-04-00
-MyCozyIsland         tracked  / 2026-07-11T01-50-30-04-00
+MyCozyIsland         tracked  / 2026-07-11T02-02-59-04-00
 AetherVale           tracked  / 2026-07-11T02-10-13-04-00
 TheCavalryOfRome     excluded by rule
 ```
 
-All nine eligible repositories were centrally tracked and had root `.agent` state. `IntoTheMeadow` was the oldest eligible fallback.
+All nine eligible repositories were centrally tracked and had root `.agent` state. `IntoTheMeadow` was the oldest eligible fallback when selected. A separate registry-truth pass landed at `2026-07-11T02-20-44-04-00` while this run was in progress. This run continued on the already selected repository to preserve the one-project rule and incorporated that pass's corrected census.
 
 ## Actual interaction loop
 
@@ -95,22 +96,44 @@ listener ownership
 resource acquisition and rollback
 fatal transition and terminal disposal
 frame request, simulation, plan, render, and HUD projection
-DSK registry and installation
-game state, tick, reset, and snapshot
-source-plan cache and time overlay
+DSK registry, descriptor creation, validation, installation, and snapshots
+game manifest, content, state, tick, reset, and snapshot
+source-plan cache, time overlay, and rebuild
 story, objective, and interaction descriptors
-terrain, path, environment, and grass composition
-tree, wind, performance, and postprocess enhancement
+terrain, path, materials, scatter, atmosphere, tree, and grass composition
+wind, performance, and postprocess enhancement
 render-plan validation and topology hashing
 CPU mesh construction
 WebGL resource/cache/render/snapshot/disposal
-GameHost diagnostics
+GameHost diagnostics and global exposure
 browser editor capability/capture/error observation
-Node headless-editor observations
+Node headless-editor observations and artifacts
+HUD/loading/fatal projection
 validation and Pages deployment
 ```
 
-## Kit inventory
+Declared but not runtime-authoritative:
+
+```txt
+player movement
+camera control
+browser input mapping
+interaction preflight and gameplay commands
+story and objective mutation
+audio
+save/load
+UI progression
+```
+
+## Exact kit inventory
+
+```txt
+external declared kits: 1
+local declared kits: 43
+total declared kits: 44
+required-v0.1 local kits: 15
+runtime source-backed surfaces cataloged: 24
+```
 
 External:
 
@@ -148,34 +171,30 @@ browser editor bridge
 Node headless-editor environment
 ```
 
-Registry:
-
-```txt
-one external kit
-44 local kit descriptors across game, host, terrain, path, grass, environment,
-gameplay, diagnostics, rendering, postprocess, and deployment
-```
+All 43 local kit IDs and their declared services are retained in `.agent/current-audit.md` and `.agent/kit-registry.json`. Registry membership is declaration evidence, not implementation or consumption proof.
 
 ## Services offered
 
 ```txt
 external import, deterministic generation, validation, snapshots, caching, rebuild, and time overlay
-DSK lookup, validation, and install snapshots
-terrain/path/material/object descriptors
-grass density, archetypes, batches, placement, draw groups, wind, LOD, scaling, and debug
-tree, wind, performance, and postprocess enhancement
-render-plan validation and topology hashes
-CPU geometry and visual metrics
-WebGL context, shaders, buffers, resize, outline pass, cel/fog pass, snapshot, and disposal
+DSK descriptor creation, lookup, validation, installation, and snapshots
+game manifest, state root, browser boot, host safety, composition, and snapshot descriptors
+terrain surface, materials, path layers, sampling, and validation
+path curves, corridor, surface detail, progression, and validation
+grass density, channels, composition, sampling, clump archetypes, cards, atlas, batches, placement, instance streams, draw groups, wind, LOD, scaling, and debug
+wind state, sampling, zones, consumers, and validation
+tree models, tree lines, materials, wind binding, and validation
+flower, rock, mushroom, sky, sun, cloud, hill, and ecology descriptors
+player, camera, input, interaction, story, objective, audio, UI, and save descriptor services
+diagnostics, quality, budget, LOD, adaptive scaling, and performance validation
+render selection, render-plan ingest, pass order, WebGL context, shaders, buffers, resize, outline, cel/fog, render targets, grading, depth fog, vignette, composite, snapshots, and disposal
 game state tick/reset/snapshot
-Boolean runtime stop/start
-fatal DOM projection
+Boolean runtime stop/start and fatal DOM projection
 GameHost state/plan/renderer/enhancer readback
 browser editor tick/reset/scene/render/capture/viewport/error capabilities
 editor listener removal and global deletion
 Node plan/mesh/metrics/SVG/workspace capabilities
-static and editor smoke checks
-Pages deployment
+static checks, editor smoke checks, build configuration, Pages workflow, artifacts, cache invalidation, and deploy validation
 ```
 
 ## Main finding: stop/start can multiply the RAF loop

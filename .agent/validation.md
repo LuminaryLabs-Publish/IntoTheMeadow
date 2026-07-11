@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T22-58-36-04-00`
+**Updated:** `2026-07-11T00-30-48-04-00`
 
 ## Validation performed this pass
 
@@ -15,11 +15,13 @@ all eligible repositories confirmed tracked: yes
 selected repository root .agent reviewed: yes
 AGENTS.md reviewed: yes
 index and boot entry inspected: yes
-web-host construction/frame/stop/start inspected: yes
-game creation/tick/reset inspected: yes
-GameHost global exposure inspected: yes
-editor capabilities/listeners/dispose inspected: yes
-WebGL renderer allocation/render/snapshot/dispose inspected: yes
+web-host frame and observation publication inspected: yes
+game creation/tick/reset/snapshot inspected: yes
+GameHost exposure inspected: yes
+browser editor tick/reset/capture/snapshot inspected: yes
+Node headless environment build/capture inspected: yes
+render-plan enhancer cache/snapshot inspected: yes
+WebGL render/snapshot/dispose inspected: yes
 package validation scripts inspected: yes
 runtime source changed: no
 dependencies changed: no
@@ -31,10 +33,12 @@ npm install: not run
 npm run check: not run
 npm test: not run
 browser/WebGL smoke: not run
-lifecycle fixtures: not run because they do not exist yet
+lifecycle fixtures: unavailable
+atomic-frame fixtures: unavailable
+browser/Node parity fixture: unavailable
 pushed to main: yes
 central ledger updated: yes
-central change log updated: yes
+central change log added: yes
 ```
 
 ## Source inspection completed
@@ -46,10 +50,15 @@ package.json
 src/boot/boot-game.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
+src/game/game-state.js
+src/game/game-snapshot.js
+src/game/enhance-render-plan.js
 src/boot/expose-game-host.js
 src/editor/install-editor-bridge.js
 src/renderers/meadow-webgl-renderer-v2-compatible.js
 src/renderers/meadow-webgl-renderer-v2.js
+scripts/into-the-meadow-environment.mjs
+tests/headless-editor-environment-smoke.mjs
 .agent lifecycle/frame/source documentation
 central repo ledger and current Publish selection sequence
 ```
@@ -64,77 +73,54 @@ npm run editor:loop
 npm run editor:browser
 ```
 
-Existing checks cover static structure, registry, render-plan behavior, renderer v2, deterministic-scene reachability, and editor environment/command/loop reachability.
+Existing checks cover static structure, registry, render-plan behavior, renderer v2, deterministic scene reachability, and editor environment/command/loop reachability.
 
 They do not prove:
 
 ```txt
-resolved host controller retention
 one authoritative runtime session
 one-active-RAF invariant
-stop cancellation
-restart generation fencing
-startup rollback
-first-frame failure cleanup
-global lease restoration
-listener release
-terminal idempotent disposal
-render rejection after disposal
-lifecycle projection parity across controller/GameHost/editor
+startup rollback and terminal disposal
+one frame request to zero-or-one commit
+no partial publication after render failure
+state/raw-plan/enhanced-plan/render/canvas coherence
+GameHost atomic snapshot coherence
+browser editor tick/reset frame commitment
+capture expected-frame correlation
+browser WebGL versus Node synthetic observation parity
+failed-frame pointer stability
 ```
 
-## Required lifecycle checks
+## Required atomic-frame checks
 
 ```txt
-node tests/runtime-session-lifecycle-smoke.mjs
-node tests/runtime-single-raf-smoke.mjs
-node tests/runtime-stop-cancels-raf-smoke.mjs
-node tests/runtime-restart-generation-smoke.mjs
-node tests/runtime-dispose-idempotency-smoke.mjs
-node tests/runtime-fatal-rollback-smoke.mjs
-node tests/runtime-global-lease-smoke.mjs
-node tests/runtime-listener-release-smoke.mjs
-node tests/runtime-render-after-dispose-smoke.mjs
+node tests/committed-frame-coherence-smoke.mjs
+node tests/render-failure-no-partial-publish-smoke.mjs
+node tests/editor-tick-frame-commit-smoke.mjs
+node tests/reset-frame-commit-smoke.mjs
+node tests/capture-frame-correlation-smoke.mjs
+node tests/gamehost-frame-snapshot-smoke.mjs
+node tests/browser-node-frame-parity-smoke.mjs
+node tests/failed-frame-pointer-stability-smoke.mjs
 ```
 
 Assertions:
 
 ```txt
-start produces one owned RAF
-repeated start while running is a no-op
-stop cancels the exact owned RAF
-stop then start cannot revive an old run callback
-restart cancels old ownership before scheduling a new run
-runId increments exactly once per restart
-construction failure releases every acquired resource in reverse order
-first-frame failure leaves no successor RAF, global, listener, or WebGL resource
-only the owning session may remove or restore GameHost/NexusEditorEnvironment
-dispose is terminal and idempotent
-post-dispose commands are rejected with stable reasons
-lifecycle journal is bounded and JSON-safe
-controller, GameHost, and editor lifecycle snapshots match
-normal render output and source selection remain unchanged
-```
-
-## Later required checks
-
-```txt
-committed-frame-coherence-smoke
-render-failure-no-partial-publish-smoke
-editor-tick-frame-commit-smoke
-reset-frame-commit-smoke
-capture-frame-correlation-smoke
-meadow-source-provider-contract-smoke
-meadow-source-fallback-parity-smoke
-meadow-interaction-command-smoke
-meadow-objective-progress-smoke
-mesh-contribution-ledger-smoke
-dsk-registry-truth-smoke
-npm run check
-npm test
-npm run editor:smoke
+committedFrameId is monotonic within one run
+one request produces zero or one commit
+state becomes public only with its committed frame
+raw and enhanced plan times match the request
+renderer result carries the same frame request and topology
+canvas acknowledgement carries the committed frame id
+render failure preserves the previous lastCommittedFrame
+GameHost and editor snapshot return the same state/plan/render tuple
+editor tick/reset return a frame result and cannot silently mutate
+capture reports or rejects expected-frame mismatch
+Node synthetic output is marked non-browser and fingerprint-correlated
+journals are bounded, immutable, and JSON-safe
 ```
 
 ## Validation warning
 
-The current `stop()` result does not prove that animation work stopped. A pending callback remains registered, and `start()` can schedule another callback before the old one executes. Treat stop/restart, fatal failure, global cleanup, and disposal as unproven until deterministic lifecycle fixtures exist.
+A visually rendered meadow or a successful existing smoke suite does not prove frame coherence. Current browser editor tick/reset can mutate state without rendering, and a failed renderer call can leave newer state and plan facts beside an older render snapshot and canvas.

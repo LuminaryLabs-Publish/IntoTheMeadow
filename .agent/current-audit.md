@@ -2,31 +2,29 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-10T22-58-36-04-00`
+**Audit timestamp:** `2026-07-11T00-30-48-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed static meadow route with a commit-pinned external source, local render-plan enhancement, a combined CPU/WebGL renderer, and GameHost/headless-editor observation surfaces.
+`IntoTheMeadow` is a DSK-composed static meadow route with a commit-pinned external source, local render-plan enhancement, a combined CPU/WebGL renderer, and browser plus Node headless-editor observation surfaces.
 
-This documentation-only pass advances the existing lifecycle finding into a source-backed session ownership and rollback contract. Runtime behavior was not changed.
+This documentation-only pass advances the existing frame-authority finding into a source-backed atomic committed-frame and observation-correlation contract. Runtime behavior was not changed.
 
 ## Repository selection
 
 The accessible `LuminaryLabs-Publish` inventory contains ten repositories. `TheCavalryOfRome` was excluded. All nine eligible repositories were present in the central ledger and had root `.agent` state.
 
-Central timestamps at selection:
-
 ```txt
-IntoTheMeadow       2026-07-10T21-19-36-04-00 selected
-TheOpenAbove        2026-07-10T21-31-01-04-00
-HorrorCorridor      2026-07-10T21-39-22-04-00
-PhantomCommand      2026-07-10T21-49-26-04-00
-ZombieOrchard       2026-07-10T22-11-24-04-00
-TheUnmappedHouse    2026-07-10T22-21-17-04-00
-MyCozyIsland        2026-07-10T22-29-21-04-00
-PrehistoricRush     2026-07-10T22-42-00-04-00
-AetherVale          2026-07-10T22-50-02-04-00
-TheCavalryOfRome    excluded
+IntoTheMeadow       selected / 2026-07-10T22-58-36-04-00
+PrehistoricRush      tracked  / 2026-07-10T23-08-11-04-00
+TheOpenAbove         tracked  / 2026-07-10T23-20-41-04-00
+HorrorCorridor       tracked  / 2026-07-10T23-30-13-04-00
+PhantomCommand       tracked  / 2026-07-10T23-40-35-04-00
+ZombieOrchard        tracked  / 2026-07-10T23-50-53-04-00
+TheUnmappedHouse     tracked  / 2026-07-11T00-00-26-04-00
+MyCozyIsland         tracked  / 2026-07-11T00-10-28-04-00
+AetherVale           tracked  / 2026-07-11T00-18-24-04-00
+TheCavalryOfRome     excluded by rule
 ```
 
 ## Interaction loop
@@ -36,20 +34,28 @@ browser loads index.html
   -> boot-game.js locates canvas and HUD elements
   -> startWebHost begins asynchronous construction
   -> external meadow-area-kit is imported from the manifest URL
-  -> game creates DSK install, source kit, cached source plan, and state
-  -> WebGL renderer and plan enhancer are created
-  -> global GameHost is assigned
-  -> global NexusEditorEnvironment and error listeners are installed
-  -> one RAF is requested
-  -> frame mutates state with fixed dt
-  -> source plan receives absolute time
-  -> enhancer derives the active render plan
-  -> renderer draws outline and cel/fog passes
-  -> debug HUD projects diagnostics
-  -> another RAF is requested
+  -> game, renderer, enhancer, GameHost, and editor bridge are created
+  -> requestAnimationFrame invokes frame(now)
+  -> game.tick mutates the live immutable state pointer
+  -> game.getRenderPlan(time) overlays RAF time
+  -> planEnhancer.enhance derives the active contracted plan
+  -> lastPlan is assigned
+  -> renderer.render performs outline and cel/fog draws
+  -> lastRender is assigned
+  -> HUD reads diagnostics, plan counts, renderer facts, and editor protocol
+  -> successor RAF is requested
 ```
 
-Editor capabilities separately expose runtime tick/reset, scene reads, renderer reads, canvas capture, viewport reads, and browser-error reads.
+Independent browser editor paths:
+
+```txt
+runtime.tick  -> game.tick only
+runtime.reset -> game.reset only
+renderer.capture -> current canvas bytes + current renderer snapshot
+snapshot -> current state + current renderer snapshot
+```
+
+Node headless paths create a separate on-demand plan/mesh/metric observation and synthetic SVG capture.
 
 ## Domains in use
 
@@ -57,6 +63,7 @@ Editor capabilities separately expose runtime tick/reset, scene reads, renderer 
 browser shell and DOM boot
 runtime session construction
 runtime lifecycle and RAF scheduling
+frame request, simulation, plan, render, and observation publication
 external-kit manifest and dynamic import
 source-provider selection and fallback
 DSK registry and install validation
@@ -68,9 +75,10 @@ terrain/path/environment/grass composition
 wind/performance/postprocess enhancement
 CPU mesh construction
 WebGL program, buffer, cache, resize, draw, snapshot, and disposal
-GameHost global exposure
-Nexus editor global exposure, capability routing, and browser-error listeners
-HUD and loading/fatal projection
+GameHost global exposure and diagnostics
+browser headless-editor capability routing, canvas capture, and error listeners
+Node headless-editor plan/mesh/metric/SVG observation
+HUD/loading/fatal projection
 Node smoke fixtures
 static Pages deployment
 ```
@@ -113,10 +121,11 @@ grass-lod-policy-kit
 grass-density-scaling-kit
 grass-debug-visualization-kit
 GameHost diagnostics surface
-headless-editor bridge
+browser editor bridge
+Node headless-editor environment
 ```
 
-The registry declares one external kit and 44 local kit descriptors. Registry membership is not proof of live implementation consumption.
+The DSK registry declares one external kit and 44 local descriptors. Registry membership is not proof of live runtime consumption.
 
 ## Services offered
 
@@ -131,112 +140,87 @@ tree, wind, performance, and postprocess enhancement
 render-plan validation and topology hashing
 CPU geometry construction
 WebGL context, precision normalization, shaders, buffers, resize, outline, cel/fog, snapshots, and disposal
-frame/time tick and reset
+state tick and reset
 GameHost state/game/plan/renderer/enhancer readback
-editor tick/reset/scene/render/capture/viewport/error services
-editor listener disposal primitive
+browser editor tick/reset/scene/render/capture/viewport/error services
+Node editor plan/mesh/metrics/SVG capture/workspace services
 static, registry, render, deterministic-scene, and editor smoke checks
 static Pages deployment
 ```
 
-## Lifecycle ownership finding
+## Atomic frame finding
 
-`boot-game.js` invokes `startWebHost(...).catch(...)` and discards the resolved controller. The caller therefore cannot stop, restart, or dispose the runtime it created.
-
-`startWebHost()` constructs resources and side effects in this order:
+The browser frame path publishes partial facts in separate phases:
 
 ```txt
-external module
-  -> game
-  -> renderer/WebGL program
-  -> enhancer
-  -> global GameHost
-  -> editor listeners and global NexusEditorEnvironment
-  -> RAF request
+state pointer changes
+  -> raw plan is read
+  -> enhanced plan is created
+  -> lastPlan changes
+  -> WebGL rendering may succeed or fail
+  -> lastRender changes only on success
+  -> canvas is changed by WebGL outside any frame ledger
+  -> HUD, GameHost, and editor read independently
 ```
 
-There is no cleanup stack and no rollback path if a later step fails.
-
-The returned controller exposes only:
+Concrete inconsistencies:
 
 ```txt
-game
-renderer
-planEnhancer
-editorBridge
-stop()
-start()
+render failure after lastPlan assignment:
+  state = new
+  lastPlan = new
+  lastRender = previous
+  canvas = previous or partially cleared/drawn
+  public frame result = absent
+
+GameHost.getSnapshot:
+  game snapshot state = current
+  game snapshot raw renderPlan = default time 0
+  enhancedRenderPlan = last successful or attempted RAF time
+  render = last successful renderer snapshot
+
+browser editor runtime.tick/reset:
+  state changes
+  plan/render/canvas/HUD do not commit
+
+browser editor renderer.capture:
+  canvas bytes and renderer snapshot are read independently
+  no expectedFrameId or canvas acknowledgement exists
+
+Node headless environment:
+  rebuilds plan, mesh, and metrics per capability call
+  uses fallback source unless explicitly injected
+  emits synthetic SVG rather than the browser WebGL canvas
 ```
 
-`stop()` only sets `stopped = true`. It does not retain or cancel the pending RAF. `start()` schedules a new RAF when `stopped` is true. If restart occurs before the old pending callback executes, both callbacks later observe `stopped === false`, both render, and both schedule successors.
-
-`showFatal()` also only sets the Boolean and updates DOM. It does not dispose the renderer, remove editor listeners, release globals, invalidate enhancer caches, or publish a terminal lifecycle result.
-
-## Existing cleanup primitives
-
-```txt
-renderer.dispose()
-  -> delete active attribute buffers
-  -> delete WebGL program
-  -> clear mesh cache references
-
-editorBridge.dispose()
-  -> remove error and rejection listeners
-  -> delete NexusEditorEnvironment when it still owns that global
-```
-
-Missing primitives:
-
-```txt
-GameHost lease/release
-runtime session identity
-RAF ownership and cancellation
-resource ownership ledger
-reverse-order startup rollback
-terminal host dispose
-restart transaction
-fatal failure result
-bounded lifecycle journal
-render-after-dispose rejection
-```
+The renderer snapshot contains plan ID, topology key, counts, and cache state, but no session ID, run ID, frame ID, simulation state fingerprint, plan fingerprint, requested time, canvas commit ID, or failure row.
 
 ## Required authority boundary
 
-One `runtime-session-authority-domain` must own construction, start, stop, restart, fatal transition, and disposal.
+One `committed-frame-authority-domain` must own:
 
 ```txt
-create session
-  -> register cleanup immediately after each acquisition
-  -> start and retain exactly one RAF id
-  -> stop by cancelling the owned RAF
-  -> restart as one fenced transaction with incremented runId
-  -> dispose in reverse ownership order
-  -> restore/delete only globals leased by this session
-  -> publish typed lifecycle results and a bounded journal
+frame request admission
+simulation staging
+raw-plan derivation at the exact request time
+enhanced-plan derivation
+render submission
+canvas commit acknowledgement
+immutable frame commit
+failure publication without replacing the committed pointer
+GameHost, HUD, browser editor, and Node fixture projections
 ```
 
-Required states:
-
-```txt
-created
-starting
-running
-stopping
-stopped
-restarting
-disposing
-disposed
-failed
-```
+Browser editor tick/reset must route through this transaction rather than mutating the game directly.
 
 ## Implementation order
 
 ```txt
 1. Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate
-2. Committed Frame Observation Authority + Atomic Frame Fixture Gate
+2. Committed Frame Observation Authority + State/Plan/Render/Canvas Coherence Fixture Gate
 3. Source Provider Authority + External/Fallback Parity Fixture Gate
 4. Interaction Command Authority + Objective Progress Fixture Gate
 5. Mesh Contribution Ledger + Registry Truth Fixture Gate
 ```
 
-Do not start with visual fidelity, renderer replacement, WebGPU migration, CDN migration, new meadow content, or source-kit promotion.
+Lifecycle remains first because the runtime session must own frame sequence, run generation, journals, and terminal publication.

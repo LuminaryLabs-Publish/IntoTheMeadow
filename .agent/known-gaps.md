@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T22-58-36-04-00`
+**Updated:** `2026-07-11T00-30-48-04-00`
 
 ## Selection state
 
@@ -30,67 +30,77 @@ no current owner snapshot
 ```txt
 RAF id is never retained
 stop does not call cancelAnimationFrame
-stop changes only a Boolean
-start can schedule while the stopped run still owns a pending RAF
-pending old and new callbacks can both resume and fork the loop
+start can schedule while an old callback remains pending
+old and new callbacks can both resume and fork the loop
 no restart transaction or run-generation fence
-no visibility-gap or cadence policy
 ```
 
-## Construction and rollback gaps
+## Construction and disposal gaps
 
 ```txt
 resource acquisition has no cleanup stack
-external import, game, renderer, enhancer, globals, editor listeners, and RAF are not one transaction
-GameHost can remain exposed if editor installation fails
-renderer resources can remain live after later construction failure
-first-frame failure leaves globals, listeners, renderer, and references active
-boot catch can display failure but cannot dispose partial ownership
-```
-
-## Disposal gaps
-
-```txt
+startup and first-frame failure have no reverse-order rollback
 host controller has no dispose method
-renderer.dispose exists but the host never calls it
-editorBridge.dispose exists but the host never calls it
-GameHost has no lease or release operation
-enhancer cache invalidation is not coordinated
-game and retained plans remain reachable through globals
-no reverse-order disposal result
-no idempotency proof
-no render-after-dispose rejection
-```
-
-## Fatal-state gaps
-
-```txt
-showFatal only sets stopped and updates DOM
-fatal state has no typed reason or failed phase
-fatal state does not cancel an owned RAF
-fatal state does not clean up resources or global exposures
-fatal startup and fatal frame paths do not converge on one terminal policy
+renderer.dispose and editorBridge.dispose are not coordinated
+GameHost has no lease/release operation
+no terminal idempotency proof
 ```
 
 ## Atomic frame-publication gaps
 
 ```txt
-game.tick mutates state before render success
-lastPlan is assigned before renderer.render returns
-lastRender is assigned only after renderer success
-render failure can pair a new plan with an old renderer snapshot
-no staged frame object or atomic commit point
-no committed-frame id or bounded frame journals
+game.tick changes the live state pointer before render success
+lastPlan changes before renderer.render returns
+lastRender changes only after renderer success
+render failure can expose new state/new plan/old render
+no frame request id, committed frame id, or failed frame row
+no staged state or commitState boundary
+no canonical state, raw-plan, enhanced-plan, render, or canvas fingerprints
+no canvas commit acknowledgement
 ```
 
-## Observation coherence gaps
+## Raw and enhanced plan coherence gaps
 
 ```txt
-GameHost reads live state and separately retained render facts
-editor snapshot reads runtime and renderer independently
-HUD carries no session/run/frame identity
-no shared state/plan/render fingerprint tuple
-no guarantee that public readback describes one live session generation
+createGameSnapshot calls game.getRenderPlan() with default time 0
+web-host adds lastPlan from the latest RAF time
+one GameHost snapshot can contain rawPlan.time=0 and enhancedPlan.time=current
+topology keys exist but no full plan fingerprint tuple exists
+rebuildRenderPlan has no source epoch or frame commit result
+```
+
+## Browser editor mutation gaps
+
+```txt
+runtime.tick calls game.tick directly
+runtime.reset calls game.reset directly
+neither capability enhances, renders, updates HUD, or commits a frame
+subsequent scene/render/capture reads can describe different moments
+no mutation command id, result, target frame, or expected frame
+```
+
+## Capture and public-readback gaps
+
+```txt
+renderer.capture reads canvas bytes and renderer snapshot independently
+capture has no frame id or expected-frame admission
+GameHost.getState reads live state
+GameHost.getRenderPlan reads retained or on-demand plan
+GameHost.getRenderSnapshot reads retained or renderer-local snapshot
+GameHost.getSnapshot combines independently sourced facts
+editor snapshot independently reads runtime and renderer
+HUD has no session/run/frame identity
+```
+
+## Browser versus Node observation gaps
+
+```txt
+browser uses actual WebGL canvas and external source provider
+Node environment normally uses fallback source
+Node build recomputes plan, mesh, and metrics on demand
+Node capture emits a synthetic SVG, not the browser canvas
+capability calls do not share one committed frame row
+browser/Node parity has no source or frame fingerprint contract
 ```
 
 ## Source-provider gaps
@@ -108,7 +118,6 @@ external/fallback parity is asserted rather than measured
 ```txt
 movement and action inputs are ignored
 no typed gameplay command/result contract
-no target preflight or source target index
 walk-the-path and inspect-tree remain descriptors
 player.pathProgress and completedObjectiveIds never change
 ```
@@ -131,14 +140,14 @@ runtime-stop-cancels-raf-smoke
 runtime-restart-generation-smoke
 runtime-dispose-idempotency-smoke
 runtime-fatal-rollback-smoke
-runtime-global-lease-smoke
-runtime-listener-release-smoke
-runtime-render-after-dispose-smoke
 committed-frame-coherence-smoke
 render-failure-no-partial-publish-smoke
 editor-tick-frame-commit-smoke
 reset-frame-commit-smoke
 capture-frame-correlation-smoke
+gamehost-frame-snapshot-smoke
+browser-node-frame-parity-smoke
+failed-frame-pointer-stability-smoke
 meadow-source-provider-contract-smoke
 meadow-source-fallback-parity-smoke
 meadow-interaction-command-smoke
@@ -164,7 +173,7 @@ gameplay reducers before lifecycle and frame commitment
 
 ```txt
 1. Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate
-2. Committed Frame Observation Authority + Atomic Frame Fixture Gate
+2. Committed Frame Observation Authority + State/Plan/Render/Canvas Coherence Fixture Gate
 3. Source Provider Authority + External/Fallback Parity Fixture Gate
 4. Interaction Command Authority + Objective Progress Fixture Gate
 5. Mesh Contribution Ledger + Registry Truth Fixture Gate

@@ -2,34 +2,38 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T22-58-36-04-00`
+**Updated:** `2026-07-11T00-30-48-04-00`
 
 ## Goal
 
-Create one authoritative runtime session that owns construction, RAF scheduling, stop, restart, failure, global leases, cleanup, and terminal disposal before adding atomic committed-frame publication.
+Create one authoritative runtime session, then make every simulation, plan, render, canvas, HUD, GameHost, and editor observation derive from one immutable committed-frame row.
 
 ## Plan ledger
 
 ```txt
 [ ] Preserve the external meadow source URL and commit pin.
 [ ] Preserve the current render-plan schema and visible default.
-[ ] Add runtime-session-authority-domain as the only lifecycle owner.
-[ ] Add sessionId, runId, lifecycle state, command sequence, and bounded journal.
-[ ] Retain every RAF id and enforce one-active-RAF per run.
-[ ] Make stop cancel the owned RAF before reporting stopped.
-[ ] Make restart one fenced transaction that increments runId.
-[ ] Add an acquisition ledger with immediate cleanup registration.
-[ ] Add reverse-order rollback for construction and first-frame failures.
-[ ] Add GameHost and NexusEditorEnvironment lease/release operations.
-[ ] Coordinate renderer.dispose, editorBridge.dispose, enhancer invalidation, and retained-reference release.
-[ ] Make dispose terminal, idempotent, and observable.
-[ ] Reject start, tick, render, and editor mutation commands after disposal.
-[ ] Return typed accepted/no-op/rejected/failed lifecycle results.
-[ ] Expose the same lifecycle snapshot through the controller, GameHost, and editor bridge.
-[ ] Add deterministic fake-RAF and fake-resource fixtures.
-[ ] Wire lifecycle fixtures into npm run check.
-[ ] Then add committed-frame staging and atomic publication.
-[ ] Then add source provider identity and parity to committed frames.
+[ ] Implement runtime-session-authority-domain first.
+[ ] Retain and cancel the exact RAF owned by the active run.
+[ ] Add reverse-order startup rollback and idempotent disposal.
+[ ] Add sessionId, runId, lifecycle state, results, and bounded journal.
+[ ] Add committed-frame-authority-domain inside the runtime session.
+[ ] Replace direct game.tick assignment with stage-state then commit-state.
+[ ] Assign no public plan or render pointer before the frame commits.
+[ ] Add monotonic frameRequestId and committedFrameId.
+[ ] Fingerprint state-before, staged state, raw plan, enhanced plan, and render result.
+[ ] Require renderer.render to return a frame-correlated render-consumption row.
+[ ] Add a canvas commit acknowledgement after both WebGL passes complete.
+[ ] Publish one immutable lastCommittedFrame pointer.
+[ ] Keep failed frame rows separate and never replace the committed pointer.
+[ ] Route browser editor runtime.tick and runtime.reset through frame transactions.
+[ ] Make renderer.capture accept or return an expected committedFrameId.
+[ ] Project HUD, GameHost, and browser editor snapshots from the same frame row.
+[ ] Add a Node fixture adapter that uses the same frame contract.
+[ ] Mark synthetic SVG observations as non-browser and correlate them to source/frame fingerprints.
+[ ] Add deterministic failure, tick, reset, capture, and parity fixtures.
+[ ] Wire lifecycle and committed-frame fixtures into npm run check.
+[ ] Then add source-provider provenance and parity.
 [ ] Update repo-local and central ledgers after implementation lands.
 ```
 
@@ -40,7 +44,7 @@ IntoTheMeadow Runtime Session Lifecycle Authority
 + Stop/Restart/Dispose/Rollback Fixture Gate
 ```
 
-Suggested source files:
+Suggested files:
 
 ```txt
 src/runtime/runtime-session-authority.js
@@ -53,110 +57,135 @@ src/hosts/web-host.js
 src/boot/boot-game.js
 src/boot/expose-game-host.js
 src/editor/install-editor-bridge.js
-src/game/enhance-render-plan.js
+```
+
+## Phase 2: Committed Frame Observation Authority
+
+```txt
+IntoTheMeadow Committed Frame Observation Authority
++ State/Plan/Render/Canvas Coherence Fixture Gate
+```
+
+Suggested files:
+
+```txt
+src/runtime/committed-frame-authority.js
+src/runtime/frame-request.js
+src/runtime/frame-staging.js
+src/runtime/frame-fingerprint.js
+src/runtime/frame-result.js
+src/runtime/frame-journal.js
+src/game/create-into-the-meadow-game.js
+src/game/game-snapshot.js
+src/hosts/web-host.js
+src/boot/expose-game-host.js
+src/editor/install-editor-bridge.js
+scripts/into-the-meadow-environment.mjs
 src/renderers/meadow-webgl-renderer-v2.js
 ```
 
 Suggested fixtures:
 
 ```txt
-tests/runtime-session-lifecycle-smoke.mjs
-tests/runtime-single-raf-smoke.mjs
-tests/runtime-stop-cancels-raf-smoke.mjs
-tests/runtime-restart-generation-smoke.mjs
-tests/runtime-dispose-idempotency-smoke.mjs
-tests/runtime-fatal-rollback-smoke.mjs
-tests/runtime-global-lease-smoke.mjs
-tests/runtime-listener-release-smoke.mjs
-tests/runtime-render-after-dispose-smoke.mjs
+tests/committed-frame-coherence-smoke.mjs
+tests/render-failure-no-partial-publish-smoke.mjs
+tests/editor-tick-frame-commit-smoke.mjs
+tests/reset-frame-commit-smoke.mjs
+tests/capture-frame-correlation-smoke.mjs
+tests/gamehost-frame-snapshot-smoke.mjs
+tests/browser-node-frame-parity-smoke.mjs
+tests/failed-frame-pointer-stability-smoke.mjs
 ```
 
-## Session snapshot
+## Staged frame
 
 ```txt
 {
   sessionId,
   runId,
-  state,
-  commandSequence,
-  rafId,
-  activeRafCount,
-  frameCount,
-  startedAt,
-  stoppedAt,
-  disposedAt,
-  failurePhase,
-  failureReason,
-  ownedResources,
-  globalLeases,
-  cleanupCount,
-  journalSize
-}
-```
-
-## Lifecycle result
-
-```txt
-{
-  commandId,
-  command,
-  status: "accepted" | "completed" | "no-op" | "rejected" | "failed",
-  reason,
-  sessionId,
-  previousRunId,
-  runId,
+  frameRequestId,
+  source: "raf" | "editor.tick" | "editor.reset" | "fixture",
+  requestedAt,
+  requestedTime,
+  dt,
   stateBefore,
-  stateAfter,
-  rafCancelled,
-  rafScheduled,
-  cleanupCount,
-  errors
+  stateBeforeFingerprint,
+  stagedState,
+  stagedStateFingerprint,
+  rawPlan,
+  rawPlanFingerprint,
+  enhancedPlan,
+  enhancedPlanFingerprint
 }
 ```
 
-## Required lifecycle semantics
+## Committed frame
 
 ```txt
-start while created/stopped  -> one RAF scheduled
-start while running          -> no-op
-stop while running           -> owned RAF cancelled, state stopped
-stop while stopped           -> no-op
-restart while running        -> old RAF cancelled before new RAF, runId increments
-restart while stopped        -> runId increments, one RAF scheduled
-fatal during construction    -> reverse rollback, state failed, no globals/listeners/RAF
-fatal during frame           -> terminal policy, no successor RAF
-dispose while running        -> cancel RAF, release resources in reverse order
-dispose while disposed       -> no-op
-start after disposed         -> rejected
-render after disposed        -> rejected
+{
+  sessionId,
+  runId,
+  committedFrameId,
+  frameRequestId,
+  source,
+  requestedTime,
+  simulationFrame,
+  state,
+  stateFingerprint,
+  rawPlan,
+  rawPlanFingerprint,
+  enhancedPlan,
+  enhancedPlanFingerprint,
+  topologyKey,
+  renderResult,
+  renderFingerprint,
+  canvasCommit,
+  committedAt
+}
 ```
 
-## Stop condition
+## Failed frame
 
 ```txt
-one session owns zero or one RAF
-no old run can schedule work after restart
-all acquired resources have one registered cleanup
-fatal construction and first-frame failure leave no leaked global/listener/RAF/WebGL ownership
-dispose is terminal and idempotent
-GameHost and editor expose the same session/run/state
-normal visual output is unchanged
+{
+  sessionId,
+  runId,
+  frameRequestId,
+  phase,
+  reason,
+  stateBeforeFingerprint,
+  stagedStateFingerprint,
+  rawPlanFingerprint,
+  enhancedPlanFingerprint,
+  previousCommittedFrameId,
+  failedAt
+}
 ```
 
-## Phase 2: Committed Frame Observation Authority
+## Required semantics
 
-After session ownership exists, add one staged frame transaction and publish state, plan, renderer, canvas, HUD, GameHost, and editor facts only from an immutable committed-frame row.
+```txt
+one frame request produces zero or one committed frame
+failed requests never replace lastCommittedFrame
+state becomes public only when its frame commits
+raw and enhanced plans carry the same requested time
+renderer result carries frameRequestId and topologyKey
+canvas acknowledgement carries committedFrameId
+HUD, GameHost, editor snapshot, and capture use one committed frame
+editor tick/reset cannot mutate state without a frame result
+capture rejects or reports an expected-frame mismatch
+Node synthetic capture is explicitly non-browser and frame-correlated
+journals are bounded, immutable, and JSON-safe
+```
 
 ## Final implementation order
 
 ```txt
-1. Runtime session identity, lifecycle states, and results.
-2. RAF ownership and restart generation fence.
-3. Resource ledger, global leases, rollback, and disposal.
-4. Lifecycle projections through boot, GameHost, and editor.
-5. Deterministic lifecycle fixtures and npm run check integration.
-6. Committed-frame staging and atomic publication.
-7. Source provider provenance and parity.
-8. Gameplay command/objective authority.
-9. Mesh contribution and registry truth.
+1. Runtime session identity, lifecycle states, RAF ownership, rollback, and disposal.
+2. Frame request, staging, fingerprints, renderer result, canvas acknowledgement, and commit.
+3. GameHost, HUD, browser editor, and Node fixture frame projections.
+4. Deterministic lifecycle and atomic-frame fixtures.
+5. Source provider provenance and external/fallback parity.
+6. Gameplay command/objective authority.
+7. Mesh contribution and registry truth.
 ```

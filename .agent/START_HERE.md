@@ -2,42 +2,44 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-10T21-19-36-04-00`
+**Last aligned:** `2026-07-10T22-58-36-04-00`
 
 ## Current ledge
 
 ```txt
-IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate
+IntoTheMeadow Runtime Session Lifecycle Authority
++ Stop/Restart/Dispose/Rollback Fixture Gate
 ```
 
 ## Immediate companion gate
 
 ```txt
-IntoTheMeadow Committed Frame Observation Authority + Atomic Frame Fixture Gate
+IntoTheMeadow Committed Frame Observation Authority
++ Atomic Frame Fixture Gate
 ```
 
 ## Read first
 
 ```txt
-.agent/trackers/2026-07-10T21-19-36-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-10T21-19-36-04-00.md
+.agent/trackers/2026-07-10T22-58-36-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-10T22-58-36-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-10T21-19-36-04-00-committed-frame-observation-dsk-map.md
-.agent/render-audit/2026-07-10T21-19-36-04-00-atomic-frame-commit-gap.md
-.agent/gameplay-audit/2026-07-10T21-19-36-04-00-tick-reset-render-commit-loop.md
-.agent/interaction-audit/2026-07-10T21-19-36-04-00-editor-tick-capture-commit-map.md
-.agent/frame-authority-audit/2026-07-10T21-19-36-04-00-staged-frame-commit-contract.md
-.agent/deploy-audit/2026-07-10T21-19-36-04-00-committed-frame-fixture-gate.md
+.agent/architecture-audit/2026-07-10T22-58-36-04-00-runtime-session-lifecycle-dsk-map.md
+.agent/render-audit/2026-07-10T22-58-36-04-00-render-resource-lifecycle-gap.md
+.agent/gameplay-audit/2026-07-10T22-58-36-04-00-stop-restart-frame-loop.md
+.agent/interaction-audit/2026-07-10T22-58-36-04-00-host-editor-lifecycle-command-map.md
+.agent/lifecycle-audit/2026-07-10T22-58-36-04-00-session-ownership-rollback-contract.md
+.agent/deploy-audit/2026-07-10T22-58-36-04-00-lifecycle-fixture-gate.md
 ```
 
-The earlier lifecycle and source-provider audits remain required context:
+The committed-frame and source-provider audits remain required companion context:
 
 ```txt
-.agent/lifecycle-audit/2026-07-10T19-48-09-04-00-runtime-session-stop-dispose-restart-contract.md
+.agent/frame-authority-audit/2026-07-10T21-19-36-04-00-staged-frame-commit-contract.md
 .agent/source-authority-audit/2026-07-10T19-48-39-04-00-external-fallback-provider-contract.md
 ```
 
@@ -49,42 +51,49 @@ The accessible `LuminaryLabs-Publish` inventory contains ten repositories. `TheC
 
 ## Product read
 
-`IntoTheMeadow` is a static DSK-composed meadow route. The browser imports a commit-pinned external meadow provider, creates a cached source plan, enhances it through local terrain/grass/wind/performance/postprocess services, builds or reuses one combined WebGL mesh, draws outline and cel/fog passes, and exposes GameHost/editor readback.
+`IntoTheMeadow` is a static DSK-composed meadow route. The browser resolves a commit-pinned external meadow provider, creates static game state and a cached source plan, enhances the plan through local services, renders a combined WebGL mesh, and exposes GameHost and Nexus headless-editor observations.
 
-## Actual frame and observation loop
+## Actual interaction and lifecycle loop
 
 ```txt
-requestAnimationFrame
-  -> game.tick() mutates live state
-  -> source plan time overlay
-  -> planEnhancer.enhance()
-  -> lastPlan is published
-  -> renderer.render()
-  -> lastRender is published
-  -> HUD reads live state and the latest fields
-  -> next requestAnimationFrame
+index.html
+  -> boot-game.js
+  -> startWebHost()
+  -> load external meadow-area-kit
+  -> create game
+  -> create renderer
+  -> create enhancer
+  -> expose global GameHost
+  -> install global NexusEditorEnvironment and browser listeners
+  -> requestAnimationFrame(frame)
+  -> tick / enhance / render / HUD
+  -> schedule the next RAF
 ```
 
-Editor capabilities can separately call `runtime.tick`, `runtime.reset`, `scene.getRenderPlan`, `renderer.getSnapshot`, and `renderer.capture`.
+The returned host controller is discarded by `boot-game.js`.
 
 ## Current finding
 
-The route has no atomic committed-frame authority.
+The runtime has useful cleanup primitives but no owner that coordinates them.
 
 ```txt
-game state can advance before render succeeds
-lastPlan updates before renderer.render returns
-render failure can leave a new plan paired with an older render snapshot
-runtime.tick can advance state without drawing a frame
-runtime.reset can expose reset state while the canvas remains stale
-renderer.capture has no committed-frame id tying pixels to state/plan/render facts
-GameHost and editor snapshots compose live values from different phases
+RAF id is never retained or cancelled
+stop() changes only a Boolean
+start() can schedule beside a still-pending stopped RAF
+no dispose() exists on the host controller
+GameHost has no lease or release operation
+editor listeners/global exposure survive fatal render failure
+renderer.dispose() is never called by the host
+startup construction has no reverse-order rollback
+first-frame failure leaves partial runtime ownership live
 ```
+
+A stop followed by start before the old RAF callback fires can create two active callbacks. Both see `stopped === false`, both render, and both schedule successors.
 
 ## Implementation order
 
 ```txt
-1. Runtime Session Lifecycle Authority + Stop/Restart/Dispose Fixture Gate
+1. Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate
 2. Committed Frame Observation Authority + Atomic Frame Fixture Gate
 3. Source Provider Authority + External/Fallback Parity Fixture Gate
 4. Interaction Command Authority + Objective Progress Fixture Gate

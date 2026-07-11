@@ -1,24 +1,27 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-11T02-20-44-04-00",
-  "status": "runtime-session-first-registry-truth-documented",
-  "currentNextSlice": "IntoTheMeadow Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate",
-  "latestDocumentationSlice": "IntoTheMeadow DSK Registry Truth + Declared/Implemented/Consumed Fixture Gate",
-  "latestTracker": ".agent/trackers/2026-07-11T02-20-44-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-11T02-20-44-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-11T02-20-44-04-00-dsk-registry-service-truth-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-11T02-20-44-04-00-renderer-kit-registry-contract-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-11T02-20-44-04-00-declared-versus-authoritative-gameplay-kit-map.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-11T02-20-44-04-00-editor-host-capability-registry-gap.md",
+  "generatedAt": "2026-07-11T02-28-12-04-00",
+  "status": "runtime-session-single-raf-global-lease-rollback-first-registry-truth-retained",
+  "currentNextSlice": "IntoTheMeadow Runtime Session Lifecycle Authority + Single-RAF / Global-Lease / Rollback Fixture Gate",
+  "immediateCompanionSlice": "IntoTheMeadow Committed Frame Observation Authority + State/Plan/Render/Canvas Coherence Fixture Gate",
+  "retainedDocumentationSlice": "IntoTheMeadow DSK Registry Truth + Declared/Implemented/Consumed Fixture Gate",
+  "latestTracker": ".agent/trackers/2026-07-11T02-28-12-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-11T02-28-12-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-11T02-28-12-04-00-runtime-session-lifecycle-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-11T02-28-12-04-00-duplicate-raf-render-ownership-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-11T02-28-12-04-00-stop-start-frame-multiplication-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-11T02-28-12-04-00-lifecycle-control-reachability-map.md",
+  "latestLifecycleAudit": ".agent/lifecycle-audit/2026-07-11T02-28-12-04-00-single-raf-global-lease-rollback-contract.md",
   "latestRegistryTruthAudit": ".agent/registry-truth-audit/2026-07-11T02-20-44-04-00-declared-runtime-consumption-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-11T02-20-44-04-00-registry-truth-fixture-gate.md",
+  "latestFrameAuthorityAudit": ".agent/frame-authority-audit/2026-07-11T00-30-48-04-00-atomic-committed-frame-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-11T02-28-12-04-00-runtime-lifecycle-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "All eligible repositories were tracked and had root .agent state. IntoTheMeadow had the oldest current central ledger timestamp."
+    "reason": "All eligible repositories were tracked and had root .agent state. IntoTheMeadow was the oldest central ledger entry when this pass selected it. A concurrent registry-truth audit landed during this pass and was reconciled without switching projects."
   },
   "census": {
     "externalDeclaredCount": 1,
@@ -28,6 +31,43 @@
     "runtimeSourceBackedSurfaceCount": 24,
     "correction": "Prior documentation described 44 local kits plus one external. The source declares 43 local kits plus one external."
   },
+  "interactionLoop": [
+    "browser boot and asynchronous external source resolution",
+    "DSK install and game/source construction",
+    "WebGL renderer and enhancer construction",
+    "GameHost and editor global assignment",
+    "error and unhandledrejection listener installation",
+    "untracked RAF state tick, plan enhancement, WebGL render, HUD projection, and successor scheduling",
+    "Boolean stop and start controls with no exact RAF cancellation",
+    "fatal DOM projection with no coordinated teardown",
+    "independent browser editor mutation and capture",
+    "Node fallback-backed plan, mesh, metric, and SVG observation"
+  ],
+  "domainsInUse": [
+    "browser shell and DOM boot",
+    "external kit resolution and source-provider selection",
+    "runtime session construction",
+    "lifecycle state and command admission",
+    "RAF ownership, clock admission, and run generation",
+    "global exposure leasing",
+    "listener ownership",
+    "resource acquisition, cleanup, rollback, fatal transition, and disposal",
+    "frame request, simulation, plan, render, canvas, and publication",
+    "DSK registry, descriptor creation, validation, installation, and snapshots",
+    "game manifest, content, state, tick, reset, and snapshot",
+    "source-plan caching, time overlay, and rebuild",
+    "story, objective, and interaction descriptors",
+    "terrain, path, materials, scatter, atmosphere, tree, and grass composition",
+    "wind, performance, and postprocess enhancement",
+    "render-plan validation and topology hashing",
+    "CPU mesh construction",
+    "WebGL resource, cache, render, snapshot, and disposal",
+    "GameHost diagnostics and global exposure",
+    "browser editor capabilities, errors, viewport, and capture",
+    "Node editor plan, mesh, metrics, artifacts, and workspace",
+    "HUD, loading, and fatal projection",
+    "validation and Pages deployment"
+  ],
   "externalKits": {
     "meadow-area-kit": {
       "status": "external-provider",
@@ -116,33 +156,86 @@
     "browser editor bridge",
     "Node headless-editor environment"
   ],
+  "serviceGroups": {
+    "lifecycle": [
+      "asynchronous host construction",
+      "Boolean stop/start",
+      "fatal DOM projection",
+      "renderer disposal primitive",
+      "editor disposal primitive",
+      "unleased global exposure",
+      "untracked error listeners"
+    ],
+    "frameAndObservation": [
+      "game tick/reset",
+      "raw-plan time overlay",
+      "enhanced-plan cache",
+      "WebGL draw and renderer snapshot",
+      "canvas capture",
+      "GameHost readback",
+      "browser editor readback",
+      "Node synthetic observation"
+    ],
+    "composition": [
+      "manifest",
+      "registry",
+      "install validation",
+      "terrain/path/material/object descriptors",
+      "grass and environment descriptors",
+      "gameplay descriptor shells",
+      "render and postprocess descriptors"
+    ],
+    "deployment": [
+      "static route",
+      "Pages workflow",
+      "Node smoke checks",
+      "production external CDN dependency"
+    ]
+  },
+  "mainFinding": "The host drops every RAF id. A stop followed by start before the old callback is delivered can admit both the old and new callbacks, permanently creating multiple simulation/render chains. The boot route discards the controller, globals and listeners are not leased, fatal handling performs no rollback, and renderer/editor disposal is not coordinated.",
+  "lifecycleAuthority": {
+    "parentDomain": "runtime-session-authority-domain",
+    "plannedKits": [
+      "runtime-session-identity-kit",
+      "runtime-lifecycle-state-kit",
+      "runtime-lifecycle-command-kit",
+      "runtime-lifecycle-result-kit",
+      "raf-ownership-kit",
+      "run-generation-fence-kit",
+      "runtime-clock-admission-kit",
+      "resource-ownership-ledger-kit",
+      "cleanup-stack-kit",
+      "global-exposure-lease-kit",
+      "listener-lease-kit",
+      "startup-rollback-kit",
+      "fatal-transition-kit",
+      "runtime-disposal-kit",
+      "runtime-lifecycle-journal-kit",
+      "GameHost-lifecycle-observation-kit",
+      "headless-editor-lifecycle-capability-kit",
+      "runtime-lifecycle-fixture-adapter-kit"
+    ],
+    "requiredProof": [
+      "exactly one pending RAF while running",
+      "zero pending RAFs while stopped, failed, or disposed",
+      "stale callbacks produce zero side effects",
+      "stop cancels the exact active RAF",
+      "restart creates one new run generation",
+      "startup and first-frame failure roll back all acquired resources",
+      "prior globals restore only while the lease retains ownership",
+      "listeners and WebGL resources release exactly once",
+      "dispose is idempotent",
+      "all control paths return equivalent typed results"
+    ]
+  },
   "knownRegistryMismatch": {
     "kitId": "meadow-webgl-renderer-v2-kit",
     "required": true,
-    "explicitDomainLabel": false,
-    "explicitServiceMap": false,
-    "currentFallbackServices": ["model", "state", "events", "validation", "snapshot"],
+    "registryTruthStatus": "declaration-and-service-census-documented-consumption-unproved",
     "actualObservedServices": ["WebGL context", "shader programs", "mesh upload", "buffer cache", "resize", "outline pass", "cel/fog pass", "snapshot", "dispose"]
   },
-  "plannedTruthKits": [
-    "dsk-census-kit",
-    "dsk-declaration-row-kit",
-    "dsk-required-status-kit",
-    "dsk-service-contract-kit",
-    "dsk-implementation-resolver-kit",
-    "dsk-import-observation-kit",
-    "dsk-invocation-observation-kit",
-    "dsk-output-kind-kit",
-    "dsk-consumer-edge-kit",
-    "dsk-consumption-status-kit",
-    "dsk-proof-row-kit",
-    "dsk-truth-snapshot-kit",
-    "GameHost-dsk-truth-projection-kit",
-    "editor-dsk-truth-capability-kit",
-    "dsk-registry-truth-fixture-kit"
-  ],
   "implementationOrder": [
-    "Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate",
+    "Runtime Session Lifecycle Authority + Single-RAF / Global-Lease / Rollback Fixture Gate",
     "Committed Frame Observation Authority + State/Plan/Render/Canvas Coherence Fixture Gate",
     "Source Provider Authority + External/Fallback Parity Fixture Gate",
     "Interaction Command Authority + Objective Progress Fixture Gate",
@@ -152,7 +245,8 @@
     "runtimeSourceChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
+    "lifecycleFixtureRun": false,
     "registryTruthFixtureRun": false,
-    "nextCommand": "npm run check after registry truth fixtures are implemented"
+    "nextCommand": "npm run check after lifecycle fixtures are implemented and wired"
   }
 }

@@ -2,40 +2,34 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T19-48-39-04-00`
+**Updated:** `2026-07-10T21-19-36-04-00`
 
 ## Goal
 
-Create one authoritative browser/editor runtime session, then make the selected meadow source explicit and parity-tested before gameplay commands bind to rendered path and focal-tree facts.
+Create one authoritative runtime session and one atomic committed-frame observation so state, source plan, enhanced plan, renderer result, canvas evidence, GameHost, and editor readback cannot disagree about which frame is visible.
 
 ## Plan ledger
 
 ```txt
-[ ] Preserve the current external meadow source URL and commit pin.
-[ ] Preserve render-plan schema, topology keys, shaders, mesh output, screenshots, and existing read methods.
+[ ] Preserve the external meadow source URL and commit pin.
+[ ] Preserve the current render-plan schema and visible default.
 [ ] Complete Runtime Session Lifecycle Authority first.
-[ ] Add a session id and run id.
-[ ] Add explicit lifecycle states: created, starting, running, stopped, disposing, disposed, failed.
-[ ] Retain and cancel the active requestAnimationFrame id.
-[ ] Add accepted/rejected/no-op lifecycle results with stable reasons.
-[ ] Prevent stop/start races and duplicate recursive frame loops.
-[ ] Add resource ownership and global exposure lease ledgers.
-[ ] Coordinate renderer.dispose(), editorBridge.dispose(), and enhancer invalidation.
-[ ] Add reverse-order startup rollback and terminal idempotent disposal.
-[ ] Project lifecycle state and bounded journals through GameHost and the editor bridge.
-[ ] Add DOM-free and browser lifecycle fixtures.
-[ ] Then add Source Provider Authority.
-[ ] Define a common external/fallback provider contract.
-[ ] Add explicit provider request, selection status, reason, and fallback policy.
-[ ] Retain manifest URL, pinned commit, provider version, source plan version, source fingerprint, and source epoch.
-[ ] Replace representative fallback claims with measured parity classification.
-[ ] Add a canonical source target index for arrival-path and focal-tree.
-[ ] Propagate source identity into enhanced plan, mesh/render observations, GameHost, and editor readback.
-[ ] Add external-provider, fallback-provider, parity, source-rebuild, and source-render-consumption fixtures.
-[ ] Then resume Interaction Command Authority and Objective Progress.
-[ ] Bind target preflight to the selected source target index.
-[ ] Keep mesh contribution and registry truth as final companion proof gates.
-[ ] Wire all new fixtures into npm run check.
+[ ] Add session id, run id, lifecycle states, RAF ownership, cleanup, rollback, and idempotent disposal.
+[ ] Add a frame request sequence owned by the runtime session.
+[ ] Stage simulation, source-plan, enhancement, render, and capture metadata without publishing partial results.
+[ ] Commit one immutable frame row only after renderer success.
+[ ] Retain the last successful committed frame and bounded frame journal.
+[ ] Record rejected/failed frame attempts separately from committed frames.
+[ ] Prevent lastPlan and lastRender from advancing independently.
+[ ] Make runtime.tick and runtime.reset either submit a frame transaction or return an explicit uncommitted/staged result.
+[ ] Correlate renderer.capture with a committed frame id.
+[ ] Project the same committed row through HUD, GameHost, and NexusEditorEnvironment.
+[ ] Add state, source, plan, render, and optional pixel fingerprints.
+[ ] Add render-failure rollback and stale-canvas fixtures.
+[ ] Then add Source Provider Authority fields to the committed-frame row.
+[ ] Then bind gameplay commands and objectives to committed source/target facts.
+[ ] Keep mesh contribution and registry truth as final proof gates.
+[ ] Wire all fixtures into npm run check.
 [ ] Update repo-local and central ledgers after implementation lands.
 ```
 
@@ -46,145 +40,122 @@ IntoTheMeadow Runtime Session Lifecycle Authority
 + Stop/Restart/Dispose Fixture Gate
 ```
 
+Required outcomes:
+
+```txt
+one session owns at most one RAF
+stop cancels scheduling
+restart cannot fork loops
+dispose is terminal and idempotent
+renderer/editor/enhancer/global cleanup is coordinated
+fatal startup and first-frame failure roll back partial ownership
+```
+
+## Phase 2: Committed Frame Observation Authority
+
+```txt
+IntoTheMeadow Committed Frame Observation Authority
++ Atomic Frame Fixture Gate
+```
+
 Suggested files:
 
 ```txt
-src/runtime/create-runtime-session.js
-src/runtime/lifecycle-state.js
-src/runtime/lifecycle-results.js
-src/runtime/resource-ownership-ledger.js
-src/runtime/global-exposure-lease.js
+src/runtime/frame-request.js
+src/runtime/frame-staging.js
+src/runtime/frame-commit.js
+src/runtime/frame-journal.js
+src/runtime/state-fingerprint.js
+src/runtime/plan-fingerprint.js
+src/runtime/render-consumption-row.js
 src/hosts/web-host.js
-src/boot/boot-game.js
 src/boot/expose-game-host.js
 src/editor/install-editor-bridge.js
-src/game/enhance-render-plan.js
-tests/runtime-session-lifecycle-smoke.mjs
-tests/runtime-stop-restart-smoke.mjs
-tests/runtime-dispose-idempotency-smoke.mjs
-tests/runtime-fatal-rollback-smoke.mjs
-tests/editor-listener-cleanup-smoke.mjs
-tests/global-exposure-lease-smoke.mjs
+src/game/game-snapshot.js
+src/renderers/meadow-webgl-renderer-v2.js
+tests/committed-frame-coherence-smoke.mjs
+tests/render-failure-no-partial-publish-smoke.mjs
+tests/editor-tick-frame-commit-smoke.mjs
+tests/reset-frame-commit-smoke.mjs
+tests/capture-frame-correlation-smoke.mjs
 ```
 
-Lifecycle result row:
+Committed-frame row:
 
 ```txt
 {
   sessionId,
   runId,
-  sequence,
-  command,
+  frameId,
+  requestSequence,
   status,
   reason,
-  stateBefore,
-  stateAfter,
-  rafOwned,
-  disposedResources,
-  releasedGlobals,
+  simulationFrame,
+  requestTime,
+  dt,
+  stateFingerprint,
+  sourceEpoch,
+  sourceFingerprint,
+  planId,
+  planFingerprint,
+  topologyKey,
+  rendererVersion,
+  renderFingerprint,
+  vertexCount,
+  triangleCount,
+  canvasWidth,
+  canvasHeight,
+  enhancerCache,
+  rendererCache,
+  committedAt,
   errors
 }
 ```
 
-Lifecycle stop condition:
-
-```txt
-exactly one active RAF while running
-zero active RAFs while stopped or disposed
-renderer/editor cleanup runs once
-session globals and listeners are released safely
-restart cannot fork loops
-normal render output is unchanged
-```
-
-## Phase 2: Source Provider Authority
-
-```txt
-IntoTheMeadow Source Provider Authority
-+ External/Fallback Parity Fixture Gate
-```
-
-Suggested files:
-
-```txt
-src/source/create-source-provider.js
-src/source/source-provider-contract.js
-src/source/source-selection-results.js
-src/source/source-fingerprint.js
-src/source/source-target-index.js
-src/hosts/web-host.js
-src/game/create-into-the-meadow-game.js
-src/game/game-snapshot.js
-src/boot/install-dsks.js
-src/boot/expose-game-host.js
-src/editor/install-editor-bridge.js
-tests/meadow-source-provider-contract-smoke.mjs
-tests/meadow-external-provider-smoke.mjs
-tests/meadow-source-fallback-parity-smoke.mjs
-tests/meadow-source-render-consumption-smoke.mjs
-```
-
-Source-provider result row:
+Failure row:
 
 ```txt
 {
-  sourceEpoch,
-  requestedProvider,
-  selectedProvider,
-  status,
+  requestSequence,
+  status: "failed",
+  phase,
   reason,
-  moduleUrl,
-  pinnedCommit,
-  providerVersion,
-  planId,
-  planVersion,
-  planFingerprint,
-  objectCounts,
-  validation,
-  topologyKey
+  previousCommittedFrameId,
+  stagedStateFingerprint,
+  stagedPlanFingerprint,
+  errors
 }
 ```
 
-Source stop condition:
+Stop condition:
 
 ```txt
-browser and Node paths use the same provider contract
-external import failure follows an explicit fallback policy
-same provider/config produces the same source fingerprint
-fallback parity is classified as exact, compatible, representative, or incompatible
-render and target readback include source epoch and fingerprint
-production external source is exercised by a deployment fixture
+no state/plan/render field is published before commit
+render failure preserves the previous committed frame
+GameHost and editor return the same frame id and fingerprints
+runtime.tick/reset cannot silently desynchronize state from pixels
+capture metadata identifies the frame represented by the canvas
+all public readback is JSON-safe and bounded
+normal visual output is unchanged
 ```
 
-## Phase 3: Interaction Command Authority
+## Phase 3: Source Provider Authority
 
-Resume the existing interaction plan after lifecycle and source identity are proven:
+Add provider URL, pinned commit, provider version, source epoch, source fingerprint, selection reason, and parity classification to the committed-frame row.
+
+## Phase 4: Interaction Command Authority
+
+Bind movement, path progress, inspection, and objective results to the committed source epoch and frame id. Reject stale target references.
+
+## Final implementation order
 
 ```txt
-typed move/path-progress/inspect/reset commands
-target lookup and range/precondition checks
-accepted/rejected/no-op results
-player/path and inspection reducers
-walk-the-path and inspect-tree objective completion
-bounded gameplay journal and state fingerprint
-GameHost/editor gameplay observations
-same-command replay fixtures
+1. Session lifecycle and ownership.
+2. Frame request/staging/commit contracts.
+3. GameHost/editor/capture frame projections.
+4. Atomic-frame and failure fixtures.
+5. Source provider provenance and parity.
+6. Gameplay command/objective authority.
+7. Mesh contribution and registry truth.
+8. Full npm run check and browser/editor validation.
 ```
-
-## Implementation order
-
-```txt
-1. Session identity and lifecycle results.
-2. RAF, resource, and global ownership.
-3. Stop/restart/dispose/fatal rollback fixtures.
-4. Provider contract and explicit source selection.
-5. Source provenance, fingerprint, epoch, and target index.
-6. External/fallback parity and render-consumption fixtures.
-7. Interaction command and objective reducers.
-8. Mesh contribution and registry truth fixtures.
-9. Full npm run check and browser/editor validation.
-```
-
-## Final stop condition
-
-Stop when lifecycle operations are idempotent, provider selection is explicit, external/fallback behavior is parity-classified, rendered frames and gameplay targets identify their source epoch, and the authored path/tree objectives can be replayed deterministically without changing the current visual default.

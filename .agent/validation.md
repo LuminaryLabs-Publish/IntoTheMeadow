@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T19-48-39-04-00`
+**Updated:** `2026-07-10T21-19-36-04-00`
 
 ## Validation performed this pass
 
@@ -11,16 +11,17 @@ This was a documentation-only breakdown using authenticated GitHub reads and dir
 ```txt
 full accessible Publish inventory reviewed: yes
 central ledger comparison performed: yes
-all eligible root .agent timestamps compared: yes
+all eligible repositories confirmed tracked: yes
 selected repository root .agent reviewed: yes
-browser boot and host lifecycle sources inspected: yes
-external manifest and dynamic-import path inspected: yes
-external meadow-area-kit pinned source inspected: yes
-local fallback source inspected: yes
-DSK install and provider-selection behavior inspected: yes
-game source-plan caching and rebuild inspected: yes
-game snapshot readback inspected: yes
-Node render-plan and deterministic smoke paths inspected: yes
+AGENTS.md reviewed: yes
+browser boot and web-host frame loop inspected: yes
+game state/tick/reset inspected: yes
+game snapshot inspected: yes
+render-plan enhancer cache inspected: yes
+WebGL renderer cache/render/snapshot/dispose inspected: yes
+GameHost exposure inspected: yes
+editor tick/reset/capture/snapshot capabilities inspected: yes
+package validation scripts inspected: yes
 runtime source changed: no
 dependencies changed: no
 package scripts changed: no
@@ -30,35 +31,30 @@ pull request created: no
 npm install: not run
 npm run check: not run
 npm test: not run
-browser smoke: not run
-WebGL smoke: not run
-headless editor smoke: not run
-lifecycle fixtures: not run because they do not exist yet
-external provider fixture: not run because it does not exist yet
-fallback parity fixture: not run because it does not exist yet
-source render-consumption fixture: not run because it does not exist yet
-pushed to main: yes
-central ledger updated: yes
-central change log updated: yes
+browser/WebGL smoke: not run
+committed-frame fixtures: not run because they do not exist yet
+pushed to main: pending this documentation commit
+central ledger update: pending this documentation commit
+central change log: pending this documentation commit
 ```
 
 ## Source inspection completed
 
 ```txt
+AGENTS.md
+README.md
 package.json
-index.html
 src/boot/boot-game.js
 src/hosts/web-host.js
-src/content/game-manifest.js
-src/content/meadow-areas/arrival-meadow.js
-src/content/meadow-areas/create-local-meadow-source-plan.js
 src/game/create-into-the-meadow-game.js
+src/game/game-state.js
 src/game/game-snapshot.js
-src/boot/install-dsks.js
-tests/render-plan-smoke.mjs
-tests/deterministic-scene-smoke.mjs
-LuminaryLabs-Agents/NexusEngine-ProtoKits/protokits/meadow-area-kit/index.js
-.agent current lifecycle and source-authority audit sets
+src/game/enhance-render-plan.js
+src/renderers/meadow-webgl-renderer-v2-compatible.js
+src/renderers/meadow-webgl-renderer-v2.js
+src/boot/expose-game-host.js
+src/editor/install-editor-bridge.js
+.agent current lifecycle/source-provider documentation
 central repo ledger and current Publish selection sequence
 ```
 
@@ -72,84 +68,62 @@ npm run editor:loop
 npm run editor:browser
 ```
 
-Existing checks cover static structure, DSK registry, render-plan behavior, renderer v2, deterministic-scene reachability, and editor environment/command/loop reachability.
+Existing checks cover static structure, registry, render-plan behavior, renderer v2, deterministic-scene reachability, and editor environment/command/loop reachability.
 
 They do not prove:
 
 ```txt
-lifecycle state and RAF uniqueness
-stop/restart/dispose behavior
-cleanup ordering and global ownership
-fatal rollback
-production external provider loading
-explicit fallback policy
-external/fallback parity
-source-plan fingerprints and epochs
-source identity propagation into renderer/GameHost/editor
-source-aware gameplay target resolution
+one authoritative runtime session
+one RAF invariant
+atomic frame staging and commit
+no partial publication on render failure
+state/plan/render/canvas frame correlation
+editor tick/reset render coherence
+capture-to-frame correlation
+source identity inside committed frames
 ```
 
-## Required lifecycle checks
+## Required committed-frame checks
 
 ```txt
-node tests/runtime-session-lifecycle-smoke.mjs
-node tests/runtime-stop-restart-smoke.mjs
-node tests/runtime-dispose-idempotency-smoke.mjs
-node tests/runtime-fatal-rollback-smoke.mjs
-node tests/editor-listener-cleanup-smoke.mjs
-node tests/global-exposure-lease-smoke.mjs
+node tests/committed-frame-coherence-smoke.mjs
+node tests/render-failure-no-partial-publish-smoke.mjs
+node tests/editor-tick-frame-commit-smoke.mjs
+node tests/reset-frame-commit-smoke.mjs
+node tests/capture-frame-correlation-smoke.mjs
 ```
 
 Assertions:
 
 ```txt
-one session owns at most one RAF
-stop cancels RAF and blocks tick/render submission
-restart cancels the old RAF before scheduling one new RAF
-stop/start race cannot fork recursive loops
-dispose calls renderer and editor cleanup exactly once
-session-owned GameHost and NexusEditorEnvironment values are released safely
-fatal construction and first-frame errors roll back partial resources
-second stop/dispose returns an explicit no-op
-start after dispose rejects with a stable reason
-normal render topology, counts, and captures remain unchanged
+successful frame publishes one immutable frame row
+state, plan, renderer, HUD, GameHost, and editor expose the same frame id
+state/plan/render fingerprints agree with the committed row
+lastPlan and lastRender cannot advance independently
+render failure preserves the previous committed frame
+failed frame attempts retain phase and reason without becoming visible state
+runtime.tick either commits a frame or reports uncommitted/staged status
+runtime.reset commits a reset frame before public projections advance
+capture returns the frame id represented by the canvas
+frame journals are bounded and JSON-safe
+normal topology, counts, shaders, and visual output remain unchanged
 ```
 
-## Required source-provider checks
+## Later required checks
 
 ```txt
-node tests/meadow-source-provider-contract-smoke.mjs
-node tests/meadow-external-provider-smoke.mjs
-node tests/meadow-source-fallback-parity-smoke.mjs
-node tests/meadow-source-render-consumption-smoke.mjs
-node tests/meadow-source-target-index-smoke.mjs
-```
-
-Assertions:
-
-```txt
-browser and Node adapters use the same provider contract
-external provider URL, pinned commit, version, and selection reason are retained
-external import/export/validation failures produce stable results
-fallback policy is explicit
-same provider/config produces the same source fingerprint
-source epoch changes only on provider reselection or rebuild
-fallback parity is classified rather than asserted
-external and fallback plans pass the same enhancer/mesh/render consumer contract
-render snapshots identify the consumed source epoch and fingerprint
-arrival-path and focal-tree target facts come from the selected source
-stale source target references reject without mutation
-production external provider is exercised separately from offline deterministic fallback checks
-```
-
-## Later gameplay and proof checks
-
-```txt
-node tests/meadow-interaction-command-smoke.mjs
-node tests/meadow-objective-progress-smoke.mjs
-node tests/meadow-command-replay-smoke.mjs
-node tests/mesh-contribution-ledger-smoke.mjs
-node tests/dsk-registry-truth-smoke.mjs
+runtime-session-lifecycle-smoke
+runtime-stop-restart-smoke
+runtime-dispose-idempotency-smoke
+runtime-fatal-rollback-smoke
+meadow-source-provider-contract-smoke
+meadow-external-provider-smoke
+meadow-source-fallback-parity-smoke
+meadow-source-render-consumption-smoke
+meadow-interaction-command-smoke
+meadow-objective-progress-smoke
+mesh-contribution-ledger-smoke
+dsk-registry-truth-smoke
 npm run check
 npm test
 npm run editor:smoke
@@ -157,4 +131,4 @@ npm run editor:smoke
 
 ## Validation warning
 
-A working `stop()` method does not prove lifecycle authority, and a green Node render-plan smoke does not prove the production external source. The current Node checks construct the local fallback while the deployed browser requires the CDN provider. Lifecycle and source-provider gates must both become explicit before interaction, deployment, or renderer evidence is considered complete.
+A green renderer snapshot does not prove that the live state, enhanced plan, canvas, and editor observation describe the same frame. The current host publishes those facts in separate phases and editor commands can advance state without a draw. Treat all current aggregate readback as non-atomic until committed-frame fixtures exist.

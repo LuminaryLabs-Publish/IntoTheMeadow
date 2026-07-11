@@ -6,7 +6,7 @@
 
 ## Plan ledger
 
-**Goal:** Distinguish completed source/documentation inspection from runtime proof, and define the exact checks required before claiming safe stop, restart, rollback, fatal handling, or disposal.
+**Goal:** Separate completed source/documentation inspection from runtime proof, and define the checks required before claiming safe stop, restart, rollback, fatal handling, or disposal.
 
 ```txt
 [x] Review the full accessible Publish inventory.
@@ -66,7 +66,7 @@ lifecycle result contract exists: no
 lifecycle journal exists: no
 ```
 
-## Reproduced source-level race
+## Source-level race
 
 The current control flow permits:
 
@@ -163,7 +163,8 @@ target product branch: main
 central repository: LuminaryLabs-Dev/LuminaryLabs
 central branch: main
 repo-local documentation pushed: yes
-central synchronization: pending until the central ledger and change-log writes complete
+central ledger synchronized: yes
+central internal change log added: yes
 ```
 
 Do not claim runtime lifecycle safety from a visually successful meadow render or from the existing smoke suite. The required fake-scheduler and ownership fixtures do not exist yet.

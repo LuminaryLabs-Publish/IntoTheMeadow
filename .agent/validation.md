@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-10T21-19-36-04-00`
+**Updated:** `2026-07-10T22-58-36-04-00`
 
 ## Validation performed this pass
 
@@ -14,13 +14,12 @@ central ledger comparison performed: yes
 all eligible repositories confirmed tracked: yes
 selected repository root .agent reviewed: yes
 AGENTS.md reviewed: yes
-browser boot and web-host frame loop inspected: yes
-game state/tick/reset inspected: yes
-game snapshot inspected: yes
-render-plan enhancer cache inspected: yes
-WebGL renderer cache/render/snapshot/dispose inspected: yes
-GameHost exposure inspected: yes
-editor tick/reset/capture/snapshot capabilities inspected: yes
+index and boot entry inspected: yes
+web-host construction/frame/stop/start inspected: yes
+game creation/tick/reset inspected: yes
+GameHost global exposure inspected: yes
+editor capabilities/listeners/dispose inspected: yes
+WebGL renderer allocation/render/snapshot/dispose inspected: yes
 package validation scripts inspected: yes
 runtime source changed: no
 dependencies changed: no
@@ -32,7 +31,7 @@ npm install: not run
 npm run check: not run
 npm test: not run
 browser/WebGL smoke: not run
-committed-frame fixtures: not run because they do not exist yet
+lifecycle fixtures: not run because they do not exist yet
 pushed to main: yes
 central ledger updated: yes
 central change log updated: yes
@@ -42,19 +41,16 @@ central change log updated: yes
 
 ```txt
 AGENTS.md
-README.md
+index.html
 package.json
 src/boot/boot-game.js
 src/hosts/web-host.js
 src/game/create-into-the-meadow-game.js
-src/game/game-state.js
-src/game/game-snapshot.js
-src/game/enhance-render-plan.js
-src/renderers/meadow-webgl-renderer-v2-compatible.js
-src/renderers/meadow-webgl-renderer-v2.js
 src/boot/expose-game-host.js
 src/editor/install-editor-bridge.js
-.agent current lifecycle/source-provider documentation
+src/renderers/meadow-webgl-renderer-v2-compatible.js
+src/renderers/meadow-webgl-renderer-v2.js
+.agent lifecycle/frame/source documentation
 central repo ledger and current Publish selection sequence
 ```
 
@@ -73,53 +69,63 @@ Existing checks cover static structure, registry, render-plan behavior, renderer
 They do not prove:
 
 ```txt
+resolved host controller retention
 one authoritative runtime session
-one RAF invariant
-atomic frame staging and commit
-no partial publication on render failure
-state/plan/render/canvas frame correlation
-editor tick/reset render coherence
-capture-to-frame correlation
-source identity inside committed frames
+one-active-RAF invariant
+stop cancellation
+restart generation fencing
+startup rollback
+first-frame failure cleanup
+global lease restoration
+listener release
+terminal idempotent disposal
+render rejection after disposal
+lifecycle projection parity across controller/GameHost/editor
 ```
 
-## Required committed-frame checks
+## Required lifecycle checks
 
 ```txt
-node tests/committed-frame-coherence-smoke.mjs
-node tests/render-failure-no-partial-publish-smoke.mjs
-node tests/editor-tick-frame-commit-smoke.mjs
-node tests/reset-frame-commit-smoke.mjs
-node tests/capture-frame-correlation-smoke.mjs
+node tests/runtime-session-lifecycle-smoke.mjs
+node tests/runtime-single-raf-smoke.mjs
+node tests/runtime-stop-cancels-raf-smoke.mjs
+node tests/runtime-restart-generation-smoke.mjs
+node tests/runtime-dispose-idempotency-smoke.mjs
+node tests/runtime-fatal-rollback-smoke.mjs
+node tests/runtime-global-lease-smoke.mjs
+node tests/runtime-listener-release-smoke.mjs
+node tests/runtime-render-after-dispose-smoke.mjs
 ```
 
 Assertions:
 
 ```txt
-successful frame publishes one immutable frame row
-state, plan, renderer, HUD, GameHost, and editor expose the same frame id
-state/plan/render fingerprints agree with the committed row
-lastPlan and lastRender cannot advance independently
-render failure preserves the previous committed frame
-failed frame attempts retain phase and reason without becoming visible state
-runtime.tick either commits a frame or reports uncommitted/staged status
-runtime.reset commits a reset frame before public projections advance
-capture returns the frame id represented by the canvas
-frame journals are bounded and JSON-safe
-normal topology, counts, shaders, and visual output remain unchanged
+start produces one owned RAF
+repeated start while running is a no-op
+stop cancels the exact owned RAF
+stop then start cannot revive an old run callback
+restart cancels old ownership before scheduling a new run
+runId increments exactly once per restart
+construction failure releases every acquired resource in reverse order
+first-frame failure leaves no successor RAF, global, listener, or WebGL resource
+only the owning session may remove or restore GameHost/NexusEditorEnvironment
+dispose is terminal and idempotent
+post-dispose commands are rejected with stable reasons
+lifecycle journal is bounded and JSON-safe
+controller, GameHost, and editor lifecycle snapshots match
+normal render output and source selection remain unchanged
 ```
 
 ## Later required checks
 
 ```txt
-runtime-session-lifecycle-smoke
-runtime-stop-restart-smoke
-runtime-dispose-idempotency-smoke
-runtime-fatal-rollback-smoke
+committed-frame-coherence-smoke
+render-failure-no-partial-publish-smoke
+editor-tick-frame-commit-smoke
+reset-frame-commit-smoke
+capture-frame-correlation-smoke
 meadow-source-provider-contract-smoke
-meadow-external-provider-smoke
 meadow-source-fallback-parity-smoke
-meadow-source-render-consumption-smoke
 meadow-interaction-command-smoke
 meadow-objective-progress-smoke
 mesh-contribution-ledger-smoke
@@ -131,4 +137,4 @@ npm run editor:smoke
 
 ## Validation warning
 
-A green renderer snapshot does not prove that the live state, enhanced plan, canvas, and editor observation describe the same frame. The current host publishes those facts in separate phases and editor commands can advance state without a draw. Treat all current aggregate readback as non-atomic until committed-frame fixtures exist.
+The current `stop()` result does not prove that animation work stopped. A pending callback remains registered, and `start()` can schedule another callback before the old one executes. Treat stop/restart, fatal failure, global cleanup, and disposal as unproven until deterministic lifecycle fixtures exist.

@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T08-31-33-04-00`
+**Updated:** `2026-07-11T10-50-14-04-00`
 
 ## Selection state
 
@@ -14,119 +14,127 @@ IntoTheMeadow selected as oldest eligible central-ledger entry
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Runtime step and clock gaps
+## Host capability gateway gaps
 
-### Multiple step producers share raw mutation
+### Raw game authority is public
 
-```txt
-browser RAF -> game.tick
-browser editor -> GameHost.game.tick
-Node headless editor -> repeated game.tick
-```
+`GameHost.game` exposes the complete game object, including callable `tick()`, `reset()` and `rebuildRenderPlan()` methods.
 
-There is no shared admission owner.
-
-### Numeric values are coerced, not validated
-
-`advanceGameState()` stores `Number(dt)` and `Number(time)`.
-
-Missing checks:
+### Capability registration is bypassable
 
 ```txt
-finite dt
-finite time
-non-negative dt
-configured dt range
-monotonic time
-expected prior frame
-session and clock epoch
+NexusEditorEnvironment.invoke -> capability callback -> GameHost.game
+page script -> GameHost.game directly
 ```
 
-### Browser editor can regress time
+The second path bypasses capability lookup, argument isolation, error capture and any future admission policy.
 
-`runtime.tick` defaults `time` to zero. It can run while RAF is active and advance `state.frame` outside the RAF path without enhancing or rendering a frame.
+### No session or lifecycle fence
 
-### Node step count is unbounded
+Public commands do not carry:
 
 ```txt
-Infinity -> non-terminating loop
-fractional count -> implicit extra iteration
-negative count -> zero work with completed response
-NaN count -> zero work with completed response
-very large count -> unbounded synchronous work
+host lease ID
+session ID
+run generation
+clock epoch
+expected state frame
+expected render commit
 ```
 
-### Headless local time can be poisoned
+A retained old reference cannot be retired safely after restart or disposal.
+
+### Transport success conceals domain status
+
+The editor reports `completed` when a callback does not throw. It does not distinguish:
 
 ```txt
-dt = Infinity -> time becomes Infinity
-dt = NaN -> time becomes NaN
-dt < 0 -> time regresses
+accepted
+rejected
+duplicate
+stale
+unavailable
+accepted-pending-render
+accepted-rendered
 ```
 
-### Reset ownership diverges
-
-```txt
-browser reset -> game state only
-Node reset -> game state + local time + enhancer invalidation
-```
-
-No shared clock epoch or first-post-reset result exists.
-
-### Capability success is not domain acceptance
-
-The editor protocol reports whether execution threw. It does not return semantic accepted, rejected, stale or duplicate step results.
-
-### No bounded journal or frame correlation
+### No command identity or journal
 
 Missing:
 
 ```txt
-step command ID
-step sequence
-source identity
-accepted count
-rejection reason
-clock epoch
-bounded journal
-render commit ID
-first post-reset frame acknowledgement
+command ID
+capability sequence
+domain result sequence
+duplicate handling
+bounded command journal
+bounded result journal
+state commit identity
+render commit identity
 ```
 
-## Required fixture gaps
+### Public read model is not authoritative
+
+State, snapshots, plans and renderer observations are returned without one shared:
 
 ```txt
-finite dt and time rejection
-negative and out-of-range dt rejection
-integer step-count validation
-step budget enforcement
-monotonic time enforcement
-browser RAF/editor concurrency
-session and expected-frame fencing
-duplicate command handling
-reset epoch retirement
-browser/Node result-schema parity
-step-to-render correlation
+observation revision
+session lease
+state fingerprint
+source revision
+topology lineage
+render commit ID
 ```
+
+### Host controller ownership is discarded
+
+`startWebHost()` returns game, renderer, enhancer, bridge, stop and start services. `boot-game.js` does not retain that controller. Stop, fatal rollback, restart and disposal therefore lack one public revocation owner.
+
+## Required capability fixture gaps
+
+```txt
+GameHost property allowlist
+raw authority absence
+session-fenced command admission
+unknown capability result
+stale and duplicate handling
+old lease revocation
+clone-safe observation isolation
+bounded journal behavior
+browser/Node schema parity
+accepted command to render-commit correlation
+```
+
+## Retained runtime step and clock gaps
+
+```txt
+browser RAF, browser editor and Node editor share raw game.tick
+finite delta validation absent
+integer step-count validation absent
+maximum work budget absent
+monotonic simulation clock absent
+reset epoch absent
+step result and journal absent
+```
+
+The host gateway must become exclusive before runtime-step admission can be trusted.
 
 ## Retained lifecycle gaps
 
 ```txt
 RAF request handles are not retained
-stop does not cancel a pending callback
+stop does not cancel pending callback
 stop/start can create duplicate RAF chains
-boot discards the returned host controller
+boot discards returned host controller
 GameHost and editor globals have incomplete lease ownership
 fatal handling does not coordinate disposal
 ```
 
-Runtime Session Lifecycle Authority remains the prerequisite for the step clock.
-
 ## Retained source-provider gaps
 
 ```txt
-production fallback is unreachable after external import or export failure
-tests use the local fallback instead of the deployed external provider
+production fallback is unreachable after external import/export failure
+tests use local fallback rather than deployed provider
 provider selection has no typed admission result
 external and fallback plans lack parity classification
 ```
@@ -162,8 +170,8 @@ accepted/rejected result authority absent
 
 ## Registry truth gap
 
-The DSK registry declares clock-adjacent responsibilities through game, host, player, input, diagnostics and render-host DSKs, but declaration does not prove a finite, monotonic or bounded runtime-step service exists.
+The DSK registry declares host, diagnostics, game and render services, but declaration does not prove the public host is the exclusive mutation gateway.
 
 ## Deployment risk
 
-A headless automation request can hang the Node process with an infinite step count or poison time with a non-finite delta. A browser editor request can regress recorded time and advance state outside the RAF-render path while still returning a successful capability response. Current CI cannot detect these failures.
+Any same-page script or editor client can hold `GameHost.game` and mutate state outside future authority layers. Restart or disposal cannot make that old reference inert. Current CI cannot detect raw-authority exposure, stale lease mutation, misleading capability success or observation aliasing.

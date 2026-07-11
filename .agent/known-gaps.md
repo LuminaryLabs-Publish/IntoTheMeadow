@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T10-50-14-04-00`
+**Updated:** `2026-07-11T12-29-49-04-00`
 
 ## Selection state
 
@@ -14,96 +14,92 @@ IntoTheMeadow selected as oldest eligible central-ledger entry
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Host capability gateway gaps
+## Headless workspace path gaps
 
-### Raw game authority is public
+### String-prefix containment
 
-`GameHost.game` exposes the complete game object, including callable `tick()`, `reset()` and `rebuildRenderPlan()` methods.
+`safePath()` accepts a target when `target.startsWith(root)`. This can accept a sibling path whose name begins with the root's characters without being a descendant.
 
-### Capability registration is bypassable
+### Symlink containment
+
+Lexical path resolution does not verify the target's real filesystem location. An inside-root symlink can redirect list, read, write or capture operations outside the workspace.
+
+### New-write ancestry
+
+`workspace.write` creates parent directories recursively. There is no nearest-existing-ancestor realpath check before creating a new path.
+
+### Shared operation authority
+
+The following use the same incomplete helper but have no shared typed operation authority:
 
 ```txt
-NexusEditorEnvironment.invoke -> capability callback -> GameHost.game
-page script -> GameHost.game directly
+artifactRoot construction
+renderer.capture JSON write
+renderer.capture SVG write
+workspace.list
+workspace.read
+workspace.write
 ```
 
-The second path bypasses capability lookup, argument isolation, error capture and any future admission policy.
+### Missing root identity
 
-### No session or lifecycle fence
-
-Public commands do not carry:
+Commands do not carry:
 
 ```txt
-host lease ID
-session ID
-run generation
-clock epoch
-expected state frame
-expected render commit
+workspace root ID
+workspace root revision
+editor session ID
+expected capability lease
+operation ID
+path policy revision
 ```
 
-A retained old reference cannot be retired safely after restart or disposal.
+### Missing terminal result
 
-### Transport success conceals domain status
-
-The editor reports `completed` when a callback does not throw. It does not distinguish:
+Generic capability completion does not distinguish:
 
 ```txt
 accepted
-rejected
-duplicate
-stale
-unavailable
-accepted-pending-render
-accepted-rendered
+rejected-parent-escape
+rejected-sibling-prefix
+rejected-symlink
+rejected-operation-policy
+failed-I/O
+partial-artifact-write
 ```
 
-### No command identity or journal
+### Missing budgets and redaction
 
-Missing:
+Read/list/write operations have no explicit byte, entry or recursion budgets. Public results are not governed by one rule that prevents absolute host-path disclosure.
+
+## Required workspace fixture gaps
 
 ```txt
-command ID
-capability sequence
-domain result sequence
-duplicate handling
-bounded command journal
-bounded result journal
-state commit identity
-render commit identity
+root and normal descendant acceptance
+parent traversal rejection
+sibling-prefix traversal rejection
+absolute outside path rejection
+symlink read/list/write rejection
+nearest-existing-ancestor write proof
+rejected-write no-mutation proof
+artifact root and workspace policy parity
+relative public path projection
+cross-platform path semantics
 ```
 
-### Public read model is not authoritative
-
-State, snapshots, plans and renderer observations are returned without one shared:
+## Retained host capability gaps
 
 ```txt
-observation revision
-session lease
-state fingerprint
-source revision
-topology lineage
-render commit ID
+GameHost exposes raw game authority
+capability registration is bypassable
+session and lifecycle fences are absent
+transport success conceals domain status
+command identity and bounded journals are absent
+public observations are not revisioned
+host controller ownership is discarded
 ```
 
-### Host controller ownership is discarded
-
-`startWebHost()` returns game, renderer, enhancer, bridge, stop and start services. `boot-game.js` does not retain that controller. Stop, fatal rollback, restart and disposal therefore lack one public revocation owner.
-
-## Required capability fixture gaps
-
-```txt
-GameHost property allowlist
-raw authority absence
-session-fenced command admission
-unknown capability result
-stale and duplicate handling
-old lease revocation
-clone-safe observation isolation
-bounded journal behavior
-browser/Node schema parity
-accepted command to render-commit correlation
-```
+The host gateway must become exclusive before workspace operation admission can be trusted.
 
 ## Retained runtime step and clock gaps
 
@@ -116,8 +112,6 @@ monotonic simulation clock absent
 reset epoch absent
 step result and journal absent
 ```
-
-The host gateway must become exclusive before runtime-step admission can be trusted.
 
 ## Retained lifecycle gaps
 
@@ -159,7 +153,7 @@ editor tick and reset bypass rendering
 state, plan, renderer and canvas lack one commit identity
 ```
 
-## Retained interaction command gaps
+## Retained interaction gaps
 
 ```txt
 path-progress and inspect commands are authored but cannot be dispatched
@@ -170,8 +164,8 @@ accepted/rejected result authority absent
 
 ## Registry truth gap
 
-The DSK registry declares host, diagnostics, game and render services, but declaration does not prove the public host is the exclusive mutation gateway.
+The DSK registry declares host, diagnostics, game, render and workspace-adjacent services, but declaration does not prove runtime consumption or safe filesystem admission.
 
 ## Deployment risk
 
-Any same-page script or editor client can hold `GameHost.game` and mutate state outside future authority layers. Restart or disposal cannot make that old reference inert. Current CI cannot detect raw-authority exposure, stale lease mutation, misleading capability success or observation aliasing.
+Current CI exercises editor capabilities and render metrics but does not attempt sibling-prefix escape, symlink escape, rejected-write no-mutation or artifact-root containment. Headless-editor workspace safety is therefore unproven.

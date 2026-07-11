@@ -2,33 +2,34 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T04-49-30-04-00`
+**Audit timestamp:** `2026-07-11T06-38-59-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed static meadow route with one commit-pinned external source kit, one local fallback source implementation, 43 locally declared DSK descriptors, a render-plan enhancer, a WebGL renderer, browser and Node editor surfaces, two authored objectives, two interaction targets and three story beats.
+`IntoTheMeadow` is a DSK-composed static meadow route with one pinned external source kit, one local fallback source implementation, 43 local DSK declarations, a render-plan enhancer, a CPU mesh builder, a WebGL renderer, browser and Node editor surfaces, and authored interaction/objective/story descriptors.
 
-This documentation-only pass identifies the missing authority between authored actions, target admission, player mutation, objective predicates, story triggers, feedback projection and executable proof.
+This pass audits the missing authority between raw source identity, enhanced topology, CPU mesh identity, GPU buffer generations, cache invalidation, rendered frames, and host/editor proof.
 
 ## Plan ledger
 
-**Goal:** Define one deterministic command path that turns `path-progress` and `inspect` intent into typed results, committed player/objective/story state and observable proof without changing the current rendered meadow.
+**Goal:** make persistent render caching correct in both directions: every render-affecting source mutation must rebuild exactly once, and every dynamic-only mutation must reuse static mesh buffers.
 
-```txt
-[x] Enumerate the complete LuminaryLabs-Publish inventory.
-[x] Exclude TheCavalryOfRome.
-[x] Compare all eligible repositories with the central ledger.
-[x] Select only IntoTheMeadow.
-[x] Read AGENTS.md and current root .agent state.
-[x] Trace objective, target and story declarations.
-[x] Trace game-state initialization and tick behavior.
-[x] Trace GameHost, browser editor and Node editor command surfaces.
-[x] Identify the interaction loop, domains, kits and services.
-[x] Add architecture, render, gameplay, interaction, objective and deploy audits.
-[x] Refresh required root .agent files.
-[x] Push documentation only to main.
-[x] Synchronize the central ledger and internal change log.
-```
+- [x] Enumerate the complete accessible `LuminaryLabs-Publish` inventory.
+- [x] Exclude `TheCavalryOfRome`.
+- [x] Compare all eligible repositories with the central ledger.
+- [x] Select only `IntoTheMeadow` as the oldest eligible entry.
+- [x] Read `AGENTS.md` and the current root `.agent` state.
+- [x] Trace raw source-plan construction and caching.
+- [x] Trace source-key projection and enhancer cache admission.
+- [x] Trace enhanced topology hashing and CPU mesh construction.
+- [x] Trace WebGL mesh/buffer caching, snapshots, and disposal.
+- [x] Trace rebuild, GameHost, and editor observation surfaces.
+- [x] Inspect current render-plan and renderer smoke tests.
+- [x] Identify the interaction loop, domains, kits, and services.
+- [x] Add architecture, render, gameplay, interaction, cache, and deploy audits.
+- [x] Refresh required root `.agent` files.
+- [x] Push documentation only to `main`.
+- [ ] Runtime implementation and executable fixtures remain future work.
 
 ## Selection state
 
@@ -38,64 +39,46 @@ eligible after exclusion: 9
 new or missing central ledgers: 0
 missing root .agent state: 0
 selected: LuminaryLabs-Publish/IntoTheMeadow
-selection basis: oldest eligible central ledger plus newer repo-local state requiring reconciliation
+selection basis: oldest eligible central ledger
 excluded: LuminaryLabs-Publish/TheCavalryOfRome
 ```
 
 ## Interaction loop
 
-### Running browser route
+### Browser route
 
 ```txt
 index.html
   -> boot-game.js
   -> startWebHost()
-  -> load source provider
+  -> load pinned source provider
   -> createIntoTheMeadowGame()
+  -> cache baseRenderPlan
   -> install DSK descriptors
-  -> create initial game state
   -> RAF
   -> game.tick({ dt, time })
-  -> advanceGameState()
-  -> frame + 1 and lastTick only
-  -> get cached render plan
-  -> enhance, validate and render
-  -> publish read-only state and render observations
+  -> get time-overlay raw plan
+  -> enhancer.enhance(rawPlan)
+  -> source key hit or rebuild
+  -> render plan validation
+  -> renderer.render(plan)
+  -> topology key hit or mesh rebuild
+  -> GPU buffer reuse or upload
+  -> outline and color draw passes
+  -> GameHost/editor observations
 ```
 
-### Authored but disconnected gameplay loop
+### Explicit source rebuild
 
 ```txt
-walk-the-path
-  -> requiredAction: path-progress
-  -> targetId: arrival-path
-  -> completion: pathProgress >= 0.35
-  -> story trigger at path-progress:0.25
-
-inspect-tree
-  -> requiredAction: inspect
-  -> targetId: focal-tree
-  -> completion: inspected == true
-  -> story trigger inspect:focal-tree
-```
-
-### Headless loop
-
-```txt
-runtime.tick --ticks N
-  -> game.tick({ dt, time })
-  -> frame increments
-  -> player, progression and story remain unchanged
-
-runtime.reset
-  -> initial static state restored
-
-missing:
-  runtime.command
-  player.move
-  interaction.inspect
-  objective.getProgress
-  story.getEvents
+game.rebuildRenderPlan()
+  -> provider generates new raw plan
+  -> baseRenderPlan is replaced
+  -> no source revision
+  -> no source fingerprint result
+  -> no enhancer invalidation
+  -> no renderer invalidation
+  -> no committed-frame acknowledgement
 ```
 
 ## Domains in use
@@ -103,37 +86,32 @@ missing:
 ```txt
 browser shell and DOM boot
 manifest and external dependency declaration
-source-provider discovery, admission and fallback policy
-raw source-plan generation, validation, normalization, parity and caching
-runtime session lifecycle and committed-frame observation
-DSK registry, installation, validation and snapshots
-game state, tick, reset, snapshot and diagnostics
-authored player, camera, input, interaction, objective and story descriptors
-terrain, path, materials, grass, scatter, trees, wind and atmosphere
-render-plan/v2 enhancement, topology hashing and validation
-CPU mesh construction
-WebGL resources, cache, rendering, snapshots and disposal
-GameHost, browser editor and Node headless-editor observation
-HUD, loading and fatal projection
-static checks, build and Pages deployment
+source-provider discovery, loading, fallback, validation, normalization, and caching
+DSK registry, descriptor registration, installation, validation, and snapshots
+game state, tick, reset, snapshot, and diagnostics
+terrain, path, grass, scatter, tree, wind, atmosphere, materials, and style composition
+render-plan/v2 enhancement, normalization, validation, and topology hashing
+performance, LOD, wind, and postprocess policy
+CPU mesh construction and contribution accounting
+WebGL shader, buffer, cache, render, snapshot, resize, and disposal
+GameHost and browser/Node editor observation
+HUD, loading, fatal projection, checks, build, and Pages deployment
 ```
 
 Missing runtime-authoritative domains:
 
 ```txt
-input sample normalization
-gameplay command admission
-interaction target spatial query
-player movement and path projection
-path-progress evaluation
-inspect admission
-objective predicate evaluation
-objective transition and completion ledger
-story-trigger execution
-typed command results
-feedback projection
-bounded command/result journal
-command-to-committed-frame correlation
+source revision and provider fingerprint
+canonical render-affecting projection
+versioned source-key schema
+cache admission and rejection results
+coordinated enhancer/renderer invalidation
+source-to-topology-to-mesh-to-buffer lineage
+mesh contribution fingerprint
+GPU buffer generation identity
+bounded cache journal
+clone-safe cache observation
+source mutation fixture authority
 ```
 
 ## Kit inventory
@@ -154,141 +132,130 @@ source: LuminaryLabs-Agents/NexusEngine-ProtoKits
 commit: 11d245913ba4d30f3ce950eb5a17e1cc6e4aa1f5
 ```
 
-All 43 declared local kit IDs and their services remain listed in `.agent/kit-registry.json`.
+All 43 declared local kit IDs and their services remain in `.agent/kit-registry.json`.
 
-Interaction-related declared kits:
+Primary source-backed kits for this audit:
 
 ```txt
-meadow-player-dsk
-  player-state
-  movement-profile
-  terrain-contact
-  player-actions
-  player-validation
+fallback-meadow-area-kit
+  local source-plan generation, snapshot, and validation
 
-meadow-camera-dsk
-  camera-mode
-  camera-rig
-  camera-collision
-  camera-feel
-  camera-validation
+meadow-render-plan-enhancer-v2
+  source-key admission, enhancement, cache snapshot, and manual invalidation
 
-meadow-input-dsk
-  action-map
-  device-bindings
-  input-context
-  input-normalization
-  input-validation
+meadow-render-plan-v2
+  descriptor normalization, validation, topology projection, stable hashing, and time overlay
 
-meadow-interaction-dsk
-  interactable-registry
-  affordance-rules
-  inspect-state
-  interaction-events
-  interaction-validation
+meadow-mesh-builder-v2
+  CPU geometry buffers, descriptor contributions, mesh metrics, and mesh identity
 
-meadow-objective-dsk
-  objective-model
-  objective-flow
-  completion-ledger
-  feedback-surface
-  objective-validation
+meadow-webgl-renderer-v2
+  context, shaders, attribute buffers, topology cache, rendering, snapshot, and disposal
 
-meadow-story-dsk
-  story-state
-  story-beats
-  dialogue-text
-  sequence-runner
-  story-validation
+precision-safe WebGL compatibility adapter
+  one float precision declaration per graphics shader
+
+GameHost diagnostics surface
+  game, state, diagnostics, enhanced plan, enhancer snapshot, and renderer snapshot
+
+browser editor bridge
+  runtime, scene, renderer, viewport, capture, and error capabilities
+
+Node headless editor environment
+  plan, mesh, metrics, SVG, workspace, tick, reset, and observation capabilities
 ```
-
-These are registry declarations, not source-backed runtime owners.
 
 ## Services offered by the current stack
 
 ```txt
-external module import and commit pinning
-deterministic meadow source generation
-raw-plan validation, enhancement and topology hashing
-DSK descriptor registration, lookup, installation and snapshots
-terrain, path, materials, grass, scatter, tree, wind and atmosphere descriptors
-game state tick/reset/snapshot and diagnostics
-CPU mesh building
-WebGL context, shader, buffer, cache, render, snapshot and disposal
-GameHost plan/render/enhancer readback
-browser editor status/tick/reset/render/capture/error capabilities
-Node plan/mesh/metrics/SVG/workspace capabilities
+commit-pinned external source loading
+deterministic external or fallback raw source generation
+DSK descriptor registration and snapshots
+raw-plan caching and explicit rebuild
+render-plan enhancement and descriptor-family validation
+source and enhanced topology hashing
+performance, wind, grass, tree, and postprocess descriptor composition
+CPU mesh generation
+WebGL static buffer caching and two-pass draw
+renderer and enhancer cache snapshots
+GameHost and editor readback
 static checks and Pages deployment
 ```
 
 Services not currently offered:
 
 ```txt
-dispatch gameplay command
-normalize device action
-query interaction target
-move player
-project player onto path
-evaluate objective progress
-inspect target
-commit objective completion
-emit story beat
-return typed interaction result
-read command journal
-correlate command with committed state/render frame
+source revision assignment
+complete render-affecting source projection
+versioned cache-key contract
+typed cache admission result
+coordinated rebuild/invalidation transaction
+mesh contribution parity result
+GPU buffer generation ID
+source-to-frame lineage
+cache mutation journal
+source mutation fixture matrix
 ```
 
-## Main finding: authored gameplay has no runtime command path
+## Main finding: incomplete source identity can preserve stale output
 
-`createInitialGameState()` creates a player at `(0, 0, -36)`, sets `pathProgress` to `0`, marks `walk-the-path` active and preloads the `arrival` story beat.
+`createRenderPlanEnhancer()` caches by `sourceTopologyKey(rawPlan)`.
 
-`advanceGameState()` ignores every field except `dt` and `time`. It increments `frame` and writes `lastTick`.
+The key includes the plan identity, area, style, and only selected object fields. It omits render-affecting inputs including:
 
-The browser host passes only time data. `GameHost` exposes reads plus the raw game object. The browser editor bridge and Node editor environment expose tick and reset, but no movement, interaction or objective capability. The command smoke proves only that three ticks produce frame `3`.
+```txt
+path enabled, rutCount, and pebbleCount
+wildflower color and accent
+rock color and accent
+tree-line color and accent
+focal-tree trunkRadius, trunkHeight, rootCount, leafClusterCount, shadowRadius, and renderStyle
+raw wind state
+runtime performance overrides
+```
 
-Therefore the current product cannot complete either authored objective through its public runtime surfaces.
+A new raw source plan that changes only one of these fields can be classified as a cache hit. The old enhanced plan keeps its old topology key, and the renderer then reuses the old CPU mesh and GPU buffers.
+
+`rebuildRenderPlan()` replaces the raw plan but does not invalidate either cache or return a typed result.
+
+Current tests prove that time-only changes preserve static topology. They do not prove that static mutations rebuild exactly once or that dynamic-only changes avoid unnecessary rebuilds.
 
 ## Required parent domain
 
 ```txt
-meadow-interaction-command-authority-domain
+meadow-render-cache-identity-authority-domain
 ```
 
 Update existing DSKs first:
 
 ```txt
-meadow-input-dsk
-meadow-player-dsk
-meadow-interaction-dsk
-meadow-objective-dsk
-meadow-story-dsk
-meadow-ui-dsk
+meadow-area-bridge-dsk
+meadow-render-host-dsk
+meadow-performance-dsk
+wind-field-dsk
 meadow-diagnostics-dsk
 ```
 
-Add only the missing coordinating kits:
+Add only coordinating kits:
 
 ```txt
-interaction-command-envelope-kit
-interaction-command-admission-kit
-interaction-target-query-kit
-path-progress-evaluator-kit
-inspect-admission-kit
-objective-predicate-evaluator-kit
-objective-transition-kit
-story-trigger-execution-kit
-interaction-result-kit
-interaction-command-journal-kit
-interaction-feedback-projection-kit
-interaction-observation-kit
-objective-progress-fixture-kit
+source-plan-revision-kit
+render-affecting-projection-kit
+render-cache-key-schema-kit
+render-cache-admission-kit
+render-cache-invalidation-kit
+render-lineage-kit
+mesh-contribution-fingerprint-kit
+gpu-buffer-generation-kit
+render-cache-journal-kit
+render-cache-observation-kit
+render-cache-mutation-fixture-kit
 ```
 
 ## Next safe ledge
 
 ```txt
-IntoTheMeadow Interaction Command Authority
-+ Path / Inspect / Objective Progress Fixture Gate
+IntoTheMeadow Render Topology Identity Authority
++ Source Mutation / Cache Rebuild Fixture Gate
 ```
 
-Source-provider authority remains a prerequisite for production parity. Committed-frame authority remains the eventual observation boundary. This slice should not add free-form gameplay; it should prove the two already-authored actions end to end.
+Runtime lifecycle and provider admission remain prerequisites. Committed-frame and interaction-command work should consume this lineage instead of inventing separate render identity.

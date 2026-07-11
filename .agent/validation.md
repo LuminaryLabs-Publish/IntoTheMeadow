@@ -2,11 +2,11 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T17-30-56-04-00`
+**Updated:** `2026-07-11T19-01-08-04-00`
 
 ## Plan ledger
 
-**Goal:** separate one successful renderer boot from executable proof that context loss invalidates readiness and restoration rebuilds a complete new-generation resource set before frame and capture success.
+**Goal:** distinguish visible error reporting from executable proof that startup and frame failures clean partial acquisitions, preserve the prior committed frame, quarantine public mutation/capture and recover only through an admitted new-generation path.
 
 - [x] Review the full accessible Publish inventory.
 - [x] Compare every eligible repository with the central ledger.
@@ -14,41 +14,47 @@
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Select only `IntoTheMeadow`.
 - [x] Read `AGENTS.md` and retained audits.
-- [x] Inspect WebGL renderer construction and resource ownership.
-- [x] Inspect topology cache and buffer replacement.
-- [x] Inspect web-host RAF, fatal projection and snapshots.
-- [x] Inspect editor canvas capture.
-- [x] Inspect renderer and browser smoke coverage.
-- [x] Document context-generation recovery and fixture requirements.
+- [x] Inspect boot and host startup ordering.
+- [x] Inspect frame mutation, plan publication and renderer submission order.
+- [x] Inspect fatal projection, stop/start behavior and retained globals.
+- [x] Inspect editor capabilities, listeners and capture.
+- [x] Inspect renderer mutation and disposal surfaces.
+- [x] Document failure identity, rollback, quarantine, cleanup and cold-restart requirements.
 - [x] Change documentation only.
 - [ ] Execute fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-WebGL contexts acquired during renderer construction: 1
-shader programs created during renderer construction: 1
-context-loss listeners: 0
-context-restoration listeners: 0
-context generation fields: 0
-resource generation fields: 0
-first recovered frame acknowledgements: 0
-capture freshness checks: 0
+startup acquisition ledger count: 0
+reverse cleanup stack count: 0
+startup result types: 0
+fatal failure IDs: 0
+fatal lifecycle states: 0
+fatal capability fences: 0
+fatal capture fences: 0
+cold restart transactions: 0
+last-known-good failure frame receipts: 0
+renderer dispose methods: 1
+editor bridge dispose methods: 1
+fatal paths invoking those disposers: 0
 ```
 
 ## Proven from source
 
 ```txt
-renderer acquires WebGL2 or WebGL once
-renderer creates and links the program once
-attribute and uniform locations are resolved once
-GPU buffers are replaced only when bindMesh() runs
-bindMesh() runs when topology cache misses
-same topology returns cached CPU mesh
-renderer snapshot has no context/resource/frame identity
-web host stores lastRender independently of context state
-editor capture returns canvas data URL plus latest renderer snapshot
-browser observation checks one successful screenshot and gpu HUD marker
+boot catch writes visible status and logs the error
+startWebHost acquires provider, game, renderer, enhancer, GameHost and editor in sequence
+GameHost is published before editor installation and before the first rendered frame
+game.tick mutates state before render-plan validation and draw success
+lastPlan is assigned before renderer.render completes
+renderer.render can resize canvas, replace buffers, clear and issue draws before snapshot commit
+showFatal sets stopped and writes text only
+GameHost raw game remains exposed after fatal
+editor runtime.tick, reset, renderer reads and capture remain registered after fatal
+stop changes only a Boolean
+start schedules the same callback on the same runtime graph
+renderer and editor disposers exist but fatal paths do not call them
 ```
 
 ## Existing proof
@@ -62,26 +68,25 @@ CPU mesh is substantial and internally aligned
 animation time does not change static topology
 browser route can boot in an available Chromium
 one screenshot can be created
-editor bridge and gpu HUD marker can be observed
+editor bridge and GPU HUD marker can be observed
+headless editor commands and loop can execute in their existing happy paths
 ```
 
 Current checks do not prove:
 
 ```txt
-loss event admission
-preventDefault handling
-render suspension during loss
-context generation advancement
-program recreation after restore
-attribute and uniform re-resolution
-buffer reconstruction after restore
-same-topology forced GPU rebuild
-staged recovery rollback
-first recovered frame commitment
-HUD and GameHost recovery correlation
-capture rejection while stale
-repeated recovery without leaks
-late-event rejection after dispose
+reverse cleanup after startup failure
+absence of leaked globals/listeners after failed boot
+state/plan/render rollback after frame failure
+last-known-good committed frame retention
+fatal capability and capture quarantine
+cleanup failure reporting
+recoverable versus terminal failure classification
+in-place restart rejection after fatal
+cold replacement-session creation
+new session/renderer/context/resource/frame generations
+first replacement frame before readiness
+repeated failure/restart without RAF/listener/global leaks
 ```
 
 ## Execution status
@@ -96,93 +101,124 @@ branch created: no
 pull request created: no
 npm run check executed: no
 browser smoke executed: no
-WebGL context fixtures available: no
+fatal recovery fixtures available: no
 ```
 
-## Required DOM-free fixture
+## Required DOM-free startup fixture
 
-Construct fake event and resource adapters with:
+Construct fake acquisition adapters with:
 
 ```txt
-runtime session identity
-renderer instance identity
-context state machine
-context generation counter
-resource generation counter
-fake program factory
-fake location resolver
-fake buffer factory
-candidate frame submitter
-capture admission adapter
-bounded result journal
+startup attempt and candidate session IDs
+provider acquisition
+fake game factory
+fake renderer factory
+fake enhancer factory
+global publication adapter
+editor/listener lease adapter
+reverse cleanup stack
+cleanup failure injection
+typed startup and cleanup results
+bounded journal
 ```
 
-## DOM-free acceptance assertions
+Acceptance assertions:
 
 ```txt
-ready -> lost invalidates render and capture success
-lost -> restoring allocates next context generation
-same topology still recreates program and buffers
-candidate resources remain private until complete
-successful candidate frame atomically commits recovery
-failed candidate leaves no active partial registry
-stale and duplicate events are rejected
-stop/dispose blocks late restoration
+failure at every acquisition phase invokes reverse cleanup exactly once
+cleanup order is reverse acquisition order
+no failed candidate publishes ready status
+no global or listener from a failed candidate remains active
+cleanup failure is reported but does not restore readiness
+successful startup publishes globals only at final commit
+```
+
+## Required frame-failure fixture
+
+Construct staged state, plan and renderer adapters with failure injection at:
+
+```txt
+game tick
+source plan derivation
+plan enhancement
+contract validation
+canvas resize
+mesh construction
+buffer replacement
+outline draw
+color draw
+HUD projection
+```
+
+Acceptance assertions:
+
+```txt
+prior committed public frame remains authoritative
+failed candidate receives one failure ID
+mutation and capture capabilities are quarantined
+no candidate is presented as committed
+resource impact is classified
+recoverable WebGL failure routes to context recovery
+terminal failure retires the graph
 ```
 
 ## Required browser fixture
 
-Use the `WEBGL_lose_context` extension when available:
-
 ```txt
-boot route and wait for committed frame
-record baseline frame/context/resource generations
-lose context
-assert diagnostics report lost
-assert capture is rejected
-restore context
-assert context and resource generations advance
-wait for first recovered frame
-capture and compare correlated IDs
-repeat at least three times
+boot baseline and wait for committed frame
+inject a controlled frame failure
+assert visible fatal projection
+assert GameHost mutation and editor capture reject with typed failure state
+assert no additional automatic ticks occur
+assert in-place start is rejected for terminal failure
+perform cold restart
+assert new session and renderer identities
+wait for first replacement committed frame
+assert canvas, renderer, GameHost and editor cite the replacement frame
+repeat three times and inspect listener/RAF/global counts
 ```
 
-An unavailable extension must produce an explicit skipped-capability result rather than a pass.
-
-## Failure injection
+## Failure injection matrix
 
 ```txt
-shader compilation failure
-program link failure
-missing required attribute
-missing required uniform
-buffer creation failure
-loss during buffer upload
-loss during candidate draw
-disposal during restoration
+external module import rejection
+missing createMeadowAreaKit export
+game construction exception
+renderer context acquisition failure
+shader compilation or program link failure
+editor installation exception
+plan contract failure
+CPU mesh build exception
+buffer creation/upload exception
+first or second draw exception
+HUD projection exception
+cleanup callback exception
+late predecessor callback after cold restart
 ```
 
-Each failure must assert:
+Each case must assert:
 
 ```txt
-no partial active resource registry
-no recovered readiness
-no successful capture
+no false ready state
+no unowned active resource/global/listener
 one typed failure result
+one cleanup result
 one bounded journal row
+no stale successful capture
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:webgl-context-state
-npm run fixture:webgl-resource-generation
-npm run smoke:webgl-context-loss-restore
-npm run smoke:webgl-capture-freshness
-npm run smoke:webgl-repeated-recovery
+npm run fixture:startup-rollback
+npm run fixture:frame-failure-quarantine
+npm run fixture:fatal-capability-fence
+npm run fixture:fatal-cleanup-failure
+npm run smoke:cold-restart
+npm run smoke:repeated-failure-recovery
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim context recovery, current renderer readiness, committed-frame coherence or capture freshness until a restored context owns a fully rebuilt resource generation and a first post-restoration frame has committed.
+Do not claim fatal recovery because an error is visible or the RAF stopped. Recovery requires either a proven WebGL recovery transaction or complete predecessor disposal followed by a new session and renderer generation whose first committed frame is acknowledged across canvas, renderer, GameHost and editor observations.

@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T04-49-30-04-00`
+**Updated:** `2026-07-11T06-38-59-04-00`
 
 ## Selection state
 
@@ -10,86 +10,123 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as oldest eligible central ledger entry
-newer repo-local source-provider audit reconciled
+IntoTheMeadow selected as oldest eligible central-ledger entry
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Interaction command authority gaps
+## Render cache identity gaps
 
-### Authored commands cannot be dispatched
-
-```txt
-path-progress: declared
-inspect: declared
-public command API: absent
-browser input adapter: absent
-headless command capability: absent
-```
-
-### Tick does not mutate gameplay
-
-`advanceGameState()` increments the frame and records `dt` and `time`. It does not read movement, actions, target IDs, positions, path progress or inspect intent.
-
-### Player state is static
+### Source plans have no revision authority
 
 ```txt
-initial position: x=0, y=0, z=-36
-initial pathProgress: 0
-movement transition: absent
-terrain/path projection: absent
-camera/input ownership: absent
+provider fingerprint: absent from active render lineage
+source revision: absent
+complete source fingerprint: absent
+candidate versus committed raw-plan state: absent
 ```
 
-### Interaction targets have no runtime registry
+### Source-key projection is incomplete
 
-`ARRIVAL_INTERACTION_TARGETS` contains the focal tree and arrival path, but no runtime service indexes them, measures distance, resolves affordances or rejects out-of-range actions.
-
-### Objective predicates are not evaluated
+`sourceTopologyKey()` omits render-affecting fields.
 
 ```txt
-walk-the-path completion: pathProgress >= 0.35
-inspect-tree completion: inspected == true
-predicate evaluator: absent
-objective transition: absent
-completion ledger mutation: absent
-active objective advancement: absent
+path enabled, rutCount, pebbleCount
+wildflower color and accent
+rock color and accent
+tree-line color and accent
+focal-tree trunkRadius and trunkHeight
+focal-tree rootCount and leafClusterCount
+focal-tree shadowRadius and renderStyle
+raw wind state
+runtime performance override
 ```
 
-### Story triggers are descriptive only
+A change to one of these values can reuse the prior enhanced plan.
+
+### Cache-key schema is implicit
 
 ```txt
-scene-start arrival: preloaded in initial state
-path-progress:0.25: never evaluated
-inspect:focal-tree: never evaluated
-story event journal: absent
+source key schema ID: absent
+projection version: absent
+static versus dynamic field registry: absent
+unknown static field rejection: absent
+changed-field classification: absent
 ```
 
-### No typed result or causal evidence
+### Rebuild is not a transaction
+
+`rebuildRenderPlan()` replaces the cached raw plan directly.
+
+It does not:
 
 ```txt
-commandId: absent
-sessionId admission check: absent
-frame/tick admission check: absent
-action: absent from runtime results
-targetId: absent from runtime results
-accepted/rejected status: absent
-reason code: absent
-pre-state fingerprint: absent
-post-state fingerprint: absent
-objective transitions: absent
-story transitions: absent
-feedback row: absent
-journal sequence: absent
+validate a detached candidate
+increment a source revision
+compare canonical identities
+invalidate the enhancer
+invalidate the renderer
+return a typed result
+roll back after downstream failure
+wait for visible-frame acknowledgement
 ```
 
-### Host and editor surfaces are read/tick/reset only
+### Enhancer and renderer caches are independently mutable
 
-`GameHost` exposes state, snapshot, diagnostics and render observations. The browser and Node editor environments expose tick/reset and render inspection but no gameplay command or objective-progress capability.
+```txt
+planEnhancer.invalidate(): exposed only through raw owner
+renderer.dispose(): separate lifecycle operation
+coordinated invalidate/rebuild: absent
+cache admission result: absent
+cache journal: absent
+```
 
-### Current tests cannot detect gameplay disconnection
+### Mesh and GPU lineage is incomplete
 
-The headless command smoke asserts that three ticks yield frame `3`. It does not assert player movement, path progress, target admission, objective completion, story activation, rejection behavior or deterministic replay.
+```txt
+sourceRevision -> sourceKey: absent
+sourceKey -> topologyKey: implicit only
+topologyKey -> meshKey: not exposed by renderer snapshot
+meshKey -> bufferGeneration: absent
+bufferGeneration -> committedFrameId: absent
+```
+
+### Validation proves shape, not identity coverage
+
+Current render validation checks required descriptor families and unknown types.
+
+It does not prove:
+
+```txt
+all render-affecting source fields are hashed
+all source descriptors contribute to expected enhanced descriptors
+all enhanced descriptors contribute to expected mesh families
+mesh payload matches topology identity
+GPU buffers match mesh identity
+```
+
+### Current tests cover only stable time updates
+
+```txt
+time-only cache hit: covered
+static mutation rebuild matrix: absent
+dynamic-only no-rebuild matrix: absent
+manual invalidation: absent
+failed candidate rollback: absent
+identical deterministic rebuild lineage: absent
+GPU buffer generation: absent
+host/editor lineage agreement: absent
+```
+
+## Retained interaction command gaps
+
+```txt
+path-progress and inspect commands are authored but cannot be dispatched
+player/path mutation is absent
+objective predicates and story triggers are not executed
+accepted/rejected result authority is absent
+```
+
+Interaction work must consume render lineage when it later projects visible feedback.
 
 ## Retained source-provider gaps
 
@@ -100,7 +137,7 @@ provider selection has no typed admission result
 external and fallback plans lack parity classification
 ```
 
-Interaction fixtures should use an injected deterministic source provider once that gate exists.
+Provider fingerprint and normalized source contract are prerequisites for authoritative render identity.
 
 ## Retained lifecycle and frame gaps
 
@@ -109,12 +146,12 @@ RAF ownership and coordinated disposal remain incomplete
 committed state/plan/render/canvas correlation remains absent
 ```
 
-Command IDs should be scoped beneath lifecycle session IDs and eventually linked to committed frame IDs.
+The cache authority must integrate with one runtime session and one committed frame authority.
 
 ## Registry truth gap
 
-The interaction DSKs advertise the right service names, but registry membership does not prove implementation, invocation or state mutation.
+The DSK registry advertises render host, performance, wind, diagnostics, and renderer services, but declaration does not prove that a versioned identity projection or cache admission service exists.
 
 ## Deployment risk
 
-A deployed route can render successfully while every authored objective remains impossible to complete. Current CI treats render and editor reachability as sufficient and therefore cannot catch this product-level failure.
+A deployed route can pass current render checks while a changed raw source plan silently reuses old enhanced descriptors and old GPU buffers. The screen may remain valid-looking but stale, and current CI cannot detect that mismatch.

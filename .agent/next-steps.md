@@ -2,113 +2,134 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T15-49-49-04-00`
+**Updated:** `2026-07-11T17-30-56-04-00`
 
 ## Goal
 
-Preserve the current meadow route while replacing declaration-count validation with a truthful DSK implementation, installation, consumption and retirement graph. Do not treat this as a shortcut around the earlier lifecycle, capability, clock, provider, render or interaction gates.
+Preserve the current meadow composition while making context loss, GPU-resource reconstruction, restored-frame commitment and capture freshness explicit. Do not add recovery as an isolated renderer flag; integrate it with lifecycle, topology, committed-frame and diagnostics ownership.
 
 ## Plan ledger
 
-- [ ] Preserve current visual composition and render-plan contracts.
+- [ ] Preserve current render-plan and visual composition.
 - [ ] Complete Runtime Session Lifecycle Authority first.
 - [ ] Complete Host Capability Gateway and raw runtime quarantine.
 - [ ] Complete workspace path containment and typed filesystem results.
 - [ ] Complete runtime-step admission and monotonic clock policy.
 - [ ] Complete source-provider identity and admission.
-- [ ] Complete render-topology and committed-frame proof.
-- [ ] Complete interaction/objective authority.
-- [ ] Choose one canonical DSK definition source.
-- [ ] Generate JSON and source indexes from that canonical source.
-- [ ] Add an implementation binding for every active kit.
-- [ ] Record source repository, commit/version and implementation fingerprint.
-- [ ] Replace generic `requires` and `provides` values with real capability contracts.
-- [ ] Build and validate the dependency graph.
-- [ ] Reject missing providers, duplicate providers and dependency cycles.
-- [ ] Create an ordered staged install plan.
-- [ ] Instantiate kits into staged ownership.
-- [ ] Validate provided services before activation.
-- [ ] Atomically publish the active service registry.
-- [ ] Make consumers resolve services by capability rather than direct imports where appropriate.
-- [ ] Record immutable per-consumer consumption receipts.
-- [ ] Derive declared, installed, active, consumed, failed and retired status from evidence.
-- [ ] Add reverse-order disposal for reset and stop.
-- [ ] Correct `meadow-webgl-renderer-v2-kit` descriptor services.
-- [ ] Classify player/input/interaction/objective services as declared-only until implemented.
-- [ ] Add registry drift, dependency, activation, consumption and disposal fixtures.
-- [ ] Wire DSK fixtures into `npm run check`.
-- [ ] Run `npm run check` and a browser smoke after implementation.
+- [ ] Complete render-topology identity and transactional rebuild ownership.
+- [ ] Add renderer instance identity and canvas ownership.
+- [ ] Register leased `webglcontextlost` and `webglcontextrestored` listeners.
+- [ ] Add context phase and strictly increasing context generation.
+- [ ] Add a complete GPU resource registry and resource generation.
+- [ ] Fence render submission and capture during lost/restoring/failed phases.
+- [ ] Invalidate current committed-frame eligibility on loss.
+- [ ] Recreate program, locations and buffers after every restoration.
+- [ ] Force GPU buffer upload even when topology is unchanged.
+- [ ] Stage and validate rebuilt resources before publication.
+- [ ] Submit and commit a first recovered frame.
+- [ ] Correlate renderer, HUD, GameHost and capture with frame/context/resource generations.
+- [ ] Add typed loss, restore, failure and stale-event results.
+- [ ] Add bounded recovery observations and diagnostics.
+- [ ] Add DOM-free state and resource-generation fixtures.
+- [ ] Add real-browser `WEBGL_lose_context` coverage.
+- [ ] Add capture-freshness and repeated-recovery fixtures.
+- [ ] Wire recovery fixtures into `npm run check` or an explicit browser gate.
+- [ ] Continue with committed-frame, interaction/objective and DSK-consumption gates.
 
 ## Existing owners to update first
 
 ```txt
-game-composition-dsk
-into-the-meadow-game-dsk
-meadow-diagnostics-dsk
+meadow-webgl-renderer-v2-kit
 meadow-render-host-dsk
-install-dsks adapter
-src/content/dsk-registry.js
-src/dsks/index.js
-dsk-registry.json
-browser and Node editor observations
-static and runtime fixtures
+web-host-dsk
+meadow-diagnostics-dsk
+browser editor renderer.capture adapter
+runtime session lifecycle authority
+render topology identity authority
+committed frame observation authority
+browser observation and deployment fixtures
 ```
 
 ## Candidate coordinating kits
 
 ```txt
-1. dsk-definition-source-kit
-2. dsk-implementation-binding-kit
-3. dsk-capability-contract-kit
-4. dsk-dependency-graph-kit
-5. dsk-install-plan-kit
-6. dsk-install-admission-kit
-7. dsk-instance-registry-kit
-8. dsk-service-registry-kit
-9. dsk-external-provider-identity-kit
-10. dsk-runtime-consumption-receipt-kit
-11. dsk-status-derivation-kit
-12. dsk-consumer-ack-kit
-13. dsk-lifecycle-disposal-kit
-14. dsk-diagnostics-projection-kit
-15. dsk-registry-drift-fixture-kit
-16. dsk-consumption-parity-fixture-kit
+1. webgl-context-state-kit
+2. webgl-context-generation-kit
+3. webgl-context-event-adapter-kit
+4. webgl-render-admission-kit
+5. webgl-resource-registry-kit
+6. webgl-resource-generation-kit
+7. webgl-resource-rebuild-plan-kit
+8. webgl-context-loss-result-kit
+9. webgl-context-restore-transaction-kit
+10. webgl-recovered-frame-ack-kit
+11. webgl-capture-freshness-kit
+12. webgl-context-observation-kit
+13. webgl-context-recovery-journal-kit
+14. webgl-context-recovery-fixture-kit
 ```
 
-## Required definition contract
-
-Each canonical DSK definition should include:
+## Required context record
 
 ```txt
-id
-domain
-version
-source repository and source ref
-implementation module or factory binding
-lifecycle contract
-provided capabilities
-required capabilities
-optional capabilities
-configuration schema
-runtime phase
-ownership and disposal policy
-validation contract
+WebglContextState
+  runtimeSessionId
+  rendererInstanceId
+  canvasId
+  phase
+  contextGeneration
+  resourceGeneration
+  lossSequence
+  restoreSequence
+  latestCommittedFrameId
+  latestRecoveredFrameId
+  lastResult
 ```
 
-## Required install result
+## Required resource record
 
 ```txt
-DskInstallResult
-  sessionId
-  installId
-  definitionFingerprint
-  orderedKitIds
-  installedKitIds
-  failedKitIds
-  providedCapabilities
-  unresolvedCapabilities
-  instanceRegistryRevision
-  serviceRegistryRevision
+WebglResourceRegistry
+  rendererInstanceId
+  contextGeneration
+  resourceGeneration
+  topologyKey
+  meshKey
+  programReady
+  requiredAttributes
+  requiredUniforms
+  bufferCount
+  validation
+  status
+```
+
+Raw WebGL handles must remain private to the renderer.
+
+## Required loss result
+
+```txt
+WebglContextLossResult
+  rendererInstanceId
+  previousContextGeneration
+  invalidatedResourceGeneration
+  invalidatedFrameId
+  lossSequence
+  status
+  reason
+```
+
+## Required restore result
+
+```txt
+WebglContextRestoreResult
+  rendererInstanceId
+  contextGeneration
+  resourceGeneration
+  topologyKey
+  rebuiltProgram
+  rebuiltBufferCount
+  candidateFrameId
+  committedFrameId
   status
   failures
 ```
@@ -116,41 +137,42 @@ DskInstallResult
 ## Acceptance cases
 
 ```txt
-all 43 local IDs have one canonical definition
-every active definition has one implementation binding
-all required capabilities resolve exactly once
-install order follows the dependency graph
-renderer definition exposes the actual renderer service contract
-external meadow provider records repository, ref and validation result
-runtime-used grass/tree/wind/post services produce consumption receipts
-diagnostics derive status from install and consumption evidence
-reset and stop retire instances in reverse dependency order
-registry JSON and source indexes are generated without drift
+loss before first frame
+loss after first frame
+loss after repeated topology cache hits
+restore with unchanged topology
+restore with changed topology
+loss during staged rebuild
+loss during candidate draw
+capture during lost state rejected
+capture before recovered frame rejected
+capture after recovered frame correlated
+three repeated recovery cycles without leaks
+stop/dispose during lost or restoring state
 ```
 
 ## Rejection cases
 
 ```txt
-missing implementation binding
-unknown implementation export
-duplicate capability provider
-missing required capability
-dependency cycle
-incompatible version or source identity
-provider validation failure
-partial staged installation
-consumer requests undeclared capability
-stale session or registry revision
-reset/stop disposal failure
+stale renderer or session event
+duplicate event sequence
+restore without accepted loss
+program from prior context generation
+buffer from prior context generation
+partial staged registry
+GL error during upload or draw
+capture with stale frame/context generation
+render after dispose
+late restore after disposal
 ```
 
-Every rejected install must assert:
+Every rejected transition must assert:
 
 ```txt
-no partial active registry
-no consumer-visible service mutation
-no leaked instance ownership
-one typed failure result
+no partial active resource registry
+no false renderer readiness
+no successful capture receipt
+one typed result
 one bounded journal row
 ```
 
@@ -163,6 +185,7 @@ one bounded journal row
 4. Runtime Step Admission and Clock Integrity
 5. Source Provider Authority
 6. Render Topology Identity Authority
+6a. WebGL Context Recovery Authority
 7. Committed Frame Observation Authority
 8. Interaction Command and Objective Authority
 9. DSK Runtime Consumption Authority
@@ -171,12 +194,11 @@ one bounded journal row
 ## Deferred until after this gate
 
 ```txt
-additional authored objectives
-new local DSK declarations
-promotion of generic registry kits into NexusEngine
-save/load of composed instance state
-hot reload or live kit replacement
-multiplayer service negotiation
+renderer hot replacement
+multi-canvas renderer negotiation
+new post-process render targets
+new visual feature families
+promotion of generic recovery contracts into NexusEngine
 ```
 
-Do not add more registry entries until the current declarations can be classified from runtime evidence rather than list membership.
+Do not mark the renderer recovered because the browser emitted `webglcontextrestored`. Recovery requires a complete new-generation resource registry and a committed visible frame.

@@ -2,106 +2,110 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T17-30-56-04-00`
+**Audit timestamp:** `2026-07-11T19-01-08-04-00`
 
 ## Summary
 
-`IntoTheMeadow` has one external meadow provider, 43 local DSK/kit declarations, a descriptor-driven render plan, a CPU mesh builder, a persistent WebGL renderer and browser/Node editor surfaces.
+`IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, a descriptor-driven render plan, a CPU mesh builder, a persistent WebGL renderer, browser `GameHost` and editor surfaces, and Node headless-editor operations.
 
-The current audit isolates WebGL context recovery. The renderer acquires a context and creates its program, locations and GPU buffers once. No `webglcontextlost` or `webglcontextrestored` ownership exists. Topology cache identity is therefore allowed to outlive the GPU objects it originally populated, while renderer snapshots and canvas capture remain unversioned by context generation.
+This pass isolates fatal-runtime failure recovery. The host can fail during external provider loading, game construction, renderer construction, editor installation, simulation, plan enhancement, validation, mesh/buffer work, draw submission or debug projection. Current failure handling displays text and stops the RAF chain, but does not own failure identity, partial acquisition cleanup, state/plan/render rollback, public capability quarantine, terminal disposal or a safe cold restart.
 
 ## Plan ledger
 
-**Goal:** document the exact loss/restoration failure path and define one authoritative context-generation, resource-rebuild and first-recovered-frame contract without changing runtime behavior.
+**Goal:** document the exact startup and frame failure paths and define one authoritative failure lifecycle that preserves the last known-good frame, blocks stale mutation/capture, retires partial resources and creates a fresh runtime generation before success resumes.
 
-- [x] Enumerate the ten accessible Publish repositories.
+- [x] Enumerate all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Compare nine eligible repositories with the central ledger.
-- [x] Confirm root `.agent` coverage.
+- [x] Confirm nine eligible central ledgers and root `.agent` states.
 - [x] Select only `IntoTheMeadow` as the oldest eligible documented repository.
-- [x] Read `AGENTS.md` and retained audits.
-- [x] Inspect browser boot, web host and RAF ownership.
-- [x] Inspect WebGL context acquisition, shader creation, location resolution and GPU buffer caching.
-- [x] Inspect renderer snapshots, GameHost, editor capture and browser observation.
-- [x] Preserve all active domains, kits and offered services.
-- [x] Add architecture, render, interaction, WebGL-context and deployment audits.
+- [x] Read `AGENTS.md`, current agent state and retained audits.
+- [x] Inspect boot rejection, host acquisitions, frame order, fatal projection and restart.
+- [x] Inspect renderer mutation/disposal and editor capability/error ownership.
+- [x] Preserve every active domain, kit and offered service.
+- [x] Add architecture, render, gameplay, interaction, failure-recovery and deployment audits.
 - [x] Change documentation only.
-- [ ] Runtime implementation and fixtures remain future work.
+- [ ] Runtime implementation and executable fixtures remain future work.
 
 ## Selection comparison
 
 ```txt
-IntoTheMeadow      2026-07-11T15-49-49-04-00  selected
-PrehistoricRush    2026-07-11T15-59-12-04-00
-MyCozyIsland       2026-07-11T16-10-58-04-00
-TheOpenAbove       2026-07-11T16-30-25-04-00
-HorrorCorridor     2026-07-11T16-38-10-04-00
-PhantomCommand     2026-07-11T16-49-51-04-00
-ZombieOrchard      2026-07-11T17-01-11-04-00
-TheUnmappedHouse   2026-07-11T17-10-50-04-00
-AetherVale         2026-07-11T17-20-20-04-00
+IntoTheMeadow      2026-07-11T17-30-56-04-00  selected
+PrehistoricRush    2026-07-11T17-39-47-04-00
+MyCozyIsland       2026-07-11T17-50-37-04-00
+TheOpenAbove       2026-07-11T18-01-38-04-00
+HorrorCorridor     2026-07-11T18-11-21-04-00
+PhantomCommand     2026-07-11T18-21-09-04-00
+ZombieOrchard      2026-07-11T18-28-40-04-00
+TheUnmappedHouse   2026-07-11T18-38-45-04-00
+AetherVale         2026-07-11T18-48-21-04-00
 TheCavalryOfRome   excluded
 ```
+
+No eligible repository was new, central-ledger-missing or root-`.agent`-missing. Only `IntoTheMeadow` was changed in the Publish organization.
 
 ## Interaction loop
 
 ```txt
 browser boot
-  -> load commit-pinned meadow-area provider
-  -> create game, DSK report and source plan
+  -> import commit-pinned meadow-area provider
+  -> create game and DSK report
+  -> create WebGL renderer
   -> create render-plan enhancer
-  -> acquire WebGL context
-  -> compile/link program and resolve locations
-  -> install editor bridge
+  -> publish GameHost
+  -> install NexusEditorEnvironment
+  -> schedule RAF
 
 RAF
-  -> game.tick({ time, dt })
-  -> create time-overlay source plan
-  -> enhance render plan
-  -> validate render contract
-  -> resize canvas
-  -> reuse or rebuild CPU topology
-  -> reuse or rebuild GPU buffers
+  -> game.tick mutates frame and lastTick
+  -> get source plan with time overlay
+  -> enhance and validate plan
+  -> publish lastPlan
+  -> resize, build/reuse mesh and buffers
   -> submit outline and color passes
-  -> replace renderer snapshot and host lastRender
+  -> publish renderer snapshot and lastRender
   -> update debug HUD
-  -> request next frame
+  -> schedule next RAF
 
-editor observation
-  -> read game, diagnostics, render plan and renderer snapshot
-  -> optionally call runtime.tick or runtime.reset outside RAF
-  -> serialize canvas through renderer.capture
+fatal path today
+  -> catch error
+  -> set stopped = true
+  -> expose text and console error
+  -> retain game, renderer, enhancer, editor bridge and globals
+  -> retain last successful or partially advanced observations
 
-context loss/restoration today
-  -> no event admission
-  -> no render/capture fence
-  -> no context/resource generation change
-  -> no deterministic GPU rebuild
-  -> no first recovered frame proof
+manual/editor path after fatal
+  -> runtime.tick and runtime.reset remain available
+  -> scene and renderer reads remain available
+  -> renderer.capture still serializes the canvas
+
+restart today
+  -> start() sets stopped = false
+  -> schedule RAF on the same graph
 ```
 
 ## Domains in use
 
 ```txt
 browser shell, DOM boot and visible fatal projection
-manifest and external dependency declaration
+external dependency manifest and dynamic provider loading
 source-provider selection, fallback and source-plan generation
 DSK census, descriptor generation, validation and install reporting
 game state, tick, reset, snapshots and diagnostics
-runtime session lifecycle and RAF ownership
+runtime session lifecycle, RAF ownership and restart
+startup acquisition, partial-construction rollback and terminal cleanup
 GameHost capability exposure and browser editor adapters
 Node headless editor, workspace and artifact operations
-runtime-step admission and clock integrity
+runtime-step admission, clock and reset epochs
 player, input, interaction, objective and story declarations
 terrain, path, materials, scatter and atmosphere
 grass density, archetypes, batching, placement, instancing, wind and LOD
 tree, wind, performance and post-process enhancement
 render-plan v2 contract, topology identity and cache policy
 CPU mesh construction
-WebGL context acquisition and shader/program ownership
-GPU attribute-buffer creation, replacement and disposal
+WebGL context, program, locations, buffers, draw and disposal
 WebGL context-loss/restoration and resource-generation recovery
-renderer snapshots, committed-frame correlation and capture freshness
+committed-frame staging, last-known-good observation and capture freshness
+fatal failure identity, classification, quarantine, cleanup and cold restart
 static checks, browser observation, build and Pages deployment
 DSK implementation, dependency, service-consumption and retirement truth
 ```
@@ -112,9 +116,7 @@ DSK implementation, dependency, service-consumption and retirement truth
 
 ```txt
 meadow-area-kit
-  area normalization
-  path normalization
-  style and material normalization
+  area/path/style/material normalization
   deterministic seeded scatter
   grass, flower, rock, mushroom and tree descriptors
   wind and atmosphere descriptors
@@ -209,8 +211,8 @@ meadow-performance-dsk
 meadow-render-host-dsk
   renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
 meadow-webgl-renderer-v2-kit
-  WebGL context acquisition, program creation, uniform/attribute binding,
-  CPU mesh ingestion, GPU buffer ownership, draw submission, resize, snapshot and disposal
+  context acquisition, shader program, attributes/uniforms, CPU mesh ingest,
+  GPU buffers, two-pass draw, resize, snapshot and disposal
 post-process-stack-dsk
   pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
 render-target-kit
@@ -226,135 +228,151 @@ vignette-pass-kit
 final-composite-pass-kit
   scene-input, post-input, output-target, debug-overlay, fallback-composite
 static-pages-deploy-dsk
-  build-config, github-pages-workflow, release-artifacts, cache-invalidation, deploy-validation
+  build-config, GitHub Pages workflow, release-artifacts, cache-invalidation, deploy-validation
 ```
 
-## Main finding: context-bound resources have no generation
+## Main finding: failure is visible but not authoritative
 
-### One-time context and program creation
+### Startup has no acquisition ledger
 
-The renderer obtains `webgl2` or `webgl` once during construction, compiles and links one program, and resolves all required locations into immutable maps. There is no path that recreates those values after construction.
+`startWebHost()` acquires the external provider, game, renderer, enhancer, global `GameHost` and editor bridge in sequence. Cleanup callbacks are not registered as each resource is acquired. A failure after renderer or global creation can escape to the boot catch without reverse-order disposal or global retirement.
 
-### Topology cache is not a GPU-resource cache
+### Frame mutation precedes success
 
-The renderer cache stores:
+The RAF advances game state, enhances the plan and assigns `lastPlan` before renderer success. The renderer may resize the canvas, replace buffers, clear and issue one or both draws before a later error is thrown. No staged transaction restores the prior state, plan, cache, canvas or renderer observation.
 
-```txt
-topologyKey
-CPU mesh
-rebuildCount
-cacheHitCount
-```
+### Fatal projection is not a lifecycle state
 
-A matching topology key returns the cached CPU mesh and skips `bindMesh()`. That is correct for normal frames in one context generation, but incorrect after context restoration because the program and buffers belong to the previous generation.
+`showFatal()` sets one local Boolean and writes text. It does not publish a failure ID, phase, source, frame request, previous committed frame, resource impact, cleanup result or recovery eligibility.
 
-### No browser context-event ownership
+### Public authority survives failure
 
-Neither the renderer nor the host registers:
+`GameHost` retains the raw game. `NexusEditorEnvironment` retains `runtime.tick`, `runtime.reset`, read and capture capabilities. Their listeners and globals remain installed, and capture can pair current canvas bytes with an older renderer snapshot.
 
-```txt
-webglcontextlost
-webglcontextrestored
-```
+### Restart is an unsafe in-place resume
 
-The runtime has no opportunity to call `preventDefault()`, fence rendering, invalidate GPU resources, rebuild them or acknowledge a recovered frame.
+`start()` schedules the same callback against the same game, renderer, enhancer, bridge and observations. It does not create a new session ID, renderer instance, context/resource generation, capability lease or first-frame acknowledgement.
 
-### Snapshot and capture remain stale-capable
+### Disposal is disconnected
 
-The renderer snapshot records plan and topology fields but no context, resource or frame generation. The web host retains `lastRender`, and the editor capture combines `canvas.toDataURL()` with that renderer snapshot without freshness checks.
-
-### Existing smokes do not exercise recovery
-
-The renderer smoke builds CPU mesh data only. The Chromium observation proves one booted screenshot and a `gpu:` HUD marker. It does not force loss/restoration or compare generations.
+The renderer provides `dispose()` and the editor bridge provides `dispose()`, but neither fatal path invokes them. Boot rejection also has no partially constructed host controller through which to retire resources.
 
 ## Required parent domain
 
 ```txt
-meadow-webgl-context-recovery-authority-domain
+meadow-runtime-failure-recovery-authority-domain
 ```
 
 ## Existing owners to update first
 
 ```txt
-meadow-webgl-renderer-v2-kit
-meadow-render-host-dsk
 web-host-dsk
-meadow-diagnostics-dsk
-browser editor renderer.capture adapter
+into-the-meadow-game-dsk
 runtime session lifecycle authority
-render topology identity authority
-committed frame observation authority
+Host Capability Gateway and Raw Runtime Quarantine
+Source Provider Authority
+Render Topology Identity Authority
+WebGL Context Recovery Authority
+Committed Frame Observation Authority
+meadow-webgl-renderer-v2-kit
+meadow-diagnostics-dsk
+browser editor bridge
+browser boot projection
 browser and deployment fixtures
 ```
 
 ## Candidate coordinating kits
 
 ```txt
-webgl-context-state-kit
-webgl-context-generation-kit
-webgl-context-event-adapter-kit
-webgl-render-admission-kit
-webgl-resource-registry-kit
-webgl-resource-generation-kit
-webgl-resource-rebuild-plan-kit
-webgl-context-loss-result-kit
-webgl-context-restore-transaction-kit
-webgl-recovered-frame-ack-kit
-webgl-capture-freshness-kit
-webgl-context-observation-kit
-webgl-context-recovery-journal-kit
-webgl-context-recovery-fixture-kit
+runtime-failure-id-kit
+runtime-failure-state-kit
+startup-acquisition-ledger-kit
+reverse-cleanup-stack-kit
+failure-classification-kit
+fatal-event-admission-kit
+frame-failure-result-kit
+last-known-good-frame-kit
+failure-quarantine-kit
+failure-capability-fence-kit
+failure-capture-fence-kit
+rollback-or-retire-plan-kit
+cleanup-result-kit
+failure-observation-kit
+restart-admission-kit
+cold-restart-transaction-kit
+terminal-disposal-kit
+fatal-recovery-journal-kit
+fatal-recovery-fixture-kit
 ```
 
-## Required transaction
+## Required startup transaction
 
 ```txt
-loss event
-  -> admit active renderer/session event
-  -> prevent default
-  -> enter lost
-  -> fence render and capture success
-  -> invalidate resource generation and committed-frame eligibility
-  -> publish typed loss result
+prepare startup
+  -> allocate runtime/session candidate
+  -> acquire provider, game, renderer, enhancer and editor leases
+  -> register reverse cleanup after every acquisition
+  -> validate complete candidate
+  -> publish globals only at final commit
+  -> commit ready result
 
-restore event
-  -> allocate new context generation
-  -> stage new program, locations and buffers
-  -> force GPU rebuild even when topology is unchanged
-  -> validate staged resources
-  -> submit candidate frame
-  -> atomically commit resource generation and recovered frame
-  -> publish typed restore result
-  -> return to recovered readiness
+startup failure
+  -> classify acquisition phase
+  -> execute reverse cleanup
+  -> retire candidate identity
+  -> guarantee no public globals or active listeners remain
+  -> publish typed failed result
 ```
+
+## Required frame-failure transaction
+
+```txt
+stage frame request
+  -> stage state, plan and render candidate
+  -> retain prior committed frame
+  -> submit draw
+
+failure
+  -> reject candidate commit
+  -> enter quarantined failure state
+  -> stop automatic scheduling
+  -> fence mutation and capture capabilities
+  -> classify resource impact
+  -> roll back safe staged state or retire the graph
+  -> publish one failure result and cleanup result
+```
+
+## Required recovery
+
+```txt
+recoverable context/resource failure
+  -> route through WebGL Context Recovery Authority
+  -> require first recovered committed frame
+
+terminal or unknown failure
+  -> dispose editor, renderer and globals
+  -> allocate new runtime/session/renderer/frame generations
+  -> cold boot and validate
+  -> publish only after first committed frame
+```
+
+The existing in-place `start()` must not be considered fatal recovery.
 
 ## Required proof
 
 ```txt
-loss immediately invalidates current render readiness
-restoration strictly advances context generation
-all program, locations and buffers cite the restored generation
-same topology forces GPU reconstruction after restore
-failed restoration publishes no partial resource registry
-first recovered frame commits before HUD or capture report success
-capture receipt matches renderer and committed-frame generations
-repeated recovery does not duplicate listeners or RAF chains
-disposal is idempotent and blocks late restore events
-```
-
-## Ordered architecture queue
-
-```txt
-1. Runtime Session Lifecycle Authority
-2. Host Capability Gateway and Raw Runtime Quarantine
-3. Headless Workspace Path Authority and Filesystem Containment
-4. Runtime Step Admission and Clock Integrity
-5. Source Provider Authority
-6. Render Topology Identity Authority
-6a. WebGL Context Recovery Authority
-7. Committed Frame Observation Authority
-8. Interaction Command and Objective Authority
-9. DSK Runtime Consumption Authority
+provider-load failure leaves no globals or resources
+renderer-construction failure cleans prior acquisitions
+editor-install failure disposes renderer and removes GameHost
+failure after tick preserves the prior committed public frame
+failure after buffer replacement produces a classified resource result
+fatal state rejects tick, reset, rebuild and capture
+cleanup failure is reported without restoring readiness
+in-place start after fatal is rejected
+cold restart uses new session, renderer and frame generations
+first new-generation committed frame precedes ready status
+three failure/restart cycles do not duplicate RAFs, listeners or globals
+terminal disposal is idempotent
 ```
 
 ## Validation state
@@ -369,7 +387,7 @@ branch created: no
 pull request created: no
 npm run check: not run
 browser smoke: not run
-context-loss fixture: unavailable
-context-restoration fixture: unavailable
-capture-freshness fixture: unavailable
+startup rollback fixture: unavailable
+frame failure quarantine fixture: unavailable
+cold restart fixture: unavailable
 ```

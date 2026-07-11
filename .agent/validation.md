@@ -2,11 +2,11 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T08-31-33-04-00`
+**Updated:** `2026-07-11T10-50-14-04-00`
 
 ## Plan ledger
 
-**Goal:** separate completed source inspection from executable proof and define the exact fixtures required before claiming deterministic browser or headless stepping.
+**Goal:** separate completed source inspection from executable proof and define the exact fixture gate required before claiming that `GameHost` or the editor bridge is an authoritative control surface.
 
 - [x] Review the complete accessible Publish inventory.
 - [x] Compare every eligible repository with the central ledger.
@@ -14,33 +14,30 @@
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Select only `IntoTheMeadow`.
 - [x] Read `AGENTS.md` and current `.agent` state.
-- [x] Inspect browser RAF step production.
-- [x] Inspect browser editor tick and reset.
-- [x] Inspect Node headless time, tick loop and reset.
-- [x] Inspect state frame and last-tick conversion.
-- [x] Inspect current positive-path editor command smoke.
-- [x] Document runtime-step authority and required fixtures.
+- [x] Inspect browser host construction and global exposure.
+- [x] Inspect `GameHost` properties and read methods.
+- [x] Inspect browser editor capability registration and invocation.
+- [x] Inspect direct tick, reset and source-plan rebuild paths.
+- [x] Inspect existing positive-path editor tests.
+- [x] Document host capability authority and required fixtures.
 - [x] Change documentation only.
-- [x] Push documentation to `main`.
 - [ ] Execute runtime checks after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-browser RAF calls raw game.tick: yes
+GameHost exposes raw game: yes
+GameHost exposes mutation methods indirectly: yes
 browser editor calls raw game.tick: yes
-Node editor calls raw game.tick: yes
-shared step admission: no
-finite dt validation: no
-finite time validation: no
-monotonic time policy: no
-integer step-count validation: no
-maximum step budget: no
-session and expected-frame fence: no
-clock epoch: no
-typed step result: no
-step journal: no
-step-to-render correlation: no
+browser editor calls raw game.reset: yes
+page scripts can bypass invoke: yes
+session-fenced host admission: no
+command ID and sequence: no
+typed semantic result: no
+capability lease revocation: no
+bounded command/result journal: no
+clone-safe observation revision: no
+host-command to render-commit correlation: no
 ```
 
 ## Existing proof
@@ -53,26 +50,24 @@ DSK registry shape is valid
 fallback source plan can be generated
 render plan can be enhanced and validated
 CPU mesh is substantial
-positive headless editor commands route
-runtime.tick with ticks=3 and dt=0.016 reaches frame 3
+positive headless editor capability names route
+runtime.tick can advance a positive test case
 headless capture can be produced
 ```
 
 Current checks do not prove:
 
 ```txt
-Infinity cannot enter a loop
-large step counts are bounded
-fractional counts are rejected
-negative and NaN counts are rejected truthfully
-non-finite dt and time are rejected
-negative dt is rejected
-simulation time is monotonic
-browser editor cannot bypass RAF session policy
-reset retires prior commands
-rejected requests preserve state
-browser and Node results match
-accepted steps reach a correlated visible frame
+GameHost omits raw authority properties
+all mutations enter capability admission
+old host leases are inert after restart
+stale commands reject without mutation
+transport completion differs from domain acceptance
+duplicate command IDs do not repeat side effects
+read observations are isolated from runtime state
+journals are bounded
+browser and Node result schemas match
+accepted visible commands reach a correlated frame
 ```
 
 ## Execution status
@@ -89,117 +84,127 @@ render output changed: no
 
 The GitHub connector was used for this documentation audit and does not execute repository commands.
 
-## Required pure admission fixture
+## Required surface allowlist fixture
 
-Test the command preflight without entering an adapter loop.
+Assert the complete public `GameHost` key set.
+
+Allowed:
+
+```txt
+build
+protocol
+getSessionObservation
+listCapabilities
+invoke
+getStateObservation
+getDiagnosticsObservation
+getCommittedFrameObservation
+getJournalObservation
+```
+
+Forbidden:
+
+```txt
+game
+renderer
+planEnhancer
+meadow
+raw tick/reset/rebuild/dispose functions
+WebGL objects
+DOM objects
+provider instances
+```
+
+## Required admission fixture
 
 Accepted:
 
 ```txt
-requestedSteps = 1
-requestedSteps = configured maximum
-requestedDt = canonical 1/60
-finite monotonic explicit target time
-matching session, epoch and expected frame
+known capability
+valid command ID
+matching active lease and session
+matching expected state frame
+valid payload
+runtime state permits command
 ```
 
-Rejected:
+Rejected or unavailable:
 
 ```txt
-requestedSteps = 0 according to chosen policy
-requestedSteps < 0
-requestedSteps = 1.5
-requestedSteps = NaN
-requestedSteps = Infinity
-requestedSteps > configured maximum
-requestedDt < 0
-requestedDt = NaN
-requestedDt = Infinity
-requestedDt outside configured range
-requestedTime = NaN or Infinity
-requestedTime below committed time
-stale session or clock epoch
+unknown capability
+missing command ID
+stale lease
+stale session
 stale or future expected frame
-disposed session
+stopped runtime
+disposed runtime
+invalid payload
+mutation through read-only capability
 ```
 
-Each rejection must assert:
+Every rejection must assert:
 
 ```txt
-state frame unchanged
-simulation time unchanged
-clock epoch unchanged
-game state fingerprint unchanged
+state unchanged
+source-plan revision unchanged
 render lineage unchanged
-one bounded rejection row appended
+one bounded result row appended
+no new render commit
 ```
 
-## Required adapter budget fixture
-
-Use a fake step authority and count invocations.
+## Required lease-revocation fixture
 
 ```txt
-browser RAF adapter submits at most one command per callback
-browser editor adapter submits exactly one command per invoke
-Node adapter validates before looping
-Node adapter never exceeds maxStepsPerCommand
-Infinity and large counts reach zero loop iterations before rejection
+start host generation 1
+retain gateway reference
+stop and restart as generation 2
+invoke through generation-1 gateway
+assert stale or disposed result
+assert generation-2 state unchanged
+dispose generation 2
+assert both references cannot mutate
 ```
 
-## Required monotonic clock fixture
+## Required observation-isolation fixture
 
 ```txt
-canonical sequence advances time monotonically
-explicit equal time follows documented duplicate/no-op policy
-regressed time rejects
-negative delta rejects
-reset increments clockEpoch
-old-epoch command rejects
-first new-epoch step is accepted and correlated
+read state observation
+mutate returned nested arrays and objects where possible
+read state again
+assert runtime state and fingerprints unchanged
+repeat for diagnostics, render-plan and journal observations
+assert all values structuredClone successfully
+assert JSON serialization follows documented policy
 ```
 
-## Required browser concurrency fixture
+## Required browser/Node parity fixture
 
-```txt
-start controlled RAF session
-record baseline state frame and render commit
-invoke browser editor runtime.tick
-assert session policy result
-if accepted, assert exactly one state increment
-assert one later render commit references the step sequence
-repeat during stop, restart and dispose
-```
-
-## Required schema parity fixture
-
-Browser and Node adapters must return equivalent nested fields:
+Both adapters must expose equivalent nested fields:
 
 ```txt
 commandId
+capabilityId
+hostLeaseId
 sessionId
-clockEpoch
 status
 reason
-acceptedSteps
-priorFrame
-committedFrame
-priorTime
-committedTime
-journalSequence
+commandSequence
+stateFrame
 renderCommitId
+observationRevision
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:runtime-step-admission
-npm run fixture:runtime-step-budget
-npm run fixture:runtime-clock-monotonicity
-npm run fixture:runtime-reset-epoch
-npm run fixture:browser-editor-step
+npm run fixture:host-capability-surface
+npm run fixture:host-capability-admission
+npm run fixture:host-lease-revocation
+npm run fixture:observation-isolation
+npm run fixture:browser-host-capability
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim deterministic editor stepping because one positive three-step smoke passes. Completion requires finite rejection, a strict work budget, monotonic time, reset epoch fencing, truthful typed results, browser/Node parity and step-to-render correlation.
+Do not claim an authoritative host or editor API because capability names exist. Completion requires raw-runtime quarantine, exclusive admission, revocable leases, truthful semantic results, clone-safe observations, browser/Node parity and render correlation.

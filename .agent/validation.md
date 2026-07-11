@@ -2,71 +2,54 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T15-49-49-04-00`
+**Updated:** `2026-07-11T17-30-56-04-00`
 
 ## Plan ledger
 
-**Goal:** separate declaration-shape proof from executable proof that DSK implementations are bound, installed, consumed and retired through one authoritative graph.
+**Goal:** separate one successful renderer boot from executable proof that context loss invalidates readiness and restoration rebuilds a complete new-generation resource set before frame and capture success.
 
 - [x] Review the full accessible Publish inventory.
 - [x] Compare every eligible repository with the central ledger.
 - [x] Verify central and root `.agent` coverage.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Select only `IntoTheMeadow`.
-- [x] Read `AGENTS.md` and current audit state.
-- [x] Inspect registry JSON, source IDs and generated descriptors.
-- [x] Inspect local installation and game-state snapshots.
-- [x] Inspect direct implementation imports and runtime consumers.
-- [x] Inspect DSK smoke assertions.
-- [x] Document the consumption authority and fixture requirements.
+- [x] Read `AGENTS.md` and retained audits.
+- [x] Inspect WebGL renderer construction and resource ownership.
+- [x] Inspect topology cache and buffer replacement.
+- [x] Inspect web-host RAF, fatal projection and snapshots.
+- [x] Inspect editor canvas capture.
+- [x] Inspect renderer and browser smoke coverage.
+- [x] Document context-generation recovery and fixture requirements.
 - [x] Change documentation only.
 - [ ] Execute fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-external declared kits: 1
-local declared kits: 43
-required-v0.1 local kits: 15
-descriptor implementation references: 0
-descriptor dependency edges: 0
-local instances created by installDsks(): 0
-registry-backed runtime service lookups: 0
-per-kit install results: 0
-per-consumer consumption receipts: 0
-registry-owned disposal receipts: 0
+WebGL contexts acquired during renderer construction: 1
+shader programs created during renderer construction: 1
+context-loss listeners: 0
+context-restoration listeners: 0
+context generation fields: 0
+resource generation fields: 0
+first recovered frame acknowledgements: 0
+capture freshness checks: 0
 ```
 
 ## Proven from source
 
 ```txt
-dsk-registry.json and src/content/dsk-registry.js duplicate kit IDs
-src/dsks/index.js generates descriptors from IDs and service-name arrays
-every generated descriptor has requires: []
-every generated descriptor provides one generic game:<domain> capability
-status is derived from required-v0.1 membership
-installDsks() validates and returns descriptor arrays
-installDsks() does not instantiate local implementations
-external loaded status depends on truthiness of the supplied export
-game state stores a declaration snapshot
-runtime diagnostics publish aggregate counts
-render-plan enhancement imports concrete factories directly
-DSK smoke checks count and five architecture layers
+renderer acquires WebGL2 or WebGL once
+renderer creates and links the program once
+attribute and uniform locations are resolved once
+GPU buffers are replaced only when bindMesh() runs
+bindMesh() runs when topology cache misses
+same topology returns cached CPU mesh
+renderer snapshot has no context/resource/frame identity
+web host stores lastRender independently of context state
+editor capture returns canvas data URL plus latest renderer snapshot
+browser observation checks one successful screenshot and gpu HUD marker
 ```
-
-## Concrete drift proof
-
-`meadow-webgl-renderer-v2-kit` appears in the local and required-v0.1 ID lists and has a real renderer implementation, but it is missing from the descriptor label and service maps. Descriptor generation therefore falls back to:
-
-```txt
-model
-state
-events
-validation
-snapshot
-```
-
-This proves the generated registry can disagree with the implementation shipped by the browser while validation still passes.
 
 ## Existing proof
 
@@ -74,31 +57,31 @@ Current checks prove:
 
 ```txt
 required files exist
-43 local descriptors can be generated
-required-v0.1 IDs appear in the descriptor set
-each descriptor has five architecture layers
-IDs use dsk/kit suffixes
-service-name arrays contain at least five entries
-render plan and renderer utility smokes pass
-positive editor operations can execute
+render-plan descriptors validate
+CPU mesh is substantial and internally aligned
+animation time does not change static topology
+browser route can boot in an available Chromium
+one screenshot can be created
+editor bridge and gpu HUD marker can be observed
 ```
 
 Current checks do not prove:
 
 ```txt
-one canonical definition source
-one implementation binding per active kit
-source identity, version or fingerprint
-dependency resolution
-cycle or duplicate-provider rejection
-ordered staged installation
-atomic activation or rollback
-capability-based service lookup
-runtime consumer acknowledgement
-external provider validation identity
-status derived from runtime evidence
-reverse-order reset and disposal
-registry/runtime service parity
+loss event admission
+preventDefault handling
+render suspension during loss
+context generation advancement
+program recreation after restore
+attribute and uniform re-resolution
+buffer reconstruction after restore
+same-topology forced GPU rebuild
+staged recovery rollback
+first recovered frame commitment
+HUD and GameHost recovery correlation
+capture rejection while stale
+repeated recovery without leaks
+late-event rejection after dispose
 ```
 
 ## Execution status
@@ -113,108 +96,93 @@ branch created: no
 pull request created: no
 npm run check executed: no
 browser smoke executed: no
-DSK consumption fixtures available: no
+WebGL context fixtures available: no
 ```
 
 ## Required DOM-free fixture
 
-Construct a fixture with:
+Construct fake event and resource adapters with:
 
 ```txt
-canonical DSK definitions
-fake implementation bindings
-capability requirements and providers
-external provider identity
-staged instance ownership
-service registry
-consumer registry
-bounded install/result journal
-lifecycle disposal adapter
+runtime session identity
+renderer instance identity
+context state machine
+context generation counter
+resource generation counter
+fake program factory
+fake location resolver
+fake buffer factory
+candidate frame submitter
+capture admission adapter
+bounded result journal
 ```
 
-## Acceptance assertions
+## DOM-free acceptance assertions
 
 ```txt
-all canonical IDs generate JSON and source indexes without drift
-all active definitions bind exactly one implementation
-dependency order is deterministic
-all required capabilities resolve exactly once
-staged instances validate before publication
-active registry publishes atomically
-runtime consumer lookup records immutable receipts
-diagnostics derive installed/active/consumed status from evidence
-renderer definition matches actual renderer capabilities
-external provider identity and validation are retained
-reset and stop dispose in reverse dependency order
+ready -> lost invalidates render and capture success
+lost -> restoring allocates next context generation
+same topology still recreates program and buffers
+candidate resources remain private until complete
+successful candidate frame atomically commits recovery
+failed candidate leaves no active partial registry
+stale and duplicate events are rejected
+stop/dispose blocks late restoration
 ```
 
-## Rejection assertions
+## Required browser fixture
+
+Use the `WEBGL_lose_context` extension when available:
 
 ```txt
-missing binding rejected
-unknown export rejected
-missing capability rejected
-duplicate provider rejected
-dependency cycle rejected
-provider validation failure rejected
-stale session or install revision rejected
-consumer request for undeclared capability rejected
-partial installation rolled back
-disposal failure reported without concealing leaked ownership
+boot route and wait for committed frame
+record baseline frame/context/resource generations
+lose context
+assert diagnostics report lost
+assert capture is rejected
+restore context
+assert context and resource generations advance
+wait for first recovered frame
+capture and compare correlated IDs
+repeat at least three times
 ```
 
-Every rejected activation must assert:
+An unavailable extension must produce an explicit skipped-capability result rather than a pass.
+
+## Failure injection
 
 ```txt
-no partial active service registry
-no consumer-visible service change
-no leaked staged instance
-one typed result
+shader compilation failure
+program link failure
+missing required attribute
+missing required uniform
+buffer creation failure
+loss during buffer upload
+loss during candidate draw
+disposal during restoration
+```
+
+Each failure must assert:
+
+```txt
+no partial active resource registry
+no recovered readiness
+no successful capture
+one typed failure result
 one bounded journal row
 ```
-
-## Required parity fixture
-
-For every runtime-used system, compare:
-
-```txt
-canonical DSK definition
-implementation binding
-provided capability contract
-actual created instance
-consumer request
-consumption receipt
-diagnostics projection
-retirement receipt
-```
-
-Minimum systems:
-
-```txt
-external meadow provider
-game root
-render host
-WebGL renderer v2
-tree object
-wind field
-performance policy
-post-process stack
-nine grass kits
-```
-
-Declared but currently inert player, input, interaction, objective and story services must be classified as `declared-only`, not `active` or `consumed`.
 
 ## Future commands
 
 ```bash
-npm run fixture:dsk-registry-drift
-npm run fixture:dsk-dependency-graph
-npm run fixture:dsk-install-rollback
-npm run fixture:dsk-consumption-parity
-npm run fixture:dsk-disposal-order
+npm run fixture:webgl-context-state
+npm run fixture:webgl-resource-generation
+npm run smoke:webgl-context-loss-restore
+npm run smoke:webgl-capture-freshness
+npm run smoke:webgl-repeated-recovery
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim that a DSK is installed or operational because its descriptor exists. Completion requires an implementation binding, admitted dependency graph, active service registration, at least one expected consumer receipt where applicable, truthful diagnostics and lifecycle retirement proof.
+Do not claim context recovery, current renderer readiness, committed-frame coherence or capture freshness until a restored context owns a fully rebuilt resource generation and a first post-restoration frame has committed.

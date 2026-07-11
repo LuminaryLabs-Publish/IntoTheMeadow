@@ -2,47 +2,47 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T04-49-30-04-00`
+**Updated:** `2026-07-11T06-38-59-04-00`
 
 ## Plan ledger
 
-**Goal:** Separate completed command-path inspection from executable proof and define the exact fixtures required before claiming that the authored path and tree objectives are playable.
+**Goal:** separate completed static inspection from executable proof and define the exact mutation fixtures required before claiming that persistent render caches are correct.
 
-```txt
-[x] Review the complete accessible Publish inventory.
-[x] Compare every eligible repository with the central ledger.
-[x] Exclude TheCavalryOfRome.
-[x] Select only IntoTheMeadow.
-[x] Read AGENTS.md and current .agent state.
-[x] Inspect objective, target and story declarations.
-[x] Inspect initial game state and advanceGameState.
-[x] Inspect browser host input and tick behavior.
-[x] Inspect GameHost and browser editor capabilities.
-[x] Inspect Node headless editor capabilities and command smoke.
-[x] Document interaction authority and required fixtures.
-[x] Change documentation only.
-[x] Push to main.
-[x] Synchronize the central ledger and internal change log.
-```
+- [x] Review the complete accessible Publish inventory.
+- [x] Compare every eligible repository with the central ledger.
+- [x] Exclude `TheCavalryOfRome`.
+- [x] Select only `IntoTheMeadow`.
+- [x] Read `AGENTS.md` and current `.agent` state.
+- [x] Inspect raw source-plan caching and rebuild.
+- [x] Inspect source-key projection and enhancer cache logic.
+- [x] Inspect enhanced topology hashing.
+- [x] Inspect CPU mesh and WebGL buffer caching.
+- [x] Inspect GameHost and editor readbacks.
+- [x] Inspect current render-plan and renderer smoke tests.
+- [x] Document render cache identity authority and required fixtures.
+- [x] Change documentation only.
+- [x] Push documentation to `main`.
+- [ ] Execute runtime checks after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-authored objectives: 2
-authored interaction targets: 2
-authored story beats: 3
-runtime gameplay command API: no
-browser input mapping: no
-player movement mutation: no
-path progress mutation: no
-inspect mutation: no
-objective predicate evaluation: no
-story trigger execution after startup: no
-typed interaction result: no
-command journal: no
-GameHost command observation: no
-browser editor command capability: no
-Node editor command capability: no
+raw baseRenderPlan cached: yes
+explicit rebuildRenderPlan: yes
+source revision: no
+provider fingerprint in render lineage: no
+source key: yes
+source key schema/version: no
+source key covers every static field: no
+enhancer manual invalidate: yes
+coordinated rebuild/invalidate result: no
+enhanced topology key: yes
+CPU mesh builder: yes
+renderer topology cache: yes
+mesh key in renderer snapshot: no
+GPU buffer generation: no
+source-to-frame lineage: no
+cache journal: no
 ```
 
 ## Existing proof
@@ -52,28 +52,29 @@ Current checks prove:
 ```txt
 static source and manifest reachability
 DSK registry structure
-fallback render-plan generation
-render-plan enhancement and validation
-renderer-v2 descriptors
-deterministic fallback scene snapshots
-headless environment reachability
-runtime.tick frame increments
-renderer capture metrics
+fallback source-plan generation
+render-plan enhancement and descriptor validation
+required descriptor families
+substantial CPU mesh output
+buffer-array length parity
+no primitive fallback output
+time-only changes preserve topology and mesh identity
+enhancer reports at least one cache hit
 ```
 
 Current checks do not prove:
 
 ```txt
-movement
-path progress
-target range
-inspect admission
-objective completion
-story transition
-command rejection
-duplicate/stale protection
-command/result journals
-command-to-frame correlation
+static source mutations change source identity
+all render-affecting fields are part of the key
+static mutations rebuild exactly once
+dynamic-only mutations avoid static rebuilds
+manual invalidation creates one new mesh generation
+failed candidates preserve prior committed caches
+identical deterministic rebuilds retain mesh buffers with new source lineage
+mesh contribution fingerprint parity
+GPU buffer generation identity
+GameHost/editor/canvas lineage agreement
 ```
 
 ## Execution status
@@ -87,82 +88,127 @@ package scripts changed: no
 dependencies changed: no
 ```
 
-The GitHub connector was used for this docs-only audit and does not execute repository commands.
+The GitHub connector was used for this documentation audit and does not execute repository commands.
 
-## Required path-progress fixture
+## Required source-key mutation fixture
 
-Start from the canonical initial state and dispatch a deterministic command sequence.
+Start from one canonical frozen source plan and mutate one field at a time.
+
+Static rebuild cases:
+
+```txt
+path.enabled
+path.rutCount
+path.pebbleCount
+wildflower.color
+wildflower.accent
+rock.color
+rock.accent
+tree-line-tree.color
+tree-line-tree.accent
+focal-tree.trunkRadius
+focal-tree.trunkHeight
+focal-tree.rootCount
+focal-tree.leafClusterCount
+focal-tree.shadowRadius
+focal-tree.renderStyle
+performance quality or density budget
+```
+
+Dynamic-only cases:
+
+```txt
+time
+camera position and target
+viewport size
+wind phase/time
+wind direction and strength when declared uniform-only
+```
+
+Each case must assert:
+
+```txt
+source revision
+source-key schema
+prior and next source keys
+changed-field classification
+cache admission status and reason
+enhancer rebuild and hit counts
+topology key
+mesh key
+mesh contribution counts
+buffer generation
+renderer rebuild and hit counts
+committed frame ID
+```
+
+## Required rollback fixture
 
 Cases:
 
 ```txt
-unknown action -> rejected / no mutation
-unknown target -> rejected / no mutation
-negative progress -> rejected / no mutation
-progress below 0.25 -> accepted / no story transition
-cross 0.25 -> path-discovery story beat exactly once
-cross 0.35 -> walk-the-path objective completion exactly once
-repeat same commandId -> duplicate / no second mutation
-stale sessionId -> rejected / no mutation
-reset -> pathProgress 0 and initial progression restored
+invalid source validation
+unknown source type
+unsupported static field
+failed enhancement
+failed mesh build
+failed GPU buffer upload
+failed draw
+render after disposal
+stale expected source revision
+duplicate rebuild command ID
 ```
 
-Each result must assert:
+Every failure must preserve:
 
 ```txt
-commandId
-sessionId
-requestedTick and committedTick
-action and targetId
-status
-reason
-preStateFingerprint
-postStateFingerprint
-player transition
-objective transitions
-story transitions
-journal sequence
+last committed raw source
+last committed source key
+last committed enhanced plan
+last committed topology key
+last committed mesh key
+last committed GPU buffer generation
+last committed visible frame
 ```
 
-## Required inspect fixture
-
-Cases:
+## Required identical rebuild fixture
 
 ```txt
-inspect unknown target -> rejected
-inspect wrong target type -> rejected
-inspect focal-tree out of range -> rejected
-inspect focal-tree in range -> accepted
-inspect-tree objective completes exactly once
-focal-tree story beat emits exactly once
-repeat accepted commandId -> duplicate with no mutation
-new command after completion -> already-completed or accepted-noop by declared policy
+produce the same deterministic raw plan twice
+increment source revision for the second production event
+prove source fingerprint and staticRenderKey are identical
+prove enhancer and mesh caches hit
+prove bufferGeneration does not change
+append lineage linking the new source revision to the existing identities
 ```
 
 ## Required host/editor proof
 
 ```txt
-GameHost.dispatchCommand()
-GameHost.getCommandJournal()
-GameHost.getObjectiveState()
-NexusEditorEnvironment interaction.dispatch
-NexusEditorEnvironment objective.getState
+GameHost.getRenderLineage()
+GameHost.getRenderCacheJournal()
+GameHost.rebuildRenderSource()
+NexusEditorEnvironment render.rebuildSource
+NexusEditorEnvironment render.invalidateCache
+NexusEditorEnvironment render.getLineage
+NexusEditorEnvironment render.getCacheJournal
 Node headless equivalents
-clone-safe results
-bounded journal
-same command sequence yields same state fingerprint
+renderer.capture includes committed lineage
+all outputs are clone-safe and bounded
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:interaction-path
-npm run fixture:interaction-inspect
-npm run fixture:objective-story
-npm run fixture:interaction-replay
+npm run fixture:render-source-key
+npm run fixture:render-cache-admission
+npm run fixture:render-mesh-parity
+npm run fixture:render-buffer-generation
+npm run fixture:render-rebuild-rollback
+npm run fixture:render-cache-observation
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim the meadow is playable because it renders or because `runtime.tick` advances the frame. Completion requires accepted and rejected command fixtures, atomic objective/story transitions, deterministic replay and host/editor observation.
+Do not claim persistent render caching is correct because time updates hit the cache. Completion requires a mutation matrix proving exact rebuilds for every registered static field, no rebuilds for dynamic-only fields, rollback after failure, and one observable source-to-frame lineage.

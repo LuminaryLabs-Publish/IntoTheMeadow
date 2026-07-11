@@ -33,9 +33,9 @@ npm run check: not run
 npm test: not run
 browser/WebGL smoke: not run
 committed-frame fixtures: not run because they do not exist yet
-pushed to main: pending this documentation commit
-central ledger update: pending this documentation commit
-central change log: pending this documentation commit
+pushed to main: yes
+central ledger updated: yes
+central change log updated: yes
 ```
 
 ## Source inspection completed

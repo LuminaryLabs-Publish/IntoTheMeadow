@@ -2,30 +2,33 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T02-20-44-04-00`
+**Audit timestamp:** `2026-07-11T02-28-12-04-00`
 
 ## Summary
 
 `IntoTheMeadow` is a DSK-composed static meadow route with a commit-pinned external meadow provider, local render-plan enhancement, a combined CPU/WebGL renderer, and browser plus Node headless-editor surfaces.
 
-This documentation-only pass reconciles the complete DSK census and maps the gap between declared kits, source-backed implementations, runtime imports, outputs, and consumers.
+This documentation-only pass maps the first implementation gate in detail: runtime session ownership, exact RAF cancellation, run-generation fencing, global and listener leases, startup rollback, fatal cleanup, and idempotent disposal. It also retains the concurrently completed registry-truth census and service inventory.
 
 ## Plan ledger
 
-**Goal:** Establish an exact kit and service inventory, distinguish declarations from implementations and consumption, and define the fixture gate needed before the registry can be treated as runtime truth.
+**Goal:** Establish one authoritative runtime session that owns exactly one RAF chain, all global/listener/resource leases, and all terminal lifecycle results before committed-frame, source, gameplay, or registry-consumption work begins.
 
 ```txt
 [x] Enumerate the complete LuminaryLabs-Publish inventory.
 [x] Exclude TheCavalryOfRome.
 [x] Compare all eligible repositories with the central ledger.
-[x] Select only the oldest eligible repository.
+[x] Select only one repository.
 [x] Read repository instructions and current .agent state.
-[x] Trace browser and editor interaction loops.
+[x] Trace browser boot and external kit resolution.
+[x] Trace RAF request, delivery, stop, start, fatal, and successor scheduling.
+[x] Trace GameHost and editor global ownership.
+[x] Trace editor listener installation and disposal.
+[x] Trace WebGL resource ownership and disposal.
+[x] Trace fixed-dt state advancement.
 [x] Identify all domains in use.
-[x] Enumerate every declared local and external kit.
-[x] Enumerate every declared kit service.
-[x] Separate source-backed, descriptor-only, required, planned, imported, and consumed states.
-[x] Identify the renderer registry fallback mismatch.
+[x] Preserve the corrected exact kit and service census.
+[x] Separate declared, source-backed, and runtime-authoritative capabilities.
 [x] Add timestamped architecture and system audits.
 [x] Refresh required root .agent files.
 [x] Push only to main.
@@ -47,35 +50,54 @@ AetherVale           tracked  / 2026-07-11T02-10-13-04-00
 TheCavalryOfRome     excluded by rule
 ```
 
-All nine eligible repositories were tracked and had root `.agent` state. `IntoTheMeadow` was the oldest eligible fallback.
+All nine eligible repositories were tracked and had root `.agent` state. `IntoTheMeadow` was the oldest eligible fallback when this pass began. A separate registry-truth audit landed at `2026-07-11T02-20-44-04-00` while this pass was in progress. This pass continued on the already selected repository to preserve the one-project rule and reconciled that audit rather than discarding it.
 
-## Interaction loop
+## Interaction and lifecycle loop
 
 ```txt
 browser boot
-  -> external kit import
+  -> startWebHost
+  -> external meadow-area-kit import
   -> DSK descriptor install and validation
   -> game/source-plan construction
-  -> renderer/enhancer/GameHost/editor construction
-  -> RAF tick
-  -> render-plan derivation and enhancement
-  -> WebGL render
-  -> HUD and diagnostic projection
-  -> successor RAF
-
-browser editor
-  -> direct runtime tick/reset or read/capture capability
-
-Node editor
-  -> fallback-backed on-demand plan, mesh, metrics, and synthetic SVG
+  -> WebGL renderer construction
+  -> enhancer construction
+  -> GameHost global assignment
+  -> editor global assignment and error listeners
+  -> requestAnimationFrame without retaining id
+  -> fixed-dt state tick with RAF absolute time
+  -> raw-plan time overlay
+  -> render-plan enhancement
+  -> WebGL outline and cel/fog passes
+  -> HUD projection
+  -> successor RAF without retaining id
 ```
+
+Lifecycle side paths:
+
+```txt
+stop()  -> stopped=true only
+start() -> stopped=false and queues another RAF
+fatal   -> stopped=true and projects DOM error only
+boot    -> discards resolved host controller
+dispose -> exists separately on renderer and editor bridge, not on session
+```
+
+Independent browser editor paths can call `runtime.tick`, `runtime.reset`, plan reads, renderer reads, and canvas capture without using one committed browser frame. The Node editor creates fallback-backed plans, meshes, metrics, and synthetic SVG artifacts on demand.
 
 ## Domains in use
 
 ```txt
 browser shell and DOM boot
-runtime session construction and RAF lifecycle
-external kit resolution and source-provider selection
+asynchronous external kit resolution and source-provider selection
+runtime session construction
+lifecycle state and command admission
+RAF ownership, clock admission, and run generation
+global exposure leasing
+listener ownership
+resource acquisition, cleanup stack, and rollback
+fatal transition and terminal disposal
+frame request, simulation, plan, render, canvas, and HUD publication
 DSK registry, descriptor creation, validation, installation, and snapshots
 game manifest, content, state, tick, reset, and snapshot
 source-plan cache, time overlay, and rebuild
@@ -108,10 +130,11 @@ UI progression
 ## Exact declared kit census
 
 ```txt
-external: meadow-area-kit
+external: 1
 local declared: 43
 total declared: 44
 required-v0.1 local: 15
+runtime source-backed surfaces cataloged: 24
 ```
 
 ### All local kits and declared services
@@ -193,84 +216,89 @@ Node headless-editor environment
 
 The runtime-backed list is not identical to the declared registry. Some concrete adapters are not registry entries, while many declared gameplay, audio, save, UI, and postprocess kits are descriptor shells.
 
-## Registry truth finding
+## Main lifecycle finding
 
-`src/content/dsk-registry.js` declares 43 local IDs. `src/dsks/index.js` converts each ID into a descriptor and marks required IDs `active-v0.1`. The install path validates descriptor shape, duplicates, and required membership.
-
-It does not prove:
+`web-host.js` never retains a RAF id. A stop/start race can permanently fork the loop:
 
 ```txt
-source file exists
-implementation was imported
-service was invoked
-output was produced
-consumer accepted output
-renderer consumed descriptor
-gameplay reducer consumed descriptor
-observation can identify the producing kit
+RAF A pending
+  -> stop sets stopped=true
+  -> start sets stopped=false and queues RAF B
+  -> A and B are delivered
+  -> both see stopped=false
+  -> both tick, render, update HUD, and schedule successors
 ```
 
-`meadow-webgl-renderer-v2-kit` appears in `LOCAL_DSK_IDS` and `REQUIRED_V01_DSK_IDS`, but has no explicit label or service mapping. The descriptor falls back to:
+Every callback increments `state.frame` and applies fixed `dt: 1/60`. Two chains can therefore double simulation advancement while receiving near-identical RAF times. They also produce two plan enhancements, two renderer submissions, four WebGL draws, two HUD writes, and two successor requests per display cadence.
+
+## Ownership and failure findings
 
 ```txt
-model
-state
-events
-validation
-snapshot
+boot discards the resolved controller
+no sessionId, runId, lifecycle state, command result, or journal exists
+GameHost overwrites the prior global without a lease
+editor overwrites the prior global and installs two listeners
+stop cancels no callback
+start has no generation fence
+showFatal disposes no resources or globals
+renderer.dispose and editorBridge.dispose are never coordinated
+host controller exposes no dispose or restart transaction
 ```
 
-That generic row does not match the actual renderer contract.
+## Required lifecycle authority boundary
 
-## Required authority boundary
-
-Add a registry truth ledger that records, per kit:
+`runtime-session-authority-domain` must own:
 
 ```txt
-kitId
-declarationStatus
-requiredStatus
-implementationStatus
-implementationModule
-importStatus
-invocationStatus
-outputKinds
-consumerIds
-consumptionStatus
-proofRows
-lastObservedFrameId
-validationResult
+session and run identity
+lifecycle state and command admission
+exact active RAF id
+run-generation callback fence
+resource ledger and reverse cleanup stack
+global exposure leases
+listener leases
+startup and first-frame rollback
+fatal teardown
+idempotent disposal
+last typed result and bounded journal
+GameHost/editor lifecycle projections
 ```
 
-Allowed implementation statuses:
+Candidate kits:
 
 ```txt
-external
-source-backed
-descriptor-shell
-planned
-unresolved
+runtime-session-identity-kit
+runtime-lifecycle-state-kit
+runtime-lifecycle-command-kit
+runtime-lifecycle-result-kit
+raf-ownership-kit
+run-generation-fence-kit
+runtime-clock-admission-kit
+resource-ownership-ledger-kit
+cleanup-stack-kit
+global-exposure-lease-kit
+listener-lease-kit
+startup-rollback-kit
+fatal-transition-kit
+runtime-disposal-kit
+runtime-lifecycle-journal-kit
+GameHost-lifecycle-observation-kit
+headless-editor-lifecycle-capability-kit
+runtime-lifecycle-fixture-adapter-kit
 ```
 
-Allowed consumption statuses:
+## Registry-truth finding retained
 
-```txt
-not-applicable
-not-observed
-produced
-partially-consumed
-consumed
-rejected
-unsupported
-fallback-consumed
-```
+Registry membership remains declaration evidence, not runtime truth. Required-list membership does not prove a module exists, is imported, is invoked, produces output, or has a consumer. `meadow-webgl-renderer-v2-kit` also needs its declared service contract kept in sync with the source-backed renderer surface.
 
 ## Ordered safe ledges
 
 ```txt
-1. Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate
+1. Runtime Session Lifecycle Authority + Single-RAF / Global-Lease / Rollback Fixture Gate
 2. Committed Frame Observation Authority + State/Plan/Render/Canvas Coherence Fixture Gate
 3. Source Provider Authority + External/Fallback Parity Fixture Gate
 4. Interaction Command Authority + Objective Progress Fixture Gate
 5. DSK Registry Truth + Mesh Contribution and Consumer Proof Fixture Gate
 ```
+
+Lifecycle remains first because every later journal, frame, provider, command, and consumption observation requires one stable session and run owner.

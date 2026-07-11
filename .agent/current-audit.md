@@ -2,78 +2,85 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T12-29-49-04-00`
+**Audit timestamp:** `2026-07-11T14-08-51-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed static browser meadow with one commit-pinned external provider, 43 local DSK declarations, a WebGL renderer, browser editor bridge and Node headless-editor environment.
+`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local DSK declarations, a WebGL renderer, browser editor bridge and Node headless-editor environment.
 
-This pass audits the filesystem boundary behind the Node editor. The local `safePath()` helper resolves a path and checks `target.startsWith(root)`. That is a character-prefix check, not segment-aware containment, and it does not inspect symlink destinations.
+This pass audits the authored interaction and objective layer. The content contains a path-progress objective, a tree-inspection objective and matching target descriptors. Those definitions are counted and exposed through `game.content`, but no browser input, editor capability or game command can submit either action. `advanceGameState()` only increments `frame` and stores `lastTick`.
 
 ## Plan ledger
 
-**Goal:** make list, read, write and artifact operations use one canonical workspace authority with typed rejection, no-mutation guarantees and cross-platform fixtures.
+**Goal:** define one canonical command and objective transaction shared by browser input, browser and Node editor adapters, target lookup, player state, progression, story beats, diagnostics and committed rendering.
 
-- [x] Enumerate ten accessible Publish repositories.
+- [x] Enumerate the ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Verify nine eligible central ledger entries and root `.agent` states.
-- [x] Select only `IntoTheMeadow` as the oldest eligible entry.
+- [x] Avoid duplicating the newer AetherVale repo-local audit already in flight.
+- [x] Select only `IntoTheMeadow` as the oldest fully aligned eligible entry.
 - [x] Read `AGENTS.md` and retained audits.
-- [x] Trace browser and Node interaction loops.
-- [x] Trace `safePath`, artifact writes and workspace operations.
+- [x] Trace browser, game, content, editor and headless interaction paths.
 - [x] Inventory domains, kits and services.
-- [x] Add architecture, render, interaction, editor, security and deploy audits.
+- [x] Add architecture, render, gameplay, interaction, objective-system and deploy audits.
 - [x] Change documentation only.
 - [ ] Runtime implementation and fixtures remain future work.
 
-## Selection state
-
-```txt
-accessible Publish repos: 10
-eligible after exclusion: 9
-central ledger entries: 9
-root .agent states: 9
-new or missing eligible repos: 0
-selected: LuminaryLabs-Publish/IntoTheMeadow
-selection basis: oldest eligible central-ledger timestamp
-excluded: LuminaryLabs-Publish/TheCavalryOfRome
-```
-
 ## Interaction loops
 
-### Browser
+### Browser render loop
 
 ```txt
 boot
-  -> load external provider
-  -> create game, enhancer and WebGL renderer
+  -> load pinned meadow-area provider
+  -> create game, plan enhancer and WebGL renderer
   -> expose GameHost and browser editor bridge
-  -> RAF tick
-  -> enhance plan
+  -> requestAnimationFrame
+  -> game.tick({ time, dt })
+  -> enhance static render plan
   -> render
-  -> diagnostics
+  -> publish diagnostics
 ```
 
-### Node headless editor
+### Authored gameplay loop
 
 ```txt
-createEnvironment
-  -> define project root and artifact root
-  -> create game and enhancer
-  -> register runtime, scene, renderer, browser and workspace capabilities
-  -> editor client invokes capability
-  -> capability executes local callback
+ARRIVAL_OBJECTIVES
+  -> walk-the-path requires path-progress >= 0.35
+  -> inspect-tree requires inspected=true for focal-tree
+
+ARRIVAL_INTERACTION_TARGETS
+  -> arrival-path / requiredAction=path-progress
+  -> focal-tree / requiredAction=inspect
 ```
 
-### Workspace operation
+### Actual state mutation
 
 ```txt
-workspace.list/read/write or renderer.capture
-  -> caller-controlled path
-  -> safePath(root, path)
-  -> resolve(root, path)
-  -> target.startsWith(root)
-  -> filesystem operation
+createInitialGameState
+  -> player.pathProgress = 0
+  -> activeObjectiveId = walk-the-path
+  -> completedObjectiveIds = []
+  -> storyBeatIds = [arrival]
+
+advanceGameState(state, input)
+  -> frame += 1
+  -> lastTick = { dt, time }
+  -> all player, objective, inspection and story fields unchanged
+```
+
+### Editor surfaces
+
+```txt
+browser editor
+  -> runtime.tick / runtime.reset
+  -> scene and renderer observation
+  -> no interaction or objective capability
+
+Node headless editor
+  -> runtime.tick / runtime.reset
+  -> scene, renderer, camera, browser and workspace capabilities
+  -> no interaction or objective capability
 ```
 
 ## Domains in use
@@ -89,8 +96,12 @@ public host capability routing, admission and revocation
 browser editor invocation and error observation
 Node headless editor runtime and workspace capabilities
 workspace root identity, path containment, symlink policy and I/O admission
-artifact path construction and capture publication
 runtime step admission, clock policy and work budget
+player state and authored movement profile
+interaction-target definitions and target indexing
+path-progress and inspection action semantics
+objective definitions, progress ledger and completion predicates
+story beats and transition projection
 terrain, path, materials, grass, scatter, trees, wind and atmosphere
 render-plan enhancement, validation and topology identity
 performance, LOD and postprocess policy
@@ -110,13 +121,7 @@ required-v0.1 local kits: 15
 runtime source-backed surfaces: 24
 ```
 
-The complete per-kit service inventory is recorded in:
-
-```txt
-.agent/trackers/2026-07-11T12-29-49-04-00/project-breakdown.md
-.agent/kit-registry.json
-src/dsks/index.js
-```
+The complete per-kit service inventory remains in `.agent/kit-registry.json` and `src/dsks/index.js`.
 
 ## Services offered by the current stack
 
@@ -127,116 +132,154 @@ DSK descriptor registration and snapshots
 raw game state, tick, reset and render-plan rebuild
 browser RAF hosting
 browser editor capability lookup and invocation
-Node headless runtime, scene and renderer capabilities
-workspace directory listing
-workspace file reading
-workspace directory creation and file writing
-capture JSON and SVG artifact writing
+Node headless runtime, scene, renderer, camera and workspace capabilities
+workspace list/read/write and capture artifacts
 render-plan enhancement and descriptor validation
 CPU mesh generation
 WebGL buffer caching and two-pass drawing
 GameHost and editor observations
 static checks and Pages deployment
+authored objective, story and target descriptors
 ```
 
 Services not currently offered:
 
 ```txt
-segment-aware workspace containment
-realpath and symlink containment
-workspace root identity and revision
-operation-specific path policy
-read/write budgets
-no-mutation rejection proof
-workspace command and result identity
-bounded filesystem journal
-artifact pair transaction result
-cross-platform path fixture proof
+interaction command envelope
+command identity, sequence or session admission
+canonical target resolution from targetId
+player path-progress mutation
+inspection receipt or duplicate classification
+objective progress evaluation
+objective completion result
+story-beat transition result
+browser and editor command parity
+interaction journal
+committed-frame acknowledgement of progression
 ```
 
-## Main finding: `startsWith` is not path containment
+## Main finding: authored gameplay is inert
 
-Current implementation:
+The content layer defines:
+
+```txt
+walk-the-path
+  requiredAction: path-progress
+  targetId: arrival-path
+  completion: progressAtLeast 0.35
+
+inspect-tree
+  requiredAction: inspect
+  targetId: focal-tree
+  completion: inspected true
+```
+
+The initial state exposes matching progression fields, but the only mutation function is:
 
 ```js
-function safePath(root, path = "") {
-  const target = resolve(root, path);
-  if (!target.startsWith(root)) throw new Error(`Path escapes editor root: ${path}`);
-  return target;
-}
+return Object.freeze({
+  ...state,
+  frame: state.frame + 1,
+  lastTick: Object.freeze({ dt, time })
+});
 ```
 
-Concrete sibling-prefix path:
+The browser host sends only `{ time, dt }`; it registers no keyboard, pointer, proximity or interaction listeners. The browser and Node editor bridges expose no `interaction.*`, `player.*` or `objective.*` capability.
+
+Consequences:
 
 ```txt
-root:   /workspace/IntoTheMeadow
-input:  ../IntoTheMeadow-escape/out.txt
-target: /workspace/IntoTheMeadow-escape/out.txt
+pathProgress remains 0
+focal-tree cannot be inspected
+completedObjectiveIds remains empty
+activeObjectiveId never advances
+storyBeatIds never changes
+render/HUD cannot acknowledge progression
+editor smokes can pass without exercising gameplay
 ```
-
-The target is outside the root but its string begins with the root string. The current check therefore admits it.
-
-A path under an inside-root symlink can also resolve on disk outside the root because `safePath()` never compares `realpath()` results.
-
-Affected services:
-
-```txt
-artifactRoot construction
-renderer.capture JSON output
-renderer.capture SVG output
-workspace.list
-workspace.read
-workspace.write
-```
-
-`workspace.write` can create parent directories recursively and write caller-controlled content after this incomplete admission check.
 
 ## Required parent domain
 
 ```txt
-meadow-workspace-path-authority-domain
+meadow-interaction-objective-authority-domain
 ```
 
 Update existing owners first:
 
 ```txt
 into-the-meadow-game-dsk
+meadow-player-dsk
+meadow-input-dsk
+meadow-interaction-dsk
+meadow-objective-dsk
+meadow-story-dsk
+web-host-dsk
 meadow-diagnostics-dsk
-scripts/into-the-meadow-environment.mjs
-NexusEngine core-headless-editor-kit
+browser and Node editor adapters
 ```
 
 Candidate coordinating kits:
 
 ```txt
-workspace-root-identity-kit
-workspace-path-request-kit
-workspace-containment-policy-kit
-workspace-symlink-policy-kit
-workspace-operation-admission-kit
-workspace-artifact-path-kit
-workspace-operation-result-kit
-workspace-path-journal-kit
-headless-workspace-adapter-kit
-workspace-path-fixture-kit
+interaction-command-kit
+interaction-command-id-kit
+interaction-admission-kit
+canonical-interaction-target-index-kit
+player-action-state-kit
+path-progress-evaluator-kit
+inspect-target-evaluator-kit
+objective-definition-index-kit
+objective-progress-ledger-kit
+objective-completion-result-kit
+story-beat-transition-kit
+interaction-projection-kit
+interaction-debug-observation-kit
+interaction-command-journal-kit
+interaction-objective-fixture-kit
+browser-interaction-parity-smoke-kit
 ```
 
-Reusable containment belongs in NexusEngine. This repository owns allowed roots, operations, budgets and artifact policy.
+## Required transaction
+
+```txt
+InteractionCommand C
+  -> validate session, epoch, command sequence and action kind
+  -> resolve canonical target from active scene and targetId
+  -> validate range/progress evidence under one policy
+  -> classify stale, duplicate, rejected or accepted
+  -> prepare player/inspection candidate state
+  -> evaluate objective predicates from canonical definitions
+  -> emit zero or more ObjectiveCompletionResult values
+  -> prepare story-beat transition
+  -> atomically commit state and bounded journal
+  -> project command/result/revision into diagnostics and render state
+  -> acknowledge the first committed frame that consumed the revision
+```
+
+Compatibility targets:
+
+```txt
+path progress threshold: 0.35
+inspect target: focal-tree
+path target: arrival-path
+initial active objective: walk-the-path
+initial story beat: arrival
+```
 
 ## Required proof
 
 ```txt
-accept root and normal descendants
-reject parent traversal
-reject sibling-prefix traversal
-reject outside absolute paths
-reject symlink traversal
-validate nearest existing ancestor for new writes
-perform no I/O on rejection
-use one policy for workspace and artifact operations
-return typed session-correlated results
-publish relative paths only
-run POSIX and Windows path-semantics fixtures where supported
+path progress below threshold does not complete
+path progress at threshold completes once
+canonical target lookup rejects unknown target IDs
+tree inspection completes once and duplicates are no-mutation
+wrong action for target is rejected
+stale session/epoch/sequence commands are rejected
+browser and editor ingress produce equivalent results
+objective completion advances active objective deterministically
+story transition cites objective completion receipts
+reset retires old commands and restores initial progression
+state, diagnostics and committed frame cite one revision
 ```
 
 ## Ordered safe ledges
@@ -249,15 +292,20 @@ run POSIX and Windows path-semantics fixtures where supported
 5. Source Provider Authority
 6. Render Topology Identity Authority
 7. Committed Frame Observation Authority
-8. Interaction Command Authority
+8. Interaction Command and Objective Authority
 9. DSK Registry Consumption Proof
 ```
 
-## Next safe ledge
+## Validation boundary
 
 ```txt
-IntoTheMeadow Headless Workspace Path Authority
-+ Sibling-Prefix / Symlink / Rejected-Write No-Mutation Fixture Gate
+runtime source changed: no
+dependencies or manifests changed: no
+gameplay/render/deployment changed: no
+branch or PR created: no
+npm run check: not run
+browser smoke: not run
+interaction/objective fixtures: unavailable
 ```
 
-Runtime lifecycle and host capability authority remain prerequisites because workspace commands need one session lease and exclusive public command path.
+No gameplay-completion claim is made until a fixture proves command admission, canonical target lookup, state mutation, objective predicates, story transition and committed-frame projection at one session, epoch and revision.

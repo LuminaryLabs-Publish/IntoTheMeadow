@@ -2,129 +2,126 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T10-50-14-04-00`
+**Updated:** `2026-07-11T12-29-49-04-00`
 
 ## Goal
 
-Replace the globally exposed raw runtime with one session-owned capability gateway that can admit commands, return truthful results, revoke old leases and expose clone-safe read models.
+After runtime lifecycle and the host capability gateway are established, replace lexical workspace checks with one segment-aware, symlink-aware and session-owned filesystem authority shared by workspace and capture-artifact operations.
 
 ## Plan ledger
 
 - [ ] Preserve the current meadow composition and visible output.
 - [ ] Complete Runtime Session Lifecycle Authority first.
-- [ ] Assign one host lease ID, session ID and run generation.
-- [ ] Define an explicit public `GameHost` property allowlist.
-- [ ] Remove `GameHost.game`.
-- [ ] Do not expose raw renderer, enhancer or provider references.
-- [ ] Move game mutations behind internal domain services.
-- [ ] Define immutable `host-command/v1` envelopes.
-- [ ] Require command ID, capability ID, session ID and expected state frame.
-- [ ] Add a canonical capability registry.
-- [ ] Add lifecycle and session admission before every mutation.
-- [ ] Add typed unavailable, rejected, duplicate, stale and accepted results.
-- [ ] Separate transport completion from domain acceptance.
-- [ ] Add capability sequence and bounded command/result journals.
-- [ ] Define read-only capability descriptors.
-- [ ] Project clone-safe state, diagnostics and committed-frame observations.
-- [ ] Add observation revision and state fingerprint.
-- [ ] Revoke prior capability leases on fatal rollback, restart and dispose.
-- [ ] Make retained old gateways return stale or disposed results.
-- [ ] Route browser editor actions through the gateway.
-- [ ] Route Node headless actions through the same schema.
-- [ ] Correlate accepted visual commands with a later render commit.
-- [ ] Add raw-surface, lease-revocation and observation-isolation fixtures.
-- [ ] Wire fixtures into `npm run check`.
+- [ ] Complete Host Capability Gateway and remove raw public authority.
+- [ ] Assign editor session, host lease and workspace-root identities.
+- [ ] Move reusable containment logic into NexusEngine `core-headless-editor-kit`.
+- [ ] Define game-specific allowed roots and artifact policy locally.
+- [ ] Replace `target.startsWith(root)` with segment-aware containment.
+- [ ] Add realpath and symlink containment for existing targets.
+- [ ] Verify the nearest existing ancestor before creating new write targets.
+- [ ] Add operation-specific list, read, write and artifact budgets.
+- [ ] Define immutable workspace operation commands.
+- [ ] Return typed accepted, rejected, stale and failed results.
+- [ ] Keep absolute host paths out of public results and journals.
+- [ ] Use one admission path for workspace and artifact writes.
+- [ ] Add bounded filesystem operation journals.
+- [ ] Add atomic or explicitly partial JSON/SVG capture results.
+- [ ] Add sibling-prefix, symlink and rejected-write no-mutation fixtures.
+- [ ] Add POSIX and Windows path-semantics fixtures where supported.
+- [ ] Wire the fixture into `npm run check`.
 - [ ] Run `npm run check`.
-- [ ] Run browser and deployed Pages smoke tests.
+- [ ] Run Node editor and browser smoke tests.
 
 ## Required implementation order
 
 ```txt
-1. host-capability-registry-kit
-2. host-command-envelope-kit
-3. host-session-fence-kit
-4. host-command-admission-kit
-5. raw-runtime-quarantine-kit
-6. capability-sequence-kit
-7. capability-result-kit
-8. capability-journal-kit
-9. gamehost-read-model-kit
-10. clone-safe-observation-kit
-11. capability-revocation-kit
-12. browser-editor-capability-adapter-kit
-13. headless-editor-capability-adapter-kit
-14. host-capability-fixture-kit
+1. workspace-root-identity-kit
+2. workspace-path-request-kit
+3. workspace-containment-policy-kit
+4. workspace-symlink-policy-kit
+5. workspace-operation-admission-kit
+6. workspace-operation-result-kit
+7. workspace-artifact-path-kit
+8. workspace-path-journal-kit
+9. headless-workspace-adapter-kit
+10. workspace-path-fixture-kit
 ```
 
-## Public surface acceptance cases
+Existing owners to update before adding local packages:
 
 ```txt
-list capabilities
-read session observation
-read state observation
-read diagnostics observation
-read committed-frame observation
-invoke one admitted command
-invoke one read-only capability
-repeat a command ID and receive duplicate
-call an old gateway after restart and receive stale
-call after disposal and receive disposed/rejected result
+scripts/into-the-meadow-environment.mjs
+into-the-meadow-game-dsk
+meadow-diagnostics-dsk
+NexusEngine core-headless-editor-kit
+```
+
+## Acceptance cases
+
+```txt
+workspace root
+normal descendant directory
+normal descendant file
+new file under verified inside-root ancestor
+capture JSON and SVG under admitted artifact root
+bounded list
+bounded read
+bounded write
 ```
 
 ## Rejection cases
 
 ```txt
-unknown capability
-missing command ID
-missing or stale session ID
-retired host lease
-stale expected frame
-future expected frame
-stopped runtime when policy disallows mutation
-disposed runtime
-mutation attempted through read-only capability
-invalid payload schema
+parent traversal
+sibling-prefix traversal
+absolute outside path
+inside symlink to outside directory
+inside symlink to outside file
+write below outside-pointing symlink
+unknown or stale root revision
+operation not allowed for root
+read, list or write budget exceeded
 ```
 
 ## Acceptance criteria
 
 ```txt
-GameHost exposes no raw game, renderer, enhancer or provider
-all state-changing operations enter one admission function
-old leases cannot mutate a new session
-transport success never conceals domain rejection
-read observations are structured-clone safe
-mutating a returned observation cannot affect runtime state
-journals remain bounded
-browser and Node descriptors/results match
-accepted visible mutation reaches one correlated render commit
+all filesystem operations enter one admission function
+segment-aware containment replaces raw prefix comparison
+real filesystem containment is proven
+rejected operations perform no I/O
+workspace and capture paths share one policy
+public results expose relative paths only
+operation results are typed and session-correlated
+journals are bounded and redact host details
+fixtures pass on supported path semantics
 ```
 
 ## Ordered architecture queue
 
 ```txt
-1. Runtime Session Lifecycle Authority + Single-RAF / Global-Lease / Rollback Fixture Gate
-2. Host Capability Gateway + Raw Runtime Quarantine / Observation Isolation Fixture Gate
-3. Runtime Step Admission and Clock Integrity + Finite / Monotonic / Work-Budget Fixture Gate
-4. Source Provider Authority + External/Fallback Admission and Parity Fixture Gate
-5. Render Topology Identity Authority + Source Mutation / Cache Rebuild Fixture Gate
-6. Committed Frame Observation Authority + State/Plan/Render/Canvas Coherence Fixture Gate
-7. Interaction Command Authority + Path/Inspect/Objective Progress Fixture Gate
-8. DSK Registry Truth + Declared/Implemented/Consumed Fixture Gate
+1. Runtime Session Lifecycle Authority
+2. Host Capability Gateway and Raw Runtime Quarantine
+3. Headless Workspace Path Authority and Filesystem Containment
+4. Runtime Step Admission and Clock Integrity
+5. Source Provider Authority
+6. Render Topology Identity Authority
+7. Committed Frame Observation Authority
+8. Interaction Command Authority
+9. DSK Registry Consumption Proof
 ```
 
 ## Deferred until after this gate
 
 ```txt
+expanded workspace commands
+recursive project search
+bulk file edits
+artifact publishing outside the local root
+agent-authored content pipelines
 deterministic editor stepping
-movement simulation
-objective and story command execution
-replay
-save/load
-provider switching
-render-plan rebuild commands
-new public editor capabilities
-shared-kit promotion
+movement and objective commands
+replay and save/load
 ```
 
-Do not add more public mutation capabilities while callers can bypass the gateway through `GameHost.game`.
+Do not add more filesystem capabilities while `safePath()` relies on raw string-prefix membership.

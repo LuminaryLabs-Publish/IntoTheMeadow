@@ -2,18 +2,21 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Last aligned:** `2026-07-11T02-20-44-04-00`
+**Last aligned:** `2026-07-11T02-28-12-04-00`
 
 ## Current ledge
 
 ```txt
 IntoTheMeadow Runtime Session Lifecycle Authority
-+ Stop/Restart/Dispose/Rollback Fixture Gate
++ Single-RAF / Global-Lease / Rollback Fixture Gate
 ```
 
-## Latest documentation finding
+## Immediate companion gates
 
 ```txt
+IntoTheMeadow Committed Frame Observation Authority
++ State/Plan/Render/Canvas Coherence Fixture Gate
+
 IntoTheMeadow DSK Registry and Service Truth
 + Declared/Implemented/Consumed Fixture Gate
 ```
@@ -21,19 +24,27 @@ IntoTheMeadow DSK Registry and Service Truth
 ## Read first
 
 ```txt
-.agent/trackers/2026-07-11T02-20-44-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-11T02-20-44-04-00.md
+.agent/trackers/2026-07-11T02-28-12-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-11T02-28-12-04-00.md
 .agent/current-audit.md
 .agent/known-gaps.md
 .agent/next-steps.md
 .agent/validation.md
 .agent/kit-registry.json
-.agent/architecture-audit/2026-07-11T02-20-44-04-00-dsk-registry-service-truth-map.md
-.agent/render-audit/2026-07-11T02-20-44-04-00-renderer-kit-registry-contract-gap.md
-.agent/gameplay-audit/2026-07-11T02-20-44-04-00-declared-versus-authoritative-gameplay-kit-map.md
-.agent/interaction-audit/2026-07-11T02-20-44-04-00-editor-host-capability-registry-gap.md
+.agent/architecture-audit/2026-07-11T02-28-12-04-00-runtime-session-lifecycle-dsk-map.md
+.agent/render-audit/2026-07-11T02-28-12-04-00-duplicate-raf-render-ownership-gap.md
+.agent/gameplay-audit/2026-07-11T02-28-12-04-00-stop-start-frame-multiplication-loop.md
+.agent/interaction-audit/2026-07-11T02-28-12-04-00-lifecycle-control-reachability-map.md
+.agent/lifecycle-audit/2026-07-11T02-28-12-04-00-single-raf-global-lease-rollback-contract.md
+.agent/deploy-audit/2026-07-11T02-28-12-04-00-runtime-lifecycle-fixture-gate.md
+```
+
+Companion context:
+
+```txt
+.agent/frame-authority-audit/2026-07-11T00-30-48-04-00-atomic-committed-frame-contract.md
 .agent/registry-truth-audit/2026-07-11T02-20-44-04-00-declared-runtime-consumption-contract.md
-.agent/deploy-audit/2026-07-11T02-20-44-04-00-registry-truth-fixture-gate.md
+.agent/headless-editor-audit/2026-07-11T00-30-48-04-00-browser-node-observation-parity-contract.md
 ```
 
 ## Selection result
@@ -53,28 +64,46 @@ AetherVale           tracked  / 2026-07-11T02-10-13-04-00
 TheCavalryOfRome     excluded by rule
 ```
 
-`IntoTheMeadow` was the oldest eligible documented fallback. Only this product repository was changed.
+`IntoTheMeadow` was the oldest eligible documented fallback when this pass selected it. A separate registry-truth audit landed at `2026-07-11T02-20-44-04-00` while this pass was in progress. This pass continued on the already selected repository to preserve the one-project rule and incorporated its corrected kit census.
 
-## Interaction loop
+## Product read
+
+`IntoTheMeadow` is a static DSK-composed meadow route. The browser imports a commit-pinned meadow provider, constructs the game, enhancer, WebGL renderer, `GameHost`, and editor bridge, then advances and renders through a browser animation loop.
+
+## Actual interaction and lifecycle loop
 
 ```txt
 index.html
-  -> src/boot/boot-game.js
+  -> boot-game.js
   -> startWebHost()
-  -> import commit-pinned meadow-area-kit
-  -> create game, renderer, enhancer, GameHost, and editor bridge
-  -> requestAnimationFrame
-  -> fixed-dt state tick with RAF absolute time
-  -> raw-plan time overlay
-  -> plan enhancement
-  -> WebGL outline and cel/fog render
-  -> HUD, GameHost, and editor readback
-  -> successor RAF
+  -> import external meadow-area-kit
+  -> construct game, renderer, and enhancer
+  -> overwrite global GameHost
+  -> overwrite global NexusEditorEnvironment and install error listeners
+  -> request one RAF without retaining its id
+  -> tick / enhance / render / HUD
+  -> request the successor RAF
 ```
 
-Independent editor paths can call `runtime.tick`, `runtime.reset`, plan reads, renderer reads, and capture without using one committed browser frame.
+The returned controller is discarded by `boot-game.js`. Its `stop()` only changes a Boolean. Its `start()` schedules a new RAF without cancelling a previously queued callback.
 
-## Registry census
+## Current finding
+
+A stop/start race can permanently multiply the render loop:
+
+```txt
+RAF A is queued
+  -> stop() sets stopped=true
+  -> start() sets stopped=false and queues RAF B
+  -> RAF A fires and sees stopped=false
+  -> RAF B fires and sees stopped=false
+  -> both tick, render, and queue successors
+  -> two active RAF chains persist
+```
+
+Each callback increments `state.frame` with fixed `dt: 1/60`, so duplicate chains increase simulation and render work independently of display cadence. Fatal failure also leaves renderer resources, editor listeners, and global exposures live because the host has no coordinated `dispose()` or rollback transaction.
+
+## Registry truth retained
 
 ```txt
 external declared kits: 1
@@ -84,32 +113,16 @@ required-v0.1 local kits: 15
 runtime source-backed surfaces cataloged: 24
 ```
 
-Prior docs repeatedly described the registry as one external plus 44 local kits. The source of truth is one external plus 43 local kits.
-
-## Main finding
-
-The DSK registry is a descriptor catalog, not an implementation or consumption authority.
-
-```txt
-LOCAL_DSK_IDS membership
-  -> creates descriptors
-  -> REQUIRED_V01 membership labels selected descriptors active-v0.1
-  -> install validates shape and presence
-  -> snapshot reports descriptor status
-```
-
-This does not prove a kit has a source-backed implementation, is imported, is invoked, produces an output, or is consumed by the renderer or gameplay loop.
-
-`meadow-webgl-renderer-v2-kit` is required, but it has no explicit `DOMAIN_LABELS` or `SERVICES` row. It therefore receives generic fallback services even though the actual renderer exposes WebGL context, shader, buffer-cache, resize, draw, snapshot, and disposal behavior.
+Registry membership remains declaration evidence, not implementation or consumption proof.
 
 ## Implementation order
 
 ```txt
-1. Runtime Session Lifecycle Authority + Stop/Restart/Dispose/Rollback Fixture Gate
+1. Runtime Session Lifecycle Authority + Single-RAF / Global-Lease / Rollback Fixture Gate
 2. Committed Frame Observation Authority + State/Plan/Render/Canvas Coherence Fixture Gate
 3. Source Provider Authority + External/Fallback Parity Fixture Gate
 4. Interaction Command Authority + Objective Progress Fixture Gate
 5. DSK Registry Truth + Mesh Contribution and Consumer Proof Fixture Gate
 ```
 
-Do not begin with visual tuning, renderer replacement, WebGPU migration, CDN migration, new meadow content, or shared-kit promotion.
+Do not begin with visual tuning, renderer replacement, WebGPU migration, new meadow content, CDN migration, or shared-kit promotion.

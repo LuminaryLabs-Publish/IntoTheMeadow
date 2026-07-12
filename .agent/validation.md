@@ -2,61 +2,67 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T22-08-13-04-00`
+**Updated:** `2026-07-11T23-10-51-04-00`
 
 ## Plan ledger
 
-**Goal:** distinguish a canvas that fills the browser from executable proof that viewport, DPR, WebGL drawing-buffer dimensions, projection, renderer snapshot, capture and visible frame share one bounded surface revision.
+**Goal:** distinguish a declared save DSK and readable live snapshot from executable proof that a checkpoint can be written, verified, reloaded, migrated, hydrated, rolled back and projected into the first visible resumed frame.
 
 - [x] Review the complete accessible Publish inventory.
 - [x] Compare every eligible repository with central tracking.
 - [x] Verify central and root `.agent` coverage.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow` after skipping active unsynchronized `AetherVale` work.
-- [x] Inspect CSS canvas sizing.
-- [x] Inspect renderer DPR and drawing-buffer mutation.
-- [x] Inspect GL viewport and camera aspect derivation.
-- [x] Inspect renderer snapshot contents.
-- [x] Inspect browser editor viewport and capture capabilities.
-- [x] Inspect the existing browser observation configuration.
-- [x] Document surface identity, policy, budget, capability, fallback, revision and frame requirements.
+- [x] Select only `IntoTheMeadow` after skipping newer unsynchronized repo-local work.
+- [x] Inspect the save DSK declaration and required-v0.1 registry.
+- [x] Inspect game construction and reset behavior.
+- [x] Inspect game snapshot shape.
+- [x] Inspect GameHost, browser editor and Node headless capability surfaces.
+- [x] Inspect current package validation scripts.
+- [x] Document schema, slot, fingerprint, migration, reconciliation, hydration, rollback and frame-proof requirements.
 - [x] Change documentation only.
 - [ ] Execute fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-render surface IDs: 0
-surface revisions: 0
-resize command IDs: 0
-resize generations: 0
-pixel-budget policies: 0
-WebGL surface capability results: 0
-actual drawing-buffer readback records: 0
-fallback results: 0
-surface journals: 0
-capture/frame surface receipts: 0
-hard-coded DPR policy: min 1, max 2
-browser observation surface configurations: one, 1440x900 at DPR 1
+external declared kits: 1
+local declared kits: 43
+total declared kits: 44
+meadow-save-dsk service declarations: 5
+required-v0.1 save implementation: 0
+save schema descriptors: 0
+slot registries: 0
+checkpoint IDs: 0
+state revisions: 0
+reset epochs: 0
+integrity fingerprints: 0
+browser persistence adapters: 0
+save/load command capabilities: 0
+migration executions: 0
+hydration results: 0
+persistence journal rows: 0
+visible hydrated-frame receipts: 0
+persistence fixture commands: 0
 ```
 
 ## Proven from source
 
 ```txt
-canvas CSS width and height are 100 percent of the viewport
-renderer.render invokes resize every frame
-resize samples canvas.clientWidth/clientHeight with inner-size fallback
-resize samples live devicePixelRatio
-DPR is clamped to 1 through 2
-canvas.width and canvas.height are assigned directly when different
-gl.viewport uses the requested width and height
-camera projection aspect uses requested width divided by requested height
-renderer snapshot omits width, height, DPR and surface revision
-browser.getViewport reads live browser and canvas values
-renderer.capture reads canvas width, height and data URL
-capture attaches the latest renderer snapshot independently
-browser observation forces DPR 1 and window size 1440 by 900
-browser observation checks screenshot byte size, not surface policy or correlation
+meadow-save-dsk declares save-model
+meadow-save-dsk declares save-slots
+meadow-save-dsk declares persistence-adapter
+meadow-save-dsk declares migration
+meadow-save-dsk declares save-validation
+meadow-save-dsk is not included in REQUIRED_V01_DSK_IDS
+game construction always creates initial state
+browser startup supplies no hydrated state
+reset always creates initial state again
+game snapshot bundles manifest, state, render plan and diagnostics
+snapshot validation checks only manifest, scene, render plan and diagnostics
+GameHost exposes no persistence command
+browser editor exposes no persistence domain
+Node headless environment exposes no persistence domain
+npm run check includes no save, migration, reload or hydration fixture
 ```
 
 ## Existing proof
@@ -65,36 +71,38 @@ Current checks prove:
 
 ```txt
 required files exist
+DSK descriptors validate structurally
 render-plan descriptors validate
 CPU mesh data is internally aligned
 static topology remains stable across time changes
 renderer can draw the current plan
-browser can produce one nontrivial screenshot at DPR 1
-editor viewport and capture capabilities exist
+headless-editor runtime and command surfaces operate for existing domains
 ```
 
 Current checks do not prove:
 
 ```txt
-bounded DPR and total pixel policy
-WebGL maximum-dimension admission
-actual drawing-buffer dimensions
-browser clamping detection
-rapid resize coalescing
-hidden and zero-size behavior
-fallback or rollback
-stale resize rejection
-context-generation fencing
-camera projection from committed dimensions
-renderer/capture/frame surface correlation
-high-DPR or 4K behavior
-Pages resize parity
+canonical save-envelope construction
+atomic slot write and read-back verification
+storage failure classification
+candidate parsing and precedence
+schema support and migration
+content reconciliation
+integrity verification
+stale and duplicate command handling
+reset/new-game slot policy
+detached hydration and rollback
+browser reload continuity
+headless persistence parity
+first visible hydrated-frame correlation
+Pages reload continuity
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
+persistence source changed: no
 renderer source changed: no
 package scripts changed: no
 dependencies changed: no
@@ -103,109 +111,139 @@ deployment changed: no
 branch created: no
 pull request created: no
 npm run check executed: no
-browser resize smoke executed: no
-render-surface fixtures available: no
+browser reload smoke executed: no
+persistence fixtures available: no
 ```
 
-## Required DOM-free policy fixture
+## Required envelope fixture
 
-Construct fake viewport, policy and WebGL capability inputs.
+Construct canonical state and content identity inputs.
 
 Acceptance assertions:
 
 ```txt
-finite positive CSS dimensions and DPR normalize deterministically
-DPR policy identifies requested and applied values
-maximum width, height and total pixels are never exceeded
-capability limits produce a declared fallback or typed rejection
-actual drawing-buffer readback governs committed dimensions
-stale session, context generation and surface revision reject
-newer viewport observations supersede older queued commands
-accepted resize advances surface revision exactly once
-failed allocation does not publish a new committed revision
-bounded journal records accepted, degraded and rejected commands
+only persistable domain state enters the payload
+schema and content IDs are required
+checkpoint ID, slot ID, reset epoch and state revision are present
+fingerprint is deterministic for canonical content
+functions, provider instances, render plans and GPU state are rejected or omitted
+serializing the same admitted state is deterministic
 ```
 
-## Required rapid resize fixture
+## Required candidate fixture
 
 ```txt
-submit a sequence of viewport observations before the next frame
-assert superseded commands are coalesced deterministically
-assert only the latest admitted command can commit
-assert predecessor surface remains valid until successor frame acknowledgement
-assert projection and capture do not cite an intermediate stale surface
+empty slot classifies as empty
+valid current checkpoint classifies as current
+supported predecessor classifies as migratable
+malformed JSON cannot throw through startup
+unsupported schema fails explicitly
+content mismatch fails explicitly
+integrity mismatch fails explicitly
+one invalid slot cannot hide another valid candidate
+multiple valid candidates resolve through one versioned policy
 ```
 
-## Required hidden and zero-size fixture
+## Required write fixture
 
 ```txt
-commit a baseline surface
-simulate hidden page and zero CSS size
-assert explicit preserve, suspend or release policy
-assert no accidental one-pixel surface is reported as ready
-resume with a valid viewport
-assert one successor surface revision and first-frame receipt
+admit SaveCommand against session, epoch and state revision
+write canonical candidate to a temporary or transactional location
+read back the exact bytes or canonical value
+verify checkpoint identity and fingerprint
+promote only after verification
+preserve the predecessor on denial, quota, serialization or mismatch
+return one typed SaveResult
+record one bounded journal row
 ```
 
-## Required browser surface matrix
+## Required migration and reconciliation fixture
 
 ```txt
-320x240 DPR 1
-1440x900 DPR 1
-1920x1080 DPR 1.25
-2560x1440 DPR 2
-3840x2160 requested DPR 2
-3840x2160 requested DPR 3
-portrait and landscape transition
-browser zoom change
-context loss during resize
+run ordered pure migrations
+validate every intermediate schema
+append deterministic migration history
+reconcile scene identity
+reconcile objectives and story beats
+reconcile interaction receipts
+reject unsupported content changes without mutating live state
 ```
 
-For every case assert:
+## Required hydration fixture
 
 ```txt
-requested values
-bounded candidate values
-actual drawing-buffer values
-applied DPR and quality tier
-camera aspect
-surface revision
-renderer snapshot revision
-visible-frame revision
-capture revision and dimensions
+commit a baseline live state and visible frame
+resolve and prepare a detached checkpoint candidate
+validate state invariants
+commit one successor state revision
+invalidate or rebuild derived render state
+wait for first visible hydrated frame
+assert state, snapshot, diagnostics, renderer and frame share checkpoint identity
+inject failure before and after candidate preparation
+assert predecessor state and frame remain or rollback succeeds
+```
+
+## Required browser reload matrix
+
+```txt
+fresh boot with empty storage
+save valid checkpoint and reload
+multiple slots
+malformed candidate beside valid candidate
+unsupported schema
+migratable schema
+content mismatch
+integrity mismatch
+storage denied
+quota exceeded
+read-back mismatch
+reset and reload
+new game with existing resume candidate
+save/load race
+reset/load race
+```
+
+For every successful resume assert:
+
+```txt
+selected slot and checkpoint ID
+source and committed schema version
+committed state revision
+active scene and progression state
+renderer observation checkpoint identity
+first visible frame checkpoint identity
+capture checkpoint identity
 ```
 
 ## Required browser smoke
 
 ```txt
-boot and wait for initial visible surface frame
-record surface and frame receipt
-resize viewport and change DPR
-wait for successor surface revision
-assert actual dimensions obey policy and capability limits
-capture canvas
-assert viewport, renderer, capture and frame cite one revision
-trigger rapid resize and assert coalescing
-trigger hidden/zero transition and assert explicit policy
-trigger context loss during resize and assert recovery routing
+boot and wait for initial frame
+save a checkpoint through the supported command surface
+verify durable read-back
+reload page
+observe candidate resolution and hydration result
+wait for first hydrated frame
+assert state, diagnostics, renderer and capture share checkpoint identity
+repeat with malformed and incompatible candidates
+assert explicit safe failure and no partial mutation
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:render-resolution-policy
-npm run fixture:render-surface-capabilities
-npm run fixture:render-surface-budget-fallback
-npm run fixture:render-surface-stale-rejection
-npm run fixture:render-surface-allocation-failure
-npm run smoke:render-surface-resize
-npm run smoke:render-surface-dpr
-npm run smoke:render-surface-hidden-zero
-npm run smoke:render-surface-capture-correlation
-npm run smoke:render-surface-context-loss
+npm run fixture:persistence-envelope
+npm run fixture:persistence-candidates
+npm run fixture:persistence-write
+npm run fixture:persistence-migration
+npm run fixture:persistence-reconciliation
+npm run fixture:persistence-hydration
+npm run fixture:persistence-races
+npm run smoke:persistence-browser-reload
+npm run smoke:persistence-pages-reload
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim responsive or high-DPI rendering because the canvas fills the window or a screenshot is nonempty. Completion requires one accepted surface revision and actual drawing-buffer dimensions to propagate through projection, renderer snapshot, capture and visible-frame evidence.
+Do not claim persistence because a save DSK is registered or a live snapshot can be serialized. Completion requires verified durable storage, compatibility admission, failure-safe hydration and a first visible frame that cites the same checkpoint and committed state revision.

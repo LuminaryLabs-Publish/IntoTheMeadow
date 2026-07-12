@@ -2,41 +2,41 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T22-08-13-04-00`
+**Audit timestamp:** `2026-07-11T23-10-51-04-00`
 
 ## Summary
 
-`IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, descriptor-driven scene composition, CPU mesh construction, a persistent WebGL renderer, browser `GameHost` and editor surfaces, and a Node headless-editor environment.
+`IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, immutable game state, descriptor-driven scene composition, CPU mesh construction, a persistent WebGL renderer, browser `GameHost` and editor surfaces, and a Node headless-editor environment.
 
-This pass audits render-surface resolution. The browser canvas fills the viewport through CSS, while the renderer samples live CSS dimensions and device pixel ratio inside every render call. It directly mutates the drawing buffer, configures the GL viewport and derives projection aspect without a pixel budget, capability admission, resize generation, fallback result, committed surface revision or capture/frame correlation.
+This pass audits persistence continuity. `meadow-save-dsk` declares save-model, save-slots, persistence-adapter, migration and save-validation, but the registry marks it as planned rather than a required v0.1 implementation. Browser startup and reset always create a default state, snapshots are live inspection packets rather than save envelopes, and no public capability can save, resolve, migrate, hydrate or verify a checkpoint.
 
 ## Plan ledger
 
-**Goal:** define one bounded and revisioned surface transaction from viewport observation through actual WebGL drawing-buffer readback, projection, visible-frame acknowledgement and capture.
+**Goal:** define one schema-versioned and failure-safe transaction from live state through checkpoint storage, reload admission, migration, reconciliation, hydration and first visible resumed frame.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm nine eligible central ledgers and root `.agent` states.
-- [x] Detect active unsynchronized `AetherVale` lifecycle work.
-- [x] Select only `IntoTheMeadow` as the oldest stable eligible repository.
-- [x] Inspect `AGENTS.md`, `index.html`, browser host, renderer, editor bridge and browser observation script.
+- [x] Skip repositories with newer unsynchronized repo-local audit work.
+- [x] Select only `IntoTheMeadow` as the oldest fully synchronized eligible repository.
+- [x] Inspect `AGENTS.md`, package checks, manifest, registry, state, snapshot, browser host, GameHost and editor surfaces.
 - [x] Identify the interaction loop, all domains, all kits and every declared service.
-- [x] Define the render-surface parent domain and fixture boundary.
+- [x] Define the persistence parent domain and fixture boundary.
 - [x] Change documentation only.
-- [ ] Runtime implementation and executable fixtures remain future work.
+- [ ] Runtime implementation and executable persistence fixtures remain future work.
 
 ## Selection comparison
 
 ```txt
-AetherVale         central 20:30, active repo-local 22:08 lifecycle audit, skipped
-IntoTheMeadow      central 20:38, selected oldest stable
-MyCozyIsland       central 20:51
-PrehistoricRush    central 21:00
-TheOpenAbove       central 21:08
-HorrorCorridor     central 21:21
-PhantomCommand     central 21:31
-ZombieOrchard      central 21:40
-TheUnmappedHouse   central 21:48
+HorrorCorridor     central 21:21, newer repo-local audit, skipped
+PhantomCommand     central 21:31, newer repo-local audit, skipped
+ZombieOrchard      central 21:40, newer repo-local audit, skipped
+TheUnmappedHouse   central 21:48, newer repo-local audit, skipped
+AetherVale         central 22:02, newer repo-local audit, skipped
+IntoTheMeadow      central 22:08, selected oldest fully synchronized
+MyCozyIsland       central 22:20
+PrehistoricRush    central 22:38
+TheOpenAbove       central 22:58
 TheCavalryOfRome   excluded
 ```
 
@@ -46,63 +46,66 @@ Only `LuminaryLabs-Publish/IntoTheMeadow` was changed in the Publish organizatio
 
 ```txt
 browser boot
-  -> full-window CSS canvas
-  -> external kit load
-  -> game, renderer and enhancer creation
-  -> GameHost and browser editor exposure
+  -> load commit-pinned meadow-area-kit
+  -> validate and install 43 local descriptors
+  -> create meadow source and static render plan
+  -> createInitialGameState
+  -> create renderer and enhancer
+  -> expose GameHost and editor bridge
   -> request RAF
 
 browser frame
   -> game.tick
-  -> get and enhance render plan
-  -> renderer.render
-  -> sample canvas.clientWidth / clientHeight and live DPR
-  -> clamp DPR to 1 through 2
-  -> mutate canvas.width / canvas.height
-  -> gl.viewport with requested dimensions
-  -> derive perspective aspect from requested dimensions
-  -> bind persistent mesh buffers
-  -> draw outline pass
-  -> draw color pass
-  -> publish renderer snapshot without surface dimensions
+  -> replace immutable state with frame + 1 and lastTick
+  -> enhance and render the plan
+  -> publish game, render and diagnostic observations
 
-editor observation
-  -> browser.getViewport reads live viewport, DPR and canvas dimensions
-  -> renderer.capture reads canvas dimensions and data URL
-  -> latest renderer snapshot attaches independently
-  -> no surface revision or frame ID joins those observations
+reset
+  -> replace state with createInitialGameState
+  -> no checkpoint, reset epoch or persistence result
+
+reload
+  -> create a new default graph
+  -> no slot discovery, parsing, migration, reconciliation or hydration
+
+browser and Node editors
+  -> read state/snapshot, tick, reset, inspect and capture
+  -> no persistence domain or save/load command
 ```
 
 ## Domains in use
 
 ```txt
 browser shell, DOM boot and visible failure projection
-fixed CSS canvas and viewport layout
-DOM viewport, orientation and visibility observation
-device-pixel-ratio observation and quality policy
-render pixel budget and WebGL surface capability
-resize command, generation, coalescing and stale rejection
-drawing-buffer allocation, fallback and surface commit
-camera projection and aspect derivation
-renderer snapshot, capture and visible-frame correlation
 external dependency manifest and dynamic provider loading
 source-provider selection, validation and fallback
-DSK census, descriptor generation, validation and install reporting
-game state, snapshots, diagnostics, tick and reset
-runtime lifecycle, RAF scheduling, pause/start and disposal
-runtime clock, step admission, reset epoch and work budgets
-GameHost capability exposure and browser editor adapters
+DSK declaration, census, validation and install snapshots
+game manifest, build and content identity
+immutable game state, frame mutation and reset
+game snapshot and diagnostics
+runtime lifecycle, RAF scheduling and stop/start
+runtime clock, step admission and reset epoch
+persistence schema, slots and checkpoint identity
+save envelope, serialization and integrity fingerprint
+storage capability and failure classification
+save command admission and atomic write verification
+candidate parsing, classification and precedence
+schema migration and migration history
+content reconciliation
+hydration planning, atomic commit and rollback
+persistence journal and observation
+GameHost capability projection
+browser editor capability routing
 Node headless editor, workspace and artifact operations
 player, input, interaction, objective and story declarations
 terrain, path, materials, scatter and atmosphere
 grass density, archetypes, batching, placement, instancing, wind and LOD
 tree, wind, performance and post-process enhancement
-render-plan v2 contract, topology identity and cache policy
+render-plan v2 contract and topology identity
 CPU mesh construction
-WebGL context, shader program, buffers, draw, resize and disposal
-WebGL context recovery and resource generations
-committed-frame staging, observation and capture freshness
-fatal failure classification, quarantine, cleanup and cold restart
+WebGL context, shader, buffer, draw, resize and disposal
+render surface, context recovery and committed-frame observation
+checkpoint-to-visible-frame and capture correlation
 static checks, browser observation, build and Pages deployment
 DSK implementation, dependency, consumption and retirement truth
 ```
@@ -228,92 +231,98 @@ static-pages-deploy-dsk
   build-config, GitHub Pages workflow, release-artifacts, cache-invalidation, deploy-validation
 ```
 
-## Main finding: requested surface values become truth without admission
+## Main finding: declared save services have no runtime path
 
-### DPR and dimensions are sampled inside the draw path
+### The save DSK is planned
 
-`resize()` clamps live `devicePixelRatio` from 1 through 2, multiplies live CSS size, mutates the canvas and returns the requested values. There is no immutable viewport observation or resize command.
+`meadow-save-dsk` is present in `LOCAL_DSK_IDS` and its five services are generated into a descriptor. It is absent from `REQUIRED_V01_DSK_IDS`, so its descriptor status is `planned`, not an implementation-backed active capability.
 
-### Pixel and capability budgets are absent
+### Startup and reset always construct defaults
 
-The runtime does not query `MAX_VIEWPORT_DIMS`, `MAX_RENDERBUFFER_SIZE`, or the actual `gl.drawingBufferWidth` and `gl.drawingBufferHeight`. It does not cap total pixels or classify browser clamping.
+`createIntoTheMeadowGame()` creates initial state immediately. `startWebHost()` provides no hydration input, and `game.reset()` replaces the live state with another default object.
 
-### Fallback and rollback are absent
+### The snapshot is not a save envelope
 
-A large or unsupported request has no lower-resolution retry policy, typed failure, last-known-good surface or cold-rebuild result. Changing the live canvas drawing buffer is destructive, but the operation is not staged or journaled.
+`createGameSnapshot()` bundles manifest, state, render plan and diagnostics. It has no schema ID, slot, checkpoint ID, reset epoch, state revision, content revision, migration history, integrity fingerprint or hydration result.
 
-### Renderer and capture evidence omit surface identity
+### Persistence is absent from every public adapter
 
-The renderer snapshot contains topology and cache state but no width, height, DPR, surface revision, context generation or frame ID. Editor viewport and capture capabilities read live values independently and cannot prove they describe the same committed frame.
-
-### Existing browser proof is one configuration
-
-The browser observation fixes 1440 by 900 and DPR 1. It validates title, debug markers and screenshot byte count, not resize behavior, high-DPR budgets or capture parity.
+GameHost exposes raw game authority and read observations. Browser and Node editor capabilities include runtime, scene, renderer, camera, browser and workspace operations, but no persistence operation.
 
 ## Required parent domain
 
 ```txt
-meadow-render-surface-resolution-authority-domain
+meadow-persistence-continuity-authority-domain
 ```
 
 Planned coordinating kits:
 
 ```txt
-render-surface-id-kit
-render-surface-revision-kit
-viewport-observation-kit
-device-pixel-ratio-policy-kit
-render-pixel-budget-kit
-webgl-surface-capability-kit
-resize-command-kit
-resize-coalescing-kit
-render-surface-plan-kit
-drawing-buffer-allocation-kit
-render-surface-fallback-kit
-render-surface-commit-kit
-render-surface-rollback-kit
-stale-surface-observation-rejection-kit
-render-surface-observation-kit
-capture-surface-correlation-kit
-visible-frame-surface-ack-kit
-render-surface-journal-kit
-render-surface-fixture-kit
-browser-resize-dpr-smoke-kit
+save-schema-descriptor-kit
+save-slot-registry-kit
+checkpoint-id-kit
+state-revision-kit
+reset-epoch-kit
+save-envelope-kit
+save-integrity-fingerprint-kit
+persistence-capability-kit
+save-command-kit
+save-admission-kit
+save-write-result-kit
+save-candidate-read-kit
+save-candidate-classifier-kit
+save-migration-kit
+save-reconciliation-kit
+hydration-plan-kit
+hydration-commit-kit
+hydration-rollback-kit
+persistence-journal-kit
+persistence-observation-kit
+visible-frame-hydration-ack-kit
+persistence-fixture-kit
+browser-reload-continuity-smoke-kit
 ```
 
 ## Required transaction
 
 ```txt
-observe CSS viewport and DPR
-  -> create ResizeCommand
-  -> validate session, context generation and predecessor surface revision
-  -> validate finite positive dimensions
-  -> query WebGL limits and product pixel budget
-  -> derive bounded candidate dimensions and fallback sequence
-  -> coalesce superseded observations
-  -> allocate drawing buffer
-  -> read actual drawing-buffer dimensions
-  -> classify mismatch or fallback
-  -> commit one surface revision
-  -> derive camera aspect from committed dimensions
-  -> draw and acknowledge one visible frame
-  -> permit viewport/capture observations for that revision
+SaveCommand
+  -> admit session, reset epoch and expected state revision
+  -> capture canonical persistable state
+  -> validate current schema and content identity
+  -> compute integrity fingerprint
+  -> atomically write a named slot
+  -> read back and verify the exact candidate
+  -> publish typed SaveResult and bounded journal
+
+startup or LoadCommand
+  -> enumerate slots independently
+  -> parse and classify every candidate
+  -> select by one versioned precedence policy
+  -> migrate supported predecessors
+  -> reconcile scene, objective, story and content identities
+  -> construct detached candidate state
+  -> commit one state revision or preserve the predecessor
+  -> rebuild derived render state
+  -> render and acknowledge the first hydrated frame
+  -> publish typed HydrationResult and journal
 ```
 
 ## Required proof
 
 ```txt
-multiple viewport sizes and DPR values obey one policy
-large surfaces remain within maximum dimensions and pixels
-rapid resize coalesces deterministically
-hidden and zero-sized layouts preserve or suspend explicitly
-actual GL dimensions govern the result
-stale session, context and surface revisions reject
-allocation failure follows typed fallback or failure
-camera projection cites committed dimensions
-renderer snapshot, viewport, capture and visible frame share one revision
-context loss during resize routes through context recovery
-Pages proves deployed resize and capture parity
+fresh boot produces an explicit no-save result
+valid save survives browser reload
+malformed candidates cannot crash startup or hide a valid candidate
+unsupported schema and incompatible content fail explicitly
+supported predecessor schema migrates deterministically
+duplicate and stale commands are idempotent or rejected
+quota, denial and read-back mismatch preserve the prior valid checkpoint
+reset follows an explicit slot and epoch policy
+hydration failure causes no partial state or frame mutation
+browser and headless adapters share envelope and result semantics
+state, snapshot, renderer, diagnostics and first visible frame cite one checkpoint
+Pages proves deployed reload continuity
 ```
 
 ## Ordered safe ledges
@@ -330,6 +339,7 @@ Pages proves deployed resize and capture parity
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 8. Interaction Command and Objective Authority
+8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 ```
 
@@ -337,6 +347,7 @@ Pages proves deployed resize and capture parity
 
 ```txt
 runtime source changed: no
+persistence source changed: no
 renderer source changed: no
 package scripts changed: no
 dependencies changed: no
@@ -344,6 +355,6 @@ deployment changed: no
 branch created: no
 pull request created: no
 npm run check: not run
-browser resize smoke: not run
-render-surface fixtures: unavailable
+browser reload smoke: not run
+persistence fixtures: unavailable
 ```

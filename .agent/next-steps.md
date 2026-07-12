@@ -1,168 +1,149 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T13-54-00-04-00`
+**Updated:** `2026-07-12T15-49-09-04-00`
 
 ## Summary
 
-Repo-local and central documentation are synchronized. The next implementation task is still to extend the existing grass, camera, performance, render-plan and renderer owners with a camera-bound visible-set transaction. Do not create a parallel grass renderer.
+The next implementation boundary is to turn the existing DSK declaration catalog into a truthful runtime capability registry, then consume those capabilities through one minimal exploration loop. Extend the existing game, host and DSK owners; do not add a parallel framework.
 
 ## Plan ledger
 
-**Goal:** ensure every rendered grass patch has current camera, frustum, distance-tier, budget and generation evidence before its geometry reaches draw submission.
+**Goal:** prove one complete player-action transaction using resolved DSK providers, typed service results, atomic progression state and first-visible-frame acknowledgement.
 
-- [x] Reconcile the current grass audit across root docs, machine registry and central tracking.
-- [ ] Define `GrassVisibilityCommand` and immutable input revisions.
-- [ ] Add stable bounds for every grass patch.
-- [ ] Project the committed camera into frustum planes.
-- [ ] Classify patches as inside, intersecting or outside.
-- [ ] Measure camera distance to patch bounds.
-- [ ] Make near, mid, far, terrain-tint and culled states reachable.
-- [ ] Stop using density as the authority for LOD tier.
-- [ ] Retain density as distribution and local-complexity input only.
-- [ ] Add entry/exit hysteresis for each distance threshold.
-- [ ] Define transition behavior for camera, viewport and quality revisions.
-- [ ] Define terrain-tint representation and ownership.
-- [ ] Apply patch, instance, vertex and draw budgets.
-- [ ] Produce one immutable `GrassVisibilityResult`.
-- [ ] Allocate visible-set, mesh and draw generations.
-- [ ] Reject stale camera, viewport, topology, policy and quality results.
-- [ ] Preserve the predecessor visible set after candidate failure.
-- [ ] Publish per-tier counts, cull reasons and budget reductions.
-- [ ] Add bounded observations and a visibility journal.
-- [ ] Correlate renderer snapshots and captures with visibility revision.
-- [ ] Acknowledge the first visible frame using the accepted visible set.
-- [ ] Add deterministic distance, frustum, hysteresis and budget fixtures.
-- [ ] Add browser and GitHub Pages visual smokes.
+- [ ] Add versioned service contracts to active DSK declarations.
+- [ ] Add immutable provider identity, version, source and fingerprint.
+- [ ] Replace empty `requires` lists with real capability dependencies.
+- [ ] Add a provider registry and deterministic dependency graph.
+- [ ] Define `DskInstallCommand` and per-kit `DskInstallResult`.
+- [ ] Prepare executable services before publishing a capability generation.
+- [ ] Run readiness probes and declared/offered/realized parity checks.
+- [ ] Keep planned declarations unavailable at runtime.
+- [ ] Add rollback and disposal for candidate provider generations.
+- [ ] Add normalized keyboard/pointer/editor gameplay input samples.
+- [ ] Add an idempotent gameplay command router.
+- [ ] Implement player movement and terrain/path projection.
+- [ ] Implement interaction-target queries and admitted inspection.
+- [ ] Implement objective progression and exactly-once completion.
+- [ ] Implement story trigger evaluation and sequence results.
+- [ ] Project player feedback through the existing UI owner.
+- [ ] Bind save consumption after committed gameplay revisions exist.
+- [ ] Record `DskConsumptionReceipt` rows per command/service.
+- [ ] Publish capability, gameplay, objective and story revisions.
+- [ ] Correlate render/HUD output with the accepted gameplay result.
+- [ ] Acknowledge the first visible gameplay frame.
+- [ ] Add Node provider/dependency/rollback fixtures.
+- [ ] Add deterministic movement/interaction/progression fixtures.
+- [ ] Add browser and GitHub Pages gameplay smokes.
 
-## Required command
+## Required install command
 
 ```txt
-GrassVisibilityCommand {
+DskInstallCommand {
   commandId
   runtimeSessionId
-  runtimeGeneration
-  frameId
-  cameraRevision
-  viewportRevision
-  topologyKey
-  grassPolicyRevision
-  performanceRevision
-  predecessorVisibilityRevision
-  camera
-  viewport
-  patchBounds
-  budgets
+  expectedCapabilityGeneration
+  declarations[]
+  providerCatalogRevision
+  sourcePolicyRevision
 }
 ```
 
-## Required result
+## Required install result
 
 ```txt
-GrassVisibilityResult {
+DskInstallResult {
   status
   reason
   commandId
-  cameraRevision
-  viewportRevision
-  topologyKey
-  policyRevision
-  visibilityRevision
-  predecessorVisibilityRevision
-  testedPatchCount
-  visiblePatchCount
-  culledPatchCount
-  tierCounts
-  instanceCounts
-  vertexBudget
-  admittedVertexCount
-  drawBudget
-  admittedDrawCount
-  transitions
-  failures
+  declarationId
+  providerId
+  predecessorCapabilityGeneration
+  capabilityGeneration
+  declaredServices[]
+  offeredServices[]
+  realizedServices[]
+  missingServices[]
+  dependencyResults[]
+  readinessResults[]
+  failures[]
 }
 ```
 
-## Required statuses
+## Required gameplay command
 
 ```txt
-Accepted
-AcceptedBudgetReduced
-RejectedInvalidCamera
-RejectedInvalidViewport
-RejectedInvalidPatchBounds
-RejectedStaleCamera
-RejectedStaleViewport
-RejectedStaleTopology
-RejectedStalePolicy
-RejectedBudgetImpossible
-RejectedCandidateBuild
-Retired
+GameplayCommand {
+  commandId
+  sessionId
+  capabilityGeneration
+  expectedGameplayRevision
+  action
+  payload
+}
 ```
 
-## Tier contract
+## Required consumption receipt
 
 ```txt
-near
-  -> highest card count
-  -> frustum required
-
-mid
-  -> reduced card count
-  -> frustum required
-
-far
-  -> minimal clump representation
-  -> frustum required
-
-terrain-tint
-  -> no blade geometry
-  -> terrain/material contribution only
-
-culled
-  -> no grass geometry or tint contribution
+DskConsumptionReceipt {
+  commandId
+  capabilityGeneration
+  kitId
+  providerId
+  serviceId
+  invocationId
+  inputFingerprint
+  resultFingerprint
+  stateRevisionBefore
+  stateRevisionAfter
+  status
+}
 ```
 
-## Acceptance matrix
+## Minimal playable slice
 
 ```txt
-inside/intersecting/outside frustum
-near/mid/far/tint/culled distance bands
-slow threshold crossing and oscillation
-camera teleport
-viewport aspect change
-topology and policy replacement
-quality reduction
-vertex and draw budget exhaustion
-candidate failure preserves predecessor
-stale camera/viewport/topology result
-first visible frame receipt
-local and deployed browser parity
+1. Normalize WASD or editor movement commands.
+2. Move the player deterministically over the terrain/path.
+3. Derive pathProgress from committed movement.
+4. Emit path-discovery once at 0.25.
+5. Complete walk-the-path once at 0.35.
+6. Query focal-tree range from committed transforms.
+7. Admit inspect-tree only with valid target evidence.
+8. Emit focal-tree story result and complete inspect-tree once.
+9. Project feedback and acknowledge the first visible frame.
+10. Save only committed gameplay revisions.
 ```
 
-## Ordered architecture queue
+## Capability truth rules
+
+```txt
+declared != installed
+validated != ready
+installed != active
+active != consumed
+planned declarations expose no callable capability
+no active capability without provider identity and readiness proof
+no gameplay commit without service consumption receipts
+```
+
+## Updated architecture order
 
 ```txt
 1. Runtime Session Lifecycle Authority
 2. Host Capability Gateway and Raw Runtime Quarantine
 2a. Editor Bridge Lifecycle and Error Journal Authority
-3. Headless Workspace Path Authority and Filesystem Containment
-4. Runtime Clock and Step Admission Authority
-5. Source Provider Authority
-6. Render Topology Identity Authority
-6a. WebGL Context Recovery Authority
-6b. Render Surface Resolution Authority
-6c. Shader Precision Admission Authority
-6d. WebGL Program Interface Admission Authority
-7. Committed Frame Observation Authority
-7a. Fatal Runtime Failure Recovery Authority
-7b. Adaptive Quality and Performance Budget Authority
-7c. Grass Visibility and LOD Authority
-7d. Audio Activation and Lifecycle Authority
-8. Interaction Command and Objective Progression Authority
-8a. Persistence Continuity Authority
-9. DSK Runtime Consumption Authority
-9a. Deterministic Replay Validation Authority
+3. Runtime Clock and Step Admission Authority
+4. Source Provider Authority
+5. Render Topology, Context, Surface and Program Authorities
+6. Committed Frame and Failure Recovery Authorities
+7. Adaptive Quality and Grass Visibility Authorities
+8. DSK Runtime Consumption Authority
+8a. Interaction Command and Objective Progression Authority
+8b. Audio Activation and Lifecycle Authority
+8c. Persistence Continuity Authority
+9. Deterministic Replay Validation Authority
 ```
 
-`grass-lod-policy-kit.pick(distance)` should become policy inside this authority. Density-driven batch choice should remain content distribution, not camera LOD.
+The full 44-kit service map remains in the current tracker and machine registry.

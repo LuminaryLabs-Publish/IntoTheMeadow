@@ -2,59 +2,60 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T19-01-08-04-00`
+**Updated:** `2026-07-11T20-38-07-04-00`
 
 ## Plan ledger
 
-**Goal:** distinguish visible error reporting from executable proof that startup and frame failures clean partial acquisitions, preserve the prior committed frame, quarantine public mutation/capture and recover only through an admitted new-generation path.
+**Goal:** distinguish a visually animated meadow from executable proof that browser RAF, browser editor and Node headless execution share one monotonic, bounded and reset-aware runtime clock.
 
-- [x] Review the full accessible Publish inventory.
-- [x] Compare every eligible repository with the central ledger.
+- [x] Review the complete accessible Publish inventory.
+- [x] Compare every eligible repository with central tracking.
 - [x] Verify central and root `.agent` coverage.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow`.
-- [x] Read `AGENTS.md` and retained audits.
-- [x] Inspect boot and host startup ordering.
-- [x] Inspect frame mutation, plan publication and renderer submission order.
-- [x] Inspect fatal projection, stop/start behavior and retained globals.
-- [x] Inspect editor capabilities, listeners and capture.
-- [x] Inspect renderer mutation and disposal surfaces.
-- [x] Document failure identity, rollback, quarantine, cleanup and cold-restart requirements.
+- [x] Select only `IntoTheMeadow` after skipping active unsynchronized `AetherVale` work.
+- [x] Inspect browser RAF time and delta construction.
+- [x] Inspect game state tick and reset behavior.
+- [x] Inspect render-plan time propagation and shader consumption.
+- [x] Inspect browser editor tick/reset capabilities.
+- [x] Inspect Node headless tick/reset and multi-step behavior.
+- [x] Document clock identity, admission, reset epoch, work budget and parity requirements.
 - [x] Change documentation only.
 - [ ] Execute fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-startup acquisition ledger count: 0
-reverse cleanup stack count: 0
-startup result types: 0
-fatal failure IDs: 0
-fatal lifecycle states: 0
-fatal capability fences: 0
-fatal capture fences: 0
-cold restart transactions: 0
-last-known-good failure frame receipts: 0
-renderer dispose methods: 1
-editor bridge dispose methods: 1
-fatal paths invoking those disposers: 0
+browser authoritative clock objects: 0
+runtime clock IDs: 0
+clock revisions: 0
+step command IDs: 0
+step admission policies: 0
+reset epochs: 0
+step work budgets: 0
+typed step results: 0
+clock journals: 0
+clock/frame correlation receipts: 0
+raw game.tick public paths: browser RAF, GameHost.game, browser editor, Node headless
 ```
 
 ## Proven from source
 
 ```txt
-boot catch writes visible status and logs the error
-startWebHost acquires provider, game, renderer, enhancer, GameHost and editor in sequence
-GameHost is published before editor installation and before the first rendered frame
-game.tick mutates state before render-plan validation and draw success
-lastPlan is assigned before renderer.render completes
-renderer.render can resize canvas, replace buffers, clear and issue draws before snapshot commit
-showFatal sets stopped and writes text only
-GameHost raw game remains exposed after fatal
-editor runtime.tick, reset, renderer reads and capture remain registered after fatal
+browser RAF converts now to seconds
+browser RAF always passes dt = 1/60
+game state increments frame by exactly one per tick
+game state stores caller dt and time without validation
+render plan overlays caller time
+render-plan enhancer preserves dynamic time over cached topology
+WebGL renderer uploads renderPlan.time to uTime
+wind vertex shader uses uTime to calculate phase
 stop changes only a Boolean
-start schedules the same callback on the same runtime graph
-renderer and editor disposers exist but fatal paths do not call them
+start schedules a later RAF on the same clock source
+browser editor runtime.tick accepts arbitrary dt and time
+browser editor runtime.reset does not reset an owned browser clock
+Node headless maintains a separate private accumulated time
+Node headless loops over caller-provided ticks without an explicit budget
+Node reset sets its private time to zero and invalidates the enhancer
 ```
 
 ## Existing proof
@@ -64,29 +65,27 @@ Current checks prove:
 ```txt
 required files exist
 render-plan descriptors validate
-CPU mesh is substantial and internally aligned
-animation time does not change static topology
-browser route can boot in an available Chromium
-one screenshot can be created
-editor bridge and GPU HUD marker can be observed
-headless editor commands and loop can execute in their existing happy paths
+CPU mesh data is internally aligned
+changing time does not change static topology
+renderer can consume dynamic time
+headless editor commands execute in happy paths
+an available browser can produce a screenshot
 ```
 
 Current checks do not prove:
 
 ```txt
-reverse cleanup after startup failure
-absence of leaked globals/listeners after failed boot
-state/plan/render rollback after frame failure
-last-known-good committed frame retention
-fatal capability and capture quarantine
-cleanup failure reporting
-recoverable versus terminal failure classification
-in-place restart rejection after fatal
-cold replacement-session creation
-new session/renderer/context/resource/frame generations
-first replacement frame before readiness
-repeated failure/restart without RAF/listener/global leaks
+browser RAF rate independence
+monotonic simulation-time ownership
+large-delay clamp or rejection
+pause/resume rebasing
+reset-epoch fencing
+browser editor step admission
+finite delta and integer tick validation
+bounded multi-step execution
+browser/headless parity
+clock-to-render-frame correlation
+stale session, epoch, revision or sequence rejection
 ```
 
 ## Execution status
@@ -101,124 +100,94 @@ branch created: no
 pull request created: no
 npm run check executed: no
 browser smoke executed: no
-fatal recovery fixtures available: no
+runtime clock fixtures available: no
 ```
 
-## Required DOM-free startup fixture
+## Required DOM-free clock fixture
 
-Construct fake acquisition adapters with:
-
-```txt
-startup attempt and candidate session IDs
-provider acquisition
-fake game factory
-fake renderer factory
-fake enhancer factory
-global publication adapter
-editor/listener lease adapter
-reverse cleanup stack
-cleanup failure injection
-typed startup and cleanup results
-bounded journal
-```
+Construct a fake runtime clock with adapters for RAF, browser editor and headless commands.
 
 Acceptance assertions:
 
 ```txt
-failure at every acquisition phase invokes reverse cleanup exactly once
-cleanup order is reverse acquisition order
-no failed candidate publishes ready status
-no global or listener from a failed candidate remains active
-cleanup failure is reported but does not restore readiness
-successful startup publishes globals only at final commit
+30 Hz, 60 Hz and 144 Hz source events can produce the same admitted step sequence
+negative, NaN and infinite delta reject without mutation
+large delta follows explicit clamp, split, defer or reject policy
+non-integer or over-budget tick counts reject
+stale session, reset epoch, clock revision and step sequence reject
+accepted step advances clock revision and sequence exactly once
+result includes accepted delta, simulation time and game-state frame
+bounded journal records one row per accepted or rejected command
 ```
 
-## Required frame-failure fixture
-
-Construct staged state, plan and renderer adapters with failure injection at:
+## Required pause/resume fixture
 
 ```txt
-game tick
-source plan derivation
-plan enhancement
-contract validation
-canvas resize
-mesh construction
-buffer replacement
-outline draw
-color draw
-HUD projection
+advance baseline steps
+pause clock
+advance wall clock without admitted simulation steps
+resume through source-adapter rebase
+assert simulation and render time do not include paused wall duration
+assert first resumed step has one new revision and bounded delta
 ```
 
-Acceptance assertions:
+## Required reset fixture
 
 ```txt
-prior committed public frame remains authoritative
-failed candidate receives one failure ID
-mutation and capture capabilities are quarantined
-no candidate is presented as committed
-resource impact is classified
-recoverable WebGL failure routes to context recovery
-terminal failure retires the graph
+advance baseline clock
+capture predecessor session, epoch, revision and step
+reset
+assert reset epoch advances
+assert simulation time follows declared reset origin
+assert predecessor commands reject
+assert first post-reset state, plan and frame cite the new epoch
 ```
 
-## Required browser fixture
+## Required browser/headless parity fixture
+
+Run an identical accepted command stream through browser and Node adapters.
+
+Assert equality for:
 
 ```txt
-boot baseline and wait for committed frame
-inject a controlled frame failure
-assert visible fatal projection
-assert GameHost mutation and editor capture reject with typed failure state
-assert no additional automatic ticks occur
-assert in-place start is rejected for terminal failure
-perform cold restart
-assert new session and renderer identities
-wait for first replacement committed frame
-assert canvas, renderer, GameHost and editor cite the replacement frame
-repeat three times and inspect listener/RAF/global counts
+clock revision
+step sequence
+simulation time
+game state frame
+last accepted delta
+render-plan time
+wind phase inputs
+committed-frame clock receipt
 ```
 
-## Failure injection matrix
+## Required browser smoke
 
 ```txt
-external module import rejection
-missing createMeadowAreaKit export
-game construction exception
-renderer context acquisition failure
-shader compilation or program link failure
-editor installation exception
-plan contract failure
-CPU mesh build exception
-buffer creation/upload exception
-first or second draw exception
-HUD projection exception
-cleanup callback exception
-late predecessor callback after cold restart
-```
-
-Each case must assert:
-
-```txt
-no false ready state
-no unowned active resource/global/listener
-one typed failure result
-one cleanup result
-one bounded journal row
-no stale successful capture
+boot and wait for a committed frame
+record clock and frame receipt
+simulate delayed RAF callback
+assert explicit delay policy
+pause and resume
+assert no presentation-time jump
+reset through public admitted capability
+assert new reset epoch
+invoke stale editor step
+assert typed rejection and no state/render mutation
+compare browser observation with headless replay
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:startup-rollback
-npm run fixture:frame-failure-quarantine
-npm run fixture:fatal-capability-fence
-npm run fixture:fatal-cleanup-failure
-npm run smoke:cold-restart
-npm run smoke:repeated-failure-recovery
+npm run fixture:runtime-clock
+npm run fixture:runtime-step-admission
+npm run fixture:pause-resume-clock
+npm run fixture:reset-epoch-clock
+npm run fixture:browser-headless-clock-parity
+npm run smoke:runtime-clock-frame-correlation
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim fatal recovery because an error is visible or the RAF stopped. Recovery requires either a proven WebGL recovery transaction or complete predecessor disposal followed by a new session and renderer generation whose first committed frame is acknowledged across canvas, renderer, GameHost and editor observations.
+Do not claim deterministic stepping because state stores `dt`, or clock correctness because wind animates. Completion requires one accepted clock revision and step identity to propagate through state, render-plan time, shader input and committed-frame evidence across browser and headless execution.

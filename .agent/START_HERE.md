@@ -2,126 +2,121 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T09-06-38-04-00`
+**Last aligned:** `2026-07-12T09-08-17-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable state, a persistent WebGL renderer, a browser `GameHost`, a browser editor bridge and Node headless-editor surfaces.
+IntoTheMeadow is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a persistent WebGL renderer and browser/editor readback.
 
-The current audit isolates **editor-bridge lifecycle and browser error-journal authority**. The browser bridge installs global error listeners, retains every error in an unbounded array, clones the complete array into queries and snapshots, and overwrites `globalThis.NexusEditorEnvironment` without automatically retiring a predecessor bridge. Host `stop()` does not dispose the bridge or listeners.
+The current audit isolates **interaction command and objective progression authority**. The repo authors two objectives, two interaction targets and three story beats, but `advanceGameState()` only increments the frame and records dt/time. Browser and editor paths expose no movement, path-progress or inspect command, so completion and story state never advance.
 
-The preceding adaptive-quality, audio, shader, render-surface, capability, lifecycle, interaction, persistence, DSK-consumption and replay audits remain active dependencies.
+The immediately preceding editor-bridge lifecycle/error-journal audit and all earlier performance, audio, shader, render-surface, capability, lifecycle, persistence, DSK-consumption and replay audits remain active dependencies.
 
 ## Plan ledger
 
-**Goal:** make bridge installation, capability publication, listener ownership, bounded browser-error retention, replacement, stop/restart and disposal one session-scoped transaction with typed results.
+**Goal:** convert authored interaction/objective/story descriptors into one admitted, deterministic and visibly proven gameplay transaction.
 
 - [x] Compare the full Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm all nine eligible repositories have central ledger and root `.agent` coverage.
-- [x] Avoid overlapping newer unsynchronized `PrehistoricRush` documentation.
-- [x] Select only `IntoTheMeadow` as the next-oldest stable eligible repository.
-- [x] Trace `GameHost`, editor bridge, capabilities, listener registration, error retention, capture, host stop/start and global replacement.
-- [x] Identify the complete interaction loop, all domains, all 44 declared kits and every offered service.
+- [x] Confirm all nine eligible repositories have ledger and root `.agent` coverage.
+- [x] Select only `IntoTheMeadow` because newer repo-local work required central reconciliation.
+- [x] Inspect DSK registration, installation, game state, content, host and editor surfaces.
+- [x] Identify the interaction loop, all domains, all 44 kits and offered services.
+- [x] Define command, target evidence, objective/story commit, rollback and frame-proof contracts.
 - [x] Add timestamped architecture and system audits.
-- [x] Update documentation on `main`; create no branch or pull request.
-- [ ] Implement bridge lifecycle/error-journal authority and executable browser fixtures.
+- [x] Push documentation to `main`; create no branch or PR.
+- [ ] Runtime implementation and executable progression fixtures remain future work.
 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-12T09-06-38-04-00/project-breakdown.md
+.agent/trackers/2026-07-12T09-08-17-04-00/project-breakdown.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
 .agent/validation.md
-.agent/architecture-audit/2026-07-12T09-06-38-04-00-editor-bridge-lifecycle-error-journal-dsk-map.md
-.agent/render-audit/2026-07-12T09-06-38-04-00-stale-bridge-capture-frame-provenance-gap.md
-.agent/gameplay-audit/2026-07-12T09-06-38-04-00-bridge-replacement-listener-retention-loop.md
-.agent/interaction-audit/2026-07-12T09-06-38-04-00-bridge-install-query-dispose-command-map.md
-.agent/editor-bridge-audit/2026-07-12T09-06-38-04-00-generation-listener-error-retention-contract.md
-.agent/deploy-audit/2026-07-12T09-06-38-04-00-browser-bridge-lifecycle-fixture-gate.md
-.agent/turn-ledger/2026-07-12T09-06-38-04-00.md
+.agent/architecture-audit/2026-07-12T09-08-17-04-00-interaction-objective-progression-dsk-map.md
+.agent/render-audit/2026-07-12T09-08-17-04-00-objective-feedback-visible-frame-gap.md
+.agent/gameplay-audit/2026-07-12T09-08-17-04-00-path-inspect-objective-stall-loop.md
+.agent/interaction-audit/2026-07-12T09-08-17-04-00-action-command-progress-result-map.md
+.agent/progression-audit/2026-07-12T09-08-17-04-00-target-evidence-ledger-story-contract.md
+.agent/deploy-audit/2026-07-12T09-08-17-04-00-interaction-objective-fixture-gate.md
+.agent/turn-ledger/2026-07-12T09-08-17-04-00.md
 .agent/kit-registry.json
 ```
 
 ## Interaction loop
 
 ```txt
-page boot
-  -> external provider and DSK installation
-  -> game, enhancer and WebGL renderer
-  -> global GameHost publication
-  -> global editor bridge publication and listener registration
-  -> recursive RAF
+boot
+  -> install 44 local descriptors plus external meadow provider
+  -> import objective, target and story content
+  -> create default progression state
+  -> start RAF and editor bridge
 
 frame
-  -> fixed-dt game tick with absolute RAF time
-  -> render-plan enhancement and validation
-  -> WebGL resize/cache/draw
-  -> diagnostics
-  -> successor RAF
+  -> game.tick({time,dt})
+  -> increment frame and record lastTick only
+  -> no action command or target evidence
+  -> no objective/story evaluation
+  -> render unchanged progression state
 
-editor invoke
-  -> cloned arguments
-  -> capability execution
-  -> completed/unavailable/failed result
-  -> failure appended to bridge-local error array
-
-browser fault
-  -> error/unhandledrejection listener
-  -> append unsequenced entry
-  -> full-array clone from getErrors or snapshot
-
-stop/restart/replacement
-  -> RAF boolean changes
-  -> bridge/listeners/errors remain
-  -> new bootstrap can replace global pointer without retiring predecessor
+editor
+  -> read, tick, reset and capture
+  -> no interaction/progression command capability
 ```
 
 ## Main findings
 
 ```txt
-bridge generation: absent
-runtime-session binding: absent
-predecessor bridge retirement: absent
-listener lease identity: absent
-capability lease/revocation: absent
-error sequence/time/frame correlation: absent
-error retention count/byte/age bound: absent
-paged query and acknowledgement cursor: absent
-stale bridge invoke/capture rejection: absent
-host stop -> bridge disposal: absent
-browser bridge lifecycle fixtures: absent
+authored objectives: 2
+authored targets: 2
+authored story beats: 3
+active initial objective: walk-the-path
+initial path progress: 0
+runtime path-progress mutation: absent
+runtime inspect mutation: absent
+objective completion evaluator: absent
+story trigger evaluator: absent
+feedback projection: absent
+visible progression-frame receipt: absent
 ```
 
-## Domains and kit groups
+## Domains and kit census
 
 ```txt
 external declared kits: 1
 local declared kits: 43
 total declared kits: 44
-required-v0.1 local declarations: 15
+required-v0.1 local kits: 15
+planned local kits: 29
 
-browser/runtime/game/editor
-terrain/path/grass/tree/scatter/atmosphere
-player/input/interaction/story/objective/ecology/audio/UI/save
-performance/render-plan/WebGL/post processing
-GameHost/global capability/error observation
-headless editor/scenarios/artifacts
-validation/build/Pages
-bridge generation/listener leases/bounded error journal/replacement proof: missing
+active domains:
+  browser/runtime/game/editor
+  DSK declaration and installation
+  meadow/render/terrain/grass/atmosphere
+  authored player/input/interaction/objective/story/UI/save descriptors
+  WebGL/post/diagnostics/build/Pages
+
+missing progression authority:
+  command admission
+  canonical target evidence
+  objective/story atomic commit
+  feedback projection
+  reset/stale-work rejection
+  browser/editor parity
+  visible-frame proof
 ```
 
-The tracker and kit registry contain the complete per-kit service inventory.
+The tracker and machine registry contain the complete per-kit service inventory.
 
 ## Required parent domain
 
 ```txt
-meadow-editor-bridge-lifecycle-and-error-journal-authority-domain
+meadow-interaction-objective-progression-authority-domain
 ```
 
-It coordinates bridge identity/generation, install admission, predecessor retirement, public capability leases, browser listener leases, error normalization/sequence/retention/query/acknowledgement, stale-bridge rejection, stop/dispose results, observations, journal and browser fixtures.
+It coordinates session/reset/progression revisions, action commands, target queries, path and inspect evidence, objective evaluation, completion ledger, story triggers, atomic commit/rollback, feedback, diagnostics, editor parity and first-visible-frame acknowledgement.
 
 ## Ordered architecture queue
 
@@ -132,19 +127,13 @@ It coordinates bridge identity/generation, install admission, predecessor retire
 3. Headless Workspace Path Authority and Filesystem Containment
 4. Runtime Clock and Step Admission Authority
 5. Source Provider Authority
-6. Render Topology Identity Authority
-6a. WebGL Context Recovery Authority
-6b. Render Surface Resolution Authority
-6c. Shader Precision Admission Authority
-7. Committed Frame Observation Authority
-7a. Fatal Runtime Failure Recovery Authority
-7b. Adaptive Quality and Performance Budget Authority
-7c. Grass Visibility and LOD Authority
-7d. Audio Activation and Lifecycle Authority
+6. Render Topology / Context / Surface / Precision Authorities
+7. Committed Frame Observation and Failure Recovery
+7a. Adaptive Quality / Grass LOD / Audio Authorities
 8. Interaction Command and Objective Progression Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not solve this by adding another global array or by deleting whichever global happens to exist. Bridge lifecycle must be bound to runtime and host generations, and error retention must remain bounded under long-running browser observation.
+Do not implement objective checks as side effects inside RAF or mutate progression through the raw `game` object. Keep action admission, evidence, evaluation and commit under one revisioned authority.

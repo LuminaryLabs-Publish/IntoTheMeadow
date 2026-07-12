@@ -1,7 +1,7 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T19-41-13-04-00`
+**Updated:** `2026-07-12T19-49-41-04-00`
 
 ## Summary
 
@@ -63,6 +63,7 @@ FrameCallbackCommand {
   rafLeaseId
   callbackSequence
   rawNow
+  expectedSimulationRevision
 }
 ```
 
@@ -101,3 +102,7 @@ FrameResult {
 9. Audio, persistence and replay timing
 10. Source/build/Pages proof
 ```
+
+## Reconciliation state
+
+The repo-local `19-41-13` technical audit and the `19-49-41` root/central reconciliation are complete. All implementation and executable proof items remain open.

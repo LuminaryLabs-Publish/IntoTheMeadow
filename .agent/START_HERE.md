@@ -4,94 +4,102 @@
 
 **Branch:** `main`
 
-**Last aligned:** `2026-07-11T22-08-13-04-00`
+**Last aligned:** `2026-07-11T23-10-51-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, a persistent WebGL renderer, browser editor capabilities and a Node headless-editor surface.
+`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a persistent WebGL renderer, browser editor capabilities and a Node headless-editor environment.
 
-This pass isolates the render-surface resolution boundary. Each render samples live CSS dimensions and DPR, mutates the canvas drawing buffer, configures the GL viewport and derives camera aspect. No pixel budget, WebGL capability result, resize generation, surface revision, fallback tier or capture/frame correlation proves which resolution was actually committed.
+This pass isolates persistence continuity. `meadow-save-dsk` declares save-model, save-slots, persistence-adapter, migration and save-validation services, but it remains a planned descriptor. Browser startup and reset always create fresh default state, and no GameHost, browser-editor or headless capability can save, discover, migrate, hydrate or verify a checkpoint.
 
 ## Plan ledger
 
-**Goal:** preserve the full-screen meadow while making viewport and drawing-buffer changes bounded, revisioned, recoverable and visible through renderer, capture and frame evidence.
+**Goal:** make save, reload, migration, reset and hydration one versioned transaction whose state and checkpoint identity reaches the first visible resumed frame.
 
 - [x] Compare the complete accessible Publish inventory with the central ledger.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have central ledger and root `.agent` state.
-- [x] Skip active unsynchronized `AetherVale` lifecycle-audit work.
-- [x] Select only `IntoTheMeadow` as the oldest stable eligible repository.
-- [x] Trace CSS viewport, DPR, canvas resize, GL viewport, projection, renderer snapshot and capture.
+- [x] Skip repositories with newer unsynchronized repo-local audit work.
+- [x] Select only `IntoTheMeadow` as the oldest fully synchronized eligible repository.
+- [x] Trace manifest, DSK registry, game state, snapshot, startup, reset, GameHost and editor capabilities.
 - [x] Preserve the complete interaction loop, domain map, kit inventory and service map.
-- [x] Define surface identity, revision, policy, budgets, fallback, results, journals and fixture gates.
+- [x] Define save schema, slots, fingerprints, admission, migration, reconciliation, hydration, rollback and proof gates.
 - [x] Add timestamped architecture and system-specific audits.
 - [x] Refresh required root `.agent` files.
-- [ ] Runtime implementation and executable render-surface fixtures remain future work.
+- [ ] Runtime implementation and executable persistence fixtures remain future work.
 
 ## Current interaction loop
 
 ```txt
-browser viewport / zoom
-  -> CSS canvas dimensions and DPR change
-  -> next RAF advances state and builds a render plan
-  -> renderer.resize samples live values
-  -> canvas drawing-buffer dimensions mutate
-  -> GL viewport and camera projection use requested dimensions
-  -> outline and color passes draw
-  -> renderer snapshot publishes without dimensions or surface revision
+browser boot
+  -> load external meadow provider
+  -> install local DSK descriptors
+  -> create static meadow plan
+  -> createInitialGameState
+  -> expose GameHost and editor bridge
+  -> begin RAF
 
-browser editor
-  -> getViewport reads live browser and canvas values
-  -> capture reads canvas data URL and dimensions
-  -> latest renderer snapshot is attached independently
-  -> no surface/frame identity proves parity
+runtime
+  -> tick immutable in-memory state
+  -> render and publish snapshots
+
+reset or reload
+  -> create default state again
+  -> no slot discovery, save admission, migration or hydration
+
+browser and Node editors
+  -> read, tick, reset and capture
+  -> no persistence commands
 ```
 
 ## Main finding
 
 ```txt
-DPR policy: hard-coded clamp from 1 to 2
-pixel budget: absent
-WebGL surface-limit query: absent
-actual drawing-buffer readback: absent
-resize command and generation: absent
-surface revision: absent
-fallback and rollback result: absent
-renderer snapshot dimensions: absent
-capture/frame surface receipt: absent
+meadow-save-dsk declaration: present
+save-model / save-slots / persistence-adapter services: declared
+migration / save-validation services: declared
+required v0.1 implementation: absent
+save schema and envelope: absent
+slot registry and storage adapter: absent
+save/load commands: absent
+migration and reconciliation execution: absent
+hydration commit and rollback: absent
+reload continuity fixture: absent
+visible hydrated-frame receipt: absent
 ```
-
-At 3840 by 2160 CSS pixels and DPR 2, the renderer requests 7680 by 4320, or 33,177,600 drawing-buffer pixels, without a product budget or capability classification.
 
 ## Required parent domain
 
 ```txt
-meadow-render-surface-resolution-authority-domain
+meadow-persistence-continuity-authority-domain
 ```
 
 Core composition:
 
 ```txt
-render-surface-id-kit
-render-surface-revision-kit
-viewport-observation-kit
-device-pixel-ratio-policy-kit
-render-pixel-budget-kit
-webgl-surface-capability-kit
-resize-command-kit
-resize-coalescing-kit
-render-surface-plan-kit
-drawing-buffer-allocation-kit
-render-surface-fallback-kit
-render-surface-commit-kit
-render-surface-rollback-kit
-stale-surface-observation-rejection-kit
-render-surface-observation-kit
-capture-surface-correlation-kit
-visible-frame-surface-ack-kit
-render-surface-journal-kit
-render-surface-fixture-kit
-browser-resize-dpr-smoke-kit
+save-schema-descriptor-kit
+save-slot-registry-kit
+checkpoint-id-kit
+state-revision-kit
+reset-epoch-kit
+save-envelope-kit
+save-integrity-fingerprint-kit
+persistence-capability-kit
+save-command-kit
+save-admission-kit
+save-write-result-kit
+save-candidate-read-kit
+save-candidate-classifier-kit
+save-migration-kit
+save-reconciliation-kit
+hydration-plan-kit
+hydration-commit-kit
+hydration-rollback-kit
+persistence-journal-kit
+persistence-observation-kit
+visible-frame-hydration-ack-kit
+persistence-fixture-kit
+browser-reload-continuity-smoke-kit
 ```
 
 ## Ordered implementation gates
@@ -108,20 +116,21 @@ browser-resize-dpr-smoke-kit
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 8. Interaction Command and Objective Authority
+8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 ```
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-11T22-08-13-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-11T22-08-13-04-00.md
-.agent/architecture-audit/2026-07-11T22-08-13-04-00-render-surface-resolution-dsk-map.md
-.agent/render-audit/2026-07-11T22-08-13-04-00-dpr-drawing-buffer-budget-gap.md
-.agent/gameplay-audit/2026-07-11T22-08-13-04-00-resize-projection-capture-loop.md
-.agent/interaction-audit/2026-07-11T22-08-13-04-00-viewport-resize-surface-result-map.md
-.agent/render-surface-audit/2026-07-11T22-08-13-04-00-resolution-budget-revision-contract.md
-.agent/deploy-audit/2026-07-11T22-08-13-04-00-render-surface-fixture-gate.md
+.agent/trackers/2026-07-11T23-10-51-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-11T23-10-51-04-00.md
+.agent/architecture-audit/2026-07-11T23-10-51-04-00-persistence-continuity-dsk-map.md
+.agent/render-audit/2026-07-11T23-10-51-04-00-checkpoint-visible-frame-gap.md
+.agent/gameplay-audit/2026-07-11T23-10-51-04-00-reset-reload-progress-loss-loop.md
+.agent/interaction-audit/2026-07-11T23-10-51-04-00-save-load-command-admission-map.md
+.agent/persistence-audit/2026-07-11T23-10-51-04-00-save-schema-migration-hydration-contract.md
+.agent/deploy-audit/2026-07-11T23-10-51-04-00-persistence-continuity-fixture-gate.md
 ```
 
-A canvas filling the window is not proof of a bounded committed render surface. Success requires actual drawing-buffer dimensions and one surface revision to propagate through projection, renderer snapshot, capture and the first visible frame.
+A DSK declaration is not executable persistence. Success requires a verified checkpoint to survive reload, compatibility admission and hydration, then reach one committed visible frame without partial mutation.

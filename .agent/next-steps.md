@@ -1,81 +1,83 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T11-29-40-04-00`
+**Updated:** `2026-07-12T13-38-52-04-00`
 
 ## Summary
 
-Implement WebGL program-interface admission after context, precision and compile/link foundations. Keep the existing renderer and mesh builder as owners; add reflection, schema comparison, generation fencing and frame proof rather than a parallel renderer.
+Implement grass visibility and LOD by extending the existing grass, camera, performance, render-plan and renderer owners. Do not create a parallel grass renderer. Replace density-only batch permanence with a camera-bound visible-set transaction and keep the current static topology path as the predecessor until the new result is accepted.
 
 ## Plan ledger
 
-**Goal:** prevent an incompatible linked program from reaching buffer binding, uniform updates or draw submission, while preserving the last accepted program until a complete replacement is admitted.
+**Goal:** ensure every rendered grass patch has current camera, frustum, distance-tier, budget and generation evidence before its geometry reaches draw submission.
 
-- [ ] Define the canonical shader-interface manifest and revision.
-- [ ] Enumerate five required attributes with exact GL types and sizes.
-- [ ] Enumerate twelve required uniforms with exact GL types and sizes.
-- [ ] Reflect `ACTIVE_ATTRIBUTES` through `getActiveAttrib()`.
-- [ ] Reflect `ACTIVE_UNIFORMS` through `getActiveUniform()`.
-- [ ] Resolve and validate every required attribute location.
-- [ ] Resolve and validate every required uniform location.
-- [ ] Classify optimized-out required uniforms explicitly.
-- [ ] Observe WebGL program resource limits and current usage.
-- [ ] Define the CPU mesh-layout schema and fingerprint.
-- [ ] Compare mesh semantics/component counts with admitted attributes.
-- [ ] Define uniform-payload schemas and update operations.
-- [ ] Reject non-finite or shape-incompatible uniform batches.
-- [ ] Produce a detached `ProgramInterfaceResult`.
-- [ ] Allocate context-bound program and interface generations.
-- [ ] Install accepted candidates atomically.
-- [ ] Preserve the predecessor after candidate rejection.
-- [ ] Reject stale context/program/interface draw work.
-- [ ] Publish interface fingerprints in renderer snapshots.
-- [ ] Add bounded interface observations and journal entries.
-- [ ] Correlate the first visible frame with the accepted interface.
-- [ ] Add deterministic missing-symbol and type-mismatch fixtures.
-- [ ] Add WebGL1/WebGL2 browser and Pages smokes.
+- [ ] Define `GrassVisibilityCommand` and immutable input revisions.
+- [ ] Add stable bounds for every grass patch.
+- [ ] Project the committed camera into frustum planes.
+- [ ] Classify patches as inside, intersecting or outside.
+- [ ] Measure camera distance to patch bounds rather than patch centers only.
+- [ ] Make near, mid, far, terrain-tint and culled states reachable.
+- [ ] Stop using density as the authority for LOD tier.
+- [ ] Retain density only as an instance-distribution and local-complexity input.
+- [ ] Add entry/exit hysteresis for each distance threshold.
+- [ ] Define transition behavior when camera or viewport revisions change.
+- [ ] Define terrain-tint representation and its render ownership.
+- [ ] Apply quality-profile patch, instance, vertex and draw budgets.
+- [ ] Produce one `GrassVisibilityResult`.
+- [ ] Allocate visible-set, mesh and draw generations.
+- [ ] Reject stale camera, viewport, topology, policy and quality results.
+- [ ] Preserve the predecessor visible set after candidate failure.
+- [ ] Publish per-tier counts, cull reasons and budget reductions.
+- [ ] Add bounded observations and a visibility journal.
+- [ ] Correlate renderer snapshots and captures with visibility revision.
+- [ ] Acknowledge the first visible frame using the accepted visible set.
+- [ ] Add deterministic distance, frustum, hysteresis and budget fixtures.
+- [ ] Add browser and GitHub Pages visual smokes.
 
-## Required manifest
+## Required command
 
 ```txt
-attributes:
-  aPosition       FLOAT_VEC3
-  aNormal         FLOAT_VEC3
-  aColor          FLOAT_VEC3
-  aOutline        FLOAT
-  aWind           FLOAT_VEC2
-
-uniforms:
-  uViewProjection FLOAT_MAT4
-  uTime           FLOAT
-  uWindDirection  FLOAT_VEC2
-  uWindStrength   FLOAT
-  uWindGust       FLOAT
-  uOutlinePass    FLOAT
-  uOutlineWidth   FLOAT
-  uLightDirection FLOAT_VEC3
-  uRimColor       FLOAT_VEC3
-  uOutlineColor   FLOAT_VEC3
-  uFogColor       FLOAT_VEC3
-  uRimStrength    FLOAT
+GrassVisibilityCommand {
+  commandId
+  runtimeSessionId
+  runtimeGeneration
+  frameId
+  cameraRevision
+  viewportRevision
+  topologyKey
+  grassPolicyRevision
+  performanceRevision
+  predecessorVisibilityRevision
+  camera
+  viewport
+  patchBounds
+  budgets
+}
 ```
 
 ## Required result
 
 ```txt
-ProgramInterfaceResult {
+GrassVisibilityResult {
   status
   reason
-  contextGeneration
-  candidateProgramId
-  programGeneration
-  manifestRevision
-  activeAttributes
-  activeUniforms
-  resourceProfile
-  meshLayoutFingerprint
-  uniformPayloadFingerprint
-  interfaceFingerprint
+  commandId
+  cameraRevision
+  viewportRevision
+  topologyKey
+  policyRevision
+  visibilityRevision
+  predecessorVisibilityRevision
+  testedPatchCount
+  visiblePatchCount
+  culledPatchCount
+  tierCounts
+  instanceCounts
+  vertexBudget
+  admittedVertexCount
+  drawBudget
+  admittedDrawCount
+  transitions
   failures
 }
 ```
@@ -84,38 +86,65 @@ ProgramInterfaceResult {
 
 ```txt
 Accepted
-RejectedMissingAttribute
-RejectedMissingUniform
-RejectedAttributeTypeMismatch
-RejectedUniformTypeMismatch
-RejectedResourceBudget
-RejectedStaleContext
+AcceptedBudgetReduced
+RejectedInvalidCamera
+RejectedInvalidViewport
+RejectedInvalidPatchBounds
+RejectedStaleCamera
+RejectedStaleViewport
+RejectedStaleTopology
+RejectedStalePolicy
+RejectedBudgetImpossible
+RejectedCandidateBuild
 Retired
+```
+
+## Tier contract
+
+```txt
+near
+  -> highest card count
+  -> strict near threshold
+  -> frustum required
+
+mid
+  -> reduced card count
+  -> frustum required
+
+far
+  -> minimal clump representation
+  -> frustum required
+
+terrain-tint
+  -> no blade geometry
+  -> terrain/material contribution only
+
+culled
+  -> no geometry and no tint contribution
 ```
 
 ## Acceptance matrix
 
 ```txt
-complete accepted interface
-missing aPosition
-missing aWind
-missing uTime
-missing uOutlinePass
-optimized-out required uniform
-attribute vector-width mismatch
-uniform scalar/vector mismatch
-uniform array-size mismatch
-mesh component-count mismatch
-uniform payload shape mismatch
-non-finite uniform payload
-resource limit exceeded
-candidate rejection preserves predecessor
-stale context generation
-stale program generation
-stale interface fingerprint
-WebGL1 accepted interface
-WebGL2 accepted interface
-first visible frame interface receipt
+patch fully outside frustum
+patch intersecting frustum edge
+patch inside near threshold
+patch crossing near-to-mid boundary
+patch oscillating around a threshold
+patch inside far threshold
+patch beyond far but inside tint range
+patch beyond tint range
+camera teleport
+viewport aspect change
+topology replacement
+quality reduction
+vertex budget exhaustion
+draw budget exhaustion
+candidate build failure preserves predecessor
+stale camera result
+stale viewport result
+stale topology result
+first visible frame receipt
 local and deployed browser parity
 ```
 
@@ -144,4 +173,4 @@ local and deployed browser parity
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not infer interface compatibility from successful linking. Reflect the active program, validate it against exact host schemas, and install it only after one accepted result.
+The current `grass-lod-policy-kit.pick(distance)` should become policy inside the authority, not remain an unused descriptor. The current density-driven batch choice should remain a content-density decision, not a substitute for camera LOD.

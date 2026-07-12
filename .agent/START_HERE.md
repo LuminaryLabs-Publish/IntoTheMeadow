@@ -2,8 +2,8 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T19-41-13-04-00`  
-**Status:** `frame-scheduler-step-admission-authority-audited`
+**Last aligned:** `2026-07-12T19-49-41-04-00`  
+**Status:** `frame-scheduler-step-admission-central-reconciled`
 
 ## Summary
 
@@ -13,14 +13,14 @@ The current audit isolates browser frame ownership. The host advances one fixed 
 
 ## Plan ledger
 
-**Goal:** preserve all 44 kit surfaces while defining one monotonic, single-chain, budgeted frame transaction with simulation/render correlation and visible-frame proof.
+**Goal:** preserve all 44 kit surfaces while reconciling one monotonic, single-chain, budgeted frame transaction with simulation/render correlation and visible-frame proof.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have central-ledger and root `.agent` coverage.
-- [x] Select only `IntoTheMeadow` as the oldest eligible synchronized repository.
+- [x] Select only `IntoTheMeadow` because its repo-local scheduler audit was newer than central tracking.
 - [x] Identify the complete interaction loop, domains, all kits and offered services.
-- [x] Add the `2026-07-12T19-41-13-04-00` frame-scheduler audit family.
+- [x] Reconcile the `2026-07-12T19-41-13-04-00` source audit into a complete central-sync audit family.
 - [x] Refresh root `.agent` routing and machine registry.
 - [x] Push only to `main`; create no branch or pull request.
 - [ ] Implement the clock, RAF lease, fixed-step budget and fixtures later.
@@ -28,14 +28,14 @@ The current audit isolates browser frame ownership. The host advances one fixed 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-12T19-41-13-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T19-41-13-04-00.md
-.agent/architecture-audit/2026-07-12T19-41-13-04-00-frame-scheduler-step-admission-dsk-map.md
-.agent/render-audit/2026-07-12T19-41-13-04-00-render-simulation-clock-correlation-gap.md
-.agent/gameplay-audit/2026-07-12T19-41-13-04-00-refresh-rate-dependent-simulation-loop.md
-.agent/interaction-audit/2026-07-12T19-41-13-04-00-stop-start-frame-admission-map.md
-.agent/frame-clock-audit/2026-07-12T19-41-13-04-00-raf-lease-fixed-step-contract.md
-.agent/deploy-audit/2026-07-12T19-41-13-04-00-frame-clock-fixture-gate.md
+.agent/trackers/2026-07-12T19-49-41-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T19-49-41-04-00.md
+.agent/architecture-audit/2026-07-12T19-49-41-04-00-frame-scheduler-central-reconciliation-dsk-map.md
+.agent/render-audit/2026-07-12T19-49-41-04-00-clocked-visible-frame-central-reconciliation.md
+.agent/gameplay-audit/2026-07-12T19-49-41-04-00-refresh-rate-simulation-central-reconciliation.md
+.agent/interaction-audit/2026-07-12T19-49-41-04-00-frame-callback-step-admission-map.md
+.agent/frame-scheduler-audit/2026-07-12T19-49-41-04-00-clock-raf-step-lifecycle-contract.md
+.agent/deploy-audit/2026-07-12T19-49-41-04-00-frame-clock-fixture-central-gate.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -43,7 +43,7 @@ The current audit isolates browser frame ownership. The host advances one fixed 
 .agent/kit-registry.json
 ```
 
-The exploration/progression reconciliation at `2026-07-12T17-58-43-04-00` remains the immediate predecessor. Its playable-loop authority should consume admitted fixed steps rather than owning browser time.
+The detailed source audit at `2026-07-12T19-41-13-04-00` remains the technical predecessor. The exploration/progression reconciliation at `2026-07-12T17-58-43-04-00` remains the first gameplay consumer dependency.
 
 ## Current loop
 

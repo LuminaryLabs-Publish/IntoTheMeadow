@@ -2,112 +2,105 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T19-01-08-04-00`
+**Audit timestamp:** `2026-07-11T20-38-07-04-00`
 
 ## Summary
 
-`IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, a descriptor-driven render plan, a CPU mesh builder, a persistent WebGL renderer, browser `GameHost` and editor surfaces, and Node headless-editor operations.
+`IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, a descriptor-driven render plan, CPU mesh construction, persistent WebGL rendering, browser `GameHost` and editor surfaces, and a Node headless-editor environment.
 
-This pass isolates fatal-runtime failure recovery. The host can fail during external provider loading, game construction, renderer construction, editor installation, simulation, plan enhancement, validation, mesh/buffer work, draw submission or debug projection. Current failure handling displays text and stops the RAF chain, but does not own failure identity, partial acquisition cleanup, state/plan/render rollback, public capability quarantine, terminal disposal or a safe cold restart.
+This pass audits runtime clock and step admission. The browser, browser editor and Node editor all reach the same mutable game through incompatible time models. The browser advances one state frame with a fixed `1/60` delta while projecting absolute RAF time into the render plan. Browser editor commands may provide arbitrary time and delta directly, while Node accumulates its own caller-controlled time. No clock ID, step ID, session fence, reset epoch, finite-delta policy, work budget or step/frame receipt joins these paths.
 
 ## Plan ledger
 
-**Goal:** document the exact startup and frame failure paths and define one authoritative failure lifecycle that preserves the last known-good frame, blocks stale mutation/capture, retires partial resources and creates a fresh runtime generation before success resumes.
+**Goal:** define one monotonic simulation clock and typed step transaction that all runtime surfaces must consume before state, plan time or presentation can advance.
 
-- [x] Enumerate all ten accessible Publish repositories.
+- [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm nine eligible central ledgers and root `.agent` states.
-- [x] Select only `IntoTheMeadow` as the oldest eligible documented repository.
-- [x] Read `AGENTS.md`, current agent state and retained audits.
-- [x] Inspect boot rejection, host acquisitions, frame order, fatal projection and restart.
-- [x] Inspect renderer mutation/disposal and editor capability/error ownership.
-- [x] Preserve every active domain, kit and offered service.
-- [x] Add architecture, render, gameplay, interaction, failure-recovery and deployment audits.
+- [x] Detect newer unsynchronized repo-local work in nominal-oldest `AetherVale`.
+- [x] Select only `IntoTheMeadow` as the oldest stable eligible repository.
+- [x] Inspect `AGENTS.md`, browser host, game state, render-plan enhancer, WebGL renderer, browser editor bridge and Node environment.
+- [x] Identify interaction loops, all domains, all kits and every declared service.
+- [x] Define the runtime-clock parent domain and fixture boundary.
 - [x] Change documentation only.
 - [ ] Runtime implementation and executable fixtures remain future work.
 
 ## Selection comparison
 
 ```txt
-IntoTheMeadow      2026-07-11T17-30-56-04-00  selected
-PrehistoricRush    2026-07-11T17-39-47-04-00
-MyCozyIsland       2026-07-11T17-50-37-04-00
-TheOpenAbove       2026-07-11T18-01-38-04-00
-HorrorCorridor     2026-07-11T18-11-21-04-00
-PhantomCommand     2026-07-11T18-21-09-04-00
-ZombieOrchard      2026-07-11T18-28-40-04-00
-TheUnmappedHouse   2026-07-11T18-38-45-04-00
-AetherVale         2026-07-11T18-48-21-04-00
-TheCavalryOfRome   excluded
+central timestamp      repo-local state
+AetherVale       18:48 active newer audit at 20:30, skipped
+IntoTheMeadow    19:01 selected oldest stable
+PrehistoricRush  19:09
+MyCozyIsland     19:20
+TheOpenAbove     19:28
+HorrorCorridor   19:38
+PhantomCommand   19:48
+ZombieOrchard    20:03
+TheUnmappedHouse 20:11
+TheCavalryOfRome excluded
 ```
 
-No eligible repository was new, central-ledger-missing or root-`.agent`-missing. Only `IntoTheMeadow` was changed in the Publish organization.
+Only `LuminaryLabs-Publish/IntoTheMeadow` was changed in the Publish organization.
 
 ## Interaction loop
 
 ```txt
 browser boot
-  -> import commit-pinned meadow-area provider
-  -> create game and DSK report
-  -> create WebGL renderer
-  -> create render-plan enhancer
-  -> publish GameHost
-  -> install NexusEditorEnvironment
-  -> schedule RAF
+  -> load pinned meadow provider
+  -> create game, renderer and enhancer
+  -> expose GameHost and editor bridge
+  -> request RAF
 
-RAF
-  -> game.tick mutates frame and lastTick
-  -> get source plan with time overlay
-  -> enhance and validate plan
-  -> publish lastPlan
-  -> resize, build/reuse mesh and buffers
-  -> submit outline and color passes
-  -> publish renderer snapshot and lastRender
-  -> update debug HUD
-  -> schedule next RAF
+browser RAF
+  -> receive DOMHighResTimeStamp now
+  -> time = now / 1000
+  -> game.tick({ time, dt: 1/60 })
+  -> state.frame += 1
+  -> state.lastTick = { time, dt }
+  -> getRenderPlan(time)
+  -> enhance cached static plan with time overlay
+  -> renderer uploads time to uTime
+  -> wind shader evaluates absolute page-time phase
 
-fatal path today
-  -> catch error
-  -> set stopped = true
-  -> expose text and console error
-  -> retain game, renderer, enhancer, editor bridge and globals
-  -> retain last successful or partially advanced observations
+browser editor
+  -> runtime.tick({ dt = 1/60, time = 0 })
+  -> direct raw game mutation
+  -> no RAF admission, clock ownership or render commit
+  -> runtime.reset resets game state only
 
-manual/editor path after fatal
-  -> runtime.tick and runtime.reset remain available
-  -> scene and renderer reads remain available
-  -> renderer.capture still serializes the canvas
-
-restart today
-  -> start() sets stopped = false
-  -> schedule RAF on the same graph
+Node headless editor
+  -> private time = 0
+  -> runtime.tick adds caller dt for caller ticks count
+  -> game.tick({ dt, time })
+  -> build/capture uses private time
+  -> reset sets private time to 0 and invalidates enhancer
 ```
 
 ## Domains in use
 
 ```txt
-browser shell, DOM boot and visible fatal projection
+browser shell, DOM boot and visible failure projection
 external dependency manifest and dynamic provider loading
 source-provider selection, fallback and source-plan generation
 DSK census, descriptor generation, validation and install reporting
-game state, tick, reset, snapshots and diagnostics
-runtime session lifecycle, RAF ownership and restart
-startup acquisition, partial-construction rollback and terminal cleanup
+game state, snapshots, diagnostics, tick and reset
+runtime lifecycle, RAF scheduling, pause/start and disposal
+runtime clock, step admission, reset epoch and work budgets
 GameHost capability exposure and browser editor adapters
 Node headless editor, workspace and artifact operations
-runtime-step admission, clock and reset epochs
 player, input, interaction, objective and story declarations
 terrain, path, materials, scatter and atmosphere
 grass density, archetypes, batching, placement, instancing, wind and LOD
 tree, wind, performance and post-process enhancement
 render-plan v2 contract, topology identity and cache policy
 CPU mesh construction
-WebGL context, program, locations, buffers, draw and disposal
-WebGL context-loss/restoration and resource-generation recovery
-committed-frame staging, last-known-good observation and capture freshness
-fatal failure identity, classification, quarantine, cleanup and cold restart
+WebGL context, shader program, buffers, draw, resize and disposal
+WebGL context recovery and resource generations
+committed-frame staging, observation and capture freshness
+fatal failure classification, quarantine, cleanup and cold restart
 static checks, browser observation, build and Pages deployment
-DSK implementation, dependency, service-consumption and retirement truth
+DSK implementation, dependency, consumption and retirement truth
 ```
 
 ## Complete kit inventory and services
@@ -211,8 +204,8 @@ meadow-performance-dsk
 meadow-render-host-dsk
   renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
 meadow-webgl-renderer-v2-kit
-  context acquisition, shader program, attributes/uniforms, CPU mesh ingest,
-  GPU buffers, two-pass draw, resize, snapshot and disposal
+  context acquisition, shader program creation, attribute/uniform binding, CPU mesh ingest,
+  GPU buffer ownership, two-pass draw, resize, snapshot and disposal
 post-process-stack-dsk
   pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
 render-target-kit
@@ -231,163 +224,93 @@ static-pages-deploy-dsk
   build-config, GitHub Pages workflow, release-artifacts, cache-invalidation, deploy-validation
 ```
 
-## Main finding: failure is visible but not authoritative
+## Main finding: three clocks reach one mutable graph
 
-### Startup has no acquisition ledger
+### Browser RAF combines incompatible values
 
-`startWebHost()` acquires the external provider, game, renderer, enhancer, global `GameHost` and editor bridge in sequence. Cleanup callbacks are not registered as each resource is acquired. A failure after renderer or global creation can escape to the boot catch without reverse-order disposal or global retirement.
+`frame(now)` converts the RAF timestamp to seconds but passes a constant `dt = 1/60`. A delayed callback, hidden tab, pause or overloaded frame still advances state by one nominal fixed step while render time jumps to the current page timestamp.
 
-### Frame mutation precedes success
+### Render time is operational, not metadata
 
-The RAF advances game state, enhances the plan and assigns `lastPlan` before renderer success. The renderer may resize the canvas, replace buffers, clear and issue one or both draws before a later error is thrown. No staged transaction restores the prior state, plan, cache, canvas or renderer observation.
+`getRenderPlan(time)` overlays the supplied time. The enhancer preserves it through `withMeadowRenderTime()`, and the renderer sends it to shader uniform `uTime`. Wind phase therefore follows absolute browser page time rather than an authoritative simulation clock.
 
-### Fatal projection is not a lifecycle state
+### Stop/start and reset do not define time semantics
 
-`showFatal()` sets one local Boolean and writes text. It does not publish a failure ID, phase, source, frame request, previous committed frame, resource impact, cleanup result or recovery eligibility.
+`stop()` changes a Boolean. `start()` schedules a later RAF whose absolute timestamp includes the stopped interval. Browser `runtime.reset` recreates state but does not reset or rebase the RAF-derived render clock. The reset state can immediately render at a large pre-reset time.
 
-### Public authority survives failure
+### Browser editor bypasses scheduling authority
 
-`GameHost` retains the raw game. `NexusEditorEnvironment` retains `runtime.tick`, `runtime.reset`, read and capture capabilities. Their listeners and globals remain installed, and capture can pair current canvas bytes with an older renderer snapshot.
+`runtime.tick` invokes `game.tick` directly with caller-provided `dt` and `time`. It does not validate finite values, monotonicity, session, expected frame, maximum ticks or whether a visible frame follows.
 
-### Restart is an unsafe in-place resume
+### Node headless uses a different clock contract
 
-`start()` schedules the same callback against the same game, renderer, enhancer, bridge and observations. It does not create a new session ID, renderer instance, context/resource generation, capability lease or first-frame acknowledgement.
-
-### Disposal is disconnected
-
-The renderer provides `dispose()` and the editor bridge provides `dispose()`, but neither fatal path invokes them. Boot rejection also has no partially constructed host controller through which to retire resources.
+The Node environment maintains a private `time`, adds caller-provided `dt` once per requested tick and resets time to zero. The same logical commands can therefore produce different `lastTick`, render time and wind phase in browser and headless execution.
 
 ## Required parent domain
 
 ```txt
-meadow-runtime-failure-recovery-authority-domain
+meadow-runtime-clock-and-step-authority-domain
 ```
 
-## Existing owners to update first
+Planned coordinating kits:
 
 ```txt
-web-host-dsk
-into-the-meadow-game-dsk
-runtime session lifecycle authority
-Host Capability Gateway and Raw Runtime Quarantine
-Source Provider Authority
-Render Topology Identity Authority
-WebGL Context Recovery Authority
-Committed Frame Observation Authority
-meadow-webgl-renderer-v2-kit
-meadow-diagnostics-dsk
-browser editor bridge
-browser boot projection
-browser and deployment fixtures
+runtime-clock-id-kit
+runtime-clock-state-kit
+runtime-clock-revision-kit
+simulation-step-command-kit
+simulation-step-id-kit
+simulation-step-admission-kit
+finite-delta-policy-kit
+step-work-budget-kit
+monotonic-time-policy-kit
+pause-resume-clock-kit
+reset-epoch-kit
+clock-source-adapter-kit
+browser-raf-step-adapter-kit
+browser-editor-step-adapter-kit
+headless-step-adapter-kit
+simulation-step-result-kit
+clock-step-journal-kit
+clock-observation-kit
+clock-render-frame-correlation-kit
+runtime-clock-parity-fixture-kit
+pause-resume-clock-fixture-kit
+reset-epoch-clock-fixture-kit
+step-budget-fixture-kit
 ```
 
-## Candidate coordinating kits
+## Required transaction
 
 ```txt
-runtime-failure-id-kit
-runtime-failure-state-kit
-startup-acquisition-ledger-kit
-reverse-cleanup-stack-kit
-failure-classification-kit
-fatal-event-admission-kit
-frame-failure-result-kit
-last-known-good-frame-kit
-failure-quarantine-kit
-failure-capability-fence-kit
-failure-capture-fence-kit
-rollback-or-retire-plan-kit
-cleanup-result-kit
-failure-observation-kit
-restart-admission-kit
-cold-restart-transaction-kit
-terminal-disposal-kit
-fatal-recovery-journal-kit
-fatal-recovery-fixture-kit
+raw source event
+  -> adapt into SimulationStepCommand
+  -> validate runtimeSessionId and resetEpoch
+  -> validate expected clock revision and step sequence
+  -> validate finite non-negative delta
+  -> clamp or reject by maximum delta and work budget
+  -> advance monotonic simulation time exactly once
+  -> mutate game state under accepted step ID
+  -> derive render time from accepted clock state
+  -> render and commit a frame citing the same step and clock revision
+  -> publish typed result and bounded journal row
 ```
 
-## Required startup transaction
-
-```txt
-prepare startup
-  -> allocate runtime/session candidate
-  -> acquire provider, game, renderer, enhancer and editor leases
-  -> register reverse cleanup after every acquisition
-  -> validate complete candidate
-  -> publish globals only at final commit
-  -> commit ready result
-
-startup failure
-  -> classify acquisition phase
-  -> execute reverse cleanup
-  -> retire candidate identity
-  -> guarantee no public globals or active listeners remain
-  -> publish typed failed result
-```
-
-## Required frame-failure transaction
-
-```txt
-stage frame request
-  -> stage state, plan and render candidate
-  -> retain prior committed frame
-  -> submit draw
-
-failure
-  -> reject candidate commit
-  -> enter quarantined failure state
-  -> stop automatic scheduling
-  -> fence mutation and capture capabilities
-  -> classify resource impact
-  -> roll back safe staged state or retire the graph
-  -> publish one failure result and cleanup result
-```
-
-## Required recovery
-
-```txt
-recoverable context/resource failure
-  -> route through WebGL Context Recovery Authority
-  -> require first recovered committed frame
-
-terminal or unknown failure
-  -> dispose editor, renderer and globals
-  -> allocate new runtime/session/renderer/frame generations
-  -> cold boot and validate
-  -> publish only after first committed frame
-```
-
-The existing in-place `start()` must not be considered fatal recovery.
+Pause must stop admission without advancing simulation time. Resume must rebase the source adapter without injecting wall-clock pause duration. Reset must advance an epoch, retire predecessor commands and define the new clock origin.
 
 ## Required proof
 
 ```txt
-provider-load failure leaves no globals or resources
-renderer-construction failure cleans prior acquisitions
-editor-install failure disposes renderer and removes GameHost
-failure after tick preserves the prior committed public frame
-failure after buffer replacement produces a classified resource result
-fatal state rejects tick, reset, rebuild and capture
-cleanup failure is reported without restoring readiness
-in-place start after fatal is rejected
-cold restart uses new session, renderer and frame generations
-first new-generation committed frame precedes ready status
-three failure/restart cycles do not duplicate RAFs, listeners or globals
-terminal disposal is idempotent
+30 Hz, 60 Hz and 144 Hz source callbacks yield the same accepted simulation sequence
+large callback delay is clamped or rejected by explicit policy
+hidden-tab and stop/start intervals do not jump simulation/render time
+browser reset and Node reset establish equivalent epoch-zero observations
+browser editor rejects stale, non-finite, negative and over-budget commands
+multiple requested headless ticks have deterministic bounded results
+state.lastTick, renderPlan.time, shader time and committed frame cite one clock revision
+no direct raw game.tick path bypasses admission
 ```
 
-## Validation state
+## Validation boundary
 
-```txt
-runtime source changed: no
-package scripts changed: no
-dependencies changed: no
-render output changed: no
-deployment changed: no
-branch created: no
-pull request created: no
-npm run check: not run
-browser smoke: not run
-startup rollback fixture: unavailable
-frame failure quarantine fixture: unavailable
-cold restart fixture: unavailable
-```
+This was a documentation-only audit. No runtime, dependency, render or deployment behavior changed. Existing checks were not run because the proposed step-admission and clock-parity fixtures do not exist yet.

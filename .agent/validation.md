@@ -1,147 +1,153 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T13-54-00-04-00`
+**Updated:** `2026-07-12T15-49-09-04-00`
 
 ## Summary
 
-This documentation-only reconciliation verifies that the root `.agent` entrypoints, machine registry and central ledger now describe the same grass visibility/LOD authority. The source-backed audit proves that camera distance and frustum containment do not currently select the visible grass set. It does not prove runtime performance, corrected LOD, browser parity or deployed readiness.
+This documentation-only audit verifies the current declaration, install-snapshot, tick and authored-content paths. It proves that DSK descriptors are metadata and that gameplay fields are not consumed by the active tick. It does not prove executable provider installation, interactive gameplay or deployed readiness.
 
 ## Plan ledger
 
-**Goal:** separate verified source and documentation state from unimplemented and unexecuted runtime proof.
+**Goal:** separate verified source facts from unimplemented provider, gameplay and deployment proof.
 
 - [x] Compare the Publish inventory with central tracking.
-- [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow`.
-- [x] Verify all required root `.agent` files exist.
-- [x] Verify the new tracker and timestamped audit family exist.
-- [x] Preserve all 44 kits and service inventory.
-- [x] Reconcile current status, timestamp, parent authority and validation boundary.
+- [x] Exclude `TheCavalryOfRome` and select only `IntoTheMeadow`.
+- [x] Verify required root `.agent` files and new timestamped audit family.
+- [x] Preserve all 44 kits and offered services.
+- [x] Inspect registry, descriptor factory, install path, state transition, content and host loop.
 - [x] Change documentation only.
-- [ ] Execute visibility/LOD fixtures after implementation exists.
+- [ ] Execute provider and gameplay fixtures after implementation exists.
 
 ## Proven from source
 
 ```txt
-external provider declarations: 1
+external DSK/provider declarations: 1
 local DSK/kit declarations: 43
-total declared kits: 44
-grass-specific local kits: 11
+total declarations: 44
+required-v0.1 declarations: 15
+planned declarations: 28
 
-LOD policy tiers:
-  near <= 32
-  mid <= 72
-  far <= 128
-  terrain-tint <= 220
+local descriptor validation checks:
+  duplicate ids
+  -dsk/-kit suffix
+  five listed services
+  required id presence
 
-active call to grass-lod-policy-kit.pick(distance): no
-placement selects near when density > 0.55
-placement selects mid otherwise
-far selected by placement: no
-terrain-tint representation: absent
-draw groups include all patch instances
-CPU mesh includes all grass draw groups
-camera is read after mesh selection
-renderer draws complete mesh twice
+installDsks behavior:
+  returns local descriptor array
+  returns external loaded/deferred rows
+  returns structural validation
+  returns snapshots
+  does not register executable providers
+
+advanceGameState behavior:
+  increments frame
+  records lastTick.dt and lastTick.time
+  does not mutate player or progression
+
+content:
+  story beats: 3
+  objectives: 2
+  interaction targets: 2
+  runtime trigger/command consumers: 0
 ```
 
 ## Proven documentation state
 
 ```txt
-START_HERE timestamp/status aligned: yes
-current-audit timestamp/status aligned: yes
-next-steps updated: yes
-known-gaps updated: yes
-validation updated: yes
-kit-registry current audit paths aligned: yes
-new tracker and turn ledger present: yes
-architecture/render/gameplay/interaction/grass/central-sync/deploy audits present: yes
-central ledger update requested in this run: yes
-internal change log requested in this run: yes
+START_HERE current: yes
+current-audit current: yes
+next-steps current: yes
+known-gaps current: yes
+validation current: yes
+kit-registry current: yes
+tracker and turn ledger present: yes
+architecture/render/gameplay/interaction/DSK/deploy audits present: yes
+central ledger and internal change log required: yes
 ```
 
-## Existing proof can establish, when run
+## Existing checks can establish, when run
 
 ```txt
 required files exist
-DSK descriptors validate structurally
-render plan contains density texture, patches, batches and draw groups
-grass policy contains four tiers
-patches contain instance arrays
-draw groups contain positive instance counts
-CPU mesh arrays are aligned
-static topology and mesh identity are stable across time-only plans
-renderer cache behavior under tested static plans
-scene generation determinism
-browser page/editor/GPU markers and screenshot size
+DSK ids and structural service lists validate
+required-v0.1 declarations are present
+external meadow provider or fallback can create a render plan
+render plan and CPU mesh satisfy current static contracts
+renderer cache and draw paths satisfy current smokes
+scene generation is deterministic
+headless editor commands and scenarios operate
+browser canvas and editor bridge markers exist
 ```
 
-## Existing proof cannot establish
+## Existing checks cannot establish
 
 ```txt
-distance-driven near/mid/far selection
-terrain-tint representation
-frustum culling
-camera and viewport revision admission
-hysteresis and camera teleport handling
-quality and render-budget enforcement
-per-tier visible counts
-candidate failure preserving predecessor
-stale visibility rejection
-first visible grass frame
-Pages visibility/LOD behavior
+provider identity/version/source fingerprint
+service contract compatibility
+dependency graph or install order
+provider readiness, rollback or retirement
+callable player/input/interaction/objective/story services
+browser gameplay input
+gameplay command admission
+DSK consumption receipts
+player movement or path progress
+interaction target evidence
+objective/story transitions
+feedback, audio or save consumption
+first visible gameplay frame
+GitHub Pages gameplay parity
+```
+
+## Required deterministic fixtures
+
+```txt
+declared-realized service parity
+missing and wrong provider
+service contract mismatch
+cyclic dependency
+readiness failure and rollback
+planned capability rejection
+provider retirement and stale command rejection
+movement and path-progress determinism
+inspect-tree target admission
+objective/story exactly-once transitions
+DSK consumption receipts
+first visible gameplay frame
+```
+
+## Required browser matrix
+
+```txt
+local static host and GitHub Pages
+desktop keyboard/pointer and editor gameplay command
+fresh session, reset and stop/start
+DPR 1 and 2
+WebGL2 and WebGL1 fallback
+provider success and controlled provider failure
+walk objective and inspect objective completion
+first visible feedback frame
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
-grass source changed: no
-renderer source changed: no
-shader source changed: no
 gameplay source changed: no
+render source changed: no
 package scripts changed: no
 dependencies changed: no
-render output changed: no
 deployment changed: no
 branch created: no
 pull request created: no
 target branch: main
 npm run check executed: no
-browser observation executed: no
-Pages observation executed: no
-grass visibility fixtures available: no
-```
-
-## Required deterministic fixtures
-
-```txt
-patch bounds
-frustum inside/intersection/outside
-distance near/mid/far/terrain-tint/culled
-threshold hysteresis
-camera teleport
-viewport/topology/policy revision changes
-quality, vertex and draw budgets
-candidate failure preserves predecessor
-stale camera/viewport/topology result
-first visible grass frame
-```
-
-## Required browser matrix
-
-```txt
-WebGL2 and WebGL1 fallback
-DPR 1 and 2
-desktop, tablet and narrow viewport
-default, near, mid, far, tint-only and outside-field cameras
-slow threshold crossing, rapid orbit and teleport
-high, medium, low and emergency quality
-initial, resize, stop/start and context restore
-local static host and deployed GitHub Pages
+browser gameplay smoke executed: no
+Pages gameplay smoke executed: no
+DSK consumption fixtures available: no
 ```
 
 ## Claim boundary
 
-The audit proves the current density-selected batch and static full-mesh draw behavior and reconciles documentation state. It does not claim a performance regression, visual severity, corrected LOD behavior, browser parity or deployment readiness.
+The audit proves that current descriptor installation is metadata-only and that the active tick does not consume authored gameplay capabilities. It does not claim that the DSK design is invalid, that visual services are absent, that interactive gameplay is implemented, or that the deployed route is gameplay-ready.

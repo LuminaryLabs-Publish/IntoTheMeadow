@@ -1,17 +1,16 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-12T04-11-54-04-00",
-  "status": "grass-visibility-lod-authority-audited",
-  "currentAuditedSlice": "IntoTheMeadow Grass Visibility + Camera Distance / Frustum Admission / Instance and Card Budgets / Terrain Tint / Visible-Frame Fixture Gate",
-  "latestTracker": ".agent/trackers/2026-07-12T04-11-54-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T04-11-54-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T04-11-54-04-00-grass-visibility-lod-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-12T04-11-54-04-00-static-grass-mesh-camera-lod-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T04-11-54-04-00-camera-traversal-grass-cost-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T04-11-54-04-00-camera-observation-grass-plan-result-map.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-12T04-11-54-04-00-distance-frustum-budget-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T04-11-54-04-00-grass-lod-visibility-fixture-gate.md",
+  "generatedAt": "2026-07-12T05-31-59-04-00",
+  "status": "shader-precision-admission-authority-audited",
+  "currentAuditedSlice": "IntoTheMeadow Shader Precision Admission / Stage Capability / Source Normalization / Compile-Link Provenance / Program Generation / Device Matrix",
+  "latestTracker": ".agent/trackers/2026-07-12T05-31-59-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T05-31-59-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T05-31-59-04-00-shader-precision-admission-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-12T05-31-59-04-00-forced-mediump-stage-policy-gap.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T05-31-59-04-00-context-shader-compile-frame-map.md",
+  "latestShaderAudit": ".agent/shader-audit/2026-07-12T05-31-59-04-00-stage-capability-normalization-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T05-31-59-04-00-shader-precision-device-matrix-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
@@ -25,51 +24,42 @@
     "externalDeclaredCount": 1,
     "localDeclaredCount": 43,
     "totalDeclaredCount": 44,
-    "grassSpecificImplementedCount": 11,
-    "declaredGrassLodTierCount": 4,
-    "staticGrassBatchTierCount": 3,
-    "runtimePatchSelectedTierCount": 2,
-    "runtimeFarSelectionPathCount": 0,
-    "runtimeTerrainTintPathCount": 0,
-    "cameraInputCountToGrassSelection": 0,
-    "frustumInputCountToGrassSelection": 0,
-    "visibleGrassSetRevisionCount": 0
+    "precisionCompatibilityAdapterCount": 1,
+    "interceptedShaderStageCount": 2,
+    "forcedPrecisionPolicyCount": 1,
+    "precisionCapabilityQueryCount": 0,
+    "shaderDecisionResultCount": 0,
+    "shaderSourceFingerprintCount": 0,
+    "programGenerationCount": 0,
+    "shaderFrameReceiptCount": 0
   },
   "interactionLoop": [
-    "startup creates deterministic density, archetypes, static batches, patches and complete draw groups",
-    "patch placement chooses near or mid batch from density rather than camera distance",
-    "the render-plan enhancer caches the grass system by source topology",
-    "each frame updates time without a camera observation",
-    "the CPU mesh builder expands every draw-group instance into static triangles",
-    "WebGL renders the persistent full-field mesh and diagnostics report total counts"
+    "startup creates a precision-safe canvas and WebGL context proxy",
+    "createShader records vertex or fragment stage",
+    "shaderSource removes float precision declarations and injects mediump",
+    "the base renderer compiles and links one program",
+    "each frame uses the program for outline and color passes",
+    "renderer and editor observations omit precision and program provenance"
   ],
   "domainsInUse": [
     "browser shell loading and visible failure projection",
     "external provider loading validation and fallback",
     "DSK declaration registry validation and install snapshots",
-    "game manifest immutable state tick reset snapshot and diagnostics",
+    "game state tick reset snapshot and diagnostics",
     "runtime lifecycle RAF clock and reset epoch",
-    "camera descriptors and browser view observation",
-    "terrain path and terrain sampling",
-    "grass density texture generation and path suppression",
-    "grass archetype static batch and patch placement",
-    "grass draw-group construction and wind descriptors",
-    "declared grass distance LOD policy",
-    "CPU grass mesh expansion and WebGL buffer ownership",
-    "grass visible-set frustum and card-budget authority",
+    "camera terrain path grass scatter tree atmosphere and world descriptors",
     "player input interaction objective story and persistence declarations",
-    "flowers rocks ground cover trees atmosphere and scatter",
-    "render-plan topology post processing and WebGL rendering",
-    "committed draw plan and visible-frame observation",
-    "validation headless tools build and Pages deployment",
-    "DSK implementation dependency consumption and retirement truth"
+    "render-plan validation topology and CPU mesh construction",
+    "WebGL context shader program buffer and draw ownership",
+    "shader precision normalization and admission",
+    "committed frame diagnostics editor capture and deployment proof"
   ],
   "externalKits": {
     "meadow-area-kit": {
       "status": "external-provider",
       "source": "LuminaryLabs-Agents/NexusEngine-ProtoKits",
       "version": "0.1.0",
-      "services": ["area normalization", "path normalization", "style and material normalization", "deterministic seeded scatter", "grass flower rock mushroom and tree descriptors", "wind and atmosphere descriptors", "render-plan generation", "validation snapshot reset and optional runtime adapter"]
+      "services": ["area normalization", "path normalization", "style normalization", "deterministic scatter", "world descriptors", "render-plan generation", "validation", "snapshot", "reset"]
     }
   },
   "declaredLocalKitServices": {
@@ -107,7 +97,7 @@
     "meadow-diagnostics-dsk": ["runtime-health", "render-health", "determinism-checks", "smoke-tests", "diagnostics-report"],
     "meadow-performance-dsk": ["quality-profile", "budget-policy", "lod-policy", "adaptive-scaling", "performance-validation"],
     "meadow-render-host-dsk": ["renderer-selection", "render-plan-ingest", "pass-order", "renderer-state", "renderer-validation"],
-    "meadow-webgl-renderer-v2-kit": ["WebGL context acquisition", "shader program creation", "attribute and uniform binding", "CPU mesh ingestion", "GPU buffer ownership", "draw submission", "resize", "snapshot", "disposal"],
+    "meadow-webgl-renderer-v2-kit": ["context-acquisition", "shader-compile", "program-link", "attribute-uniform-binding", "CPU-mesh-ingestion", "GPU-buffer-ownership", "draw", "resize", "snapshot", "dispose"],
     "post-process-stack-dsk": ["pass-registry", "render-target-system", "sobel-outline-pass", "color-grade-pass", "post-validation"],
     "render-target-kit": ["scene-color-texture", "depth-texture", "normal-texture", "ping-pong-buffer", "resize-policy"],
     "sobel-outline-pass-kit": ["color-edge-threshold", "depth-edge-threshold", "normal-edge-threshold", "outline-color", "object-mask"],
@@ -117,25 +107,23 @@
     "final-composite-pass-kit": ["scene-input", "post-input", "output-target", "debug-overlay", "fallback-composite"],
     "static-pages-deploy-dsk": ["build-config", "github-pages-workflow", "release-artifacts", "cache-invalidation", "deploy-validation"]
   },
-  "grassVisibilityLodAuthority": {
-    "parentDomain": "meadow-grass-visibility-lod-authority-domain",
-    "mainFinding": "The four-tier distance LOD policy is declared but not consumed. Density chooses near or mid batches, all instances survive into draw groups, far and terrain-tint are unreachable, and the active renderer expands the entire grass field into one static CPU mesh without camera or frustum admission.",
-    "existingOwnersToUpdate": ["grass-density-texture-kit", "grass-clump-archetype-kit", "grass-static-batch-kit", "grass-patch-placement-kit", "grass-clump-instancing-render-kit", "grass-lod-policy-kit", "grass-density-scaling-kit", "grass-debug-visualization-kit", "grass-patch-dsk", "gpu-grass-render-dsk", "meadow-performance-dsk", "meadow-camera-dsk", "meadow-render-host-dsk", "meadow-webgl-renderer-v2-kit", "meadow-diagnostics-dsk", "meadow-render-plan/v2", "render-plan enhancer", "CPU mesh builder", "web host", "Committed Frame Observation Authority"],
-    "plannedKits": ["grass-view-observation-kit", "grass-camera-revision-kit", "grass-patch-bounds-kit", "grass-patch-distance-kit", "grass-lod-selection-kit", "grass-frustum-admission-kit", "grass-visible-set-kit", "grass-visible-set-revision-kit", "grass-instance-budget-kit", "grass-card-budget-kit", "grass-terrain-tint-transition-kit", "grass-draw-plan-kit", "grass-draw-plan-result-kit", "stale-grass-visibility-rejection-kit", "grass-visibility-observation-kit", "grass-visibility-journal-kit", "grass-visible-frame-ack-kit", "grass-lod-distance-fixture-kit", "grass-frustum-fixture-kit", "grass-budget-fixture-kit", "browser-grass-traversal-smoke-kit"],
-    "requiredProof": ["near mid far and terrain-tint thresholds are exercised at exact boundaries", "patch LOD is selected from camera distance not grass density", "off-frustum patches are absent from the committed visible set", "far and terrain-tint tiers are reachable", "instance and card budgets remain bounded during camera traversal", "quality changes produce explicit grass-plan revisions", "stale camera or surface observations cannot commit", "path suppression remains intact after LOD selection", "browser headless observation and renderer diagnostics agree", "the first visible frame cites the committed grass visible-set revision", "deployed Pages traversal proves bounded grass work"]
+  "shaderPrecisionAdmissionAuthority": {
+    "parentDomain": "meadow-shader-precision-admission-authority-domain",
+    "mainFinding": "The compatibility adapter rewrites both graphics stages to mediump without device capability evidence, stage-specific policy, source fingerprints, typed compile/link results, program generation or first-frame provenance.",
+    "plannedKits": ["shader-stage-identity-kit", "graphics-context-capability-snapshot-kit", "float-precision-capability-kit", "shader-precision-policy-kit", "shader-source-normalization-kit", "shader-source-fingerprint-kit", "shader-precision-decision-kit", "shader-compile-result-kit", "shader-program-link-result-kit", "shader-program-generation-kit", "shader-precision-observation-kit", "shader-precision-journal-kit", "first-frame-shader-provenance-kit", "shader-precision-fixture-kit", "browser-shader-device-matrix-smoke-kit"],
+    "requiredProof": ["stage capability evidence", "explicit Accepted Degraded or Rejected decision", "original and normalized source fingerprints", "typed compile and link results", "program generation bound to context generation", "context restoration readmission", "renderer and capture provenance", "WebGL1 WebGL2 device matrix", "first visible frame acknowledgement"]
   },
-  "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
+  "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Shader Precision Admission Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
   "validation": {
     "runtimeSourceChanged": false,
-    "grassSourceChanged": false,
     "rendererSourceChanged": false,
+    "shaderSourceChanged": false,
     "packageScriptsChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
-    "grassDistanceFixtureRun": false,
-    "grassFrustumFixtureRun": false,
-    "grassBudgetFixtureRun": false,
-    "visibleGrassFrameRun": false,
-    "nextCommand": "npm run check after distance LOD frustum budget stale-plan diagnostics-parity and visible-frame fixtures exist"
+    "shaderPrecisionFixtureRun": false,
+    "deviceMatrixRun": false,
+    "firstFrameProvenanceRun": false,
+    "nextCommand": "npm run check after shader policy normalization compile-link context-restore and frame-provenance fixtures exist"
   }
 }

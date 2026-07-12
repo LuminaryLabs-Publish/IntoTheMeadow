@@ -1,126 +1,82 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T04-11-54-04-00`
+**Updated:** `2026-07-12T05-31-59-04-00`
 
 ## Goal
 
-Make the existing grass density, patch, batch and LOD declarations produce a camera-derived visible draw plan without changing deterministic placement or moving gameplay rules into renderer code.
+Replace the unconditional graphics-shader rewrite with one stage-aware policy that is re-evaluated for every WebGL context generation and observable through compile, link and visible-frame receipts.
 
 ## Plan ledger
 
-- [ ] Preserve current density texture, path suppression, archetypes, wind and visual composition.
-- [ ] Complete Runtime Session Lifecycle Authority first.
-- [ ] Complete Render Surface Resolution and WebGL Context Recovery Authority.
-- [ ] Add camera, surface, context and quality revision observations.
-- [ ] Add canonical patch bounds for every grass patch.
-- [ ] Compute patch-to-camera distance from committed camera state.
-- [ ] Apply the existing near/mid/far/terrain-tint thresholds through one owner.
-- [ ] Remove density-based near/mid selection from patch placement.
-- [ ] Add deterministic frustum admission with conservative bounds.
-- [ ] Add explicit instance and card budgets.
-- [ ] Define terrain-tint fallback output for the fourth tier.
-- [ ] Build an immutable `GrassVisibleSet`.
-- [ ] Build a typed `GrassDrawPlanResult`.
-- [ ] Reject stale camera, surface, context and quality revisions.
-- [ ] Route CPU and future GPU rendering through the same visible-set contract.
-- [ ] Report requested, admitted, culled and applied counts by tier.
-- [ ] Correlate draw-plan revision with renderer observation and first visible frame.
-- [ ] Add DOM-free distance, frustum and budget fixtures to `npm run check`.
-- [ ] Add browser and Pages camera-traversal smoke gates.
+- [ ] Preserve the current shader math and visual intent.
+- [ ] Complete Runtime Session Lifecycle and WebGL Context Recovery foundations first.
+- [ ] Add a context capability snapshot using `getShaderPrecisionFormat()`.
+- [ ] Record capability evidence separately for vertex and fragment stages.
+- [ ] Define required, preferred and fallback precision policy.
+- [ ] Replace the global rewrite with a stage-specific normalization result.
+- [ ] Fingerprint original and normalized sources.
+- [ ] Return typed shader compile results with stage, source fingerprint and logs.
+- [ ] Return a typed program link result with ordered shader identities.
+- [ ] Allocate a program generation after successful admission.
+- [ ] Include context generation, program generation and precision decisions in renderer snapshots.
+- [ ] Re-run precision admission after context restoration.
+- [ ] Correlate first rendered frame and editor capture with program generation.
+- [ ] Add DOM-free normalization and policy fixtures to `npm run check`.
+- [ ] Add real WebGL1/WebGL2 browser matrix smoke tests.
+- [ ] Add deployed Pages shader provenance verification.
 
 ## Existing owners to update first
 
 ```txt
-grass-patch-placement-kit
-grass-clump-instancing-render-kit
-grass-lod-policy-kit
-grass-density-scaling-kit
-grass-debug-visualization-kit
-grass-patch-dsk
-gpu-grass-render-dsk
-meadow-camera-dsk
-meadow-performance-dsk
-meadow-render-host-dsk
+src/renderers/meadow-webgl-renderer-v2-compatible.js
+src/renderers/meadow-webgl-renderer-v2.js
+src/hosts/web-host.js
+src/editor/install-editor-bridge.js
+tests/renderer-v2-smoke.mjs
+scripts/run-browser-observation.mjs
 meadow-webgl-renderer-v2-kit
+meadow-render-host-dsk
 meadow-diagnostics-dsk
-meadow-render-plan/v2
-render-plan enhancer
-CPU mesh builder
-web host
+WebGL Context Recovery Authority
 Committed Frame Observation Authority
 ```
 
 ## Candidate coordinating kits
 
 ```txt
-grass-view-observation-kit
-grass-camera-revision-kit
-grass-patch-bounds-kit
-grass-patch-distance-kit
-grass-lod-selection-kit
-grass-frustum-admission-kit
-grass-visible-set-kit
-grass-visible-set-revision-kit
-grass-instance-budget-kit
-grass-card-budget-kit
-grass-terrain-tint-transition-kit
-grass-draw-plan-kit
-grass-draw-plan-result-kit
-stale-grass-visibility-rejection-kit
-grass-visibility-observation-kit
-grass-visibility-journal-kit
-grass-visible-frame-ack-kit
-grass-lod-distance-fixture-kit
-grass-frustum-fixture-kit
-grass-budget-fixture-kit
-browser-grass-traversal-smoke-kit
-```
-
-## Required patch classification flow
-
-```txt
-committed camera observation
-  -> patch bounds lookup
-  -> conservative frustum test
-  -> nearest bounds distance
-  -> declared tier selection
-  -> quality and budget admission
-  -> visible patch result
-```
-
-## Required draw flow
-
-```txt
-visible patch results
-  -> deterministic instance selection
-  -> tier-appropriate batch or terrain tint
-  -> aggregate instance/card budgets
-  -> immutable grass draw plan
-  -> typed commit result
-  -> render-resource update
-  -> visible-frame acknowledgement
+shader-stage-identity-kit
+graphics-context-capability-snapshot-kit
+float-precision-capability-kit
+shader-precision-policy-kit
+shader-source-normalization-kit
+shader-source-fingerprint-kit
+shader-precision-decision-kit
+shader-compile-result-kit
+shader-program-link-result-kit
+shader-program-generation-kit
+shader-precision-observation-kit
+shader-precision-journal-kit
+first-frame-shader-provenance-kit
+shader-precision-fixture-kit
+browser-shader-device-matrix-smoke-kit
 ```
 
 ## Acceptance matrix
 
 ```txt
-distance 31.999 selects near
-distance 32.001 selects mid
-distance 71.999 selects mid
-distance 72.001 selects far
-distance 127.999 selects far
-distance 128.001 selects terrain-tint
-distance beyond 220 selects no grass cards
-off-frustum patch produces no active cards
-density changes placement count but not tier policy
-path-core patches remain suppressed
-budget overflow applies deterministic fallback
-same camera and policy produce the same visible-set fingerprint
-new camera revision invalidates predecessor plans
-stale context or surface result cannot commit
-debug counts match renderer-applied counts
-first visible frame cites committed visible-set revision
+vertex and fragment stages receive independent capability records
+original source declarations are preserved in evidence
+normalization emits one deterministic source fingerprint
+unsupported required precision returns Rejected before program use
+supported fallback returns Degraded with explicit reason
+compile failure cites stage and normalized source fingerprint
+link failure cites every compiled shader result
+context restoration creates a new decision and program generation
+renderer snapshot cites actual context/program generations
+editor capture cites the same program generation as the captured frame
+WebGL1 and WebGL2 smoke results are distinguishable
+same capabilities and sources produce the same decision fingerprint
 ```
 
 ## Ordered architecture queue
@@ -134,6 +90,7 @@ first visible frame cites committed visible-set revision
 6. Render Topology Identity Authority
 6a. WebGL Context Recovery Authority
 6b. Render Surface Resolution Authority
+6c. Shader Precision Admission Authority
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 7b. Adaptive Quality and Performance Budget Authority
@@ -144,4 +101,4 @@ first visible frame cites committed visible-set revision
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not add a second grass policy inside the renderer. Patch admission, tier selection and budgets must resolve before draw submission through one shared contract.
+Do not add a second silent compatibility rewrite. Precision normalization must be the output of the shared admission policy.

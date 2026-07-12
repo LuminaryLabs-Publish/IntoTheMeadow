@@ -1,7 +1,7 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T04-11-54-04-00`
+**Updated:** `2026-07-12T05-31-59-04-00`
 
 ## Selection state
 
@@ -13,137 +13,77 @@ IntoTheMeadow selected as the oldest eligible repository
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Current grass visibility and LOD gaps
+## Current shader precision gaps
 
-### Declared policy is not consumed
+### One unconditional policy
 
 ```txt
-near threshold: present
-mid threshold: present
-far threshold: present
-terrain-tint threshold: present
-camera-distance policy consumer: absent
-policy revision: absent
+vertex shader rewrite: mediump float
+fragment shader rewrite: mediump float
+stage-specific requirement: absent
+preferred precision: absent
+fallback order: absent
+rejection policy: absent
 ```
 
-### Patch LOD is density-driven
+### Device capability is unknown
 
 ```txt
-density texture: present
-path suppression: present
-patch grid: present
-near batch selection by density: present
-mid batch selection by density: present
-far batch selection: absent
-terrain-tint selection: absent
-camera distance input: absent
+getShaderPrecisionFormat calls: 0
+WebGL version in precision result: absent
+GPU/renderer identity: absent
+context generation: absent
+precision range and bit counts: absent
 ```
 
-### Visibility admission is absent
+### Source and program identity are absent
 
 ```txt
-patch bounds descriptor: partial
-camera revision: absent
-surface revision binding: absent
-frustum test: absent
-distance culling: absent
-visible patch set: absent
-visible-set revision: absent
-stale-result rejection: absent
+original source fingerprint: absent
+normalized source fingerprint: absent
+compile result object: absent
+link result object: absent
+program generation: absent
+program-to-frame receipt: absent
 ```
 
-### Budgets are implicit
+### Diagnostics can overstate success
+
+A linked program and a non-fatal screenshot prove that one browser produced pixels. They do not prove that the chosen precision was required, optimal, equivalent across WebGL1/WebGL2 or stable after context restoration.
+
+## Required shader fixtures
 
 ```txt
-instance budget result: absent
-card budget result: absent
-triangle budget result: absent
-budget fallback tier: absent
-requested-versus-applied counts: absent
+fixture:shader-precision-stage-policy
+fixture:shader-precision-capability-matrix
+fixture:shader-source-normalization
+fixture:shader-source-fingerprint
+fixture:shader-compile-link-result
+fixture:shader-unsupported-required-precision
+fixture:shader-context-restoration-readmission
+fixture:shader-program-frame-provenance
+smoke:browser-webgl1-shader-precision
+smoke:browser-webgl2-shader-precision
+smoke:pages-shader-precision
 ```
 
-The mesh builder silently slices cards to 28, 16 or 4 based on the already assigned batch. That is an implementation detail, not an admitted quality result.
-
-### Active renderer expands the whole field
+## Retained gaps
 
 ```txt
-all draw groups traversed: yes
-all group instances traversed: yes
-CPU triangle expansion: yes
-camera-conditioned mesh subset: no
-frustum-conditioned mesh subset: no
-terrain-tint render path: no
-```
-
-### Diagnostics can overstate optimization
-
-The debug HUD reports total grass instances, total vertices and cache state. It does not prove that distance LOD, frustum culling, budgets or terrain-tint fallback were applied.
-
-## Required grass fixtures
-
-```txt
-fixture:grass-lod-exact-boundaries
-fixture:grass-density-lod-separation
-fixture:grass-frustum-admission
-fixture:grass-far-tier-reachability
-fixture:grass-terrain-tint-transition
-fixture:grass-instance-budget
-fixture:grass-card-budget
-fixture:grass-stale-camera-rejection
-fixture:grass-path-suppression-parity
-fixture:grass-visible-set-determinism
-fixture:grass-render-diagnostics-parity
-fixture:first-visible-grass-frame
-smoke:browser-grass-camera-traversal
-smoke:pages-grass-camera-traversal
-```
-
-## Retained interaction and progression gaps
-
-```txt
-movement and inspect commands absent
-path progress and objective rules unreachable
-objective/story atomic commit absent
-browser/editor progression parity absent
-```
-
-## Retained deterministic-replay gaps
-
-```txt
-independent runtime replay absent
-production provider parity absent
-reset/cadence parity absent
-first-divergence and visible-frame fingerprints absent
-```
-
-## Retained runtime and rendering gaps
-
-```txt
+runtime lifecycle and raw host authority remain incomplete
 RAF absolute time and fixed dt disagree
-raw GameHost exposes game authority
 WebGL context recovery is non-transactional
-DPR/pixel budget and surface revision absent
-committed state/plan/frame identity absent
-fatal startup/frame recovery remains non-transactional
-```
-
-## Retained performance and persistence gaps
-
-```txt
-adaptive quality transaction absent
-complete terrain/scatter/post budgets not enforced
-save schema, migration and atomic hydration absent
-```
-
-## Retained DSK truth gaps
-
-```txt
-declaration status is not runtime consumption proof
-local implementations are not registry-bound
-runtime consumers bypass registry lookup
-reverse disposal is not registry-owned
+DPR/pixel budget and surface revision are absent
+committed state/plan/frame identity is absent
+fatal startup/frame recovery is non-transactional
+adaptive quality authority is absent
+grass camera-distance/frustum admission is absent
+movement, inspection and objective progression remain unreachable
+save migration and atomic hydration are absent
+DSK declaration is not runtime consumption proof
+independent deterministic replay proof is absent
 ```
 
 ## Completion boundary
 
-Do not treat the presence of `grass-lod-policy-kit`, near/mid/far batches or `webgl-instancing` labels as runtime LOD proof. Completion requires camera-derived patch admission, reachable far/tint tiers, bounded applied work, diagnostics parity and a visible frame citing the committed grass visible-set revision.
+Do not treat successful shader compilation as precision admission. Completion requires stage capability evidence, an explicit decision, source/program provenance and a visible frame bound to the admitted program generation.

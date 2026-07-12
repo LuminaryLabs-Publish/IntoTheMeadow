@@ -1,50 +1,35 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-12T11-29-40-04-00`
-
-## Status
-
-```txt
-status: webgl-program-interface-admission-authority-audited
-runtime source changed by this pass: no
-branch: main
-root .agent state: refreshed
-preceding progression audit: preserved
-central synchronization: pending this run
-```
+**Audit timestamp:** `2026-07-12T11-29-40-04-00`  
+**Status:** `webgl-program-interface-admission-authority-audited`
 
 ## Summary
 
-IntoTheMeadow compiles and links one persistent WebGL program, queries five attribute locations and twelve uniform locations, uploads a CPU-generated mesh and submits outline and color passes every visible frame.
+IntoTheMeadow compiles and links one persistent WebGL program, queries five attribute locations and twelve uniform locations, uploads a CPU-generated mesh and submits outline and color passes.
 
-The renderer has no aggregate program-interface admission. It does not reflect `ACTIVE_ATTRIBUTES` or `ACTIVE_UNIFORMS`, compare exact names/types/sizes with a manifest, validate the mesh layout against the linked interface, validate uniform update operations against active uniform types, allocate a program/interface generation or publish a first-frame interface fingerprint. Attribute absence is discovered only during the first mesh bind; missing uniform locations remain silent no-op updates.
+The linked program’s active interface is never reflected or admitted as one artifact. Attributes fail only when the first mesh is bound, missing uniforms can remain silent no-op updates, and snapshots contain no context/program/interface generation or fingerprint. Repo-local and central audit state are synchronized; runtime behavior is unchanged.
 
 ## Plan ledger
 
-**Goal:** establish a context-bound program-interface transaction from linked candidate through exact symbol admission, mesh/uniform compatibility, atomic installation, draw use and first-visible-frame proof.
+**Goal:** establish a context-bound transaction from linked candidate through exact symbol admission, mesh/uniform compatibility, atomic installation, draw use and first-visible-frame proof.
 
-- [x] Compare all accessible Publish repositories with central tracking.
+- [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm all nine eligible repositories have ledger and root `.agent` state.
+- [x] Confirm all nine eligible repositories have central-ledger and root `.agent` coverage.
 - [x] Select only `IntoTheMeadow` as the oldest eligible synchronized repository.
-- [x] Inspect shader precision wrapping, compilation, linking and location lookup.
-- [x] Inspect mesh schemas, GPU buffers, uniform updates, draw passes and snapshots.
+- [x] Inspect shader compile/link, locations, buffers, uniforms, draws and snapshots.
 - [x] Inspect Node and Chromium proof surfaces.
-- [x] Preserve the complete 44-kit service inventory.
-- [x] Define program-interface manifests, reflection, results and fixture gates.
+- [x] Preserve all 44 declared kits and offered services.
+- [x] Define interface manifests, reflection, results, generations and fixture gates.
 - [x] Add timestamped architecture and system audits.
-- [x] Change documentation only on `main`.
-- [ ] Implement and execute program-interface authority later.
+- [x] Refresh root `.agent` files and synchronize central tracking on `main`.
+- [x] Create no branch or pull request.
+- [ ] Implement and execute the authority later.
 
-## Selection comparison
+## Selection
 
 ```txt
-accessible Publish repositories: 10
-eligible non-Cavalry repositories: 9
-new or central-ledger-missing eligible repositories: 0
-root-.agent-missing eligible repositories: 0
-
 IntoTheMeadow      2026-07-12T09-21-40-04-00 selected
 PhantomCommand     2026-07-12T09-28-05-04-00
 HorrorCorridor     2026-07-12T09-48-15-04-00
@@ -57,116 +42,91 @@ PrehistoricRush    repo-local 2026-07-12T11-21-01-04-00 newer work observed
 TheCavalryOfRome   excluded
 ```
 
-Only `LuminaryLabs-Publish/IntoTheMeadow` is modified in the Publish organization by this run.
+All nine eligible repositories were already tracked and had root `.agent` state. Only IntoTheMeadow was modified in the Publish organization.
 
-## Complete interaction loop
+## Interaction loop
 
 ```txt
-page boot
-  -> import commit-pinned meadow-area provider
-  -> install 43 local descriptors plus one external provider
-  -> create game and authored render plan
-  -> create plan enhancer and persistent renderer
-  -> acquire WebGL2 or WebGL context through precision wrapper
-  -> compile vertex and fragment shaders
-  -> link program
-  -> query attribute and uniform locations
+boot
+  -> import pinned meadow-area provider
+  -> install 43 local declarations plus one external kit
+  -> create game, plan enhancer and renderer
+  -> acquire WebGL2 or WebGL through precision wrapper
+  -> compile two shaders and link one program
+  -> query five attributes and twelve uniforms
   -> expose GameHost and editor bridge
-  -> schedule RAF
+  -> start RAF
 
-browser frame
-  -> game.tick({ time, dt: 1/60 })
-  -> enhance and validate render plan
-  -> resize physical canvas
-  -> build/reuse CPU mesh keyed by topology
-  -> on rebuild, create five attribute buffers
-  -> reject a missing attribute only at buffer creation
-  -> submit twelve uniform update calls
-  -> draw outline pass
-  -> draw color pass
-  -> publish counts/cache renderer snapshot
-  -> schedule successor RAF
+frame
+  -> tick and validate render plan
+  -> resize canvas and build/reuse CPU mesh
+  -> validate negative attribute locations only during first buffer bind
+  -> upload position, normal, color, outline and wind arrays
+  -> submit twelve uniform updates without interface admission
+  -> draw outline and color passes
+  -> publish counts/cache snapshot without interface identity
+  -> schedule next RAF
 
-editor/browser proof
-  -> editor reads render snapshots and captures canvas
-  -> Node smoke validates plan and CPU mesh arrays
-  -> Chromium smoke verifies page/editor/gpu markers and screenshot bytes
-  -> no active-program interface result or frame correlation is observed
+proof
+  -> Node smoke validates CPU plan and mesh arrays
+  -> Chromium checks DOM markers and screenshot bytes
+  -> no active-symbol inventory or first-frame interface fingerprint
 ```
 
 ## Source-backed findings
 
-### Compile and link
-
 ```txt
-vertex compile status checked: yes
-fragment compile status checked: yes
-program link status checked: yes
-shader/program info logs surfaced on failure: yes
-precision source normalization: yes
-active program interface reflection: no
+compile status checked: yes
+link status checked: yes
+active attribute reflection: absent
+active uniform reflection: absent
+required interface manifest: absent
+attribute type/size admission: absent
+uniform presence/type/size admission: absent
+mesh/program compatibility result: absent
+uniform/program compatibility result: absent
+program/interface generation: absent
+first visible interface frame receipt: absent
 ```
 
-Compile and link checks establish executable syntax and stage linkage. They do not establish that the host’s required active symbols match the linked program.
-
-### Required attribute assumptions
+Required attributes:
 
 ```txt
-aPosition vec3
-aNormal vec3
-aColor vec3
-aOutline float
-aWind vec2
+aPosition FLOAT_VEC3
+aNormal   FLOAT_VEC3
+aColor    FLOAT_VEC3
+aOutline  FLOAT
+aWind     FLOAT_VEC2
 ```
 
-The locations are queried after linking. `createAttributeBuffer()` rejects a location below zero only when a topology is first bound. No detached candidate-interface result exists before buffer mutation.
-
-### Required uniform assumptions
+Required uniforms:
 
 ```txt
-uViewProjection mat4
-uTime float
-uWindDirection vec2
-uWindStrength float
-uWindGust float
-uOutlinePass float
-uOutlineWidth float
-uLightDirection vec3
-uRimColor vec3
-uOutlineColor vec3
-uFogColor vec3
-uRimStrength float
+uViewProjection FLOAT_MAT4
+uTime           FLOAT
+uWindDirection  FLOAT_VEC2
+uWindStrength   FLOAT
+uWindGust       FLOAT
+uOutlinePass    FLOAT
+uOutlineWidth   FLOAT
+uLightDirection FLOAT_VEC3
+uRimColor       FLOAT_VEC3
+uOutlineColor   FLOAT_VEC3
+uFogColor       FLOAT_VEC3
+uRimStrength    FLOAT
 ```
 
-Locations are queried but never validated. Required uniforms optimized out or absent from the active interface can return `null`; corresponding `uniform*` calls become no-ops rather than typed renderer failures.
-
-### CPU mesh schema
+CPU mesh layout:
 
 ```txt
-positions: 3 floats per vertex
-normals: 3 floats per vertex
-colors: 3 floats per vertex
-outlines: 1 float per vertex
-wind: 2 floats per vertex
+positions vec3
+normals vec3
+colors vec3
+outlines float
+wind vec2
 ```
 
-Array lengths and triangle alignment are validated. The mesh builder does not know or prove the linked program’s active attribute types and sizes.
-
-### Draw and observation gap
-
-```txt
-program generation: absent
-interface manifest revision: absent
-active attribute inventory: absent
-active uniform inventory: absent
-mesh/interface compatibility result: absent
-uniform update batch result: absent
-draw admission result: absent
-interface fingerprint in renderer snapshot: absent
-first visible frame interface receipt: absent
-```
-
-The snapshot’s `cacheState` and the DOM’s `gpu:` marker prove only that the host reached the renderer’s return path.
+The mesh builder validates array lengths, not compatibility with the active linked interface. Uniform locations are not validated, so absent or optimized-out required uniforms can produce no-op updates.
 
 ## Domains in use
 
@@ -175,190 +135,87 @@ browser shell, loading and fatal projection
 external provider loading, validation and fallback
 DSK declaration, registry validation and installation snapshots
 game manifest, immutable state, tick, reset, snapshot and diagnostics
-authored player, path, interaction, objective and story content
 runtime lifecycle, RAF clock and reset epoch
 camera and browser view observation
 terrain, path, grass, flowers, rocks, trees, wind, atmosphere and scatter
-render-plan enhancement, validation and topology identity
+player, input, interaction, objective, story, ecology, audio, UI and save declarations
+render-plan enhancement, validation and topology caching
 CPU mesh construction and immutable vertex payloads
 WebGL context acquisition and precision compatibility
 shader compilation and program linking
-program interface manifests and active-symbol reflection
-attribute and uniform location/type/size admission
+program-interface manifest, reflection and active-symbol admission
+attribute/uniform location, type, size and resource-limit admission
 mesh-layout and uniform-payload compatibility
-GPU buffers, uniform updates, outline/color draws and disposal
+GPU buffers, uniform updates, draw passes and disposal
 program/interface generation, fingerprint and draw admission
 renderer snapshots and committed-frame observation
-GameHost global publication and raw game reachability
-browser editor capability, capture and error observation
+GameHost publication and raw game reachability
+browser editor capabilities, capture and error observation
 Node headless editor, scenarios and artifacts
 validation, build and Pages deployment
 ```
 
-## Complete kit inventory and services
+## Kit and service census
 
 ```txt
-external declared kits: 1
-local declared kits: 43
+external provider kits: 1
+local declared DSK/kits: 43
 total declared kits: 44
 required-v0.1 local declarations: 15
 planned local declarations: 28
 ```
 
-### External provider
-
-`meadow-area-kit` offers area/path/style/material normalization, deterministic scatter, vegetation/environment descriptors, render-plan generation, validation, snapshot, reset and an optional runtime adapter.
-
-### Local service groups
+Kit groups:
 
 ```txt
-composition and host:
-  into-the-meadow-game-dsk
-  web-host-dsk
-  game-composition-dsk
-  meadow-area-bridge-dsk
-
-terrain and path:
-  meadow-terrain-texture-dsk
-  path-corridor-dsk
-
- grass:
-  grass-density-texture-kit
-  grass-clump-archetype-kit
-  grass-static-batch-kit
-  grass-patch-placement-kit
-  grass-clump-instancing-render-kit
-  grass-shader-wind-kit
-  grass-lod-policy-kit
-  grass-density-scaling-kit
-  grass-debug-visualization-kit
-  grass-patch-dsk
-  gpu-grass-render-dsk
-
-environment:
-  wind-field-dsk
-  tree-object-dsk
-  meadow-scatter-dsk
-  meadow-atmosphere-dsk
-
-gameplay and product declarations:
-  meadow-player-dsk
-  meadow-camera-dsk
-  meadow-input-dsk
-  meadow-interaction-dsk
-  meadow-story-dsk
-  meadow-objective-dsk
-  meadow-ecology-dsk
-  meadow-audio-dsk
-  meadow-ui-dsk
-  meadow-save-dsk
-
-diagnostics and performance:
-  meadow-diagnostics-dsk
-  meadow-performance-dsk
-
-rendering:
-  meadow-render-host-dsk
-  meadow-webgl-renderer-v2-kit
-  post-process-stack-dsk
-  render-target-kit
-  sobel-outline-pass-kit
-  color-grade-pass-kit
-  depth-fog-pass-kit
-  vignette-pass-kit
-  final-composite-pass-kit
-
-operations:
-  static-pages-deploy-dsk
+composition/host: 4
+terrain/path: 2
+grass: 11
+environment: 4
+gameplay/product declarations: 10
+diagnostics/performance: 2
+rendering/post-processing: 9
+operations/deployment: 1
+external provider: 1
 ```
 
-The exact per-kit offered services remain machine-readable in `.agent/kit-registry.json` and are listed in the current tracker.
+The exact name and offered-service list for every kit is preserved in `.agent/kit-registry.json` and the current timestamped tracker.
 
-## Required parent domain
+## Required authority
 
 ```txt
 meadow-webgl-program-interface-admission-authority-domain
 ```
 
-## Existing owners to update first
+Required composition:
 
 ```txt
-meadow-webgl-renderer-v2-kit
-meadow-render-host-dsk
-post-process-stack-dsk
-render-target-kit
-meadow-diagnostics-dsk
-meadow-performance-dsk
-precision compatibility wrapper
-CPU mesh builder v2
-renderer snapshot/read model
-committed-frame authority
-browser editor renderer capability
-browser observation and renderer smoke
-```
-
-## Candidate coordinating kits
-
-```txt
-shader-interface-manifest-kit
-shader-symbol-definition-kit
-program-interface-reflection-kit
-active-attribute-inventory-kit
-active-uniform-inventory-kit
-attribute-location-admission-kit
-uniform-location-admission-kit
-program-resource-limit-profile-kit
-mesh-layout-schema-kit
-mesh-program-layout-compatibility-kit
-uniform-payload-schema-kit
-uniform-update-result-kit
-program-interface-compatibility-policy-kit
-program-interface-fingerprint-kit
-program-interface-result-kit
-program-generation-kit
-draw-interface-admission-kit
-shader-interface-observation-kit
-shader-interface-journal-kit
-first-frame-program-interface-ack-kit
-missing-attribute-fixture-kit
-missing-uniform-fixture-kit
-optimized-out-uniform-fixture-kit
-browser-program-interface-smoke-kit
+shader-interface manifest and symbol definitions
+active attribute and uniform reflection
+location/type/size and resource-limit admission
+mesh-layout and uniform-payload schemas
+compatibility result and interface fingerprint
+context-bound program generation
+atomic candidate installation and predecessor preservation
+draw admission and stale-generation rejection
+bounded observations and journal
+first visible program-interface frame acknowledgement
+missing-symbol and browser fixtures
 ```
 
 ## Required flow
 
 ```txt
-required interface manifest plus shader source
-  -> compile and link detached candidate
+manifest plus shader source
+  -> compile/link detached candidate
   -> reflect ACTIVE_ATTRIBUTES and ACTIVE_UNIFORMS
-  -> resolve exact locations, GL types, sizes and resource use
-  -> compare with manifest
-  -> compare mesh layout and uniform payload schemas
-  -> reject missing, optimized-out, mismatched or over-budget candidate
-  -> allocate context-bound program generation and interface fingerprint
+  -> validate names, locations, types, sizes and resource usage
+  -> validate mesh and uniform payload schemas
+  -> reject incompatible candidate before draw
+  -> allocate program generation and interface fingerprint
   -> atomically install or preserve predecessor
-  -> admit buffer binding, uniform updates and draws
-  -> publish typed results and bounded journal
-  -> acknowledge first visible frame citing the same interface fingerprint
-```
-
-## Required proof
-
-```txt
-five exact required attributes
-twelve exact required uniforms
-missing attribute rejection before buffer publication
-missing/optimized-out uniform rejection before draw
-type and size mismatch rejection
-resource-limit rejection
-mesh/program and uniform/program schema parity
-predecessor preservation after candidate rejection
-stale context/program/interface rejection
-WebGL1/WebGL2 parity
-snapshot and capture interface correlation
-first visible program-interface frame
-local and deployed browser smoke
+  -> admit bindings, uniform updates and draws
+  -> publish typed results and first visible frame receipt
 ```
 
 ## Validation
@@ -367,14 +224,13 @@ local and deployed browser smoke
 runtime source changed: no
 renderer/shader source changed: no
 gameplay source changed: no
-package scripts changed: no
-dependencies changed: no
+package scripts or dependencies changed: no
 deployment changed: no
-branch created: no
-pull request created: no
+branch or pull request created: no
 npm run check: not run
 program-interface fixtures: unavailable
 browser and Pages interface smoke: not run
+central synchronization: complete
 ```
 
-This audit proves only that the current runtime lacks one active-program interface admission result. It does not prove a visible defect on the observed browser.
+This audit proves that the active-program interface is not currently admitted as one artifact. It does not prove a visible browser defect or deployment readiness.

@@ -1,120 +1,111 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T09-06-38-04-00`
+**Updated:** `2026-07-12T09-08-17-04-00`
 
 ## Summary
 
-Implement bridge lifecycle and bounded browser error retention immediately after runtime-session and public-capability foundations. Keep the browser bridge as an adapter over those authorities rather than a second lifecycle owner.
+Implement one interaction/objective progression authority after runtime-session, capability and committed-frame foundations. Keep browser and editor inputs as adapters over the same command/result contracts.
 
 ## Plan ledger
 
-**Goal:** make editor bridge installation, replacement, capability invocation, error observation, query, stop and disposal deterministic and bounded.
+**Goal:** make the authored arrival sequence playable without adding direct state mutation to RAF, renderer, GameHost or editor code.
 
-- [ ] Define `EditorBridgeId` and monotonic `EditorBridgeGeneration`.
-- [ ] Bind every bridge to `runtimeSessionId` and `hostGeneration`.
-- [ ] Replace implicit install with `EditorBridgeInstallCommand/Result`.
-- [ ] Admit predecessor generation before global replacement.
-- [ ] Retire predecessor capability and listener leases before successor commit.
-- [ ] Represent every registered capability as a revocable lease.
-- [ ] Represent `error` and `unhandledrejection` handlers as listener leases.
-- [ ] Define normalized `BrowserErrorEntry` with sequence, time, frame and generation evidence.
-- [ ] Add count, byte and age retention limits.
-- [ ] Coalesce repeated errors by stable fingerprint and time window.
-- [ ] Add dropped-entry counters and reason classification.
-- [ ] Replace full-array cloning with paged cursor queries.
-- [ ] Add explicit acknowledgement/clear policy.
-- [ ] Reject invokes, snapshots and captures from stale/disposed bridges.
-- [ ] Correlate captures with bridge, runtime, frame and surface revisions.
-- [ ] Decide and encode stop policy: keep diagnostics active, suspend, or dispose.
-- [ ] Make disposal ordered, idempotent and typed.
-- [ ] Remove the global only when its generation still matches.
-- [ ] Expose bounded bridge observations through diagnostics and editor readback.
-- [ ] Add browser restart, replacement, error-flood and listener-retirement fixtures.
-- [ ] Repeat the lifecycle matrix against deployed GitHub Pages.
+- [ ] Define runtime session, reset generation and progression revision.
+- [ ] Define canonical `InteractionCommand` and command IDs.
+- [ ] Normalize browser/editor/controller actions through one action map.
+- [ ] Build a revisioned interaction-target registry.
+- [ ] Derive immutable path-progress and inspect evidence.
+- [ ] Add typed interaction rejection reasons.
+- [ ] Implement objective-definition registry and evaluator.
+- [ ] Implement deterministic successor-objective policy.
+- [ ] Add idempotent completion ledger and receipts.
+- [ ] Parse/evaluate story triggers against the same evidence.
+- [ ] Deduplicate story-beat commits.
+- [ ] Prepare feedback/UI state before mutation.
+- [ ] Atomically commit player, inspect, objective, story and feedback state.
+- [ ] Preserve/restore predecessor state on failure.
+- [ ] Reject duplicate, stale-session, stale-reset and stale-revision commands.
+- [ ] Replace raw public mutation with explicit capabilities.
+- [ ] Add editor `interaction.dispatch` and progression readback capabilities.
+- [ ] Include progression results/revisions in snapshots and diagnostics.
+- [ ] Publish bounded observations and journals.
+- [ ] Correlate the first visible feedback frame.
+- [ ] Add deterministic, browser and Pages fixtures.
 
-## Required commands
+## Required command
 
 ```txt
-EditorBridgeInstallCommand {
+InteractionCommand {
   commandId
   runtimeSessionId
-  hostGeneration
-  predecessorBridgeGeneration
-  capabilityManifestRevision
-  errorRetentionPolicyRevision
-}
-
-BrowserErrorQueryCommand {
-  bridgeId
-  bridgeGeneration
-  afterSequence
-  limit
-}
-
-BrowserErrorAckCommand {
-  bridgeId
-  bridgeGeneration
-  throughSequence
-}
-
-EditorBridgeDisposeCommand {
-  bridgeId
-  bridgeGeneration
-  reason
+  resetGeneration
+  actorId
+  action
+  targetId
+  payload
+  source
+  inputSequence
+  expectedTargetRevision
+  expectedProgressionRevision
+  submittedAt
 }
 ```
 
-## Required results
+## Required aggregate result
 
 ```txt
-EditorBridgeInstallResult {
+ProgressionTransactionResult {
   status
-  bridgeId
-  bridgeGeneration
-  predecessorRetirementResult
-  capabilityLeaseCount
-  listenerLeaseCount
+  reason
+  commandId
+  interactionResult
+  objectiveResult
+  storyResult
+  feedbackResult
+  predecessorProgressionRevision
+  committedProgressionRevision
+  rollbackResult
+  firstVisibleFrameId
 }
+```
 
-BrowserErrorQueryResult {
-  status
-  entries
-  nextSequence
-  retainedCount
-  retainedBytes
-  droppedCounts
-}
+## Required state
 
-EditorBridgeDisposeResult {
-  status
-  revokedCapabilityCount
-  removedListenerCount
-  releasedEntryCount
-  globalRemovalResult
+```txt
+progression {
+  revision
+  activeObjectiveId
+  completedObjectiveIds
+  completionLedgerRevision
+  storyBeatIds
+  storyRevision
+  inspectState
+  feedbackRevision
 }
 ```
 
 ## Acceptance matrix
 
 ```txt
-first install
-idempotent dispose
-stop/start under selected policy
-successor install retires predecessor
-stale predecessor invoke rejection
-stale predecessor capture rejection
-error event normalization
-unhandled rejection normalization
-capability error normalization
-10,000-event count and byte bound
-age expiry
-fingerprint coalescing
-paged query and acknowledgement
-listener count returns to baseline
-current capture cites current frame/surface/bridge
-local browser smoke
-GitHub Pages smoke
+path progress 0.24
+path progress 0.25
+path progress 0.34
+path progress 0.35
+inspect unknown target
+inspect focal-tree outside range
+inspect focal-tree inside range
+duplicate command ID
+out-of-order input sequence
+stale target revision
+stale progression revision
+reset-generation rejection
+objective/story atomic commit
+feedback prepare failure rollback
+browser/editor parity
+snapshot/result parity
+first visible progression-frame receipt
+local browser and deployed Pages smoke
 ```
 
 ## Ordered architecture queue
@@ -126,19 +117,13 @@ GitHub Pages smoke
 3. Headless Workspace Path Authority and Filesystem Containment
 4. Runtime Clock and Step Admission Authority
 5. Source Provider Authority
-6. Render Topology Identity Authority
-6a. WebGL Context Recovery Authority
-6b. Render Surface Resolution Authority
-6c. Shader Precision Admission Authority
-7. Committed Frame Observation Authority
-7a. Fatal Runtime Failure Recovery Authority
-7b. Adaptive Quality and Performance Budget Authority
-7c. Grass Visibility and LOD Authority
-7d. Audio Activation and Lifecycle Authority
+6. Render Topology / Context / Surface / Precision Authorities
+7. Committed Frame Observation and Failure Recovery
+7a. Adaptive Quality / Grass LOD / Audio Authorities
 8. Interaction Command and Objective Progression Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not add another independent global owner. Update the existing host, GameHost and bridge adapters to consume runtime-session, capability and frame authorities.
+Do not implement threshold checks as free-running frame effects. Evaluate objectives and story beats only from admitted command evidence and commit all resulting state under one progression revision.

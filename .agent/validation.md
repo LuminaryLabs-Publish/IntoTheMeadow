@@ -1,44 +1,45 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T07-19-47-04-00`
+**Updated:** `2026-07-12T09-06-38-04-00`
 
 ## Summary
 
-This documentation-only audit verifies the current static performance policy, host frame loop, enhancer cache admission and physical renderer behavior. It does not prove measured performance, adaptive decisions, physical-policy parity, rollback or visible-frame correlation.
+This documentation-only audit verifies the browser host, global host publication, editor bridge, error listeners, error retention paths and current test coverage. It does not prove bridge replacement, listener retirement, bounded retention, stale capability rejection or capture/frame provenance.
 
 ## Plan ledger
 
-**Goal:** separate source-backed performance findings from unimplemented and unexecuted runtime, browser and Pages proof.
+**Goal:** separate source-backed bridge findings from unimplemented and unexecuted browser lifecycle proof.
 
-- [x] Compare the current Publish inventory with central tracking.
+- [x] Compare the Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
-- [x] Inspect DSK declarations, required-v0.1 registry and performance policy.
-- [x] Inspect web-host RAF, enhancer cache, game diagnostics and WebGL renderer.
-- [x] Confirm logical/physical quality mismatches.
+- [x] Select only `IntoTheMeadow` after avoiding active unsynchronized PrehistoricRush work.
+- [x] Inspect `src/hosts/web-host.js`.
+- [x] Inspect `src/boot/expose-game-host.js`.
+- [x] Inspect `src/editor/install-editor-bridge.js`.
+- [x] Inspect package checks and headless-editor smoke tests.
 - [x] Preserve the complete 44-kit inventory and service map.
-- [x] Define adaptive-quality contracts and fixture gates.
+- [x] Define bridge lifecycle/error-journal contracts and fixture gates.
 - [x] Change documentation only.
-- [ ] Execute performance fixtures after implementation exists.
+- [ ] Execute browser bridge fixtures after implementation exists.
 
 ## Proven from source
 
 ```txt
-meadow-performance-dsk is required-v0.1
-services are quality-profile, budget-policy, lod-policy, adaptive-scaling and performance-validation
-profiles are low, medium, high, ultra and auto
-default quality is high
-auto is a fixed profile
-web host supplies no runtime performance options to the enhancer
-web host measures no CPU or GPU frame duration
-web host maintains no rolling performance window
-terrain resolution is hard-coded to 96 x 124 during enhancement
-maxGrassInstances is calculated but not passed into the inspected grass construction path
-physical renderer always submits outline and color draws
-renderer snapshot contains no quality revision, budget or timing result
-enhancer cache admission is based on source topology key
-quality transition and first visible-frame results are absent
+startWebHost creates one editor bridge during host creation
+bridge registers global error and unhandledrejection listeners
+bridge stores errors in a local Array
+browser.getErrors clones the complete array
+bridge.snapshot clones the complete array
+capability failures append entries to the same array
+no count/byte/age bound is applied
+no sequence/timestamp/frame/generation evidence is assigned
+bridge publishes through direct global assignment
+GameHost publishes through direct global assignment
+host stop toggles only a boolean
+host stop does not call editorBridge.dispose
+successor install does not automatically dispose predecessor bridge
+capture includes canvas pixels and renderer readback without frame/surface/bridge revisions
 ```
 
 ## Existing proof
@@ -48,36 +49,32 @@ Current checks can prove:
 ```txt
 required files exist
 DSK descriptors validate structurally
-render plans validate
-renderer topology caching works under tested static plans
-deterministic scene generation and editor commands pass when executed
+render plans and static renderer topology validate
+scene generation is deterministic under tested inputs
+Node headless-editor environment capabilities execute
+Node headless-editor captures create artifacts
 ```
 
 Current checks cannot prove:
 
 ```txt
-CPU/GPU timing accuracy
-frame deadline classification
-adaptive downgrade or upgrade
-hysteresis or cooldown
-hidden-tab sampling policy
-manual/auto command parity
-logical/physical tier parity
-grass and terrain budget enforcement
-post-process physical-policy application
-quality-driven cache invalidation
-multi-consumer atomic commit
-rollback after partial failure
-first visible-frame quality correlation
-browser or Pages device performance
+browser bridge install/replacement/disposal
+browser listener count or exact retirement
+host stop/start bridge policy
+stale predecessor invoke rejection
+error normalization completeness
+error-journal count/byte/age bounds
+repeat coalescing and dropped counters
+paged query or acknowledgement
+capture/frame/surface/bridge provenance
+browser or Pages lifecycle behavior
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
-performance source changed: no
-renderer source changed: no
+editor bridge source changed: no
 package scripts changed: no
 dependencies changed: no
 render output changed: no
@@ -86,54 +83,43 @@ branch created: no
 pull request created: no
 target branch: main
 npm run check executed: no
-performance fixtures available: no
-browser performance smoke available: no
-Pages performance smoke available: no
+browser bridge fixtures available: no
+browser bridge smoke available: no
+Pages bridge smoke available: no
 ```
 
 ## Required deterministic fixtures
 
 ```txt
-fixture:performance-sample-normalization
-fixture:performance-window-percentiles
-fixture:performance-budget-policy
-fixture:quality-hysteresis
-fixture:quality-cooldown
-fixture:quality-capability-envelope
-fixture:quality-manual-auto-parity
-fixture:quality-topology-impact
-fixture:quality-consumer-prepare
-fixture:quality-rollback
-fixture:quality-stale-plan
-fixture:quality-frame-correlation
-```
-
-## Required browser matrix
-
-```txt
-quality: low, medium, high, ultra, auto
-viewport: desktop, tablet, narrow mobile
-DPR: 1, 1.5, 2
-GPU timing: supported, unsupported
-visibility: visible, hidden, restored
-load: steady, transient spike, sustained overload, sustained headroom
+fixture:editor-bridge-install
+fixture:editor-bridge-successor-replacement
+fixture:editor-bridge-stale-invoke
+fixture:editor-bridge-idempotent-dispose
+fixture:browser-listener-retirement
+fixture:browser-error-normalization
+fixture:browser-error-retention-count
+fixture:browser-error-retention-bytes
+fixture:browser-error-retention-age
+fixture:browser-error-fingerprint-coalescing
+fixture:browser-error-paged-query
+fixture:browser-error-acknowledgement
+fixture:bridge-capture-frame-correlation
 ```
 
 ## Required browser and Pages smoke
 
 ```txt
-open fresh session
-capture capability and predecessor-quality revisions
-collect the minimum admitted performance window
-trigger one stable downgrade or upgrade
-capture command and consumer results
-verify topology rebuild/no-rebuild decision
-verify physical grass/terrain/post settings
-capture first visible frame citing quality, topology and surface revisions
+record baseline listener state
+install first bridge and capture generation
+inject error, rejection and capability failure
+query normalized journal
+stop/start under declared policy
+install successor and reject predecessor invoke/capture
+inject large error flood and verify retention bounds
+dispose successor and restore listener/global baseline
 repeat against deployed GitHub Pages
-verify no unresolved rollback or resource leases
 ```
 
 ## Claim boundary
 
-The audit proves how the inspected source currently represents and applies performance configuration. It does not prove actual frame rate, device cost, stable adaptation, visual parity or deployment readiness.
+The audit proves how the inspected source currently installs and exposes the browser bridge and retains faults. It does not prove lifecycle correctness, memory bounds, stale-reference isolation or deployment readiness.

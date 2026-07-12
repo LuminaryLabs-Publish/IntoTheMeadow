@@ -1,11 +1,11 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T17-49-51-04-00`
+**Updated:** `2026-07-12T17-58-43-04-00`
 
 ## Summary
 
-The leading product gap is now the first playable exploration transaction. The repository has authored path, objective, story and focal-tree content, but no command ingress, movement/path evidence, inspection admission, progression reducer, exactly-once ledger, feedback result, save binding or visible gameplay acknowledgement.
+The leading product gap is the first playable exploration transaction. The repository has authored path, objective, story and focal-tree content, but no command ingress, movement/path evidence, inspection admission, progression reducer, exactly-once ledger, feedback result, save binding or visible gameplay acknowledgement.
 
 ## Plan ledger
 
@@ -15,6 +15,7 @@ The leading product gap is now the first playable exploration transaction. The r
 - [x] Record target-inspection and progression gaps.
 - [x] Record atomicity, duplicate and visible-proof gaps.
 - [x] Preserve upstream DSK runtime-consumption gaps.
+- [x] Reconcile the detailed `17-49-51` gap audit into current routing.
 - [ ] Implement in dependency order.
 
 ## Command and input gaps

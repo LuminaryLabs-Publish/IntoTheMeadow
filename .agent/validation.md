@@ -1,59 +1,57 @@
 # IntoTheMeadow Validation
 
-**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
-
-**Updated:** `2026-07-12T00-58-12-04-00`
+**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
+**Updated:** `2026-07-12T02-38-23-04-00`
 
 ## Plan ledger
 
-**Goal:** distinguish repeated reads of one unchanged fallback-backed game from executable proof that independent runtimes reproduce construction, simulation, reset, progression, render plans and the first visible frame.
+**Goal:** distinguish authored progression data from executable proof that movement, path sampling, inspection, objective/story transition and visible feedback work through one authority.
 
-- [x] Review the complete accessible Publish inventory.
-- [x] Compare every eligible repository with central tracking.
-- [x] Verify central and root `.agent` coverage.
+- [x] Review the complete Publish inventory and central ledger.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow` because newer repo-local work required central reconciliation.
-- [x] Inspect `validate-determinism.js` and `deterministic-scene-smoke.mjs`.
-- [x] Inspect game construction, provider fallback, state, snapshot and reset.
-- [x] Inspect render-plan smoke and package check coverage.
-- [x] Document canonical schema, independent construction, provider parity, replay, divergence and frame-proof requirements.
+- [x] Verify all eligible root `.agent` states.
+- [x] Select only `IntoTheMeadow` after avoiding active unsynchronized work.
+- [x] Inspect objective, target and story content.
+- [x] Inspect initial state and `advanceGameState()`.
+- [x] Inspect game construction, browser host, public host and editor capabilities.
+- [x] Inspect package checks and current smoke coverage.
+- [x] Document command, spatial, progression, parity and visible-frame proof requirements.
 - [x] Change documentation only.
-- [ ] Execute replay fixtures after implementation exists.
+- [ ] Execute progression fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-external declared kits: 1
-local declared kits: 43
-total declared kits: 44
-determinism validator functions: 2
-deterministic smoke files: 1
-independent runtimes constructed by smoke: 1
-external production providers exercised by smoke: 0
-ticks executed by smoke: 0
-resets executed by smoke: 0
-command sequences executed by smoke: 0
-checkpoint fingerprints: 0
-first-divergence results: 0
-visible replay-frame receipts: 0
+authored objectives: 2
+authored interaction targets: 2
+authored story beats: 3
+initial active objective: walk-the-path
+initial completed objectives: 0
+initial path progress: 0
+implemented game-state transition functions: 1
+state fields mutated by advanceGameState: frame and lastTick only
+browser gameplay listeners in web host: 0
+movement capabilities in editor bridge: 0
+inspect capabilities in editor bridge: 0
+progression result schemas: 0
+visible progression-frame receipts: 0
 ```
 
 ## Proven from source
 
 ```txt
-stableStringify recursively sorts plain object keys
-validateDeterminism calls the supplied callback twice
-the two serialized results are compared with strict string equality
-failure output is one generic string
-deterministic-scene-smoke validates authored scene-flow counts
-it creates one game with no externalKits
-that selects the local fallback provider
-it reads game.getSnapshot twice without a tick or reset
-game snapshot contains manifest, state, base render plan and diagnostics
-game tick increments frame and records lastTick only
-game reset constructs another initial state
-render-plan smoke separately checks topology-key stability across a time overlay
-npm run check includes no independent replay fixture
+walk-the-path requires action path-progress on arrival-path and progress >= 0.35
+inspect-tree requires action inspect on focal-tree and inspected=true
+focal-tree has an authored position and interaction radius
+arrival-path has an authored position and interaction radius
+path-discovery story beat is keyed to path-progress:0.25
+focal-tree story beat is keyed to inspect:focal-tree
+initial state contains player, progression and story IDs
+advanceGameState increments frame and records lastTick only
+createIntoTheMeadowGame exposes authored content but no action command
+web host ticks and renders but installs no gameplay input adapter
+editor bridge exposes tick/reset/read/render/capture only
+snapshot returns state and render data without a progression result
 ```
 
 ## Existing proof
@@ -63,39 +61,34 @@ Current checks prove:
 ```txt
 required source files exist
 DSK descriptors validate structurally
-scene-flow authored counts validate
-two adjacent reads of one unchanged fallback-backed snapshot are equal
-render-plan descriptors validate
-one time-only render-plan update preserves topology identity
-CPU mesh data and renderer smoke remain internally valid
-headless editor commands operate for existing domains
+authored scene-flow counts validate
+render plans and CPU mesh data validate
+renderer and headless editor smoke paths execute
 ```
 
 Current checks do not prove:
 
 ```txt
-canonical-value admission
-serializer schema/version identity
-independent game construction determinism
-production external-provider determinism
-provider or seed fingerprints
-same-seed checkpoint replay
-command/tick sequence replay
-reset and stop/start replay
-30/60/120 Hz parity
-objective/story progression replay
-browser/headless parity
-source/enhanced render-plan fingerprint parity
-first visible frame parity
-negative controls
-exact first-divergence location
+player movement
+path projection or progress
+path objective completion
+tree inspection
+tree objective completion
+story beat transition
+objective/story atomicity
+command sequencing or idempotence
+stale session/scene/epoch rejection
+reset progression fencing
+browser/editor/headless parity
+visible progression-frame correlation
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
-determinism source changed: no
+interaction source changed: no
+objective/story source changed: no
 renderer source changed: no
 package scripts changed: no
 dependencies changed: no
@@ -104,118 +97,102 @@ deployment changed: no
 branch created: no
 pull request created: no
 npm run check executed: no
-replay fixtures available: no
-browser replay smoke available: no
+progression fixtures available: no
+browser progression smoke available: no
 ```
 
-## Required canonical-value fixture
+## Required command-admission fixture
 
 ```txt
-plain canonical values serialize identically across independent calls
-object keys use one deterministic ordering policy
-finite-number and -0 policy is explicit
-NaN and Infinity reject
-undefined and sparse arrays reject or receive explicit tagged semantics
-cycles reject with a typed path
-Date, Map, Set, typed values and custom prototypes reject or use versioned adapters
-accessor properties and getter side effects reject
-schema and serializer version participate in fingerprint identity
+accept a valid monotonic command ID and input sequence
+reject duplicate command without a second mutation
+reject stale session, scene, epoch and expected revision
+reject unknown action and target
+reject non-finite movement values
+reject movement outside configured bounds
+return typed status and reasons
 ```
 
-## Required independent-build fixture
+## Required path fixture
 
 ```txt
-construct runtime A and runtime B separately
-construct separate provider instances
-admit identical manifest, content, provider and seed identity
-compare construction checkpoint fingerprints
-repeat in reversed construction order
-assert no shared mutable provider, enhancer or cache state
-change seed/provider/content as negative controls
+start from the canonical initial player position
+apply admitted movement commands
+project player position onto arrival-path geometry
+produce normalized progress from authoritative geometry
+assert monotonic policy
+emit path-discovery at 0.25 exactly once
+complete walk-the-path at 0.35 exactly once
+preserve transition identity across snapshot and replay
 ```
 
-## Required provider fixture
+## Required inspection fixture
 
 ```txt
-fallback provider replay is deterministic
-external production-provider replay is deterministic
-provider ID, version and fingerprint are recorded
-fallback/external differences are classified rather than silently treated as parity
-provider import/export failure produces a typed result
+reject focal-tree inspection outside the admitted radius
+accept inspection inside the admitted radius
+validate target scene, type and required action
+complete inspect-tree exactly once
+emit focal-tree story beat exactly once
+duplicate inspect returns prior result without mutation
 ```
 
-## Required tick and reset fixture
+## Required atomic progression fixture
 
 ```txt
-admit one sequenced command stream
-admit one normalized committed-tick schedule
-compare state checkpoints after every command/tick boundary
-reset both runtimes into a new replay epoch
-replay the same scenario
-assert terminal state, objective and story fingerprints match
-inject changed command order and changed dt negative controls
+prepare player, path, interaction, objective and story changes
+fail one staged rule and preserve predecessor state
+commit all accepted changes under one progression revision
+publish one ordered event bundle
+ensure active objective and completion ledger agree
+ensure story beat IDs agree with emitted transitions
 ```
 
-## Required cadence fixture
+## Required reset fixture
 
 ```txt
-run presentation schedules representing 30, 60 and 120 Hz
-map all schedules to the same committed simulation ticks
-assert state and progression fingerprints are identical
-classify render interpolation differences separately
-exclude hidden/suspended intervals by explicit policy
+complete at least one objective
+reset into a new progression epoch
+restore canonical player and progression state
+reject predecessor-epoch commands
+ensure no predecessor event appears after reset
+acknowledge the first neutral replacement frame
 ```
 
-## Required divergence fixture
+## Required adapter parity fixture
 
 ```txt
-change one admitted value
-stop comparison at the first mismatch
-report checkpoint ID
-report committed tick ID
-report domain and canonical path
-report left/right fingerprints
-report value summaries and classification
-preserve bounded evidence
+run the same command sequence through direct domain API
+run through browser capability gateway
+run through browser editor bridge
+run through Node headless editor environment
+compare ProgressionResult and terminal state fingerprints
 ```
 
 ## Required render and frame fixture
 
 ```txt
-compare source render-plan fingerprints
-compare enhanced render-plan fingerprints
-compare topology and quality identity
-compare renderer observations
-wait for the first visible replay frame
-assert state, plan, renderer, frame and capture cite the same replay checkpoint
-```
-
-## Required browser/headless fixture
-
-```txt
-run the same ReplayScenario through Node
-run it through browser GameHost capability gateway
-run it through the browser editor bridge
-run it through the Node headless editor environment
-assert one shared ReplayResult schema and terminal fingerprints
+commit a progression result
+build the matching snapshot/read model
+render one frame carrying progression revision and result ID
+capture the browser canvas after that frame
+assert HUD/story feedback and observation cite the same revision
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:canonical-values
-npm run fixture:deterministic-independent-build
-npm run fixture:deterministic-provider-parity
-npm run fixture:deterministic-tick-replay
-npm run fixture:deterministic-reset-replay
-npm run fixture:deterministic-cadence
-npm run fixture:deterministic-first-divergence
-npm run fixture:deterministic-browser-headless
-npm run smoke:deterministic-visible-frame
-npm run smoke:deterministic-pages
+npm run fixture:interaction-command
+npm run fixture:path-progress
+npm run fixture:inspect-objective
+npm run fixture:progression-atomicity
+npm run fixture:progression-reset
+npm run fixture:progression-adapter-parity
+npm run smoke:progression-visible-frame
+npm run smoke:progression-pages
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim deterministic replay because the same unchanged snapshot serializes equally twice. Completion requires canonical admission, independent runtime construction, production-provider coverage, checkpointed tick/reset replay, negative controls, exact divergence evidence and a first visible frame that cites the same replay result.
+Do not claim playable progression because the content arrays and DSK descriptors exist. Completion requires executable commands, authoritative spatial evidence, atomic objective/story commits, adapter parity, reset fencing and a first visible frame that cites the committed progression result.

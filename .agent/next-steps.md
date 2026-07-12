@@ -1,140 +1,166 @@
 # IntoTheMeadow Next Steps
 
-**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
-
-**Updated:** `2026-07-12T00-58-12-04-00`
+**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
+**Updated:** `2026-07-12T02-38-23-04-00`
 
 ## Goal
 
-Replace the current adjacent-read check with a versioned deterministic replay gate that compares independent runtimes, provider/seed/content identity, normalized command/tick sequences, reset behavior and the first visible frame.
+Turn authored player, path, interaction, objective and story declarations into one executable progression pipeline without moving gameplay rules into renderer code.
 
 ## Plan ledger
 
 - [ ] Preserve current meadow generation, render topology, shaders and browser composition.
 - [ ] Complete Runtime Session Lifecycle Authority first.
-- [ ] Complete Host Capability Gateway and raw runtime quarantine.
+- [ ] Replace raw `GameHost.game` exposure with a capability gateway.
 - [ ] Complete Runtime Clock and Step Admission Authority.
-- [ ] Complete Source Provider Authority and provider fingerprinting.
-- [ ] Define an admitted canonical-value schema.
-- [ ] Replace permissive `stableStringify()` with a versioned canonical serializer.
-- [ ] Add provider, seed, content, scenario and checkpoint fingerprints.
-- [ ] Add `ReplayScenario` and `ReplayResult` schemas.
-- [ ] Construct independent runtime A and runtime B for every deterministic fixture.
-- [ ] Ensure provider/cache instances are not shared across compared runs.
-- [ ] Add normalized command and tick schedules.
-- [ ] Add construction, intermediate and terminal checkpoints.
-- [ ] Add reset-and-replay and stop/start scenarios.
-- [ ] Add 30/60/120 Hz presentation schedules mapped to equal committed ticks.
-- [ ] Compare fallback and external provider runs through an explicit parity classification.
-- [ ] Add state, objective, story, source-plan and enhanced-plan fingerprints.
-- [ ] Add exact first-divergence reporting.
-- [ ] Add bounded replay journals and idempotent scenario execution.
-- [ ] Route the same scenario/result semantics through Node, browser GameHost, browser editor and headless editor.
-- [ ] Add first-visible-frame replay acknowledgement.
-- [ ] Wire DOM-free replay fixtures into `npm run check`.
-- [ ] Add browser and Pages replay smoke gates.
+- [ ] Add runtime session, scene and progression epoch identity.
+- [ ] Define `InteractionCommand` and `ProgressionResult` schemas.
+- [ ] Add monotonic command sequence and duplicate rejection.
+- [ ] Add bounded player movement commands and results.
+- [ ] Derive path progress from authoritative player/path geometry.
+- [ ] Prevent caller-supplied path progress from becoming authority.
+- [ ] Add registered-target inspection admission.
+- [ ] Define proximity and optional line-of-sight policy.
+- [ ] Evaluate objective rules after admitted movement/inspection evidence.
+- [ ] Commit player, completion ledger, active objective and story beats atomically.
+- [ ] Add one ordered event bundle per committed progression revision.
+- [ ] Add progression state to clone-safe public observations.
+- [ ] Route browser input, browser editor and Node headless commands through the same authority.
+- [ ] Add reset progression epoch and stale-command rejection.
+- [ ] Correlate progression result, snapshot, render plan, renderer observation and first visible frame.
+- [ ] Add DOM-free fixtures to `npm run check`.
+- [ ] Add browser and Pages walk-and-inspect smoke gates.
 
 ## Existing owners to update first
 
 ```txt
 into-the-meadow-game-dsk
-meadow-area-bridge-dsk
-meadow-diagnostics-dsk
+path-corridor-dsk
+meadow-player-dsk
 meadow-input-dsk
+meadow-interaction-dsk
 meadow-objective-dsk
 meadow-story-dsk
-meadow-render-host-dsk
+meadow-ui-dsk
+meadow-diagnostics-dsk
 web-host-dsk
 browser editor bridge
 Node headless editor environment
 Runtime Session Lifecycle Authority
 Runtime Clock and Step Admission Authority
-Source Provider Authority
 Committed Frame Observation Authority
 ```
 
 ## Candidate coordinating kits
 
 ```txt
-canonical-value-schema-kit
-canonical-serializer-kit
-determinism-fingerprint-kit
-provider-identity-kit
-provider-fingerprint-kit
-seed-policy-kit
-replay-run-id-kit
-replay-scenario-schema-kit
-replay-input-sequence-kit
-replay-tick-schedule-kit
-independent-runtime-construction-kit
-replay-execution-kit
-reset-replay-kit
-cadence-normalization-kit
-state-projection-fingerprint-kit
-render-plan-fingerprint-kit
-visible-frame-determinism-ack-kit
-first-divergence-kit
-replay-result-kit
-determinism-journal-kit
-same-seed-independent-build-fixture-kit
-fallback-external-parity-fixture-kit
-tick-reset-replay-fixture-kit
-cadence-parity-fixture-kit
-browser-headless-replay-fixture-kit
+interaction-command-schema-kit
+interaction-command-id-kit
+interaction-sequence-kit
+interaction-target-registry-kit
+player-movement-command-kit
+path-progress-sampler-kit
+path-progress-result-kit
+inspect-command-kit
+interaction-admission-kit
+objective-rule-kit
+objective-transition-kit
+completion-ledger-kit
+story-trigger-kit
+story-transition-kit
+progression-commit-kit
+progression-result-kit
+browser-interaction-adapter-kit
+editor-interaction-capability-kit
+progression-observation-kit
+progression-frame-ack-kit
+progression-journal-kit
+path-progress-fixture-kit
+inspect-objective-fixture-kit
+browser-editor-progression-parity-fixture-kit
+visible-progression-frame-smoke-kit
 ```
 
-## Replay scenario contract
+## Interaction command contract
 
 ```txt
-ReplayScenario
-  scenarioId
+InteractionCommand
+  commandId
   schemaVersion
-  manifestId
-  manifestVersion
-  providerId
-  providerVersion
-  providerFingerprint
-  seedPolicyId
-  seed
-  contentFingerprint
-  initialStateFingerprint
-  commandSequence
-  tickSchedule
-  checkpointPolicy
+  runtimeSessionId
+  sceneId
+  progressionEpoch
+  actorId
+  inputSequence
+  type: move | inspect
+  payload
+  expectedProgressionRevision
 ```
 
-## Required checkpoints
+## Progression result contract
 
 ```txt
-construction
-first committed tick
-path-progress transition
-objective completion
-inspect transition
-story transition
-pre-reset terminal state
-post-reset initial state
-replayed terminal state
-first visible frame
+ProgressionResult
+  commandId
+  status: committed | rejected | duplicate | stale
+  runtimeSessionId
+  sceneId
+  progressionEpoch
+  predecessorRevision
+  committedRevision
+  playerReceipt
+  pathProgressReceipt
+  interactionReceipt
+  objectiveTransitions
+  storyTransitions
+  events
+  rejectionReasons
+```
+
+## Required path flow
+
+```txt
+move command
+  -> finite bounded input admission
+  -> terrain/corridor movement proposal
+  -> accepted player position
+  -> path projection and normalized progress
+  -> monotonic progress policy
+  -> walk-the-path threshold evaluation
+  -> objective/story transition bundle
+  -> atomic progression commit
+```
+
+## Required inspection flow
+
+```txt
+inspect command
+  -> target ID lookup
+  -> scene/type/action compatibility
+  -> player-target spatial evidence
+  -> proximity and optional visibility policy
+  -> inspect result
+  -> inspect-tree objective evaluation
+  -> focal-tree story trigger
+  -> atomic progression commit
 ```
 
 ## Acceptance matrix
 
 ```txt
-same fallback provider + same seed + same scenario
-same external provider + same seed + same scenario
-fallback/external explicit parity classification
-same commands at 30, 60 and 120 Hz presentation cadence
-reset then replay
-stop/start then replay
-browser versus Node headless
-changed seed negative control
-changed provider negative control
-changed command order negative control
-changed content revision negative control
-canonical-value rejection cases
-first-divergence path and tick
-state/render/frame fingerprint correlation
+valid movement changes player position
+non-finite or oversized movement rejects without mutation
+path progress is derived from spatial state
+path progress cannot regress unless policy explicitly permits it
+0.35 threshold completes walk-the-path exactly once
+inspect out of range rejects
+inspect focal-tree in range completes inspect-tree exactly once
+objective and story changes share one committed revision
+duplicate command returns the prior result without a second mutation
+stale session/scene/epoch/revision rejects
+reset creates a new progression epoch
+browser, browser-editor and Node-headless commands produce the same result schema
+first visible frame cites the committed progression revision
 ```
 
 ## Ordered architecture queue
@@ -151,10 +177,10 @@ state/render/frame fingerprint correlation
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 7b. Adaptive Quality and Performance Budget Authority
-8. Interaction Command and Objective Authority
+8. Interaction Command and Objective Progression Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not treat two equal adjacent reads as deterministic replay. The next implementation must create independent runtimes, admit canonical scenarios, compare checkpointed projections and identify the first exact divergence.
+Do not add direct editor-only state mutation. Every product and tooling surface must use the same admitted command and typed progression result.

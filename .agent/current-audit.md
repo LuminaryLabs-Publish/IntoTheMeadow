@@ -1,110 +1,141 @@
 # IntoTheMeadow Current Audit
 
-**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
+**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
+**Audit timestamp:** `2026-07-12T02-38-23-04-00`
 
-**Audit timestamp:** `2026-07-12T00-58-12-04-00`
+## Status
+
+```txt
+status: interaction-command-objective-progression-authority-audited
+source revision reviewed: 7bf6a503a022ad4c547450308caea93aff75a4fc
+runtime source changed by this pass: no
+branch: main
+root .agent state: refreshed
+central synchronization: pending this commit, completed by paired ledger update
+```
 
 ## Summary
 
-`IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, immutable game state, descriptor-driven scene composition, CPU mesh construction, a persistent WebGL renderer, browser `GameHost` and editor surfaces, and a Node headless-editor environment.
+The repository already authors two objectives, two interaction targets and three story beats. The initial state activates `walk-the-path`, starts the player at `{ x: 0, y: 0, z: -36 }`, fixes `pathProgress` at `0` and records only the `arrival` story beat. The only runtime state transition, `advanceGameState()`, increments `frame` and writes `lastTick`.
 
-This pass audits deterministic replay validation. The source includes `stableStringify()` and `validateDeterminism()`, while `npm run check` runs `deterministic-scene-smoke.mjs`. The test constructs one game with the local fallback provider, does not tick or reset it, reads the same snapshot twice and compares the serialized strings. This proves read stability only, not deterministic construction, simulation, replay, provider parity or rendered-frame agreement.
+No implemented surface accepts movement, path-progress or inspection commands. The web host installs no gameplay input listeners. `GameHost` publishes reads plus the raw game object, and the editor bridge exposes tick/reset/render operations only. The authored objective and story graph is therefore unreachable through the shipped product loop.
 
 ## Plan ledger
 
-**Goal:** define one canonical and provider-aware replay transaction from independent construction through command/tick execution, reset, checkpoint comparison, exact divergence and first visible frame proof.
+**Goal:** define one authoritative command-to-progression transaction that makes the authored path and tree objectives reachable and correlates every accepted transition with one committed visible frame.
 
-- [x] Compare all ten accessible Publish repositories.
+- [x] Compare the current Publish inventory with every central ledger entry.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm nine eligible central ledgers and root `.agent` states.
-- [x] Select only `IntoTheMeadow` because newer repo-local work required reconciliation and it remained the oldest central entry.
-- [x] Inspect `AGENTS.md`, package checks, deterministic validator, game construction, state, snapshot and render-plan smoke.
-- [x] Identify the interaction loop, all domains, all kits and every declared service.
-- [x] Define canonical value, provider, seed, replay, reset, cadence, divergence and frame-proof boundaries.
+- [x] Confirm nine eligible root `.agent` states.
+- [x] Detect and avoid same-window unsynchronized work in `TheOpenAbove`.
+- [x] Select only `IntoTheMeadow` as the oldest stable eligible repository.
+- [x] Inspect content, state, game construction, browser host, public host, editor bridge and checks.
+- [x] Trace the complete interaction, objective and story reachability path.
+- [x] Preserve the complete 44-kit inventory and service map.
+- [x] Define authority, candidate kits, results, invariants and fixture gates.
 - [x] Change documentation only.
-- [ ] Runtime implementation and executable replay fixtures remain future work.
+- [ ] Implement and execute the progression authority.
 
 ## Selection comparison
 
 ```txt
 accessible Publish repositories: 10
 eligible non-Cavalry repositories: 9
-central ledger entries: 9
-root .agent states: 9
+new or central-ledger-missing eligible repositories: 0
+root-.agent-missing eligible repositories: 0
 
-IntoTheMeadow      central 2026-07-11T23-10-51-04-00, newer repo-local audit, selected
-HorrorCorridor     central 2026-07-11T23-18-16-04-00
-PhantomCommand     central 2026-07-11T23-28-29-04-00
-ZombieOrchard      central 2026-07-11T23-48-14-04-00
-TheUnmappedHouse   central 2026-07-12T00-01-25-04-00
-AetherVale         central 2026-07-12T00-10-23-04-00
-MyCozyIsland       central 2026-07-12T00-20-01-04-00
-PrehistoricRush    central 2026-07-12T00-30-49-04-00
-TheOpenAbove       central 2026-07-12T00-39-05-04-00
+TheOpenAbove       central 2026-07-12T00-39-05-04-00, repo-local 2026-07-12T02-29-50-04-00, skipped as active/unsynchronized
+IntoTheMeadow      central and repo-local 2026-07-12T00-58-12-04-00, selected
+HorrorCorridor     2026-07-12T01-08-06-04-00
+PhantomCommand     2026-07-12T01-20-00-04-00
+ZombieOrchard      2026-07-12T01-30-07-04-00
+TheUnmappedHouse   2026-07-12T01-41-56-04-00
+AetherVale         2026-07-12T01-58-43-04-00
+MyCozyIsland       2026-07-12T02-10-14-04-00
+PrehistoricRush    2026-07-12T02-21-55-04-00
 TheCavalryOfRome   excluded
 ```
 
-Only `LuminaryLabs-Publish/IntoTheMeadow` is changed in the Publish organization.
+Only `LuminaryLabs-Publish/IntoTheMeadow` was selected.
 
 ## Interaction loop
 
 ```txt
-browser boot
-  -> load commit-pinned meadow-area-kit
-  -> validate and install 43 local descriptors
-  -> create arrival-meadow source plan
-  -> create render-plan enhancer and WebGL renderer
-  -> expose GameHost and editor bridge
-  -> request RAF
+startup
+  -> external meadow provider import
+  -> local DSK descriptor installation
+  -> authored meadow, objectives, story and targets loaded
+  -> initial immutable state created
+  -> renderer, GameHost and editor bridge exposed
+  -> RAF begins
 
-browser frame
-  -> game.tick({ dt: 1/60, time: RAF absolute time })
-  -> immutable frame increments
-  -> lastTick records dt and time
-  -> enhancer and renderer submit the meadow frame
-  -> host/editor observations update
+frame
+  -> game.tick({ dt, time })
+  -> advanceGameState increments frame and lastTick
+  -> no input command is consumed
+  -> no player transform changes
+  -> no path progress changes
+  -> no interaction target is evaluated
+  -> no objective or story transition occurs
+  -> same scene topology is enhanced and rendered
 
-deterministic check
-  -> validateSceneFlow()
-  -> createIntoTheMeadowGame()
-  -> no externalKits, so local fallback provider
-  -> validateDeterminism(() => game.getSnapshot())
-  -> snapshot A from unchanged game
-  -> snapshot B from unchanged game
-  -> stable string comparison
-  -> Boolean pass/fail
+editor/public surfaces
+  -> read state/snapshot/diagnostics/render data
+  -> tick or reset the raw game
+  -> no movement/path/inspect/progression capability
 ```
+
+## Source-backed findings
+
+### Authored progression exists
+
+`ARRIVAL_OBJECTIVES` defines `walk-the-path` with `progressAtLeast: 0.35` and `inspect-tree` with `inspected: true`. `ARRIVAL_INTERACTION_TARGETS` defines `arrival-path` and `focal-tree`. `STORY_BEATS` defines arrival, path-discovery and focal-tree beats.
+
+### Runtime state never applies those rules
+
+The initial state contains the player, active objective, completion ledger and story beat IDs. `advanceGameState()` only increments `frame` and stores numeric `dt` and `time`; it does not read actions or mutate player/progression state.
+
+### Game construction exposes content but no progression command
+
+`createIntoTheMeadowGame()` places objectives, story beats and targets under `game.content`, but the public game API contains only read methods, `tick(input)` and `reset()`. `tick()` forwards its input directly to `advanceGameState()`.
+
+### Browser host has no gameplay adapter
+
+The host loads, ticks, enhances and renders. It installs the editor bridge but no keyboard, pointer or touch listeners for movement or inspection.
+
+### Editor bridge cannot prove progression
+
+The bridge exposes runtime status/state/snapshot/tick/reset and render/capture capabilities. It has no movement, path-progress, inspect, objective or story action.
+
+### Diagnostics can overstate product completeness
+
+Diagnostics count authored story beats, objectives and targets. Structural counts can pass while none are reachable through the product runtime.
+
+### Reset repeats the unreachable initial state
+
+Reset recreates the same state with path progress `0`, active `walk-the-path` and only the arrival story beat. There is no progression history, command sequence, transition result or frame receipt.
 
 ## Domains in use
 
 ```txt
-browser shell, DOM boot and visible failure projection
-external dependency manifest and dynamic provider loading
-source-provider selection, validation and fallback
+browser shell, DOM boot, loading and fatal projection
+external dependency manifest, dynamic provider loading and fallback
 provider, seed and content identity
 DSK declaration, census, validation and install snapshots
-game manifest, build and content identity
-immutable game state, frame mutation and reset
-game snapshot and diagnostics
-runtime lifecycle, RAF scheduling and stop/start
-runtime clock, step admission and reset epoch
-canonical value schema and serialization
-determinism fingerprints and checkpoint projections
-replay scenario, command sequence and tick schedule
-independent runtime construction and replay execution
-reset replay and cadence normalization
-first divergence and bounded replay journal
-browser/headless deterministic parity
-player, input, interaction, objective, story and persistence declarations
-terrain, path, materials, scatter and atmosphere
-grass density, archetypes, batching, placement, instancing, wind and LOD
-tree, wind, performance and post-process enhancement
-render-plan v2 contract and topology identity
-CPU mesh construction
-WebGL context, shader, buffer, draw, resize and disposal
-render surface, context recovery and committed-frame observation
-state/render-plan/visible-frame replay correlation
-static checks, browser observation, build and Pages deployment
+game manifest, immutable state, tick, reset, snapshot and diagnostics
+runtime lifecycle, RAF scheduling, clock and reset epoch
+player state, movement profile, terrain contact and actions
+input action maps, devices, contexts and normalization
+interaction registry, affordances, inspection state and events
+path curve, corridor, progression and validation
+objective model, flow, completion ledger and feedback
+story state, beats, dialogue and sequence execution
+public host, browser editor and headless editor capabilities
+terrain, materials, scatter, atmosphere, grass, trees and wind
+render-plan contract, enhancement, topology and CPU mesh generation
+WebGL context, programs, buffers, draws, resize and disposal
+committed state, progression, render and visible-frame observation
+validation, build and Pages deployment
 DSK implementation, dependency, consumption and retirement truth
 ```
 
@@ -209,8 +240,7 @@ meadow-performance-dsk
 meadow-render-host-dsk
   renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
 meadow-webgl-renderer-v2-kit
-  context acquisition, shader programs, attribute/uniform binding, CPU mesh ingest,
-  GPU buffer ownership, draw submission, resize, snapshot and disposal
+  context acquisition, shader programs, attribute/uniform binding, CPU mesh ingest, GPU buffers, draw, resize, snapshot, disposal
 post-process-stack-dsk
   pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
 render-target-kit
@@ -229,99 +259,95 @@ static-pages-deploy-dsk
   build-config, GitHub Pages workflow, release-artifacts, cache-invalidation, deploy-validation
 ```
 
-## Main findings
-
-### Same-instance read stability only
-
-`validateDeterminism()` invokes the supplied callback twice and compares the two serialized results. The smoke passes the same live `game.getSnapshot()` callback without any intervening tick, reset or mutation.
-
-### Fallback-only test path
-
-`deterministic-scene-smoke.mjs` calls `createIntoTheMeadowGame()` without `externalKits`, so it exercises the local fallback provider rather than the commit-pinned provider used by production boot.
-
-### No independent construction
-
-The check does not create runtime A and runtime B. Constructor nondeterminism, shared mutable provider state, cache residue and process-order dependencies are outside the test.
-
-### No simulation or reset replay
-
-The test executes no tick sequence, interaction command, objective transition, story trigger, stop/start or reset/replay cycle.
-
-### Canonicalization contract absent
-
-`stableStringify()` sorts plain object keys but admits arbitrary JavaScript values. `NaN`, `Infinity`, `-0`, sparse arrays, unsupported prototypes, typed values, cycles and accessor behavior have no explicit policy.
-
-### No diagnostic divergence
-
-The result contains only `passed` and a generic failure string. It does not identify checkpoint, tick, domain, path, provider, seed or left/right fingerprints.
-
-### No presentation proof
-
-Game snapshots include the base render plan, but deterministic validation does not compare enhanced plans, renderer generations, committed frames, captures or the production visible surface.
-
 ## Required parent domain
 
 ```txt
-meadow-deterministic-replay-validation-authority-domain
+meadow-interaction-objective-progression-authority-domain
 ```
 
-Planned coordinating kits:
+Existing owners to update first:
 
 ```txt
-canonical-value-schema-kit
-canonical-serializer-kit
-determinism-fingerprint-kit
-provider-identity-kit
-provider-fingerprint-kit
-seed-policy-kit
-replay-run-id-kit
-replay-scenario-schema-kit
-replay-input-sequence-kit
-replay-tick-schedule-kit
-independent-runtime-construction-kit
-replay-execution-kit
-reset-replay-kit
-cadence-normalization-kit
-state-projection-fingerprint-kit
-render-plan-fingerprint-kit
-visible-frame-determinism-ack-kit
-first-divergence-kit
-replay-result-kit
-determinism-journal-kit
-same-seed-independent-build-fixture-kit
-fallback-external-parity-fixture-kit
-tick-reset-replay-fixture-kit
-cadence-parity-fixture-kit
-browser-headless-replay-fixture-kit
+into-the-meadow-game-dsk
+path-corridor-dsk
+meadow-player-dsk
+meadow-input-dsk
+meadow-interaction-dsk
+meadow-objective-dsk
+meadow-story-dsk
+meadow-ui-dsk
+meadow-diagnostics-dsk
+web-host-dsk
+browser editor bridge
+Node headless editor environment
+Committed Frame Observation Authority
 ```
 
-## Required proof
+Candidate coordinating kits:
 
 ```txt
-canonical-value rejection and versioning
-same provider/seed/content across independent builds
-fallback and external provider replay classification
-same sequenced commands and normalized ticks
-reset and replay parity
-30/60/120 Hz committed-tick parity
-browser/headless result parity
-negative controls for seed/provider/input/content changes
-exact first-divergence reporting
-state, render-plan and first visible frame correlation
+interaction-command-schema-kit
+interaction-command-id-kit
+interaction-sequence-kit
+interaction-target-registry-kit
+player-movement-command-kit
+path-progress-sampler-kit
+path-progress-result-kit
+inspect-command-kit
+interaction-admission-kit
+objective-rule-kit
+objective-transition-kit
+completion-ledger-kit
+story-trigger-kit
+story-transition-kit
+progression-commit-kit
+progression-result-kit
+browser-interaction-adapter-kit
+editor-interaction-capability-kit
+progression-observation-kit
+progression-frame-ack-kit
+progression-journal-kit
+path-progress-fixture-kit
+inspect-objective-fixture-kit
+browser-editor-progression-parity-fixture-kit
+visible-progression-frame-smoke-kit
 ```
 
-## Validation status
+## Required invariants
 
 ```txt
-runtime source changed: no
-determinism source changed: no
-package scripts changed: no
-dependencies changed: no
-rendering changed: no
-deployment changed: no
-branch created: no
-pull request created: no
-npm run check: not run
-new replay fixtures: unavailable
-browser replay smoke: unavailable
+commands are sequenced and fenced by runtime session and scene
+movement and inspection payloads are finite and bounded
+path progress comes from authoritative spatial evidence, not caller truth
+inspection requires a registered target and admitted spatial policy
+one command produces at most one objective transition bundle
+objective completion and story triggers commit atomically
+completed objective IDs are unique and ordered by committed revision
+stale, duplicate and invalid commands perform zero mutation
+browser, public host and editor adapters use the same command/result schema
+snapshots expose progression revision and last accepted result
+one visible frame acknowledges the exact committed progression revision
+reset creates a new progression epoch and rejects predecessor commands
 ```
+
+## Ordered safe ledges
+
+```txt
+1. Runtime Session Lifecycle Authority
+2. Host Capability Gateway and Raw Runtime Quarantine
+3. Headless Workspace Path Authority and Filesystem Containment
+4. Runtime Clock and Step Admission Authority
+5. Source Provider Authority
+6. Render Topology Identity Authority
+6a. WebGL Context Recovery Authority
+6b. Render Surface Resolution Authority
+7. Committed Frame Observation Authority
+7a. Fatal Runtime Failure Recovery Authority
+7b. Adaptive Quality and Performance Budget Authority
+8. Interaction Command and Objective Progression Authority
+8a. Persistence Continuity Authority
+9. DSK Runtime Consumption Authority
+9a. Deterministic Replay Validation Authority
+```
+
+Documentation only. No runtime source, package, rendering or deployment behavior changed.

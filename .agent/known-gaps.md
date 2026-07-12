@@ -1,198 +1,144 @@
 # IntoTheMeadow Known Gaps
 
-**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
-
-**Updated:** `2026-07-12T00-58-12-04-00`
+**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
+**Updated:** `2026-07-12T02-38-23-04-00`
 
 ## Selection state
 
 ```txt
-10 accessible LuminaryLabs-Publish repositories observed
-TheCavalryOfRome excluded by rule
+10 accessible Publish repositories observed
+TheCavalryOfRome excluded
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected because newer repo-local work required reconciliation
-only IntoTheMeadow changed in the Publish organization for this pass
+TheOpenAbove skipped because repo-local state was newer than its central ledger during this run
+IntoTheMeadow selected as the oldest stable eligible repository
+only IntoTheMeadow changed in the Publish organization
 ```
 
-## Current deterministic-replay gaps
+## Current interaction and progression gaps
 
-### Determinism check is a same-instance read check
-
-`deterministic-scene-smoke.mjs` constructs one game, performs no tick or reset, and compares two immediate `game.getSnapshot()` reads.
+### Authored rules are inert
 
 ```txt
-independent construction: absent
-second provider instance: absent
-second game instance: absent
-shared-state detection: absent
-constructor-order variation: absent
+authored path objective: present
+authored inspect objective: present
+authored path target: present
+authored tree target: present
+authored arrival/path/tree story beats: present
+runtime rule evaluator: absent
 ```
 
-### Production provider is not exercised
-
-The smoke calls `createIntoTheMeadowGame()` without `externalKits`, so the local fallback provider is selected. The commit-pinned external provider used by browser production is outside the deterministic gate.
+### Player state cannot advance
 
 ```txt
-provider ID/version admission: absent
-provider fingerprint: absent
-fallback/external parity classification: absent
-production-provider replay fixture: absent
+player starts at x:0 y:0 z:-36
+pathProgress starts at 0
+movement command: absent
+movement result: absent
+terrain-contact update: absent
+path sampler: absent
+path revision: absent
 ```
 
-### Simulation replay is absent
+### Inspection is unreachable
 
 ```txt
-sequenced commands: absent
-normalized tick schedule: absent
-intermediate checkpoints: absent
-reset replay: absent
-stop/start replay: absent
-30/60/120 Hz committed-tick parity: absent
-objective/story replay: absent
+inspect command: absent
+registered-target admission: absent
+proximity/line-of-sight policy: absent
+inspection result: absent
+inspect-state commit: absent
+focal-tree story trigger: absent
 ```
 
-### Canonical-value policy is absent
-
-`stableStringify()` sorts object keys but does not reject or tag unsupported JavaScript values.
+### Objective and story transitions are absent
 
 ```txt
-NaN/Infinity policy: absent
--0 policy: absent
-undefined policy: absent
-sparse-array policy: absent
-Date/Map/Set policy: absent
-typed-value tags: absent
-cycle rejection result: absent
-accessor/getter policy: absent
-schema and serializer version: absent
+objective rule evaluation: absent
+objective transition result: absent
+completion ledger mutation: absent
+active-objective advancement: absent
+story trigger evaluation: absent
+story transition result: absent
+atomic objective/story commit: absent
+progression revision: absent
 ```
 
-### Fingerprints are absent
+### Product adapters do not expose gameplay actions
 
 ```txt
-provider fingerprint: absent
-seed fingerprint: absent
-content fingerprint: absent
-scenario fingerprint: absent
-state checkpoint fingerprint: absent
-objective/story fingerprint: absent
-source render-plan fingerprint: absent
-enhanced render-plan fingerprint: absent
-visible-frame fingerprint: absent
+browser keyboard adapter: absent
+browser pointer/touch adapter: absent
+public command gateway: absent
+editor movement capability: absent
+editor path-progress capability: absent
+editor inspect capability: absent
+headless scenario progression command: absent
 ```
 
-### Divergence reporting is absent
+### Observation can mislead
 
-The validator returns a Boolean and one generic failure string.
+Diagnostics report authored content counts, not executable reachability. Snapshots contain state but no command ID, interaction result, progression revision, objective transition, story transition or visible-frame receipt.
+
+## Required progression fixtures
 
 ```txt
-replay run ID: absent
-checkpoint ID: absent
-committed tick ID: absent
-domain/path: absent
-left/right fingerprints: absent
-classification: absent
-bounded evidence journal: absent
+fixture:movement-finite-bounds
+fixture:path-progress-spatial-sampling
+fixture:path-progress-monotonicity
+fixture:path-objective-threshold
+fixture:inspect-target-admission
+fixture:inspect-out-of-range-rejection
+fixture:objective-story-atomic-commit
+fixture:duplicate-command-idempotence
+fixture:stale-session-scene-rejection
+fixture:reset-progression-epoch
+fixture:browser-editor-progression-parity
+fixture:first-visible-progression-frame
+smoke:browser-walk-and-inspect
+smoke:pages-walk-and-inspect
 ```
 
-### Browser/headless/frame proof is absent
+## Retained deterministic-replay gaps
 
 ```txt
-browser replay command: absent
-headless replay command: absent
-shared replay result schema: absent
-renderer replay identity: absent
-first visible replay-frame acknowledgement: absent
-capture replay identity: absent
-Pages replay smoke: absent
-```
-
-## Missing deterministic-replay fixtures
-
-```txt
-canonical-value fixture
-independent fallback construction fixture
-independent external-provider construction fixture
-fallback/external parity fixture
-same-seed replay fixture
-changed-seed negative control
-changed-provider negative control
-changed-command-order negative control
-tick-sequence checkpoint fixture
-reset-and-replay fixture
-stop/start replay fixture
-30/60/120 Hz cadence-parity fixture
-browser/headless parity fixture
-first-divergence fixture
-state/render/frame correlation fixture
-visible replay-frame browser smoke
-Pages replay smoke
-```
-
-## Retained adaptive-quality gaps
-
-```txt
-auto remains a static profile
-frame/GPU sampling absent
-hysteresis, cooldown and minimum residency absent
-quality transition command/revision/result absent
-quality-aware cache identity absent
-maxGrassInstances not globally enforced
-maxSmallScatterObjects unused
-terrainResolution not bound to terrain topology
-postProcess not bound to actual pass submission
-surface/DPR budget not owned by quality
-consumer prepare/commit/rollback absent
-first visible quality-frame receipt absent
-```
-
-## Retained persistence gaps
-
-```txt
-meadow-save-dsk remains a planned declaration
-browser boot always starts fresh
-reset silently discards state
-save schema, slot registry and checkpoint identity absent
-save/load commands absent from public adapters
-candidate admission, migration and reconciliation absent
-hydration commit and rollback absent
-first visible hydrated-frame receipt absent
+same-instance adjacent-read check only
+production provider not covered
+canonical-value policy absent
+independent construction/replay absent
+reset/cadence parity absent
+first-divergence and visible-frame fingerprints absent
 ```
 
 ## Retained runtime and rendering gaps
 
 ```txt
 RAF absolute time and fixed dt disagree
-stop/start can retain or duplicate scheduling state
-clock revisions and typed step results absent
+stop/start can duplicate scheduling state
+raw GameHost exposes game authority
 WebGL context generations and transactional restore absent
 DPR/pixel budget and surface revision absent
 committed state/plan/frame identity absent
 fatal startup/frame recovery remains non-transactional
 ```
 
-## Retained DSK and capability gaps
+## Retained performance and persistence gaps
+
+```txt
+auto quality is static
+complete terrain/grass/scatter/post budgets are not enforced
+quality transition transactions and frame receipts are absent
+save/load commands, schema, migration and hydration commit are absent
+```
+
+## Retained DSK truth gaps
 
 ```txt
 declaration status is not runtime consumption proof
 local implementations are not registry-bound
 runtime consumers bypass registry lookup
 reverse disposal is not registry-owned
-GameHost exposes raw game authority
-session/lifecycle fences and fatal capability quarantine absent
-public observations are not revisioned
-```
-
-## Retained interaction and progression gaps
-
-```txt
-path-progress and inspect commands absent
-player path progress remains zero
-objective completion and story transitions absent
-browser/editor interaction parity absent
-committed-frame progression acknowledgement absent
 ```
 
 ## Completion boundary
 
-Do not close deterministic validation because repeated reads are equal. Completion requires canonical admission, independent runtime replay, production-provider coverage, reset/cadence parity, exact first divergence and state/render/visible-frame correlation.
+Do not treat objective, target or story counts as playable progression. Completion requires admitted movement and inspection commands, authoritative spatial evidence, atomic objective/story commits, reset epoch fencing, browser/editor parity and a visible frame that cites the accepted progression result.

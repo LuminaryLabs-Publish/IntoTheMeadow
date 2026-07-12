@@ -1,116 +1,81 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T17-58-43-04-00`
+**Updated:** `2026-07-12T19-41-13-04-00`
 
 ## Summary
 
-This documentation-only reconciliation verifies that the first authored exploration loop remains unreachable. It preserves the 44-kit inventory and defines the missing command, movement, inspection, progression, projection and deployment proof boundaries. It does not claim executable provider installation or playable gameplay.
+This documentation-only pass verifies that the browser loop advances once per RAF callback with a fixed `1/60` dt, renders from absolute RAF time, retains no cancellable RAF lease and exposes raw game mutation. It defines the missing scheduler and step-admission proof boundary without claiming implementation.
 
 ## Plan ledger
 
-**Goal:** separate verified source/documentation facts from unimplemented gameplay and deployment proof.
+**Goal:** separate source-verified timing facts from unimplemented scheduler guarantees.
 
-- [x] Compare the Publish inventory with central tracking.
+- [x] Compare Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow` as the oldest eligible stable repository.
-- [x] Verify required root `.agent` files and the new timestamped reconciliation family.
+- [x] Select only IntoTheMeadow.
+- [x] Verify root `.agent` and central head alignment.
+- [x] Inspect host, state, renderer, GameHost and tests.
 - [x] Preserve all 44 kits and offered services.
-- [x] Inspect and reconcile the DSK/state/content/host/render boundaries.
+- [x] Add the timestamped frame-clock audit family.
 - [x] Change documentation only.
-- [ ] Execute provider and playable-loop fixtures after implementation exists.
+- [ ] Execute timing fixtures after implementation.
 
-## Proven from source and retained audits
-
-```txt
-external provider declarations: 1
-local DSK/kit declarations: 43
-total kit surfaces: 44
-required-v0.1 declarations: 15
-planned declarations: 28
-story beats: 3
-objectives: 2
-interaction targets: 2
-
-active tick:
-  increments frame
-  records lastTick.dt and lastTick.time
-  does not mutate player, path, interaction, objective or story state
-
-runtime:
-  has no gameplay command router
-  has no movement result
-  has no inspect result
-  has no objective/story commit result
-```
-
-## Proven documentation state
+## Proven from source
 
 ```txt
-START_HERE current: yes
-current-audit current: yes
-next-steps current: yes
-known-gaps current: yes
-validation current: yes
-kit-registry current after final update: yes
-tracker and turn ledger present: yes
-architecture/render/gameplay/interaction/progression/deploy audits present: yes
-central ledger and change log required after repo-local completion: yes
+frame callback receives RAF now
+game tick is called once per callback
+dt passed by host is always 1/60
+time passed by host is now/1000
+state stores Number(dt) and Number(time) without finite/range policy
+renderer uses render-plan time for shader wind
+renderer snapshot omits temporal correlation
+stop does not cancel a RAF handle
+start requests a RAF callback
+raw GameHost.game is exposed
+renderer has a dispose method but host stop does not invoke it
 ```
 
 ## Existing checks can establish, when run
 
 ```txt
-required files and descriptor ids exist
-five-service descriptor metadata validates
-external provider or fallback can create a render plan
-static meadow generation is deterministic
-CPU mesh and WebGL draw paths meet current contracts
-headless editor observation and capture operate
+required files and descriptor structure
+render-plan contract and topology stability
+CPU mesh shape and buffer lengths
+headless editor environment and commands
+browser boot, editor marker, completed render and screenshot artifact
 ```
 
 ## Existing checks cannot establish
 
 ```txt
-executable provider readiness
-browser/editor gameplay command admission
-player movement and terrain/path evidence
-path progress thresholds
-focal-tree identity/range admission
-objective/story exactly-once transitions
-atomic multi-domain gameplay commit
-feedback and save revision binding
-first visible gameplay frame
-GitHub Pages playable-loop parity
+refresh-rate-independent simulation
+monotonic callback admission
+one live RAF chain
+stop/start race safety
+bounded long-stall catch-up
+invalid temporal input rejection
+pause/resume generation behavior
+render/simulation clock correlation
+visible-frame acknowledgement
+Pages timing parity
 ```
 
 ## Required deterministic fixtures
 
 ```txt
-input-normalization-determinism
-movement-terrain-contact
-path-projection-determinism
-0.25 and 0.35 threshold crossings
-large-delta multi-threshold crossing
-inspect exact target and range
-duplicate/stale command zero mutation
-objective/story exactly once
-candidate failure rollback
-save revision binding
-visible gameplay frame acknowledgement
-```
-
-## Required browser matrix
-
-```txt
-local source host and built output
-GitHub Pages
-keyboard movement and editor command
-fresh session, reset and restart
-path objective and focal-tree objective
-duplicate command and inspection replay
-WebGL2 and fallback render path
-first visible feedback frame
+clock sample classification
+30/60/120 Hz parity
+jitter parity
+long-stall budget
+stop/start single-chain
+late callback rejection
+negative/NaN/Infinity rejection
+pause/resume
+fatal retirement
+render correlation
+visible frame acknowledgement
 ```
 
 ## Execution status
@@ -126,11 +91,11 @@ branch created: no
 pull request created: no
 target branch: main
 npm run check executed: no
-browser gameplay smoke executed: no
-Pages gameplay smoke executed: no
-playable-loop fixtures available: no
+browser frame-clock smoke executed: no
+Pages frame-clock smoke executed: no
+timing fixtures available: no
 ```
 
 ## Claim boundary
 
-The audit proves a missing playable-loop authority. It does not claim that movement, inspection, objectives, story, feedback, save consumption or deployed playability are implemented.
+No claim is made for deterministic elapsed-time simulation, single-chain scheduling, bounded catch-up, pause/resume correctness, render-clock parity or production readiness.

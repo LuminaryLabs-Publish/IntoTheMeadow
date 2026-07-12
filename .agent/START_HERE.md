@@ -4,29 +4,28 @@
 
 **Branch:** `main`
 
-**Last aligned:** `2026-07-11T23-10-51-04-00`
+**Last aligned:** `2026-07-12T00-49-48-04-00`
 
 ## Summary
 
 `IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a persistent WebGL renderer, browser editor capabilities and a Node headless-editor environment.
 
-This pass isolates persistence continuity. `meadow-save-dsk` declares save-model, save-slots, persistence-adapter, migration and save-validation services, but it remains a planned descriptor. Browser startup and reset always create fresh default state, and no GameHost, browser-editor or headless capability can save, discover, migrate, hydrate or verify a checkpoint.
+This pass isolates adaptive quality and performance-budget authority. `meadow-performance-dsk` is required and implementation-backed, but its profiles are static. Production defaults to `high`, records no frame-cost samples, applies only part of its declared budgets, ignores profile terrain/post fields and caches enhanced topology without quality identity.
 
 ## Plan ledger
 
-**Goal:** make save, reload, migration, reset and hydration one versioned transaction whose state and checkpoint identity reaches the first visible resumed frame.
+**Goal:** turn measured performance into one cadence-independent, budget-complete and rollback-safe quality transition whose identity reaches the first visible frame.
 
 - [x] Compare the complete accessible Publish inventory with the central ledger.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have central ledger and root `.agent` state.
-- [x] Skip repositories with newer unsynchronized repo-local audit work.
-- [x] Select only `IntoTheMeadow` as the oldest fully synchronized eligible repository.
-- [x] Trace manifest, DSK registry, game state, snapshot, startup, reset, GameHost and editor capabilities.
+- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
+- [x] Trace performance profiles, scene defaults, enhancer caching, grass/scatter budgets, terrain topology, post-processing, renderer draws and browser RAF.
 - [x] Preserve the complete interaction loop, domain map, kit inventory and service map.
-- [x] Define save schema, slots, fingerprints, admission, migration, reconciliation, hydration, rollback and proof gates.
+- [x] Define sample, window, decision, budget, transition, rollback, observation and visible-frame requirements.
 - [x] Add timestamped architecture and system-specific audits.
-- [x] Refresh required root `.agent` files.
-- [ ] Runtime implementation and executable persistence fixtures remain future work.
+- [x] Refresh all required root `.agent` files.
+- [ ] Runtime implementation and executable adaptive-quality fixtures remain future work.
 
 ## Current interaction loop
 
@@ -34,72 +33,83 @@ This pass isolates persistence continuity. `meadow-save-dsk` declares save-model
 browser boot
   -> load external meadow provider
   -> install local DSK descriptors
-  -> create static meadow plan
-  -> createInitialGameState
+  -> create arrival-meadow plan
+  -> construct renderer and enhancer
   -> expose GameHost and editor bridge
   -> begin RAF
 
-runtime
-  -> tick immutable in-memory state
-  -> render and publish snapshots
+first enhancement
+  -> arrival scene supplies no performance profile
+  -> policy defaults to high
+  -> partial object limits and grass density applied
+  -> terrain resolution hard-coded
+  -> post stack created independently
+  -> plan cached by source topology only
 
-reset or reload
-  -> create default state again
-  -> no slot discovery, save admission, migration or hydration
+runtime frame
+  -> tick with fixed dt and RAF absolute time
+  -> enhancer reuses cached quality topology
+  -> renderer submits outline and color/fog draws
+  -> no performance sample or decision result
 
-browser and Node editors
-  -> read, tick, reset and capture
-  -> no persistence commands
+quality transition
+  -> no command surface
+  -> no quality revision or budget ledger
+  -> no consumer prepare/commit/rollback
+  -> no first visible quality-frame receipt
 ```
 
 ## Main finding
 
 ```txt
-meadow-save-dsk declaration: present
-save-model / save-slots / persistence-adapter services: declared
-migration / save-validation services: declared
-required v0.1 implementation: absent
-save schema and envelope: absent
-slot registry and storage adapter: absent
-save/load commands: absent
-migration and reconciliation execution: absent
-hydration commit and rollback: absent
-reload continuity fixture: absent
-visible hydrated-frame receipt: absent
+meadow-performance-dsk required: yes
+production quality selection: implicit high
+auto profile: static constant
+frame-cost sampling: absent
+elapsed-time decision window: absent
+quality transition command/result: absent
+quality-aware enhancer cache key: absent
+maxGrassInstances enforcement: absent
+maxSmallScatterObjects enforcement: absent
+terrainResolution profile binding: absent
+postProcess profile binding: absent
+surface/DPR profile binding: absent
+quality revision and fingerprint: absent
+first visible quality-frame receipt: absent
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-persistence-continuity-authority-domain
+meadow-adaptive-quality-budget-authority-domain
 ```
 
 Core composition:
 
 ```txt
-save-schema-descriptor-kit
-save-slot-registry-kit
-checkpoint-id-kit
-state-revision-kit
-reset-epoch-kit
-save-envelope-kit
-save-integrity-fingerprint-kit
-persistence-capability-kit
-save-command-kit
-save-admission-kit
-save-write-result-kit
-save-candidate-read-kit
-save-candidate-classifier-kit
-save-migration-kit
-save-reconciliation-kit
-hydration-plan-kit
-hydration-commit-kit
-hydration-rollback-kit
-persistence-journal-kit
-persistence-observation-kit
-visible-frame-hydration-ack-kit
-persistence-fixture-kit
-browser-reload-continuity-smoke-kit
+performance-sample-envelope-kit
+performance-window-timebase-kit
+quality-profile-schema-kit
+quality-profile-admission-kit
+quality-decision-policy-kit
+quality-transition-command-kit
+quality-transition-id-kit
+quality-revision-kit
+performance-budget-ledger-kit
+grass-instance-budget-kit
+scatter-budget-kit
+terrain-resolution-policy-kit
+post-process-quality-policy-kit
+render-plan-quality-fingerprint-kit
+quality-cache-invalidation-kit
+quality-transition-prepare-kit
+quality-transition-commit-kit
+quality-transition-rollback-kit
+effective-quality-observation-kit
+quality-frame-ack-kit
+quality-cadence-parity-fixture-kit
+quality-budget-enforcement-fixture-kit
+quality-transition-browser-smoke-kit
 ```
 
 ## Ordered implementation gates
@@ -115,6 +125,7 @@ browser-reload-continuity-smoke-kit
 6b. Render Surface Resolution Authority
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
+7b. Adaptive Quality and Performance Budget Authority
 8. Interaction Command and Objective Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
@@ -123,14 +134,13 @@ browser-reload-continuity-smoke-kit
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-11T23-10-51-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-11T23-10-51-04-00.md
-.agent/architecture-audit/2026-07-11T23-10-51-04-00-persistence-continuity-dsk-map.md
-.agent/render-audit/2026-07-11T23-10-51-04-00-checkpoint-visible-frame-gap.md
-.agent/gameplay-audit/2026-07-11T23-10-51-04-00-reset-reload-progress-loss-loop.md
-.agent/interaction-audit/2026-07-11T23-10-51-04-00-save-load-command-admission-map.md
-.agent/persistence-audit/2026-07-11T23-10-51-04-00-save-schema-migration-hydration-contract.md
-.agent/deploy-audit/2026-07-11T23-10-51-04-00-persistence-continuity-fixture-gate.md
+.agent/trackers/2026-07-12T00-49-48-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T00-49-48-04-00.md
+.agent/architecture-audit/2026-07-12T00-49-48-04-00-adaptive-quality-budget-dsk-map.md
+.agent/render-audit/2026-07-12T00-49-48-04-00-quality-cache-consumer-frame-gap.md
+.agent/interaction-audit/2026-07-12T00-49-48-04-00-quality-transition-admission-map.md
+.agent/performance-audit/2026-07-12T00-49-48-04-00-sampling-budget-transition-contract.md
+.agent/deploy-audit/2026-07-12T00-49-48-04-00-adaptive-quality-fixture-gate.md
 ```
 
-A DSK declaration is not executable persistence. Success requires a verified checkpoint to survive reload, compatibility admission and hydration, then reach one committed visible frame without partial mutation.
+A static profile object is not adaptive quality. Success requires measured evidence, complete budget enforcement, consumer-coherent transition, failure rollback and a visible frame that cites the committed quality revision.

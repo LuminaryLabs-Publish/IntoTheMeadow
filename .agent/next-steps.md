@@ -1,29 +1,30 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T13-38-52-04-00`
+**Updated:** `2026-07-12T13-54-00-04-00`
 
 ## Summary
 
-Implement grass visibility and LOD by extending the existing grass, camera, performance, render-plan and renderer owners. Do not create a parallel grass renderer. Replace density-only batch permanence with a camera-bound visible-set transaction and keep the current static topology path as the predecessor until the new result is accepted.
+Repo-local and central documentation are synchronized. The next implementation task is still to extend the existing grass, camera, performance, render-plan and renderer owners with a camera-bound visible-set transaction. Do not create a parallel grass renderer.
 
 ## Plan ledger
 
 **Goal:** ensure every rendered grass patch has current camera, frustum, distance-tier, budget and generation evidence before its geometry reaches draw submission.
 
+- [x] Reconcile the current grass audit across root docs, machine registry and central tracking.
 - [ ] Define `GrassVisibilityCommand` and immutable input revisions.
 - [ ] Add stable bounds for every grass patch.
 - [ ] Project the committed camera into frustum planes.
 - [ ] Classify patches as inside, intersecting or outside.
-- [ ] Measure camera distance to patch bounds rather than patch centers only.
+- [ ] Measure camera distance to patch bounds.
 - [ ] Make near, mid, far, terrain-tint and culled states reachable.
 - [ ] Stop using density as the authority for LOD tier.
-- [ ] Retain density only as an instance-distribution and local-complexity input.
+- [ ] Retain density as distribution and local-complexity input only.
 - [ ] Add entry/exit hysteresis for each distance threshold.
-- [ ] Define transition behavior when camera or viewport revisions change.
-- [ ] Define terrain-tint representation and its render ownership.
-- [ ] Apply quality-profile patch, instance, vertex and draw budgets.
-- [ ] Produce one `GrassVisibilityResult`.
+- [ ] Define transition behavior for camera, viewport and quality revisions.
+- [ ] Define terrain-tint representation and ownership.
+- [ ] Apply patch, instance, vertex and draw budgets.
+- [ ] Produce one immutable `GrassVisibilityResult`.
 - [ ] Allocate visible-set, mesh and draw generations.
 - [ ] Reject stale camera, viewport, topology, policy and quality results.
 - [ ] Preserve the predecessor visible set after candidate failure.
@@ -104,7 +105,6 @@ Retired
 ```txt
 near
   -> highest card count
-  -> strict near threshold
   -> frustum required
 
 mid
@@ -120,30 +120,22 @@ terrain-tint
   -> terrain/material contribution only
 
 culled
-  -> no geometry and no tint contribution
+  -> no grass geometry or tint contribution
 ```
 
 ## Acceptance matrix
 
 ```txt
-patch fully outside frustum
-patch intersecting frustum edge
-patch inside near threshold
-patch crossing near-to-mid boundary
-patch oscillating around a threshold
-patch inside far threshold
-patch beyond far but inside tint range
-patch beyond tint range
+inside/intersecting/outside frustum
+near/mid/far/tint/culled distance bands
+slow threshold crossing and oscillation
 camera teleport
 viewport aspect change
-topology replacement
+topology and policy replacement
 quality reduction
-vertex budget exhaustion
-draw budget exhaustion
-candidate build failure preserves predecessor
-stale camera result
-stale viewport result
-stale topology result
+vertex and draw budget exhaustion
+candidate failure preserves predecessor
+stale camera/viewport/topology result
 first visible frame receipt
 local and deployed browser parity
 ```
@@ -173,4 +165,4 @@ local and deployed browser parity
 9a. Deterministic Replay Validation Authority
 ```
 
-The current `grass-lod-policy-kit.pick(distance)` should become policy inside the authority, not remain an unused descriptor. The current density-driven batch choice should remain a content-density decision, not a substitute for camera LOD.
+`grass-lod-policy-kit.pick(distance)` should become policy inside this authority. Density-driven batch choice should remain content distribution, not camera LOD.

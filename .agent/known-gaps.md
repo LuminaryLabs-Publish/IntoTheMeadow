@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T19-01-08-04-00`
+**Updated:** `2026-07-11T20-38-07-04-00`
 
 ## Selection state
 
@@ -10,76 +10,73 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as the oldest eligible documented repository
+AetherVale skipped because repo-local audit state was newer than its central ledger
+IntoTheMeadow selected as the oldest stable eligible repository
 only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## Current fatal-runtime recovery gaps
+## Current runtime clock and step gaps
 
-### Startup acquisitions are not transactional
+### RAF time and delta disagree
 
-The external provider, game, renderer, enhancer, `GameHost`, editor bridge and listeners are acquired sequentially without an acquisition ledger or reverse cleanup stack.
+The browser uses absolute RAF page time but always passes `dt = 1/60`. State and presentation therefore do not share one elapsed-time model when callbacks are delayed, throttled or resumed.
 
-### Public globals can be published before full readiness
+### Stop/start injects wall-clock pause into presentation
 
-`GameHost` is exposed before editor installation and before the first committed rendered frame. A later startup failure has no authoritative global-retirement path.
+`stop()` only blocks callbacks. The next `start()` schedules a RAF whose timestamp includes the entire stopped interval, so wind phase jumps even though the game advances one nominal state step.
 
-### Frame state mutates before frame success
+### Browser reset does not reset render time
 
-`game.tick()` advances state before plan validation and rendering. `lastPlan` is assigned before `renderer.render()` completes. Failed work can leave state, plan, renderer snapshot and canvas representing different phases.
+`runtime.reset` recreates game state but does not establish a new clock origin or reset epoch. The next browser frame can pair frame-zero-like state with a large absolute render time.
 
-### Renderer mutation is not staged
+### Browser editor bypasses clock ownership
 
-A render attempt can resize the canvas, replace buffers, clear and issue draws before failing. No candidate resource registry, rollback receipt or last-known-good canvas/frame boundary exists.
+`runtime.tick` directly accepts caller-provided `dt` and `time`. It has no finite-value validation, monotonicity check, session/epoch fence, expected revision, step sequence or work budget.
 
-### Fatal handling is only presentation
+### Node headless uses an independent time model
 
-`showFatal()` sets `stopped`, writes text and logs the error. It creates no failure ID, lifecycle state, classification, resource-impact record, cleanup result or recovery policy.
+The Node environment accumulates caller delta in a private variable and resets it to zero. It is not the same clock used by the browser route and cannot prove browser/headless parity.
 
-### Capabilities survive fatal state
+### Multi-step work is unbounded
 
-The raw game and editor capabilities remain callable:
+Node `runtime.tick` loops over caller-controlled `ticks`. There is no integer validation, maximum tick count, total delta limit, execution budget or partial-result classification.
+
+### Step results and journals are absent
+
+There is no typed accepted/clamped/deferred/rejected result, clock revision, step ID, reset epoch, source adapter ID or bounded journal row.
+
+### Visible-frame correlation is absent
+
+State `lastTick`, render-plan time, shader `uTime`, renderer snapshot and canvas frame do not cite one shared clock revision or step identity.
+
+## Missing clock fixtures
 
 ```txt
-runtime.tick
-runtime.reset
-scene.getRenderPlan
-renderer.getSnapshot
-renderer.capture
-GameHost.game.tick/reset/rebuildRenderPlan
+RAF rate parity fixture
+large callback delay fixture
+hidden-tab throttle fixture
+stop/resume rebase fixture
+browser reset epoch fixture
+browser editor stale-step fixture
+non-finite and negative delta fixture
+headless multi-step budget fixture
+browser/headless parity fixture
+clock-to-render-frame correlation fixture
 ```
 
-### Capture remains stale-capable
-
-Canvas serialization can continue after fatal state and is paired with the latest renderer snapshot without failure state or committed-frame admission.
-
-### In-place restart reuses the damaged graph
-
-`start()` schedules the same frame callback with the same game, renderer, enhancer, bridge, globals and observations. No new session, renderer, resource or frame generation is allocated.
-
-### Disposal is disconnected from failure
-
-The renderer and editor bridge expose `dispose()`, but boot and frame failure paths do not invoke them. Cleanup failure is also not representable.
-
-### Late callbacks are not fenced
-
-There is no predecessor-session or callback-generation check to reject work that arrives after fatal retirement or cold restart.
-
-## Missing fatal-recovery fixtures
+## Retained fatal-runtime recovery gaps
 
 ```txt
-startup acquisition rollback fixture
-partial global-publication fixture
-failure-after-tick rollback fixture
-plan-validation failure fixture
-mesh/buffer/draw failure injection fixture
-fatal capability quarantine fixture
-fatal capture rejection fixture
-cleanup failure fixture
-in-place restart rejection fixture
-cold replacement-session fixture
-repeated failure/restart leak fixture
-terminal disposal idempotency fixture
+startup acquisitions are not transactional
+public globals can publish before full readiness
+frame state mutates before frame success
+renderer mutation is not staged
+fatal handling is only presentation
+capabilities survive fatal state
+capture remains stale-capable
+in-place restart reuses the damaged graph
+disposal is disconnected from failure
+late predecessor callbacks are not fenced
 ```
 
 ## Retained WebGL context recovery gaps
@@ -92,8 +89,6 @@ renderer readiness and capture are not fenced
 restoration is not transactional
 repeated restoration and late-event fixtures are absent
 ```
-
-A recoverable WebGL context loss must route through the context-recovery authority. Unknown, invariant-breaking or cleanup-compromised failures must retire the graph and cold restart.
 
 ## Retained DSK registry truth gaps
 
@@ -143,16 +138,6 @@ public observations are not revisioned
 fatal capability quarantine is absent
 ```
 
-## Retained runtime step and clock gaps
-
-```txt
-browser RAF and editor surfaces share raw game.tick
-finite delta and integer step validation absent
-maximum work budget absent
-monotonic simulation clock absent
-reset epoch and step journal absent
-```
-
 ## Retained lifecycle gaps
 
 ```txt
@@ -187,4 +172,4 @@ fatal candidate rollback and last-known-good frame ownership are absent
 
 ## Deployment risk
 
-A Pages route can display a useful fatal message while leaving partially acquired globals, listeners, renderer resources and mutation capabilities alive. A later in-place `start()` or editor command can continue against a graph whose state, plan, buffers, canvas and snapshots no longer share a proven commit. Visible error text is not cleanup, quarantine or recovery proof.
+A successful Pages frame can still combine a fixed nominal state delta with a wall-clock render phase. Pause, reset, browser editor calls and Node headless calls can produce different time histories without any typed rejection or visible proof. A moving wind shader is not evidence of a valid simulation clock.

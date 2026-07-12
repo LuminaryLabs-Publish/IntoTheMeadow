@@ -1,92 +1,98 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T09-08-17-04-00`
+**Updated:** `2026-07-12T11-29-40-04-00`
 
 ## Summary
 
-This documentation-only audit verifies authored objective/target/story content, current state mutation, host/editor capability surfaces and existing test coverage. It does not prove movement, interaction, objective completion, story progression, feedback, browser parity or visible-frame correlation.
+This documentation-only audit verifies the current shader compile/link path, attribute and uniform location lookup, CPU mesh layout, uniform updates, draw submission, renderer snapshots and existing test coverage. It does not prove active-program interface compatibility, uniform-effect correctness, draw admission or first-frame program provenance.
 
 ## Plan ledger
 
-**Goal:** separate source-backed progression findings from unimplemented and unexecuted gameplay proof.
+**Goal:** separate source-backed WebGL interface findings from unimplemented and unexecuted compatibility proof.
 
-- [x] Compare current Publish inventory with central tracking.
+- [x] Compare the Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow` and reconcile newer repo-local audit state.
-- [x] Inspect DSK declarations and required-v0.1 registry.
-- [x] Inspect game creation and immutable state mutation.
-- [x] Inspect objectives, targets and story beats.
-- [x] Inspect web host, GameHost and editor capabilities.
+- [x] Select only `IntoTheMeadow`.
+- [x] Inspect shader compilation and program linking.
+- [x] Inspect required attributes and uniforms.
+- [x] Inspect CPU mesh schemas and GPU bindings.
+- [x] Inspect uniform updates, draw passes and renderer readback.
+- [x] Inspect Node and Chromium proof surfaces.
 - [x] Preserve all 44 kits and service inventory.
-- [x] Define progression contracts and fixture gates.
+- [x] Define interface contracts and fixture gates.
 - [x] Change documentation only.
-- [ ] Execute progression fixtures after implementation exists.
+- [ ] Execute interface fixtures after implementation exists.
 
 ## Proven from source
 
 ```txt
-local DSK declarations: 43
 external provider declarations: 1
-required-v0.1 local declarations: 15
-planned local declarations: 29
+local DSK/kit declarations: 43
+total declared kits: 44
 
-arrival objectives: 2
-arrival interaction targets: 2
-story beats: 3
+vertex shader compile status checked: yes
+fragment shader compile status checked: yes
+program link status checked: yes
+required attributes queried: 5
+required uniforms queried: 12
 
-initial active objective: walk-the-path
-initial path progress: 0
-initial completed objectives: []
-initial story beats: [arrival]
+CPU mesh arrays validated:
+  positions length = vertexCount * 3
+  normals length = vertexCount * 3
+  colors length = vertexCount * 3
+  outlines length = vertexCount
+  wind length = vertexCount * 2
 
-advanceGameState increments frame and records dt/time only
-web host submits no action intent
-GameHost provides no typed interaction/progression capability
-editor provides no interaction/objective/story capability
-progression result and visible frame receipt are absent
+attribute location below zero throws during buffer creation
+uniform locations are not validated
+active attribute/uniform reflection is absent
+program/interface generation and fingerprint are absent
+renderer snapshot omits interface evidence
 ```
 
 ## Existing proof
 
-Current checks can prove:
+Current checks can prove, when executed:
 
 ```txt
 required files exist
 DSK descriptors validate structurally
 render plans validate
-renderer caching works under tested static plans
-deterministic scene generation works when executed
-editor environment/read/tick/reset/capture plumbing works when executed
+CPU mesh construction and array lengths
+static topology/mesh identity across time-only plans
+renderer cache behavior under tested static plans
+scene generation determinism
+headless-editor environment, command and loop plumbing
+Chromium page/editor/gpu markers and screenshot size
 ```
 
 Current checks cannot prove:
 
 ```txt
-browser input normalization
-movement or path progress
-canonical target selection
-inspect range/affordance admission
-interaction rejection reasons
-objective threshold evaluation
-successor-objective selection
-completion idempotence
-story trigger parsing/evaluation/deduplication
-atomic objective/story/feedback commit
-rollback
-reset-generation safety
-browser/editor command parity
-progression snapshot parity
-first visible progression-frame correlation
-Pages gameplay behavior
+active attribute inventory
+active uniform inventory
+exact symbol type and size compatibility
+required uniform non-null locations
+optimized-out required uniform classification
+mesh/program layout compatibility
+uniform update operation/type compatibility
+program resource-limit admission
+candidate rejection and predecessor preservation
+stale context/program/interface rejection
+WebGL1/WebGL2 parity
+uniform effects reaching pixels
+first visible frame interface correlation
+Pages program-interface behavior
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
-gameplay source changed: no
 renderer source changed: no
+shader source changed: no
+gameplay source changed: no
 package scripts changed: no
 dependencies changed: no
 render output changed: no
@@ -95,59 +101,64 @@ branch created: no
 pull request created: no
 target branch: main
 npm run check executed: no
-progression fixtures available: no
-browser progression smoke available: no
-Pages progression smoke available: no
+browser observation executed: no
+Pages observation executed: no
+program-interface fixtures available: no
 ```
 
 ## Required deterministic fixtures
 
 ```txt
-fixture:interaction-command-schema
-fixture:interaction-session-admission
-fixture:target-registry-fingerprint
-fixture:path-progress-evidence
-fixture:inspect-proximity-evidence
-fixture:path-story-threshold
-fixture:path-objective-threshold
-fixture:objective-successor
-fixture:completion-idempotence
-fixture:story-deduplication
-fixture:atomic-progression-commit
-fixture:progression-rollback
-fixture:stale-target-revision
-fixture:stale-progression-revision
-fixture:reset-generation-rejection
-fixture:browser-editor-progression-parity
-fixture:progression-snapshot-readback
-fixture:visible-progression-frame
+fixture:shader-interface-manifest
+fixture:active-attribute-reflection
+fixture:active-uniform-reflection
+fixture:required-location-admission
+fixture:missing-position-attribute
+fixture:missing-wind-attribute
+fixture:missing-time-uniform
+fixture:missing-outline-pass-uniform
+fixture:optimized-out-required-uniform
+fixture:attribute-type-mismatch
+fixture:uniform-type-mismatch
+fixture:uniform-array-size-mismatch
+fixture:mesh-layout-schema
+fixture:uniform-payload-schema
+fixture:program-resource-budget
+fixture:candidate-rejection-predecessor-preservation
+fixture:stale-context-generation-draw
+fixture:stale-program-generation-draw
+fixture:stale-interface-fingerprint-draw
+fixture:interface-fingerprint-stability
+fixture:first-visible-program-interface-frame
 ```
 
 ## Required browser matrix
 
 ```txt
-input source: browser keyboard/controller, pointer/touch, editor capability
+context: WebGL2 and WebGL1 fallback
+browser: Chromium plus an independent implementation when available
 viewport: desktop, tablet, narrow mobile
-progression: fresh, 0.24, 0.25, 0.34, 0.35, inspect rejected, inspect admitted, completed
-command state: valid, duplicate, out-of-order, stale revision, stale reset generation
-visibility: visible, hidden, restored
+pixel ratio: 1 and 2
+interface: accepted, missing attribute, missing uniform, type mismatch
+lifecycle: initial, resize, context loss, restore, disposal
+host: local static server and deployed GitHub Pages
 ```
 
 ## Required browser and Pages smoke
 
 ```txt
 open fresh session
-verify walk-the-path feedback
-submit path progress below and across story/objective thresholds
-verify exactly-once story and objective receipts
-verify deterministic successor objective
-verify rejected and admitted focal-tree inspection
-verify duplicate command idempotence
-reset and verify baseline plus stale predecessor rejection
-capture frame citing progression/feedback/surface revisions
+capture context and program generations
+read active attributes and uniforms
+verify exact accepted manifest
+verify renderer snapshot carries interface fingerprint
+capture first visible frame with the same fingerprint
+inject missing/type-mismatched candidates and verify pre-draw rejection
+verify predecessor frame continues after rejected candidate
+force context restoration and verify new interface generation
 repeat against deployed GitHub Pages
 ```
 
 ## Claim boundary
 
-The audit proves that progression content exists and that current runtime mutation does not consume it. It does not prove playable movement, interaction, completion, narrative flow, visible feedback or deployment readiness.
+The audit proves that compile/link checks and CPU mesh validation exist while active-program interface admission does not. It does not prove a current visual defect, program-interface correctness, uniform-effect correctness, context-restoration parity or deployment readiness.

@@ -4,99 +4,94 @@
 
 **Branch:** `main`
 
-**Last aligned:** `2026-07-11T20-38-07-04-00`
+**Last aligned:** `2026-07-11T22-08-13-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed browser meadow with one pinned external provider, 43 local declarations, a persistent WebGL renderer, a browser editor bridge and a Node headless-editor surface.
+`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, a persistent WebGL renderer, browser editor capabilities and a Node headless-editor surface.
 
-This audit isolates a split runtime-clock contract. Browser RAF passes absolute page time with a hard-coded `dt = 1/60`, browser editor commands can inject any `time` and `dt` directly into the same game, and the Node environment owns a separate accumulated clock. Stop/start, reset and editor stepping can therefore produce different state, wind phase and frame evidence from the same logical command history.
+This pass isolates the render-surface resolution boundary. Each render samples live CSS dimensions and DPR, mutates the canvas drawing buffer, configures the GL viewport and derives camera aspect. No pixel budget, WebGL capability result, resize generation, surface revision, fallback tier or capture/frame correlation proves which resolution was actually committed.
 
 ## Plan ledger
 
-**Goal:** establish one monotonic, session-scoped simulation clock and step-admission boundary shared by RAF, browser editor and Node headless execution before state or render time mutates.
+**Goal:** preserve the full-screen meadow while making viewport and drawing-buffer changes bounded, revisioned, recoverable and visible through renderer, capture and frame evidence.
 
 - [x] Compare the complete accessible Publish inventory with the central ledger.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have central ledger and root `.agent` state.
-- [x] Skip `AetherVale` because its repo-local audit advanced to `2026-07-11T20-30-33-04-00` while the central ledger still showed `18-48-21`, indicating active unsynchronized work.
+- [x] Skip active unsynchronized `AetherVale` lifecycle-audit work.
 - [x] Select only `IntoTheMeadow` as the oldest stable eligible repository.
-- [x] Trace browser RAF, game state, render-time propagation, shader time, browser editor tick/reset and Node headless tick/reset.
-- [x] Preserve the complete interaction loop, domain map, kit inventory and kit-service map.
-- [x] Define clock identity, step admission, pause/resume, reset epoch, bounded work, receipts, journals and parity fixtures.
+- [x] Trace CSS viewport, DPR, canvas resize, GL viewport, projection, renderer snapshot and capture.
+- [x] Preserve the complete interaction loop, domain map, kit inventory and service map.
+- [x] Define surface identity, revision, policy, budgets, fallback, results, journals and fixture gates.
 - [x] Add timestamped architecture and system-specific audits.
 - [x] Refresh required root `.agent` files.
-- [ ] Runtime implementation and executable clock fixtures remain future work.
+- [ ] Runtime implementation and executable render-surface fixtures remain future work.
 
-## Current interaction loops
+## Current interaction loop
 
 ```txt
-browser RAF
-  -> requestAnimationFrame(now)
-  -> time = now / 1000
-  -> game.tick({ time, dt: 1/60 })
-  -> getRenderPlan(time)
-  -> shader uTime = renderPlan.time
+browser viewport / zoom
+  -> CSS canvas dimensions and DPR change
+  -> next RAF advances state and builds a render plan
+  -> renderer.resize samples live values
+  -> canvas drawing-buffer dimensions mutate
+  -> GL viewport and camera projection use requested dimensions
+  -> outline and color passes draw
+  -> renderer snapshot publishes without dimensions or surface revision
 
 browser editor
-  -> runtime.tick({ dt, time })
-  -> raw game.tick bypasses RAF ownership and render commit
-  -> runtime.reset resets game state only
-
-Node headless editor
-  -> private time starts at 0
-  -> each requested tick adds caller dt
-  -> game.tick({ dt, time })
-  -> reset sets private time to 0 and invalidates enhancer
+  -> getViewport reads live browser and canvas values
+  -> capture reads canvas data URL and dimensions
+  -> latest renderer snapshot is attached independently
+  -> no surface/frame identity proves parity
 ```
 
 ## Main finding
 
 ```txt
-browser simulation frame count: advances by one per RAF callback
-browser dt: always 1/60, regardless of actual callback delay
-browser render time: absolute RAF page time
-browser stop/start: render time jumps across the pause
-browser reset: state resets but absolute render time does not
-browser editor tick: caller controls arbitrary time and dt
-Node headless time: independently accumulated caller dt
-step identity, clock revision and reset epoch: absent
+DPR policy: hard-coded clamp from 1 to 2
+pixel budget: absent
+WebGL surface-limit query: absent
+actual drawing-buffer readback: absent
+resize command and generation: absent
+surface revision: absent
+fallback and rollback result: absent
+renderer snapshot dimensions: absent
+capture/frame surface receipt: absent
 ```
 
-The wind shader consumes `renderPlan.time`, so presentation can jump after a pause or reset while state records only one additional fixed step. Direct editor stepping can also move state without producing the corresponding visible frame.
+At 3840 by 2160 CSS pixels and DPR 2, the renderer requests 7680 by 4320, or 33,177,600 drawing-buffer pixels, without a product budget or capability classification.
 
 ## Required parent domain
 
 ```txt
-meadow-runtime-clock-and-step-authority-domain
+meadow-render-surface-resolution-authority-domain
 ```
 
 Core composition:
 
 ```txt
-runtime-clock-id-kit
-runtime-clock-state-kit
-runtime-clock-revision-kit
-simulation-step-command-kit
-simulation-step-id-kit
-simulation-step-admission-kit
-finite-delta-policy-kit
-step-work-budget-kit
-monotonic-time-policy-kit
-pause-resume-clock-kit
-reset-epoch-kit
-clock-source-adapter-kit
-browser-raf-step-adapter-kit
-browser-editor-step-adapter-kit
-headless-step-adapter-kit
-simulation-step-result-kit
-clock-step-journal-kit
-clock-observation-kit
-clock-render-frame-correlation-kit
-runtime-clock-parity-fixture-kit
-pause-resume-clock-fixture-kit
-reset-epoch-clock-fixture-kit
-step-budget-fixture-kit
+render-surface-id-kit
+render-surface-revision-kit
+viewport-observation-kit
+device-pixel-ratio-policy-kit
+render-pixel-budget-kit
+webgl-surface-capability-kit
+resize-command-kit
+resize-coalescing-kit
+render-surface-plan-kit
+drawing-buffer-allocation-kit
+render-surface-fallback-kit
+render-surface-commit-kit
+render-surface-rollback-kit
+stale-surface-observation-rejection-kit
+render-surface-observation-kit
+capture-surface-correlation-kit
+visible-frame-surface-ack-kit
+render-surface-journal-kit
+render-surface-fixture-kit
+browser-resize-dpr-smoke-kit
 ```
 
 ## Ordered implementation gates
@@ -109,6 +104,7 @@ step-budget-fixture-kit
 5. Source Provider Authority
 6. Render Topology Identity Authority
 6a. WebGL Context Recovery Authority
+6b. Render Surface Resolution Authority
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 8. Interaction Command and Objective Authority
@@ -118,14 +114,14 @@ step-budget-fixture-kit
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-11T20-38-07-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-11T20-38-07-04-00.md
-.agent/architecture-audit/2026-07-11T20-38-07-04-00-runtime-clock-step-authority-dsk-map.md
-.agent/render-audit/2026-07-11T20-38-07-04-00-simulation-render-time-parity-gap.md
-.agent/gameplay-audit/2026-07-11T20-38-07-04-00-pause-reset-editor-clock-divergence-loop.md
-.agent/interaction-audit/2026-07-11T20-38-07-04-00-step-command-admission-map.md
-.agent/runtime-clock-audit/2026-07-11T20-38-07-04-00-monotonic-clock-reset-epoch-contract.md
-.agent/deploy-audit/2026-07-11T20-38-07-04-00-runtime-clock-parity-fixture-gate.md
+.agent/trackers/2026-07-11T22-08-13-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-11T22-08-13-04-00.md
+.agent/architecture-audit/2026-07-11T22-08-13-04-00-render-surface-resolution-dsk-map.md
+.agent/render-audit/2026-07-11T22-08-13-04-00-dpr-drawing-buffer-budget-gap.md
+.agent/gameplay-audit/2026-07-11T22-08-13-04-00-resize-projection-capture-loop.md
+.agent/interaction-audit/2026-07-11T22-08-13-04-00-viewport-resize-surface-result-map.md
+.agent/render-surface-audit/2026-07-11T22-08-13-04-00-resolution-budget-revision-contract.md
+.agent/deploy-audit/2026-07-11T22-08-13-04-00-render-surface-fixture-gate.md
 ```
 
-A frame counter, absolute RAF timestamp and caller-provided delta are not one simulation clock. Success requires a session-scoped monotonic clock, admitted step commands, bounded work, explicit pause/reset epochs and visible-frame evidence that cites the same accepted step.
+A canvas filling the window is not proof of a bounded committed render surface. Success requires actual drawing-buffer dimensions and one surface revision to propagate through projection, renderer snapshot, capture and the first visible frame.

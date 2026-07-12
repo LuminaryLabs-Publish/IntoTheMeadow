@@ -1,19 +1,19 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T09-08-17-04-00`
+**Updated:** `2026-07-12T11-29-40-04-00`
 
 ## Summary
 
-The leading gameplay gap is that authored interaction, objective and story descriptors have no executable command, evidence, evaluation, commit or feedback authority. The arrival sequence remains static while descriptor installation can imply capabilities that the runtime does not provide.
+The leading render gap is that successful shader compilation and program linking are treated as sufficient readiness. The active linked interface is not reflected or compared with required attribute, uniform, mesh-layout and uniform-payload schemas before buffer binding and draw submission.
 
 ## Plan ledger
 
-**Goal:** close progression command, target evidence, ledger, atomic commit, feedback and proof gaps while preserving previously documented bridge, runtime, rendering, audio, persistence and replay gaps.
+**Goal:** close active-symbol, schema, generation and frame-proof gaps while preserving previously documented runtime, gameplay, editor, performance, audio, persistence, DSK-consumption and replay gaps.
 
-- [x] Add interaction/objective/story progression gaps.
-- [x] Preserve the immediately preceding editor-bridge lifecycle/error-journal gap.
-- [x] Preserve earlier performance, render, audio, persistence, DSK-consumption and replay gaps.
+- [x] Add WebGL program-interface admission gaps.
+- [x] Preserve the preceding interaction/objective progression gap.
+- [x] Preserve earlier lifecycle, host, render, audio, persistence and replay gaps.
 - [ ] Implement in dependency order.
 
 ## Selection state
@@ -22,132 +22,140 @@ The leading gameplay gap is that authored interaction, objective and story descr
 10 accessible Publish repositories observed
 TheCavalryOfRome excluded
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected to reconcile recent repo-local work and central tracking
+IntoTheMeadow selected as the oldest eligible synchronized repository
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Content and runtime-consumption gaps
+## Program identity gaps
 
 ```txt
-authored objectives: 2
-authored interaction targets: 2
-authored story beats: 3
-implementation-backed interaction services: 0
-implementation-backed objective services: 0
-implementation-backed story services: 0
-
-planned descriptors are installed in snapshots
-provider/capability evidence is absent
+context-bound program generation: absent
+candidate program identity: absent
+manifest revision: absent
+program-interface fingerprint: absent
+predecessor/current program transaction: absent
+retired program/interface state: absent
+stale program/interface rejection: absent
 ```
 
-## Command and identity gaps
+## Active-symbol reflection gaps
 
 ```txt
-interaction command ID: absent
-runtime session binding: absent
-reset generation: absent
-progression revision: absent
-input sequence: absent
-action/source provenance: absent
-target registry identity: absent
-target revision: absent
-duplicate/stale command rejection: absent
-browser/editor command parity: absent
+ACTIVE_ATTRIBUTES inventory: absent
+getActiveAttrib evidence: absent
+ACTIVE_UNIFORMS inventory: absent
+getActiveUniform evidence: absent
+canonical symbol normalization: absent
+symbol type/size inventory: absent
+required/optional symbol policy: absent
+optimized-out required uniform classification: absent
 ```
 
-## Evidence gaps
+## Attribute admission gaps
 
 ```txt
-path-progress evidence: absent
-inspect proximity evidence: absent
-affordance result: absent
-canonical target result: absent
-evidence identity/digest: absent
-evidence-to-command correlation: absent
+required attributes queried: 5
+aggregate attribute admission result: absent
+exact GL type validation: absent
+array size validation: absent
+semantic mapping result: absent
+location admission before buffer mutation: absent
+mesh-layout fingerprint: absent
+mesh/program compatibility result: absent
 ```
 
-## Objective gaps
+Current attribute rejection occurs only when a first mesh bind reaches `createAttributeBuffer()` with a location below zero.
+
+## Uniform admission gaps
 
 ```txt
-objective evaluator: absent
-threshold result: absent
-completion ledger revision: absent
-completion receipt: absent
-successor-objective policy: absent
-completion idempotence: absent
-objective result: absent
+required uniforms queried: 12
+non-null location admission: absent
+exact GL type validation: absent
+array size validation: absent
+host update-operation validation: absent
+finite payload batch result: absent
+pass-specific required update result: absent
+uniform-payload fingerprint: absent
 ```
 
-## Story gaps
+A missing uniform location can remain a silent no-op rather than a typed renderer failure.
+
+## Resource and compatibility gaps
 
 ```txt
-trigger parser: absent
-trigger evaluator: absent
-story revision: absent
-trigger receipt: absent
-story-beat deduplication: absent
-story progression result: absent
+MAX_VERTEX_ATTRIBS observation: absent
+uniform component/vector limit profile: absent
+active resource usage result: absent
+resource-budget rejection: absent
+WebGL1/WebGL2 interface compatibility result: absent
+precision decision to interface fingerprint correlation: absent
 ```
 
-## Commit and rollback gaps
+## Draw and frame-proof gaps
 
 ```txt
-candidate progression state: absent
-multi-domain prepare result: absent
-atomic player/inspect/objective/story/feedback commit: absent
-predecessor preservation: absent
-rollback result: absent
-stale prepared-plan rejection: absent
+draw admission command/result: absent
+outline pass interface result: absent
+color pass interface result: absent
+GPU error observation result: absent
+renderer snapshot program generation: absent
+renderer snapshot interface fingerprint: absent
+first visible program-interface frame receipt: absent
+capture/interface correlation: absent
 ```
 
-## Feedback and proof gaps
+## Missing interface proof
 
 ```txt
-interaction affordance projection: absent
-active objective/progress projection: absent
-completion feedback: absent
-story text progression: absent
-feedback revision: absent
-progression state in renderer snapshot: absent
-first visible progression-frame acknowledgement: absent
-capture/progression correlation: absent
+complete five-attribute admission
+complete twelve-uniform admission
+missing attribute rejection before buffer publication
+missing uniform rejection before draw
+optimized-out required uniform rejection
+attribute type/size mismatch rejection
+uniform type/size mismatch rejection
+mesh/program schema compatibility
+uniform/program schema compatibility
+resource-limit rejection
+candidate rejection preserves predecessor
+stale context/program/interface rejection
+WebGL1/WebGL2 parity
+first visible frame interface receipt
+local browser and deployed Pages parity
 ```
 
-## Missing progression proof
+## Preserved progression gaps
 
 ```txt
-0.25 path story threshold
-0.35 path objective threshold
-inspect range admission
-objective successor order
-completion/story idempotence
-invalid and stale rejection
-atomic objective/story commit
-rollback
-reset-generation safety
-browser/editor parity
-snapshot/result parity
-visible-frame receipt
-browser and Pages smoke
+browser/editor interaction command surface
+canonical target evidence
+path and inspection mutation
+objective evaluation and completion ledger
+story trigger evaluation and deduplication
+atomic progression commit and rollback
+feedback projection
+first visible progression-frame acknowledgement
 ```
 
-## Preserved editor-bridge gaps
+## Preserved editor and host gaps
 
 ```txt
-bridge generation and predecessor retirement
+raw GameHost capability quarantine
+editor bridge generation and predecessor retirement
 listener leases
-bounded error retention
+bounded bridge errors
 stale capability rejection
 capture/frame provenance
 host stop/dispose parity
 ```
 
-## Preserved runtime/render gaps
+## Preserved runtime and rendering gaps
 
 ```txt
 runtime session lifecycle and ordered disposal
-raw GameHost capability quarantine
 RAF clock and step admission
+source-provider artifact authority
 render topology identity
 WebGL context recovery
 render surface revision and physical-buffer proof
@@ -158,7 +166,7 @@ adaptive quality and physical-policy parity
 camera-distance/frustum grass LOD
 ```
 
-## Preserved audio/data gaps
+## Preserved audio and data gaps
 
 ```txt
 trusted audio activation and resource generations
@@ -170,4 +178,4 @@ independent deterministic replay and first-divergence proof
 
 ## Completion boundary
 
-Do not treat content imports, DSK service names, an `activeObjectiveId` field or repeated frame ticks as progression proof. Completion requires admitted action evidence, idempotent ledgers, atomic state mutation, typed results, reset safety and a visible frame citing the committed progression revision.
+Do not treat compile/link success, queried locations, a returned renderer snapshot, a `gpu:` DOM marker or a non-empty screenshot as interface proof. Completion requires reflected active symbols, exact schema compatibility, current generations, typed binding/update/draw results and a visible frame citing the accepted interface fingerprint.

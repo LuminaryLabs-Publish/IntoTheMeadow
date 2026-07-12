@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T09-08-17-04-00`
+**Last aligned:** `2026-07-12T09-21-40-04-00`
 
 ## Summary
 
@@ -10,11 +10,13 @@ IntoTheMeadow is a DSK-composed browser meadow with one commit-pinned external p
 
 The current audit isolates **interaction command and objective progression authority**. The repo authors two objectives, two interaction targets and three story beats, but `advanceGameState()` only increments the frame and records dt/time. Browser and editor paths expose no movement, path-progress or inspect command, so completion and story state never advance.
 
+This reconciliation also corrected audit-state drift: the human docs had advanced to progression while the machine registry still pointed to editor-bridge lifecycle and the central ledger still pointed to adaptive quality. All current pointers now identify the same progression slice. The local census is also normalized to 15 active plus 28 planned equals 43 local declarations.
+
 The immediately preceding editor-bridge lifecycle/error-journal audit and all earlier performance, audio, shader, render-surface, capability, lifecycle, persistence, DSK-consumption and replay audits remain active dependencies.
 
 ## Plan ledger
 
-**Goal:** convert authored interaction/objective/story descriptors into one admitted, deterministic and visibly proven gameplay transaction.
+**Goal:** convert authored interaction/objective/story descriptors into one admitted, deterministic and visibly proven gameplay transaction while keeping repo-local and central audit identity consistent.
 
 - [x] Compare the full Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
@@ -23,25 +25,27 @@ The immediately preceding editor-bridge lifecycle/error-journal audit and all ea
 - [x] Inspect DSK registration, installation, game state, content, host and editor surfaces.
 - [x] Identify the interaction loop, all domains, all 44 kits and offered services.
 - [x] Define command, target evidence, objective/story commit, rollback and frame-proof contracts.
-- [x] Add timestamped architecture and system audits.
+- [x] Reconcile `START_HERE`, the machine registry and the central ledger.
+- [x] Add a fresh timestamped tracker and audit family.
 - [x] Push documentation to `main`; create no branch or PR.
 - [ ] Runtime implementation and executable progression fixtures remain future work.
 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-12T09-08-17-04-00/project-breakdown.md
+.agent/trackers/2026-07-12T09-21-40-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T09-21-40-04-00.md
+.agent/architecture-audit/2026-07-12T09-21-40-04-00-interaction-objective-progression-reconciliation-dsk-map.md
+.agent/render-audit/2026-07-12T09-21-40-04-00-progression-feedback-frame-registry-gap.md
+.agent/gameplay-audit/2026-07-12T09-21-40-04-00-authored-progression-no-command-loop.md
+.agent/interaction-audit/2026-07-12T09-21-40-04-00-progression-command-central-sync-map.md
+.agent/central-sync-audit/2026-07-12T09-21-40-04-00-repo-ledger-machine-registry-contract.md
+.agent/deploy-audit/2026-07-12T09-21-40-04-00-progression-fixture-central-gate.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
 .agent/validation.md
-.agent/architecture-audit/2026-07-12T09-08-17-04-00-interaction-objective-progression-dsk-map.md
-.agent/render-audit/2026-07-12T09-08-17-04-00-objective-feedback-visible-frame-gap.md
-.agent/gameplay-audit/2026-07-12T09-08-17-04-00-path-inspect-objective-stall-loop.md
-.agent/interaction-audit/2026-07-12T09-08-17-04-00-action-command-progress-result-map.md
 .agent/progression-audit/2026-07-12T09-08-17-04-00-target-evidence-ledger-story-contract.md
-.agent/deploy-audit/2026-07-12T09-08-17-04-00-interaction-objective-fixture-gate.md
-.agent/turn-ledger/2026-07-12T09-08-17-04-00.md
 .agent/kit-registry.json
 ```
 
@@ -49,7 +53,7 @@ The immediately preceding editor-bridge lifecycle/error-journal audit and all ea
 
 ```txt
 boot
-  -> install 44 local descriptors plus external meadow provider
+  -> install 43 local descriptors plus one external meadow provider
   -> import objective, target and story content
   -> create default progression state
   -> start RAF and editor bridge
@@ -62,7 +66,7 @@ frame
   -> render unchanged progression state
 
 editor
-  -> read, tick, reset and capture
+  -> read, tick, reset, render and capture
   -> no interaction/progression command capability
 ```
 
@@ -89,7 +93,7 @@ external declared kits: 1
 local declared kits: 43
 total declared kits: 44
 required-v0.1 local kits: 15
-planned local kits: 29
+planned local kits: 28
 
 active domains:
   browser/runtime/game/editor

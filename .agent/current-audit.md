@@ -1,40 +1,36 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-12T07-19-47-04-00`
+**Audit timestamp:** `2026-07-12T09-06-38-04-00`
 
 ## Status
 
 ```txt
-status: adaptive-quality-performance-budget-authority-audited
+status: editor-bridge-lifecycle-error-journal-authority-audited
 runtime source changed by this pass: no
 branch: main
 root .agent state: refreshed
-preceding audio activation audit: preserved
-preceding shader precision audit: preserved
-central synchronization: complete
+preceding adaptive-quality audit: preserved
+central synchronization: pending until paired ledger commit
 ```
 
 ## Summary
 
-`meadow-performance-dsk` is a required-v0.1 declaration with quality-profile, budget-policy, LOD-policy, adaptive-scaling and performance-validation services. The implementation creates one immutable profile and defaults to `high`; `auto` is another static constant set rather than a runtime controller.
-
-The browser host calls `game.tick({ time, dt: 1/60 })`, enhances the plan and renders once per RAF. It records no CPU/GPU frame sample, rolling percentile, deadline, capability envelope or quality decision. The enhancer accepts runtime performance options but the host does not supply them, and cache reuse depends only on source topology. The physical renderer publishes counts/cache state but no quality revision, budget result or visible-frame correlation.
+The browser editor bridge is not a runtime-owned generation. It installs `error` and `unhandledrejection` listeners, publishes a global capability surface and retains errors in a local array. The array has no count, byte or age bound; `browser.getErrors` and `snapshot` clone the complete history. A successor bridge can overwrite the global pointer without retiring the predecessor, and `startWebHost().stop()` does not dispose the bridge.
 
 ## Plan ledger
 
-**Goal:** establish one session-scoped performance authority from frame and capability observations through stable quality admission, multi-consumer prepare/commit/rollback and first-visible-frame proof.
+**Goal:** establish one session-scoped bridge lifecycle and bounded browser error-journal authority.
 
-- [x] Compare all accessible Publish repositories with the central ledger.
+- [x] Compare the current Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow` as the oldest eligible synchronized repository.
-- [x] Inspect DSK registry, performance policy, render-plan enhancer, web host, game diagnostics, renderer and package scripts.
+- [x] Avoid concurrent unsynchronized `PrehistoricRush` documentation.
+- [x] Select only `IntoTheMeadow` as the next-oldest stable eligible repository.
+- [x] Inspect browser host, GameHost publication, editor bridge, package scripts and headless-editor tests.
 - [x] Preserve the complete 44-kit service map.
-- [x] Identify logical/physical quality mismatches and cache-invalidating gaps.
-- [x] Define observations, budgets, hysteresis, commands, results, revisions, rollback and proof.
+- [x] Define bridge generations, listener/capability leases, bounded retention, query/acknowledgement, replacement and disposal contracts.
 - [x] Add timestamped architecture and system audits.
-- [x] Synchronize central ledger and internal change log.
-- [ ] Implement and execute adaptive-quality authority.
+- [ ] Implement and execute browser bridge lifecycle fixtures.
 
 ## Selection comparison
 
@@ -43,273 +39,200 @@ accessible Publish repositories: 10
 eligible non-Cavalry repositories: 9
 new or central-ledger-missing eligible repositories: 0
 root-.agent-missing eligible repositories: 0
-
-IntoTheMeadow      2026-07-12T05-39-42-04-00 selected
-PhantomCommand     2026-07-12T05-49-04-04-00
-HorrorCorridor     2026-07-12T05-59-28-04-00
-ZombieOrchard      2026-07-12T06-19-56-04-00
-TheUnmappedHouse   2026-07-12T06-30-34-04-00
-AetherVale         2026-07-12T06-41-32-04-00
-MyCozyIsland       2026-07-12T06-51-27-04-00
-TheOpenAbove       2026-07-12T07-00-48-04-00
-PrehistoricRush    2026-07-12T07-09-49-04-00
-TheCavalryOfRome   excluded
+PrehistoricRush newer repo-local audit: 2026-07-12T09-01-44-04-00, skipped
+IntoTheMeadow central audit: 2026-07-12T07-19-47-04-00, selected
 ```
 
-Only `LuminaryLabs-Publish/IntoTheMeadow` was modified in the Publish organization.
+Only `LuminaryLabs-Publish/IntoTheMeadow` is modified in the Publish organization.
 
 ## Complete interaction loop
 
 ```txt
 page boot
-  -> query browser shell nodes
-  -> import commit-pinned meadow provider
+  -> load external meadow provider
   -> install DSK descriptors
-  -> create game, enhancer, renderer and editor bridge
+  -> create game
+  -> create plan enhancer and renderer
+  -> expose global GameHost
+  -> install global NexusEditorEnvironment
+  -> register error and unhandledrejection listeners
   -> schedule RAF
 
 frame
-  -> derive absolute time from RAF timestamp
-  -> tick immutable game state with fixed dt 1/60
-  -> get source render plan
-  -> apply static quality policy during enhancement
-  -> validate contracted plan
-  -> resize physical surface
-  -> ensure/reuse cached mesh
-  -> submit outline pass
-  -> submit color pass
-  -> expose counts/cache diagnostics
-  -> schedule successor RAF
+  -> game tick
+  -> render-plan enhancement and validation
+  -> WebGL rendering
+  -> debug projection
+  -> successor RAF
 
-quality path
-  -> choose static profile, default high
-  -> no CPU/GPU observation
-  -> no rolling window
-  -> no quality decision or command
-  -> no hysteresis/cooldown
-  -> no consumer prepare results
-  -> no quality revision or atomic commit
-  -> no visible-frame acknowledgement
+capability invoke
+  -> clone arguments
+  -> execute capability
+  -> completed/unavailable/failed result
+  -> append capability failure to local errors array
+
+browser fault
+  -> append normalized partial entry to local errors array
+  -> query or snapshot clones all retained entries
+
+host stop/start
+  -> mutate stopped boolean
+  -> bridge, listeners and journal remain live
+
+host replacement
+  -> assign new GameHost
+  -> assign new NexusEditorEnvironment
+  -> no predecessor bridge disposal transaction
 ```
 
 ## Source-backed findings
 
-### Required declaration, static implementation
+### Global publication is replacement-by-assignment
+
+`exposeGameHost()` assigns `target.GameHost`. `installIntoTheMeadowEditorBridge()` assigns `target.NexusEditorEnvironment`. Neither assignment admits a predecessor generation or retires predecessor resources.
+
+### Browser listeners outlive host stop
+
+The bridge adds two global listeners. `startWebHost().stop()` only sets `stopped = true`; it does not call `editorBridge.dispose()`.
+
+### Error retention is unbounded
 
 ```txt
-meadow-performance-dsk required-v0.1: yes
-services: quality-profile, budget-policy, lod-policy, adaptive-scaling, performance-validation
-profiles: low, medium, high, ultra, auto
-default: high
-auto behavior: fixed constants
-runtime measurement state: absent
+storage: Array
+append paths: browser error, unhandled rejection, capability failure
+maximum count: absent
+maximum bytes: absent
+maximum age: absent
+coalescing: absent
+sequence/timestamp: absent
+query limit/pagination: absent
+acknowledgement/clear cursor: absent
 ```
 
-### Host does not operate a performance loop
+### Snapshot and capture provenance is incomplete
 
-`startWebHost()` performs tick, enhancement and rendering in one RAF callback. It does not measure callback duration, renderer duration, GPU duration, deadline misses, long tasks or sustained headroom. The debug HUD reports descriptor counts, vertex count and cache labels only.
+Bridge snapshots include runtime, renderer and the full cloned error array. Captures combine canvas pixels with renderer readback but cite no bridge generation, runtime session, frame or surface revision.
 
-### Declared/physical mismatches
+### Existing tests do not cover the browser bridge lifecycle
 
-```txt
-terrainResolution profile field
-  -> not applied
-  -> contracted terrain is hard-coded to xSegments 96, zSegments 124
-
-postProcess profile field
-  -> not consulted by the physical renderer
-  -> outline and color draws always execute
-
-maxGrassInstances budget
-  -> calculated by the performance policy
-  -> not passed into the inspected grass placement/draw-group creation path
-
-runtime performance option
-  -> accepted by enhancer
-  -> omitted by web host
-  -> excluded from cache identity
-```
-
-### Cache and transition gap
-
-The enhancer rebuilds only when `sourceTopologyKey(renderPlan)` changes. A future runtime quality revision affecting grass density, terrain resolution or post topology needs explicit topology-impact admission and invalidation. Without it, a quality command can be accepted while the old cached plan and mesh remain active.
-
-### Readback gap
-
-```txt
-renderer snapshot includes:
-  plan/schema/topology
-  vertices/triangles/descriptors
-  rebuild/cache-hit counts
-  cache state
-
-renderer snapshot omits:
-  performance sample/window
-  quality tier and revision
-  budget/deadline result
-  CPU/GPU cost
-  applied terrain/grass/post policy
-  transition/rollback result
-  first visible-frame quality receipt
-```
+The package check chain runs Node headless-editor environment, command and loop tests. Those tests do not repeatedly install the browser bridge, inspect global listener retirement, inject browser errors, prove bounded retention or validate stale bridge rejection.
 
 ## Domains in use
 
 ```txt
-browser shell, loading and visible failure projection
-external provider loading, validation and fallback
-DSK declaration, registry validation and install snapshots
-game manifest, immutable state, tick, reset, snapshot and diagnostics
-runtime lifecycle, RAF clock and reset epoch
-camera descriptors and browser view observation
-terrain, path and terrain sampling
-grass density, archetypes, static batches, placement, instancing, wind and LOD
-trees, scatter, atmosphere and world descriptors
-player, input, interaction, story, objective, ecology, audio, UI and persistence declarations
-render-plan enhancement, topology identity and CPU mesh construction
-WebGL context, shader, buffer, resize and draw ownership
-post-process declarations and inline physical rendering
-editor capability surface and browser error capture
-validation, headless tools, build and Pages deployment
-adaptive performance sampling, quality transition, commit and frame proof: missing
+browser shell/loading/fatal projection
+external provider loading/validation/fallback
+DSK declaration/registry/install snapshots
+game manifest/immutable state/tick/reset/snapshot/diagnostics
+runtime lifecycle/RAF clock/reset epoch
+camera/view observation
+terrain/path/grass/tree/wind/atmosphere/scatter
+player/input/interaction/story/objective/ecology/audio/UI/save declarations
+render-plan enhancement/topology/cache/CPU mesh
+WebGL context/shaders/buffers/resize/draw/disposal
+post-process declarations and physical rendering
+GameHost publication and raw game access
+browser editor capability registration/invocation/capture
+browser error and rejection observation
+Node headless editor/scenarios/artifacts
+validation/build/Pages
+bridge generation/listener leases/error-journal retention/replacement authority: missing
 ```
 
-## Complete kit inventory and services
+## Complete kit inventory and offered services
+
+```txt
+meadow-area-kit: area/path/style/material normalization; seeded scatter; grass/flower/rock/mushroom/tree descriptors; wind/atmosphere; render plan; validation; snapshot; reset; runtime adapter
+into-the-meadow-game-dsk: game-manifest; kit-stack-registry; game-state-root; boot-sequence; game-snapshot
+web-host-dsk: document-shell; browser-loop; host-debug-surface; asset-loading-host; browser-safety
+game-composition-dsk: dsk-registry; scene-composition; render-composition; simulation-composition; composition-validation
+meadow-area-bridge-dsk: meadow-area-config; meadow-feature-config; meadow-area-kit-adapter; meadow-area-state; meadow-area-validation
+meadow-terrain-texture-dsk: terrain-surface-model; material-layer-system; path-layer-system; terrain-sampler; terrain-validation
+path-corridor-dsk: path-curve-model; walkable-corridor; path-surface-detail; path-progression; path-validation
+grass-density-texture-kit: density-texture-model; density-channels; density-compositor; density-sampler; density-validation
+grass-clump-archetype-kit: clump-family-registry; card-layout-generator; texture-atlas-binding; clump-variant-generator; archetype-validation
+grass-static-batch-kit: clump-mesh-builder; batch-variant-cache; atlas-material; static-batch-lod; batch-validation
+grass-patch-placement-kit: patch-grid; density-driven-placement; clump-instance-selection; patch-instance-buffer; placement-validation
+grass-clump-instancing-render-kit: batch-registry; instance-stream; draw-group-builder; shader-binding; render-validation
+grass-shader-wind-kit: wind-uniforms; tip-bend-model; phase-field; gust-response; wind-validation
+grass-lod-policy-kit: near-lod; mid-lod; far-lod; terrain-tint-lod; lod-validation
+grass-density-scaling-kit: quality-scale; budget-scale; density-scale; profile-scale; scale-validation
+grass-debug-visualization-kit: density-view; patch-view; instance-view; lod-view; debug-validation
+grass-patch-dsk: patch-grid; blade-distribution; terrain-awareness; wind-binding; grass-validation
+gpu-grass-render-dsk: grass-instance-buffer; grass-blade-mesh; shader-wind; grass-lod-render; grass-render-validation
+wind-field-dsk: wind-state; wind-sampler; wind-zones; wind-consumers; wind-validation
+tree-object-dsk: focal-tree-model; tree-line-model; tree-materials; tree-wind-binding; tree-validation
+meadow-scatter-dsk: flower-scatter; rock-scatter; mushroom-scatter; placement-rules; scatter-validation
+meadow-atmosphere-dsk: sky-gradient; sun-system; cloud-layer; distant-hills; atmosphere-validation
+meadow-player-dsk: player-state; movement-profile; terrain-contact; player-actions; player-validation
+meadow-camera-dsk: camera-mode; camera-rig; camera-collision; camera-feel; camera-validation
+meadow-input-dsk: action-map; device-bindings; input-context; input-normalization; input-validation
+meadow-interaction-dsk: interactable-registry; affordance-rules; inspect-state; interaction-events; interaction-validation
+meadow-story-dsk: story-state; story-beats; dialogue-text; sequence-runner; story-validation
+meadow-objective-dsk: objective-model; objective-flow; completion-ledger; feedback-surface; objective-validation
+meadow-ecology-dsk: ambient-life; ecology-zones; ambience-triggers; non-gameplay-agents; ecology-validation
+meadow-audio-dsk: ambient-bed; spatial-audio-cues; audio-state; audio-events; audio-validation
+meadow-ui-dsk: minimal-hud; story-text-panel; debug-ui; ui-state; ui-validation
+meadow-save-dsk: save-model; save-slots; persistence-adapter; migration; save-validation
+meadow-diagnostics-dsk: runtime-health; render-health; determinism-checks; smoke-tests; diagnostics-report
+meadow-performance-dsk: quality-profile; budget-policy; lod-policy; adaptive-scaling; performance-validation
+meadow-render-host-dsk: renderer-selection; render-plan-ingest; pass-order; renderer-state; renderer-validation
+meadow-webgl-renderer-v2-kit: context; shaders; bindings; CPU mesh; GPU buffers; draw; resize; snapshot; disposal
+post-process-stack-dsk: pass-registry; render-target-system; sobel-outline-pass; color-grade-pass; post-validation
+render-target-kit: scene-color-texture; depth-texture; normal-texture; ping-pong-buffer; resize-policy
+sobel-outline-pass-kit: color-edge-threshold; depth-edge-threshold; normal-edge-threshold; outline-color; object-mask
+color-grade-pass-kit: warmth; contrast; saturation; shadow-tint; highlight-tint
+depth-fog-pass-kit: fog-near; fog-far; fog-color; distance-curve; horizon-haze
+vignette-pass-kit: radius; softness; strength; center; quality-tier
+final-composite-pass-kit: scene-input; post-input; output-target; debug-overlay; fallback-composite
+static-pages-deploy-dsk: build-config; github-pages-workflow; release-artifacts; cache-invalidation; deploy-validation
+```
+
+## Census
 
 ```txt
 external declared kits: 1
 local declared kits: 43
 total declared kits: 44
 required-v0.1 local declarations: 15
-```
-
-The full per-kit service inventory is retained in `.agent/kit-registry.json` and the timestamped tracker. Core performance-related owners are:
-
-```txt
-meadow-performance-dsk: quality-profile, budget-policy, lod-policy, adaptive-scaling, performance-validation
-grass-density-scaling-kit: quality-scale, budget-scale, density-scale, profile-scale, scale-validation
-grass-lod-policy-kit: near-lod, mid-lod, far-lod, terrain-tint-lod, lod-validation
-meadow-terrain-texture-dsk: terrain-surface-model, material-layer-system, path-layer-system, terrain-sampler, terrain-validation
-post-process-stack-dsk: pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
-meadow-render-host-dsk: renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
-meadow-webgl-renderer-v2-kit: context, shaders, bindings, CPU mesh, GPU buffers, draw, resize, snapshot, disposal
-meadow-diagnostics-dsk: runtime-health, render-health, determinism-checks, smoke-tests, diagnostics-report
-web-host-dsk: document-shell, browser-loop, host-debug-surface, asset-loading-host, browser-safety
+browser bridge generations: 0
+listener lease records: 0
+bounded browser error journals: 0
+browser bridge lifecycle fixtures: 0
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-adaptive-quality-performance-authority-domain
-```
-
-## Existing owners to update first
-
-```txt
-meadow-performance-dsk
-web-host-dsk
-meadow-render-host-dsk
-meadow-webgl-renderer-v2-kit
-meadow-diagnostics-dsk
-grass-density-scaling-kit
-grass-lod-policy-kit
-grass-patch-placement-kit
-grass-clump-instancing-render-kit
-meadow-terrain-texture-dsk
-post-process-stack-dsk
-render-target-kit
-into-the-meadow-game-dsk
-game snapshot/read model
-editor capability bridge
-render surface authority
-committed frame authority
+meadow-editor-bridge-lifecycle-and-error-journal-authority-domain
 ```
 
 ## Candidate coordinating kits
 
 ```txt
-performance-sample-id-kit
-performance-capability-snapshot-kit
-cpu-frame-time-observation-kit
-gpu-timer-capability-kit
-gpu-frame-time-observation-kit
-frame-deadline-result-kit
-rolling-performance-window-kit
-performance-percentile-kit
-performance-budget-policy-kit
-quality-tier-id-kit
-quality-revision-kit
-quality-transition-command-kit
-quality-transition-admission-kit
-quality-hysteresis-kit
-quality-cooldown-kit
-quality-transition-result-kit
-quality-topology-impact-plan-kit
-grass-budget-adapter-kit
-terrain-resolution-adapter-kit
-post-process-policy-adapter-kit
-surface-scale-adapter-kit
-quality-plan-prepare-kit
-quality-consumer-result-kit
-quality-commit-kit
-quality-rollback-kit
-stale-quality-plan-rejection-kit
-quality-frame-correlation-kit
-performance-observation-kit
-performance-journal-kit
-adaptive-quality-fixture-kit
-quality-oscillation-fixture-kit
-browser-performance-profile-smoke-kit
+editor-bridge-id-kit
+editor-bridge-generation-kit
+editor-bridge-install-command-kit
+editor-bridge-install-admission-kit
+editor-bridge-predecessor-retirement-kit
+editor-bridge-publication-kit
+editor-capability-lease-kit
+browser-listener-lease-kit
+browser-error-entry-kit
+browser-error-sequence-kit
+browser-error-normalization-kit
+browser-error-retention-policy-kit
+browser-error-journal-kit
+browser-error-query-kit
+browser-error-ack-kit
+editor-bridge-stop-policy-kit
+editor-bridge-dispose-plan-kit
+editor-bridge-dispose-result-kit
+stale-editor-bridge-rejection-kit
+editor-bridge-observation-kit
+editor-bridge-lifecycle-journal-kit
+editor-bridge-restart-fixture-kit
+browser-error-flood-fixture-kit
+browser-listener-retirement-fixture-kit
+browser-editor-bridge-smoke-kit
 ```
-
-## Required flow
-
-```txt
-committed frame/capability evidence
-  -> normalized PerformanceSample
-  -> bounded rolling percentile window
-  -> named budget evaluation
-  -> hysteresis and cooldown
-  -> QualityTransitionCommand or typed no-op
-  -> topology-impact and consumer preparation
-  -> atomic QualityRevision commit or predecessor preservation
-  -> renderer/enhancer cache result
-  -> first visible-frame acknowledgement
-  -> detached observation and bounded journal
-```
-
-## Required proof
-
-```txt
-static profile parity across logical and physical paths
-auto sustained-overload downgrade
-auto sustained-headroom upgrade
-single-spike rejection
-hysteresis and cooldown
-GPU timing supported/unsupported paths
-topology rebuild only when required
-consumer prepare/commit failure rollback
-context/surface replacement stale-plan rejection
-editor/browser quality-command parity
-first visible-frame quality receipt
-browser and Pages performance smoke
-```
-
-## Validation
-
-```txt
-runtime source changed: no
-performance source changed: no
-renderer source changed: no
-package scripts changed: no
-dependencies changed: no
-render output changed: no
-deployment changed: no
-branch created: no
-pull request created: no
-npm run check: not run
-performance fixtures: unavailable
-browser/Pages performance smoke: unavailable
-```
-
-No runtime performance, quality, frame-rate or deployment-readiness claim is made.

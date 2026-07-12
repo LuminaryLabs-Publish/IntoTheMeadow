@@ -1,7 +1,7 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T19-41-13-04-00`
+**Updated:** `2026-07-12T19-49-41-04-00`
 
 ## Summary
 
@@ -16,6 +16,7 @@ The leading infrastructure gap is frame-clock ownership. The browser loop has no
 - [x] Record stop/start duplicate-chain risk.
 - [x] Record raw tick and invalid temporal input exposure.
 - [x] Record proof and deployment gaps.
+- [x] Reconcile repo-local findings with root and central tracking.
 - [x] Preserve exploration, DSK, lifecycle, rendering, grass, audio, save and replay gaps.
 - [ ] Implement in dependency order.
 
@@ -106,6 +107,15 @@ audio user-gesture lifecycle
 atomic save and migration continuity
 independent deterministic replay
 WebGL context loss and restoration
+```
+
+## Reconciliation state
+
+```txt
+repo-local source audit: 2026-07-12T19-41-13-04-00
+root and central reconciliation: 2026-07-12T19-49-41-04-00
+runtime repairs: not implemented
+fixtures: not implemented or executed
 ```
 
 ## Completion boundary

@@ -1,26 +1,23 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-12T17-58-43-04-00`  
-**Status:** `exploration-progression-central-reconciled`
+**Audit timestamp:** `2026-07-12T19-41-13-04-00`  
+**Status:** `frame-scheduler-step-admission-authority-audited`
 
 ## Summary
 
-IntoTheMeadow declares one external provider and 43 local DSK/kits. The executable loop structurally validates descriptors and renders a deterministic meadow, but it still does not accept gameplay commands or consume player, input, interaction, objective and story services.
-
-Three story beats, two objectives and two interaction targets are authored. The active tick changes only `frame` and `lastTick`, so path progress, focal-tree inspection and all authored progression remain unreachable.
+IntoTheMeadow declares 44 kit surfaces and renders a deterministic meadow, but its browser frame loop has no clock or callback authority. Simulation receives a constant `1/60` step once per RAF callback, visual wind consumes absolute RAF time, stop/start does not retire a pending callback, and raw host access can bypass scheduler ownership.
 
 ## Plan ledger
 
-**Goal:** define the first complete playable transaction while preserving existing DSK, render and lifecycle ownership.
+**Goal:** define the authoritative frame transaction required before playable movement, path progress, objectives, story, audio or persistence can safely consume time.
 
-- [x] Compare all eligible Publish repositories and select only `IntoTheMeadow`.
-- [x] Inspect the current DSK, state, content, host and render boundaries.
-- [x] Identify the complete interaction loop and active/declared domains.
-- [x] Preserve all 44 kit surfaces and every offered service.
-- [x] Define movement, inspection, progression, atomic commit and frame-proof contracts.
-- [x] Reconcile the detailed `17-49-51` audit family.
-- [x] Add a new timestamped reconciliation tracker and audits.
+- [x] Compare the full Publish inventory and central ledger.
+- [x] Select only IntoTheMeadow under the oldest eligible synchronized rule.
+- [x] Inspect boot, scheduler, state, renderer, host exposure and tests.
+- [x] Preserve all domains, kits and offered services.
+- [x] Define clock, RAF lease, fixed-step, lifecycle and render-correlation contracts.
+- [x] Add a new timestamped tracker and audit family.
 - [x] Refresh root `.agent` state and machine registry.
 - [x] Push only to `main`; create no branch or pull request.
 - [ ] Implement and execute the authority later.
@@ -30,65 +27,95 @@ Three story beats, two objectives and two interaction targets are authored. The 
 ```txt
 accessible Publish repositories: 10
 eligible non-Cavalry repositories: 9
-new/ledger-missing/root-agent-missing: 0
-IntoTheMeadow: oldest eligible stable central entry; selected
-TheCavalryOfRome: excluded
+new eligible repositories: 0
+central-ledger-missing eligible repositories: 0
+root-.agent-missing eligible repositories: 0
+
+IntoTheMeadow      2026-07-12T17-58-43-04-00 selected
+PhantomCommand     2026-07-12T18-11-53-04-00
+PrehistoricRush    2026-07-12T18-18-59-04-00
+HorrorCorridor     2026-07-12T18-38-51-04-00
+ZombieOrchard      2026-07-12T18-48-07-04-00
+MyCozyIsland       2026-07-12T19-00-22-04-00
+TheUnmappedHouse   2026-07-12T19-11-01-04-00
+AetherVale         2026-07-12T19-21-29-04-00
+TheOpenAbove       2026-07-12T19-31-06-04-00
+TheCavalryOfRome   excluded
 ```
 
 ## Complete interaction loop
 
 ```txt
-page boot
-  -> import pinned meadow provider
-  -> create and validate 43 local descriptors
-  -> snapshot declaration state
-  -> create immutable game/content references
-  -> create static render source, WebGL renderer, GameHost and editor bridge
-  -> schedule RAF
+boot
+  -> load external meadow provider
+  -> validate local DSK descriptors
+  -> create game, renderer, enhancer, GameHost and editor bridge
+  -> request RAF
 
-browser frame
-  -> call game.tick
-  -> increment frame and record lastTick
-  -> leave player/path/interaction/objective/story state unchanged
-  -> render visual meadow frame
-  -> publish visual and diagnostic snapshots
+frame(now)
+  -> derive time = now / 1000
+  -> tick exactly once with dt = 1/60
+  -> commit frame and lastTick without input validation
+  -> enhance static-topology render plan
+  -> pass absolute time to wind shader
+  -> draw outline and color passes
+  -> publish mesh/cache snapshot without clock provenance
+  -> request successor RAF
 
-authored exploration
-  -> path-progress 0.25 should fire path-discovery
-  -> path-progress 0.35 should complete walk-the-path
-  -> focal-tree inspection should fire story and complete inspect-tree
-
-current outcome
-  -> no command ingress, movement, target query, inspection or progression evaluator
+lifecycle
+  -> stop sets stopped = true
+  -> start sets stopped = false and requests RAF
+  -> no RAF handle, lease, generation or stale callback rejection
 ```
 
 ## Domains in use
 
 ```txt
 browser shell, loading and fatal projection
-provider import, fallback and structural validation
-DSK descriptors, declaration status and snapshots
-game manifest, immutable state, tick, reset and snapshots
-authored story, objective and interaction-target content
+provider import, fallback and validation
+DSK identity, descriptors and declaration snapshots
+game state, tick, reset and snapshots
+authored story, objectives and interaction targets
 terrain, path, grass, trees, scatter, wind and atmosphere
-render-plan enhancement, CPU mesh and WebGL drawing
+render enhancement, mesh generation and WebGL drawing
 camera and visual-frame projection
-GameHost, browser editor and Node headless editor
-static checks, build and Pages deployment
+GameHost, browser editor and headless editor
+checks, build and Pages deployment
 
 declared but inert:
-input, player, interaction, objective, story, ecology, audio, UI, save and adaptive performance
+input, player, interaction, objective, story, ecology, audio, UI, save and performance adaptation
+
+missing:
+runtime clock, frame scheduler, RAF lease, fixed-step accumulator,
+step budgets, lifecycle results, stale callback rejection,
+render-time projection and frame-clock acknowledgement
 ```
 
 ## Source-backed findings
 
 ```txt
-no bounded browser/editor gameplay command ingress
-advanceGameState mutates frame and lastTick only
-no terrain/path or target/range evidence results
-no transition identity or exactly-once objective/story ledger
-no atomic result joining movement, progression, feedback and save
-no visible frame acknowledgement citing gameplay truth
+host dt: constant 1/60 per callback
+host time: absolute RAF timestamp / 1000
+state validation: Number conversion only
+RAF handle retained: no
+cancelAnimationFrame used: no
+scheduler generation: no
+step accumulator: no
+step budget: no
+overflow result: no
+render snapshot clock fields: no
+raw game mutation exposed: yes
+```
+
+## Failure modes
+
+```txt
+30 Hz -> future dt consumers run at half authored speed
+120 Hz -> future dt consumers run at double authored speed
+long stall -> visual wind jumps while simulation advances one step
+stop then immediate start -> predecessor and successor RAF chains can coexist
+raw tick with negative/NaN/Infinity -> unadmitted temporal state
+render success -> cannot prove matching simulation revision
 ```
 
 ## Kit and service census
@@ -99,14 +126,13 @@ local declared kits: 43
 total kit surfaces: 44
 required-v0.1 declarations: 15
 planned declarations: 28
-runtime gameplay commands: 0
-movement/inspect/progression results: 0
+runtime frame authorities: 0
 ```
 
-The exact kit/service inventory is in:
+The exact inventory is in:
 
 ```txt
-.agent/trackers/2026-07-12T17-58-43-04-00/project-breakdown.md
+.agent/trackers/2026-07-12T19-41-13-04-00/project-breakdown.md
 .agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md
 .agent/kit-registry.json
 ```
@@ -114,38 +140,40 @@ The exact kit/service inventory is in:
 ## Required authority
 
 ```txt
-meadow-exploration-progression-authority-domain
+meadow-frame-scheduler-step-admission-authority-domain
 ```
 
 ## Required transaction
 
 ```txt
-GameplayCommand
-  -> validate session, capability generation and gameplay predecessor
-  -> normalize device/editor intent
-  -> produce movement, terrain and path evidence
-  -> produce exact target/inspection evidence when requested
-  -> evaluate objective/story candidates against one successor state
-  -> suppress duplicate transitions
-  -> atomically commit player, interaction, objective and story state
-  -> publish GameplayResult and DskConsumptionReceipt rows
-  -> project feedback and save eligibility
-  -> publish GameplayVisibleFrameAck
+RAF callback
+  -> validate current runtime session, scheduler generation and RAF lease
+  -> sample monotonic time
+  -> classify first, normal, stalled, regressed, cancelled or stale
+  -> accumulate bounded elapsed time
+  -> admit zero or more fixed simulation steps under count and CPU budgets
+  -> publish SimulationStepBatchResult
+  -> publish explicit deferred-time or dropped-time result
+  -> derive render time from committed simulation and interpolation evidence
+  -> render one frame citing clock, step and render revisions
+  -> schedule exactly one successor callback or commit an explicit stop
+  -> publish FrameClockCorrelation and FrameObservation
+  -> acknowledge the first visible frame citing the accepted frame result
 ```
 
 ## Current output
 
 ```txt
-.agent/trackers/2026-07-12T17-58-43-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T17-58-43-04-00.md
-.agent/architecture-audit/2026-07-12T17-58-43-04-00-exploration-progression-central-reconciliation-dsk-map.md
-.agent/render-audit/2026-07-12T17-58-43-04-00-gameplay-frame-provenance-central-reconciliation.md
-.agent/gameplay-audit/2026-07-12T17-58-43-04-00-inert-exploration-loop-central-reconciliation.md
-.agent/interaction-audit/2026-07-12T17-58-43-04-00-gameplay-command-evidence-central-reconciliation.md
-.agent/progression-audit/2026-07-12T17-58-43-04-00-objective-story-exactly-once-central-contract.md
-.agent/deploy-audit/2026-07-12T17-58-43-04-00-playable-loop-central-sync-gate.md
+.agent/trackers/2026-07-12T19-41-13-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T19-41-13-04-00.md
+.agent/architecture-audit/2026-07-12T19-41-13-04-00-frame-scheduler-step-admission-dsk-map.md
+.agent/render-audit/2026-07-12T19-41-13-04-00-render-simulation-clock-correlation-gap.md
+.agent/gameplay-audit/2026-07-12T19-41-13-04-00-refresh-rate-dependent-simulation-loop.md
+.agent/interaction-audit/2026-07-12T19-41-13-04-00-stop-start-frame-admission-map.md
+.agent/frame-clock-audit/2026-07-12T19-41-13-04-00-raf-lease-fixed-step-contract.md
+.agent/deploy-audit/2026-07-12T19-41-13-04-00-frame-clock-fixture-gate.md
 ```
 
 ## Validation
 
-Documentation only. Runtime, gameplay, render, package, dependency and deployment files were not changed. No executable playable-loop fixture was run.
+Documentation only. No runtime, gameplay, render, package, dependency or deployment behavior was changed. Existing checks were inspected but not run.

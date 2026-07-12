@@ -2,194 +2,139 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-12T00-49-48-04-00`
+**Updated:** `2026-07-12T00-58-12-04-00`
 
 ## Goal
 
-Make performance sampling, quality decisions, budget allocation, render-plan replacement and visible-frame acknowledgement one authoritative transaction before claiming adaptive quality support.
+Replace the current adjacent-read check with a versioned deterministic replay gate that compares independent runtimes, provider/seed/content identity, normalized command/tick sequences, reset behavior and the first visible frame.
 
 ## Plan ledger
 
-- [ ] Preserve current meadow generation, visual composition and deterministic source topology.
+- [ ] Preserve current meadow generation, render topology, shaders and browser composition.
 - [ ] Complete Runtime Session Lifecycle Authority first.
-- [ ] Complete Host Capability Gateway and remove raw mutation bypasses.
+- [ ] Complete Host Capability Gateway and raw runtime quarantine.
 - [ ] Complete Runtime Clock and Step Admission Authority.
-- [ ] Complete Render Topology, Context Recovery, Surface Resolution and Committed Frame prerequisites.
-- [ ] Upgrade `meadow-performance-dsk` from static profile lookup to an admitted quality owner.
-- [ ] Define a versioned quality-profile schema and deterministic quality fingerprint.
-- [ ] Reject unknown profiles instead of silently retaining an invalid label with high-profile behavior.
-- [ ] Add post-frame CPU and optional GPU performance samples.
-- [ ] Add elapsed-time windows, invalid-sample policy, visibility policy, hysteresis, cooldown and minimum residency.
-- [ ] Add manual override and auto-quality commands through the shared capability gateway.
-- [ ] Add quality transition IDs, revisions, expected-revision admission and idempotent results.
-- [ ] Add one performance budget ledger covering grass, scatter, terrain, draw calls and drawing-buffer pixels.
-- [ ] Enforce `maxGrassInstances` globally across patches and draw groups.
-- [ ] Enforce `maxSmallScatterObjects` and remove hard-coded consumer-local limits.
-- [ ] Bind `terrainResolution` to actual terrain segment topology.
-- [ ] Bind `postProcess` to actual pass descriptors and draw submission.
-- [ ] Bind quality to an explicit DPR/pixel-budget policy.
-- [ ] Include quality revision and fingerprint in enhancer and renderer cache identity.
-- [ ] Prepare render-plan and GPU-resource candidates detached from live authority.
-- [ ] Commit all consumers atomically or roll back to the last-known-good quality.
-- [ ] Add effective-quality observations to renderer, GameHost, browser editor and headless surfaces.
-- [ ] Add first-visible-quality-frame acknowledgement.
-- [ ] Add bounded sample, decision and transition journals.
-- [ ] Add DOM-free cadence, budget, cache, rollback and stale-command fixtures.
-- [ ] Add browser and Pages degrade/recovery smoke tests.
-- [ ] Wire the fixture gate into `npm run check` or a dedicated acceptance command.
+- [ ] Complete Source Provider Authority and provider fingerprinting.
+- [ ] Define an admitted canonical-value schema.
+- [ ] Replace permissive `stableStringify()` with a versioned canonical serializer.
+- [ ] Add provider, seed, content, scenario and checkpoint fingerprints.
+- [ ] Add `ReplayScenario` and `ReplayResult` schemas.
+- [ ] Construct independent runtime A and runtime B for every deterministic fixture.
+- [ ] Ensure provider/cache instances are not shared across compared runs.
+- [ ] Add normalized command and tick schedules.
+- [ ] Add construction, intermediate and terminal checkpoints.
+- [ ] Add reset-and-replay and stop/start scenarios.
+- [ ] Add 30/60/120 Hz presentation schedules mapped to equal committed ticks.
+- [ ] Compare fallback and external provider runs through an explicit parity classification.
+- [ ] Add state, objective, story, source-plan and enhanced-plan fingerprints.
+- [ ] Add exact first-divergence reporting.
+- [ ] Add bounded replay journals and idempotent scenario execution.
+- [ ] Route the same scenario/result semantics through Node, browser GameHost, browser editor and headless editor.
+- [ ] Add first-visible-frame replay acknowledgement.
+- [ ] Wire DOM-free replay fixtures into `npm run check`.
+- [ ] Add browser and Pages replay smoke gates.
 
 ## Existing owners to update first
 
 ```txt
-meadow-performance-dsk
-grass-density-scaling-kit
-grass-patch-placement-kit
-grass-lod-policy-kit
-meadow-scatter-dsk
-post-process-stack-dsk
-meadow-render-host-dsk
-meadow-webgl-renderer-v2-kit
-web-host-dsk
+into-the-meadow-game-dsk
+meadow-area-bridge-dsk
 meadow-diagnostics-dsk
-createRenderPlanEnhancer
-GameHost capability gateway
+meadow-input-dsk
+meadow-objective-dsk
+meadow-story-dsk
+meadow-render-host-dsk
+web-host-dsk
 browser editor bridge
-Node headless environment
+Node headless editor environment
+Runtime Session Lifecycle Authority
 Runtime Clock and Step Admission Authority
-Render Topology Identity Authority
-WebGL Context Recovery Authority
-Render Surface Resolution Authority
+Source Provider Authority
 Committed Frame Observation Authority
-Fatal Runtime Failure Recovery Authority
 ```
 
 ## Candidate coordinating kits
 
 ```txt
-performance-sample-envelope-kit
-performance-window-timebase-kit
-quality-profile-schema-kit
-quality-profile-admission-kit
-quality-decision-policy-kit
-quality-transition-command-kit
-quality-transition-id-kit
-quality-revision-kit
-performance-budget-ledger-kit
-grass-instance-budget-kit
-scatter-budget-kit
-terrain-resolution-policy-kit
-post-process-quality-policy-kit
-render-plan-quality-fingerprint-kit
-quality-cache-invalidation-kit
-quality-transition-prepare-kit
-quality-transition-commit-kit
-quality-transition-rollback-kit
-effective-quality-observation-kit
-quality-frame-ack-kit
-quality-cadence-parity-fixture-kit
-quality-budget-enforcement-fixture-kit
-quality-transition-browser-smoke-kit
+canonical-value-schema-kit
+canonical-serializer-kit
+determinism-fingerprint-kit
+provider-identity-kit
+provider-fingerprint-kit
+seed-policy-kit
+replay-run-id-kit
+replay-scenario-schema-kit
+replay-input-sequence-kit
+replay-tick-schedule-kit
+independent-runtime-construction-kit
+replay-execution-kit
+reset-replay-kit
+cadence-normalization-kit
+state-projection-fingerprint-kit
+render-plan-fingerprint-kit
+visible-frame-determinism-ack-kit
+first-divergence-kit
+replay-result-kit
+determinism-journal-kit
+same-seed-independent-build-fixture-kit
+fallback-external-parity-fixture-kit
+tick-reset-replay-fixture-kit
+cadence-parity-fixture-kit
+browser-headless-replay-fixture-kit
 ```
 
-## Required profile contract
+## Replay scenario contract
 
 ```txt
-QualityProfile
-  schemaId
+ReplayScenario
+  scenarioId
   schemaVersion
-  profileId
-  outline policy
-  grass instance/card ceilings
-  flower, mushroom, rock, tree-line and small-scatter ceilings
-  terrain segment policy
-  post-process pass policy
-  draw-call ceiling
-  drawing-buffer pixel ceiling
-  DPR range
-  transition policy metadata
+  manifestId
+  manifestVersion
+  providerId
+  providerVersion
+  providerFingerprint
+  seedPolicyId
+  seed
+  contentFingerprint
+  initialStateFingerprint
+  commandSequence
+  tickSchedule
+  checkpointPolicy
 ```
 
-## Required commands
+## Required checkpoints
 
 ```txt
-ListQualityProfiles
-GetEffectiveQuality
-SetQualityProfile
-EnableAutoQuality
-DisableAutoQuality
-SetPerformanceBudgetOverride
-ClearPerformanceBudgetOverride
-ReevaluateQuality
+construction
+first committed tick
+path-progress transition
+objective completion
+inspect transition
+story transition
+pre-reset terminal state
+post-reset initial state
+replayed terminal state
+first visible frame
 ```
 
-Every mutation must resolve to one `QualityTransitionCommand` with session, renderer generation, surface revision, expected quality revision and transition ID.
-
-## Required result
+## Acceptance matrix
 
 ```txt
-QualityTransitionResult
-  commandId
-  transitionId
-  status
-  reason
-  predecessorQualityRevision
-  committedQualityRevision
-  requestedProfile
-  effectiveProfile
-  qualityFingerprint
-  budgetLedgerFingerprint
-  consumerResults
-  topologyKey
-  rendererGeneration
-  surfaceRevision
-  committedFrameId
-```
-
-## Required budget boundary
-
-```txt
-reserve before topology generation
-  grass instances and cards
-  flowers
-  mushrooms
-  rocks
-  tree-line objects
-  small scatter
-  terrain vertices and triangles
-  post-process passes
-  draw calls
-  drawing-buffer pixels
-
-report after preparation
-  reserved
-  consumed
-  dropped
-  remaining
-  violations
-```
-
-## Acceptance cases
-
-```txt
-all named profiles validate and fingerprint deterministically
-unknown profile rejects before enhancement
-same elapsed-time trace gives the same decision at 30, 60 and 120 Hz
-hidden and suspended intervals do not trigger false degradation
-stable slow trace degrades after declared evidence
-stable fast trace recovers after declared evidence
-alternating threshold trace does not thrash
-all grass and scatter ceilings hold for adversarial source plans
-terrain resolution follows the admitted profile
-post-process and draw behavior follow the admitted profile
-quality-only change invalidates enhancer and renderer topology exactly once
-same quality revision reuses caches
-duplicate transition returns the prior result
-stale transition rejects without mutation
-consumer preparation failure preserves the predecessor frame
-context loss during transition returns one classified result
-GameHost, browser editor and headless observations agree
-first visible frame cites the committed quality revision
-Pages proves degrade and recovery without leaks or duplicate RAF work
+same fallback provider + same seed + same scenario
+same external provider + same seed + same scenario
+fallback/external explicit parity classification
+same commands at 30, 60 and 120 Hz presentation cadence
+reset then replay
+stop/start then replay
+browser versus Node headless
+changed seed negative control
+changed provider negative control
+changed command order negative control
+changed content revision negative control
+canonical-value rejection cases
+first-divergence path and tick
+state/render/frame fingerprint correlation
 ```
 
 ## Ordered architecture queue
@@ -209,6 +154,7 @@ Pages proves degrade and recovery without leaks or duplicate RAF work
 8. Interaction Command and Objective Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
+9a. Deterministic Replay Validation Authority
 ```
 
-Do not implement adaptive quality as a mutable profile variable or frame-count threshold. The boundary must use elapsed-time evidence, enforce every declared budget, replace consumers transactionally and prove the first visible frame under the committed quality revision.
+Do not treat two equal adjacent reads as deterministic replay. The next implementation must create independent runtimes, admit canonical scenarios, compare checkpointed projections and identify the first exact divergence.

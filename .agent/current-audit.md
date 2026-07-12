@@ -2,43 +2,42 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T20-38-07-04-00`
+**Audit timestamp:** `2026-07-11T22-08-13-04-00`
 
 ## Summary
 
-`IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, a descriptor-driven render plan, CPU mesh construction, persistent WebGL rendering, browser `GameHost` and editor surfaces, and a Node headless-editor environment.
+`IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, descriptor-driven scene composition, CPU mesh construction, a persistent WebGL renderer, browser `GameHost` and editor surfaces, and a Node headless-editor environment.
 
-This pass audits runtime clock and step admission. The browser, browser editor and Node editor all reach the same mutable game through incompatible time models. The browser advances one state frame with a fixed `1/60` delta while projecting absolute RAF time into the render plan. Browser editor commands may provide arbitrary time and delta directly, while Node accumulates its own caller-controlled time. No clock ID, step ID, session fence, reset epoch, finite-delta policy, work budget or step/frame receipt joins these paths.
+This pass audits render-surface resolution. The browser canvas fills the viewport through CSS, while the renderer samples live CSS dimensions and device pixel ratio inside every render call. It directly mutates the drawing buffer, configures the GL viewport and derives projection aspect without a pixel budget, capability admission, resize generation, fallback result, committed surface revision or capture/frame correlation.
 
 ## Plan ledger
 
-**Goal:** define one monotonic simulation clock and typed step transaction that all runtime surfaces must consume before state, plan time or presentation can advance.
+**Goal:** define one bounded and revisioned surface transaction from viewport observation through actual WebGL drawing-buffer readback, projection, visible-frame acknowledgement and capture.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm nine eligible central ledgers and root `.agent` states.
-- [x] Detect newer unsynchronized repo-local work in nominal-oldest `AetherVale`.
+- [x] Detect active unsynchronized `AetherVale` lifecycle work.
 - [x] Select only `IntoTheMeadow` as the oldest stable eligible repository.
-- [x] Inspect `AGENTS.md`, browser host, game state, render-plan enhancer, WebGL renderer, browser editor bridge and Node environment.
-- [x] Identify interaction loops, all domains, all kits and every declared service.
-- [x] Define the runtime-clock parent domain and fixture boundary.
+- [x] Inspect `AGENTS.md`, `index.html`, browser host, renderer, editor bridge and browser observation script.
+- [x] Identify the interaction loop, all domains, all kits and every declared service.
+- [x] Define the render-surface parent domain and fixture boundary.
 - [x] Change documentation only.
 - [ ] Runtime implementation and executable fixtures remain future work.
 
 ## Selection comparison
 
 ```txt
-central timestamp      repo-local state
-AetherVale       18:48 active newer audit at 20:30, skipped
-IntoTheMeadow    19:01 selected oldest stable
-PrehistoricRush  19:09
-MyCozyIsland     19:20
-TheOpenAbove     19:28
-HorrorCorridor   19:38
-PhantomCommand   19:48
-ZombieOrchard    20:03
-TheUnmappedHouse 20:11
-TheCavalryOfRome excluded
+AetherVale         central 20:30, active repo-local 22:08 lifecycle audit, skipped
+IntoTheMeadow      central 20:38, selected oldest stable
+MyCozyIsland       central 20:51
+PrehistoricRush    central 21:00
+TheOpenAbove       central 21:08
+HorrorCorridor     central 21:21
+PhantomCommand     central 21:31
+ZombieOrchard      central 21:40
+TheUnmappedHouse   central 21:48
+TheCavalryOfRome   excluded
 ```
 
 Only `LuminaryLabs-Publish/IntoTheMeadow` was changed in the Publish organization.
@@ -47,42 +46,47 @@ Only `LuminaryLabs-Publish/IntoTheMeadow` was changed in the Publish organizatio
 
 ```txt
 browser boot
-  -> load pinned meadow provider
-  -> create game, renderer and enhancer
-  -> expose GameHost and editor bridge
+  -> full-window CSS canvas
+  -> external kit load
+  -> game, renderer and enhancer creation
+  -> GameHost and browser editor exposure
   -> request RAF
 
-browser RAF
-  -> receive DOMHighResTimeStamp now
-  -> time = now / 1000
-  -> game.tick({ time, dt: 1/60 })
-  -> state.frame += 1
-  -> state.lastTick = { time, dt }
-  -> getRenderPlan(time)
-  -> enhance cached static plan with time overlay
-  -> renderer uploads time to uTime
-  -> wind shader evaluates absolute page-time phase
+browser frame
+  -> game.tick
+  -> get and enhance render plan
+  -> renderer.render
+  -> sample canvas.clientWidth / clientHeight and live DPR
+  -> clamp DPR to 1 through 2
+  -> mutate canvas.width / canvas.height
+  -> gl.viewport with requested dimensions
+  -> derive perspective aspect from requested dimensions
+  -> bind persistent mesh buffers
+  -> draw outline pass
+  -> draw color pass
+  -> publish renderer snapshot without surface dimensions
 
-browser editor
-  -> runtime.tick({ dt = 1/60, time = 0 })
-  -> direct raw game mutation
-  -> no RAF admission, clock ownership or render commit
-  -> runtime.reset resets game state only
-
-Node headless editor
-  -> private time = 0
-  -> runtime.tick adds caller dt for caller ticks count
-  -> game.tick({ dt, time })
-  -> build/capture uses private time
-  -> reset sets private time to 0 and invalidates enhancer
+editor observation
+  -> browser.getViewport reads live viewport, DPR and canvas dimensions
+  -> renderer.capture reads canvas dimensions and data URL
+  -> latest renderer snapshot attaches independently
+  -> no surface revision or frame ID joins those observations
 ```
 
 ## Domains in use
 
 ```txt
 browser shell, DOM boot and visible failure projection
+fixed CSS canvas and viewport layout
+DOM viewport, orientation and visibility observation
+device-pixel-ratio observation and quality policy
+render pixel budget and WebGL surface capability
+resize command, generation, coalescing and stale rejection
+drawing-buffer allocation, fallback and surface commit
+camera projection and aspect derivation
+renderer snapshot, capture and visible-frame correlation
 external dependency manifest and dynamic provider loading
-source-provider selection, fallback and source-plan generation
+source-provider selection, validation and fallback
 DSK census, descriptor generation, validation and install reporting
 game state, snapshots, diagnostics, tick and reset
 runtime lifecycle, RAF scheduling, pause/start and disposal
@@ -205,7 +209,7 @@ meadow-render-host-dsk
   renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
 meadow-webgl-renderer-v2-kit
   context acquisition, shader program creation, attribute/uniform binding, CPU mesh ingest,
-  GPU buffer ownership, two-pass draw, resize, snapshot and disposal
+  GPU buffer ownership, draw submission, resize, snapshot and disposal
 post-process-stack-dsk
   pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
 render-target-kit
@@ -224,93 +228,122 @@ static-pages-deploy-dsk
   build-config, GitHub Pages workflow, release-artifacts, cache-invalidation, deploy-validation
 ```
 
-## Main finding: three clocks reach one mutable graph
+## Main finding: requested surface values become truth without admission
 
-### Browser RAF combines incompatible values
+### DPR and dimensions are sampled inside the draw path
 
-`frame(now)` converts the RAF timestamp to seconds but passes a constant `dt = 1/60`. A delayed callback, hidden tab, pause or overloaded frame still advances state by one nominal fixed step while render time jumps to the current page timestamp.
+`resize()` clamps live `devicePixelRatio` from 1 through 2, multiplies live CSS size, mutates the canvas and returns the requested values. There is no immutable viewport observation or resize command.
 
-### Render time is operational, not metadata
+### Pixel and capability budgets are absent
 
-`getRenderPlan(time)` overlays the supplied time. The enhancer preserves it through `withMeadowRenderTime()`, and the renderer sends it to shader uniform `uTime`. Wind phase therefore follows absolute browser page time rather than an authoritative simulation clock.
+The runtime does not query `MAX_VIEWPORT_DIMS`, `MAX_RENDERBUFFER_SIZE`, or the actual `gl.drawingBufferWidth` and `gl.drawingBufferHeight`. It does not cap total pixels or classify browser clamping.
 
-### Stop/start and reset do not define time semantics
+### Fallback and rollback are absent
 
-`stop()` changes a Boolean. `start()` schedules a later RAF whose absolute timestamp includes the stopped interval. Browser `runtime.reset` recreates state but does not reset or rebase the RAF-derived render clock. The reset state can immediately render at a large pre-reset time.
+A large or unsupported request has no lower-resolution retry policy, typed failure, last-known-good surface or cold-rebuild result. Changing the live canvas drawing buffer is destructive, but the operation is not staged or journaled.
 
-### Browser editor bypasses scheduling authority
+### Renderer and capture evidence omit surface identity
 
-`runtime.tick` invokes `game.tick` directly with caller-provided `dt` and `time`. It does not validate finite values, monotonicity, session, expected frame, maximum ticks or whether a visible frame follows.
+The renderer snapshot contains topology and cache state but no width, height, DPR, surface revision, context generation or frame ID. Editor viewport and capture capabilities read live values independently and cannot prove they describe the same committed frame.
 
-### Node headless uses a different clock contract
+### Existing browser proof is one configuration
 
-The Node environment maintains a private `time`, adds caller-provided `dt` once per requested tick and resets time to zero. The same logical commands can therefore produce different `lastTick`, render time and wind phase in browser and headless execution.
+The browser observation fixes 1440 by 900 and DPR 1. It validates title, debug markers and screenshot byte count, not resize behavior, high-DPR budgets or capture parity.
 
 ## Required parent domain
 
 ```txt
-meadow-runtime-clock-and-step-authority-domain
+meadow-render-surface-resolution-authority-domain
 ```
 
 Planned coordinating kits:
 
 ```txt
-runtime-clock-id-kit
-runtime-clock-state-kit
-runtime-clock-revision-kit
-simulation-step-command-kit
-simulation-step-id-kit
-simulation-step-admission-kit
-finite-delta-policy-kit
-step-work-budget-kit
-monotonic-time-policy-kit
-pause-resume-clock-kit
-reset-epoch-kit
-clock-source-adapter-kit
-browser-raf-step-adapter-kit
-browser-editor-step-adapter-kit
-headless-step-adapter-kit
-simulation-step-result-kit
-clock-step-journal-kit
-clock-observation-kit
-clock-render-frame-correlation-kit
-runtime-clock-parity-fixture-kit
-pause-resume-clock-fixture-kit
-reset-epoch-clock-fixture-kit
-step-budget-fixture-kit
+render-surface-id-kit
+render-surface-revision-kit
+viewport-observation-kit
+device-pixel-ratio-policy-kit
+render-pixel-budget-kit
+webgl-surface-capability-kit
+resize-command-kit
+resize-coalescing-kit
+render-surface-plan-kit
+drawing-buffer-allocation-kit
+render-surface-fallback-kit
+render-surface-commit-kit
+render-surface-rollback-kit
+stale-surface-observation-rejection-kit
+render-surface-observation-kit
+capture-surface-correlation-kit
+visible-frame-surface-ack-kit
+render-surface-journal-kit
+render-surface-fixture-kit
+browser-resize-dpr-smoke-kit
 ```
 
 ## Required transaction
 
 ```txt
-raw source event
-  -> adapt into SimulationStepCommand
-  -> validate runtimeSessionId and resetEpoch
-  -> validate expected clock revision and step sequence
-  -> validate finite non-negative delta
-  -> clamp or reject by maximum delta and work budget
-  -> advance monotonic simulation time exactly once
-  -> mutate game state under accepted step ID
-  -> derive render time from accepted clock state
-  -> render and commit a frame citing the same step and clock revision
-  -> publish typed result and bounded journal row
+observe CSS viewport and DPR
+  -> create ResizeCommand
+  -> validate session, context generation and predecessor surface revision
+  -> validate finite positive dimensions
+  -> query WebGL limits and product pixel budget
+  -> derive bounded candidate dimensions and fallback sequence
+  -> coalesce superseded observations
+  -> allocate drawing buffer
+  -> read actual drawing-buffer dimensions
+  -> classify mismatch or fallback
+  -> commit one surface revision
+  -> derive camera aspect from committed dimensions
+  -> draw and acknowledge one visible frame
+  -> permit viewport/capture observations for that revision
 ```
-
-Pause must stop admission without advancing simulation time. Resume must rebase the source adapter without injecting wall-clock pause duration. Reset must advance an epoch, retire predecessor commands and define the new clock origin.
 
 ## Required proof
 
 ```txt
-30 Hz, 60 Hz and 144 Hz source callbacks yield the same accepted simulation sequence
-large callback delay is clamped or rejected by explicit policy
-hidden-tab and stop/start intervals do not jump simulation/render time
-browser reset and Node reset establish equivalent epoch-zero observations
-browser editor rejects stale, non-finite, negative and over-budget commands
-multiple requested headless ticks have deterministic bounded results
-state.lastTick, renderPlan.time, shader time and committed frame cite one clock revision
-no direct raw game.tick path bypasses admission
+multiple viewport sizes and DPR values obey one policy
+large surfaces remain within maximum dimensions and pixels
+rapid resize coalesces deterministically
+hidden and zero-sized layouts preserve or suspend explicitly
+actual GL dimensions govern the result
+stale session, context and surface revisions reject
+allocation failure follows typed fallback or failure
+camera projection cites committed dimensions
+renderer snapshot, viewport, capture and visible frame share one revision
+context loss during resize routes through context recovery
+Pages proves deployed resize and capture parity
 ```
 
-## Validation boundary
+## Ordered safe ledges
 
-This was a documentation-only audit. No runtime, dependency, render or deployment behavior changed. Existing checks were not run because the proposed step-admission and clock-parity fixtures do not exist yet.
+```txt
+1. Runtime Session Lifecycle Authority
+2. Host Capability Gateway and Raw Runtime Quarantine
+3. Headless Workspace Path Authority and Filesystem Containment
+4. Runtime Clock and Step Admission Authority
+5. Source Provider Authority
+6. Render Topology Identity Authority
+6a. WebGL Context Recovery Authority
+6b. Render Surface Resolution Authority
+7. Committed Frame Observation Authority
+7a. Fatal Runtime Failure Recovery Authority
+8. Interaction Command and Objective Authority
+9. DSK Runtime Consumption Authority
+```
+
+## Validation status
+
+```txt
+runtime source changed: no
+renderer source changed: no
+package scripts changed: no
+dependencies changed: no
+deployment changed: no
+branch created: no
+pull request created: no
+npm run check: not run
+browser resize smoke: not run
+render-surface fixtures: unavailable
+```

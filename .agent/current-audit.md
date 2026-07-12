@@ -1,24 +1,25 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-12T15-49-09-04-00`  
-**Status:** `dsk-runtime-consumption-authority-audited`
+**Audit timestamp:** `2026-07-12T17-49-51-04-00`  
+**Status:** `exploration-progression-authority-audited`
 
 ## Summary
 
-IntoTheMeadow declares one external provider and 43 local DSK/kits. The local declaration stack is structurally validated and snapshotted, but there is no executable provider registry, dependency graph, per-kit install result or runtime capability generation.
+IntoTheMeadow declares one external provider and 43 local DSK/kits. The current executable loop structurally validates descriptors and renders a deterministic meadow, but it still does not accept gameplay commands or consume player, input, interaction, objective and story services.
 
-The active game tick only increments the frame counter and records `dt` and `time`. Player transform, path progress, interaction state, objectives and story remain unchanged. Authored gameplay content is visible through diagnostics and snapshots but has no runtime consumer.
+Three story beats, two objectives and two interaction targets are authored. The active tick changes only `frame` and `lastTick`, so path progress, focal-tree inspection and all authored progression remain unreachable.
 
 ## Plan ledger
 
-**Goal:** distinguish declared, validated, installed, ready, active and consumed DSK states, then prove one complete gameplay transaction through the intended service generation.
+**Goal:** define the first complete playable transaction while preserving existing DSK, render and lifecycle ownership.
 
 - [x] Compare all eligible Publish repositories and select only `IntoTheMeadow`.
-- [x] Inspect declaration, validation, install, state, content, host and render paths.
-- [x] Identify the complete interaction loop and active domains.
-- [x] Preserve all 44 kits and every offered service.
-- [x] Define provider, dependency, install, command, consumption and frame-proof boundaries.
+- [x] Avoid the concurrently changing older candidate.
+- [x] Inspect the current DSK, state, content, host and render boundaries.
+- [x] Identify the complete interaction loop and active/declared domains.
+- [x] Preserve all 44 kit surfaces and every offered service.
+- [x] Define movement, inspection, progression, atomic commit and frame-proof contracts.
 - [x] Add timestamped tracker and architecture/system audits.
 - [x] Refresh root `.agent` state and machine registry.
 - [x] Push only to `main`; create no branch or pull request.
@@ -27,15 +28,8 @@ The active game tick only increments the frame counter and records `dt` and `tim
 ## Selection
 
 ```txt
-IntoTheMeadow      2026-07-12T13-54-00-04-00 selected
-PhantomCommand     2026-07-12T13-59-50-04-00
-PrehistoricRush    2026-07-12T14-10-22-04-00
-HorrorCorridor     2026-07-12T14-30-36-04-00
-ZombieOrchard      2026-07-12T14-38-35-04-00
-MyCozyIsland       2026-07-12T14-59-01-04-00
-TheUnmappedHouse   2026-07-12T15-08-07-04-00
-AetherVale         2026-07-12T15-18-50-04-00
-TheOpenAbove       2026-07-12T15-31-24-04-00
+TheOpenAbove       older but actively changing; skipped
+IntoTheMeadow      next-oldest stable eligible repository; selected
 TheCavalryOfRome   excluded
 ```
 
@@ -43,185 +37,160 @@ TheCavalryOfRome   excluded
 
 ```txt
 page boot
-  -> import pinned meadow-area provider
-  -> create 43 local descriptors from ids and service-name arrays
-  -> validate duplicate ids, suffixes and five-item service lists
-  -> label 15 required ids active-v0.1 and 28 ids planned
-  -> snapshot declarations as the install state
-  -> instantiate the external meadow-area provider
-  -> create initial game state and authored content references
-  -> create render enhancer, WebGL renderer, GameHost and editor bridge
+  -> import pinned meadow provider
+  -> create and validate 43 local descriptors
+  -> snapshot declaration state
+  -> create immutable game/content references
+  -> create static render source, WebGL renderer, GameHost and editor bridge
   -> schedule RAF
 
 browser frame
-  -> game.tick({ time, dt: 1/60 })
-  -> advanceGameState increments frame and writes lastTick
-  -> get static source render plan with time overlay
-  -> enhance, validate and render plan
-  -> project optional debug counts
-  -> schedule successor RAF
+  -> call game.tick
+  -> increment frame and record lastTick
+  -> leave player/path/interaction/objective/story state unchanged
+  -> render visual meadow frame
+  -> publish visual and diagnostic snapshots
 
-authored gameplay content
-  -> 3 story beats, 2 objectives and 2 targets exist
-  -> content is returned from game.content and counted in diagnostics
-  -> no input, player motion, interaction, objective or story service consumes it
+authored exploration
+  -> path-progress 0.25 should fire path-discovery
+  -> path-progress 0.35 should complete walk-the-path
+  -> focal-tree inspection should fire story and complete inspect-tree
+
+current outcome
+  -> no command ingress, movement, target query, inspection or progression evaluator
 ```
 
 ## Domains in use
 
 ```txt
 browser shell, loading and fatal projection
-external provider import, fallback and validation
-DSK registry, descriptor factory and structural validation
-DSK snapshot and declaration-status projection
-game manifest, immutable state, tick, reset and snapshot
-authored story, objective and interaction-target descriptors
-meadow terrain, path, grass, trees, scatter, wind and atmosphere
-render-plan enhancement, topology caching and CPU mesh generation
-WebGL shader/program/buffer/uniform/draw lifecycle
-camera descriptors and frame projection
-GameHost and browser editor observation/capture
-Node headless editor scenarios and artifact workflows
-static checks, build and GitHub Pages deployment
+provider import, fallback and structural validation
+DSK descriptors, declaration status and snapshots
+game manifest, immutable state, tick, reset and snapshots
+authored story, objective and interaction-target content
+terrain, path, grass, trees, scatter, wind and atmosphere
+render-plan enhancement, CPU mesh and WebGL drawing
+camera and visual-frame projection
+GameHost, browser editor and Node headless editor
+static checks, build and Pages deployment
 
-Declared but currently inert gameplay domains:
-player movement and terrain contact
-input mapping and normalization
-interaction target admission and inspection
-objective progression and completion
-story trigger and sequence execution
-ecology agents and ambience triggers
-audio activation and cues
-player HUD and story feedback
-save, migration and persistence
-adaptive quality and runtime LOD consumption
+declared but inert:
+input, player, interaction, objective, story, ecology, audio, UI, save and adaptive performance
 ```
 
 ## Source-backed findings
 
-### DSK installation is metadata-only
+### No command ingress
 
-`installDsks()` receives external kit presence, validates local descriptors and returns descriptor arrays, external loaded/deferred rows, validation and snapshots. It does not register providers or instantiate callable services.
+The browser and editor surfaces expose observation and capture, not a bounded gameplay command router.
 
-### Capability status has no readiness proof
-
-`createDskDescriptor()` assigns `active-v0.1` from membership in `REQUIRED_V01_DSK_IDS`. All descriptors have empty dependency lists and generic `game:<domain>` provide tokens. The service names are strings used in layers and snapshots.
-
-### Gameplay tick is inert
+### Time-only state transition
 
 ```txt
-mutated on each tick:
+mutated:
   frame
   lastTick.dt
   lastTick.time
 
 not mutated:
-  player.position/yaw/pitch/pathProgress
-  active objective
-  completed objectives
-  story beats
-  interaction state
+  player transform or path progress
+  interaction/inspect state
+  objective state
+  story state
 ```
 
-### Authored transitions are unreachable
+### No evidence-bound progression
 
-```txt
-path-discovery: path-progress:0.25
-focal-tree story beat: inspect:focal-tree
-walk-the-path completion: progress >= 0.35
-inspect-tree completion: focal-tree inspected
-```
+There is no immutable result joining movement, terrain/path evidence, inspection evidence, objective/story transitions, feedback and persistence.
 
-No runtime evaluator processes these conditions.
+### No exactly-once transition ledger
 
-### Visual and editor proofs do not prove gameplay consumption
+Authored threshold and inspection outcomes have no transition identity, duplicate suppression or atomic multi-domain commit.
 
-The renderer and editor bridge can prove a deterministic environment and capture it. They do not prove that a DSK provider was installed, invoked or responsible for a committed gameplay transition.
+### No visible gameplay proof
+
+The render frame carries no gameplay result or revision and can appear healthy while progression remains inert.
 
 ## Kit and service census
 
 ```txt
 external provider kits: 1
 local declared kits: 43
-total declared kits: 44
+total kit surfaces: 44
 required-v0.1 declarations: 15
 planned declarations: 28
-concrete per-kit install results: 0
-runtime DSK consumption receipts: 0
+runtime gameplay commands: 0
+movement/inspect/progression results: 0
 ```
 
 The exact kit/service inventory is in:
 
 ```txt
-.agent/trackers/2026-07-12T15-49-09-04-00/project-breakdown.md
+.agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md
 .agent/kit-registry.json
 ```
 
 ## Required authority
 
 ```txt
-meadow-dsk-runtime-consumption-authority-domain
+meadow-exploration-progression-authority-domain
 ```
 
-### Required transaction
+## Required transaction
 
 ```txt
-DSK declarations
-  -> resolve immutable providers and contract versions
-  -> validate dependencies and install order
-  -> construct and probe executable service instances
-  -> compare declared/offered/realized services
-  -> atomically publish runtime capability generation
-  -> publish per-kit DskInstallResult
-
-Gameplay command
-  -> admit against runtime and capability generations
-  -> invoke bound services exactly once
-  -> collect DskConsumptionReceipt rows
-  -> atomically commit player/progression/story state
-  -> project world and feedback
-  -> acknowledge first visible gameplay frame
+GameplayCommand
+  -> validate session, capability generation and gameplay predecessor
+  -> normalize device/editor intent
+  -> produce movement, terrain and path evidence
+  -> produce exact target/inspection evidence when requested
+  -> evaluate objective/story candidates against one successor state
+  -> suppress duplicate transitions
+  -> atomically commit player, interaction, objective and story state
+  -> publish GameplayResult and DskConsumptionReceipt rows
+  -> project feedback and save eligibility
+  -> publish GameplayVisibleFrameAck
 ```
 
 ## Candidate kits
 
 ```txt
-dsk-service-contract-kit
-dsk-provider-identity-kit
-dsk-provider-registry-kit
-dsk-dependency-graph-kit
-dsk-install-command-kit
-dsk-install-result-kit
-dsk-service-binding-kit
-dsk-capability-state-kit
-dsk-consumption-receipt-kit
-runtime-capability-generation-kit
+exploration-command-id-kit
+gameplay-session-revision-kit
+gameplay-state-revision-kit
 gameplay-input-sample-kit
+gameplay-input-normalization-kit
 gameplay-command-router-kit
-player-motion-service-kit
+player-motion-proposal-kit
+terrain-contact-result-kit
+path-projection-result-kit
+path-progress-result-kit
+interaction-target-index-kit
 interaction-target-query-kit
 inspect-command-kit
-objective-progress-service-kit
-story-trigger-service-kit
+inspect-admission-result-kit
+objective-transition-kit
+objective-completion-ledger-kit
+story-trigger-evaluation-kit
+story-sequence-result-kit
+gameplay-commit-kit
+gameplay-result-kit
 feedback-projection-kit
-save-consumer-binding-kit
-runtime-capability-observation-kit
-dsk-declared-realized-parity-fixture-kit
-gameplay-consumption-smoke-kit
-first-gameplay-frame-ack-kit
+save-revision-binding-kit
+gameplay-frame-ack-kit
 ```
 
 ## Repo-local output
 
 ```txt
-.agent/trackers/2026-07-12T15-49-09-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T15-49-09-04-00.md
-.agent/architecture-audit/2026-07-12T15-49-09-04-00-dsk-runtime-consumption-authority-map.md
-.agent/render-audit/2026-07-12T15-49-09-04-00-gameplay-state-visible-frame-provenance-gap.md
-.agent/gameplay-audit/2026-07-12T15-49-09-04-00-declared-gameplay-inert-tick-loop.md
-.agent/interaction-audit/2026-07-12T15-49-09-04-00-input-target-objective-admission-map.md
-.agent/dsk-runtime-audit/2026-07-12T15-49-09-04-00-declaration-provider-consumption-contract.md
-.agent/deploy-audit/2026-07-12T15-49-09-04-00-dsk-consumption-gameplay-fixture-gate.md
+.agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T17-49-51-04-00.md
+.agent/architecture-audit/2026-07-12T17-49-51-04-00-exploration-progression-authority-dsk-map.md
+.agent/render-audit/2026-07-12T17-49-51-04-00-gameplay-result-visible-frame-gap.md
+.agent/gameplay-audit/2026-07-12T17-49-51-04-00-inert-exploration-progression-loop.md
+.agent/interaction-audit/2026-07-12T17-49-51-04-00-input-movement-inspect-objective-admission-map.md
+.agent/progression-audit/2026-07-12T17-49-51-04-00-path-inspect-objective-story-contract.md
+.agent/deploy-audit/2026-07-12T17-49-51-04-00-playable-loop-fixture-gate.md
 ```
 
 ## Validation
@@ -231,9 +200,8 @@ runtime/gameplay/render source changed: no
 package scripts/dependencies/deployment changed: no
 branch created: no
 pull request created: no
-npm run check: not run
-browser/Pages gameplay smoke: not run
-DSK provider/consumption fixtures: unavailable
+checks executed: no
+playable-loop fixtures: unavailable
 ```
 
-No interactive-gameplay, provider-readiness or deployed-gameplay claim is made.
+No interactive-gameplay or deployed-playability claim is made.

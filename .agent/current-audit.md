@@ -1,12 +1,12 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-12T17-49-51-04-00`  
-**Status:** `exploration-progression-authority-audited`
+**Audit timestamp:** `2026-07-12T17-58-43-04-00`  
+**Status:** `exploration-progression-central-reconciled`
 
 ## Summary
 
-IntoTheMeadow declares one external provider and 43 local DSK/kits. The current executable loop structurally validates descriptors and renders a deterministic meadow, but it still does not accept gameplay commands or consume player, input, interaction, objective and story services.
+IntoTheMeadow declares one external provider and 43 local DSK/kits. The executable loop structurally validates descriptors and renders a deterministic meadow, but it still does not accept gameplay commands or consume player, input, interaction, objective and story services.
 
 Three story beats, two objectives and two interaction targets are authored. The active tick changes only `frame` and `lastTick`, so path progress, focal-tree inspection and all authored progression remain unreachable.
 
@@ -15,12 +15,12 @@ Three story beats, two objectives and two interaction targets are authored. The 
 **Goal:** define the first complete playable transaction while preserving existing DSK, render and lifecycle ownership.
 
 - [x] Compare all eligible Publish repositories and select only `IntoTheMeadow`.
-- [x] Avoid the concurrently changing older candidate.
 - [x] Inspect the current DSK, state, content, host and render boundaries.
 - [x] Identify the complete interaction loop and active/declared domains.
 - [x] Preserve all 44 kit surfaces and every offered service.
 - [x] Define movement, inspection, progression, atomic commit and frame-proof contracts.
-- [x] Add timestamped tracker and architecture/system audits.
+- [x] Reconcile the detailed `17-49-51` audit family.
+- [x] Add a new timestamped reconciliation tracker and audits.
 - [x] Refresh root `.agent` state and machine registry.
 - [x] Push only to `main`; create no branch or pull request.
 - [ ] Implement and execute the authority later.
@@ -28,9 +28,11 @@ Three story beats, two objectives and two interaction targets are authored. The 
 ## Selection
 
 ```txt
-TheOpenAbove       older but actively changing; skipped
-IntoTheMeadow      next-oldest stable eligible repository; selected
-TheCavalryOfRome   excluded
+accessible Publish repositories: 10
+eligible non-Cavalry repositories: 9
+new/ledger-missing/root-agent-missing: 0
+IntoTheMeadow: oldest eligible stable central entry; selected
+TheCavalryOfRome: excluded
 ```
 
 ## Complete interaction loop
@@ -80,36 +82,14 @@ input, player, interaction, objective, story, ecology, audio, UI, save and adapt
 
 ## Source-backed findings
 
-### No command ingress
-
-The browser and editor surfaces expose observation and capture, not a bounded gameplay command router.
-
-### Time-only state transition
-
 ```txt
-mutated:
-  frame
-  lastTick.dt
-  lastTick.time
-
-not mutated:
-  player transform or path progress
-  interaction/inspect state
-  objective state
-  story state
+no bounded browser/editor gameplay command ingress
+advanceGameState mutates frame and lastTick only
+no terrain/path or target/range evidence results
+no transition identity or exactly-once objective/story ledger
+no atomic result joining movement, progression, feedback and save
+no visible frame acknowledgement citing gameplay truth
 ```
-
-### No evidence-bound progression
-
-There is no immutable result joining movement, terrain/path evidence, inspection evidence, objective/story transitions, feedback and persistence.
-
-### No exactly-once transition ledger
-
-Authored threshold and inspection outcomes have no transition identity, duplicate suppression or atomic multi-domain commit.
-
-### No visible gameplay proof
-
-The render frame carries no gameplay result or revision and can appear healthy while progression remains inert.
 
 ## Kit and service census
 
@@ -126,6 +106,7 @@ movement/inspect/progression results: 0
 The exact kit/service inventory is in:
 
 ```txt
+.agent/trackers/2026-07-12T17-58-43-04-00/project-breakdown.md
 .agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md
 .agent/kit-registry.json
 ```
@@ -152,56 +133,19 @@ GameplayCommand
   -> publish GameplayVisibleFrameAck
 ```
 
-## Candidate kits
+## Current output
 
 ```txt
-exploration-command-id-kit
-gameplay-session-revision-kit
-gameplay-state-revision-kit
-gameplay-input-sample-kit
-gameplay-input-normalization-kit
-gameplay-command-router-kit
-player-motion-proposal-kit
-terrain-contact-result-kit
-path-projection-result-kit
-path-progress-result-kit
-interaction-target-index-kit
-interaction-target-query-kit
-inspect-command-kit
-inspect-admission-result-kit
-objective-transition-kit
-objective-completion-ledger-kit
-story-trigger-evaluation-kit
-story-sequence-result-kit
-gameplay-commit-kit
-gameplay-result-kit
-feedback-projection-kit
-save-revision-binding-kit
-gameplay-frame-ack-kit
-```
-
-## Repo-local output
-
-```txt
-.agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T17-49-51-04-00.md
-.agent/architecture-audit/2026-07-12T17-49-51-04-00-exploration-progression-authority-dsk-map.md
-.agent/render-audit/2026-07-12T17-49-51-04-00-gameplay-result-visible-frame-gap.md
-.agent/gameplay-audit/2026-07-12T17-49-51-04-00-inert-exploration-progression-loop.md
-.agent/interaction-audit/2026-07-12T17-49-51-04-00-input-movement-inspect-objective-admission-map.md
-.agent/progression-audit/2026-07-12T17-49-51-04-00-path-inspect-objective-story-contract.md
-.agent/deploy-audit/2026-07-12T17-49-51-04-00-playable-loop-fixture-gate.md
+.agent/trackers/2026-07-12T17-58-43-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T17-58-43-04-00.md
+.agent/architecture-audit/2026-07-12T17-58-43-04-00-exploration-progression-central-reconciliation-dsk-map.md
+.agent/render-audit/2026-07-12T17-58-43-04-00-gameplay-frame-provenance-central-reconciliation.md
+.agent/gameplay-audit/2026-07-12T17-58-43-04-00-inert-exploration-loop-central-reconciliation.md
+.agent/interaction-audit/2026-07-12T17-58-43-04-00-gameplay-command-evidence-central-reconciliation.md
+.agent/progression-audit/2026-07-12T17-58-43-04-00-objective-story-exactly-once-central-contract.md
+.agent/deploy-audit/2026-07-12T17-58-43-04-00-playable-loop-central-sync-gate.md
 ```
 
 ## Validation
 
-```txt
-runtime/gameplay/render source changed: no
-package scripts/dependencies/deployment changed: no
-branch created: no
-pull request created: no
-checks executed: no
-playable-loop fixtures: unavailable
-```
-
-No interactive-gameplay or deployed-playability claim is made.
+Documentation only. Runtime, gameplay, render, package, dependency and deployment files were not changed. No executable playable-loop fixture was run.

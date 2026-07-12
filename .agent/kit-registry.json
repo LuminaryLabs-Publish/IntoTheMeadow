@@ -1,18 +1,18 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-12T05-39-42-04-00",
-  "status": "audio-activation-lifecycle-authority-audited",
-  "currentAuditedSlice": "IntoTheMeadow Audio Activation / Browser Gesture Admission / Context and Resource Generation / Ambient and Spatial Playback / Listener Pose / Suspension / Disposal / Audible-Output Proof",
-  "precedingAuditedSlice": "Shader Precision Admission at 2026-07-12T05-31-59-04-00",
-  "latestTracker": ".agent/trackers/2026-07-12T05-39-42-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T05-39-42-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T05-39-42-04-00-audio-activation-lifecycle-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-12T05-39-42-04-00-visual-frame-audio-listener-correlation-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T05-39-42-04-00-declared-ambience-silent-runtime-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T05-39-42-04-00-user-gesture-audio-command-result-map.md",
-  "latestAudioAudit": ".agent/audio-audit/2026-07-12T05-39-42-04-00-context-resource-listener-lifecycle-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T05-39-42-04-00-audio-activation-output-fixture-gate.md",
+  "generatedAt": "2026-07-12T07-19-47-04-00",
+  "status": "adaptive-quality-performance-budget-authority-audited",
+  "currentAuditedSlice": "IntoTheMeadow Adaptive Quality / CPU-GPU Observation / Performance Windows / Hysteresis / Multi-Consumer Commit / First Visible Frame Proof",
+  "precedingAuditedSlice": "Audio Activation and Lifecycle Authority at 2026-07-12T05-39-42-04-00",
+  "latestTracker": ".agent/trackers/2026-07-12T07-19-47-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T07-19-47-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T07-19-47-04-00-adaptive-quality-performance-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-12T07-19-47-04-00-static-profile-physical-render-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T07-19-47-04-00-unbounded-frame-quality-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T07-19-47-04-00-performance-observation-quality-command-map.md",
+  "latestPerformanceAudit": ".agent/performance-audit/2026-07-12T07-19-47-04-00-sampling-hysteresis-quality-commit-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T07-19-47-04-00-adaptive-quality-browser-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
@@ -20,33 +20,31 @@
     "rootAgentStateCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "IntoTheMeadow was selected from the oldest eligible central ledger entry. A newer repo-local shader-precision audit was discovered during root refresh and preserved before this later audio audit was routed."
+    "reason": "No eligible repository was new, central-ledger-missing or root-agent-missing. IntoTheMeadow was the oldest eligible synchronized central entry."
   },
   "census": {
     "externalDeclaredCount": 1,
     "localDeclaredCount": 43,
     "totalDeclaredCount": 44,
     "requiredV01LocalCount": 15,
-    "audioDskDeclarationCount": 1,
-    "declaredAudioServiceCount": 5,
-    "requiredV01AudioCount": 0,
-    "runtimeAudioContextOwnerCount": 0,
-    "audioManifestEntryCount": 0,
-    "audioActivationCommandCount": 0,
-    "ambientSourceCount": 0,
-    "spatialCueRegistryCount": 0,
-    "listenerObservationCount": 0,
-    "audioSnapshotFieldCount": 0,
-    "audioEditorCapabilityCount": 0,
-    "audioFixtureCount": 0
+    "requiredPerformanceDskCount": 1,
+    "qualityProfileCount": 5,
+    "runtimePerformanceSampleCount": 0,
+    "rollingPerformanceWindowCount": 0,
+    "qualityTransitionCommandCount": 0,
+    "qualityRevisionCount": 0,
+    "physicalQualityParityResultCount": 0,
+    "firstQualityFrameReceiptCount": 0,
+    "adaptiveQualityFixtureCount": 0
   },
   "interactionLoop": [
-    "page boot creates the visual shell and starts the web host",
-    "the host imports the meadow provider and installs DSK descriptors",
-    "the game, WebGL renderer, render-plan enhancer and editor bridge are created",
-    "RAF advances immutable game state and submits visual frames",
-    "no trusted browser gesture is converted into an audio activation command",
-    "no AudioContext, ambient source, spatial cue, listener update or audio observation exists"
+    "page boot imports the meadow provider and installs DSK descriptors",
+    "game enhancer renderer and editor bridge are created",
+    "RAF advances game state with fixed dt and absolute time",
+    "render plan is enhanced with the default static high profile",
+    "renderer resizes reuses or rebuilds the mesh and submits outline and color draws",
+    "debug readback reports counts and cache labels but no performance or quality result",
+    "no observation window decision command revision commit rollback or first-frame receipt exists"
   ],
   "domainsInUse": [
     "browser shell loading and visible failure projection",
@@ -57,11 +55,11 @@
     "camera descriptors and browser view observation",
     "terrain path grass trees wind atmosphere and scatter",
     "player input interaction objective story ecology audio UI and persistence declarations",
-    "render-plan enhancement CPU mesh WebGL buffers and post processing",
-    "shader precision compatibility and program construction",
-    "editor capabilities and browser error capture",
+    "render-plan enhancement topology caching CPU mesh and WebGL rendering",
+    "post-process declarations shader precision and physical draw submission",
+    "editor capability surface and browser error capture",
     "validation headless tools build and Pages deployment",
-    "planned audio activation context resource mix listener lifecycle and observation authority"
+    "adaptive performance sampling quality transition commit rollback and frame proof missing"
   ],
   "externalKits": {
     "meadow-area-kit": {
@@ -115,25 +113,26 @@
     "final-composite-pass-kit": ["scene-input", "post-input", "output-target", "debug-overlay", "fallback-composite"],
     "static-pages-deploy-dsk": ["build-config", "github-pages-workflow", "release-artifacts", "cache-invalidation", "deploy-validation"]
   },
-  "audioActivationLifecycleAuthority": {
-    "parentDomain": "meadow-audio-activation-lifecycle-authority-domain",
-    "mainFinding": "The audio DSK declares five services but is planned and unconsumed. The browser has no gesture admission, AudioContext owner, asset/resource generation, ambient or spatial playback, listener observation, audio state, diagnostics, editor capability or fixture.",
-    "existingOwnersToUpdate": ["meadow-audio-dsk", "meadow-ecology-dsk", "meadow-input-dsk", "meadow-camera-dsk", "meadow-player-dsk", "meadow-performance-dsk", "meadow-diagnostics-dsk", "web-host-dsk", "into-the-meadow-game-dsk", "game snapshot/read model", "browser shell", "editor capability bridge", "runtime session lifecycle authority", "runtime clock and step authority", "committed frame observation authority", "static-pages-deploy-dsk"],
-    "plannedKits": ["audio-session-id-kit", "audio-session-generation-kit", "audio-lifecycle-state-kit", "audio-policy-kit", "audio-asset-manifest-kit", "audio-activation-command-kit", "audio-activation-result-kit", "user-gesture-audio-admission-kit", "audio-context-owner-kit", "audio-resource-load-plan-kit", "audio-decode-result-kit", "audio-resource-generation-kit", "ambient-bed-kit", "spatial-audio-cue-registry-kit", "spatial-audio-play-command-kit", "audio-listener-pose-kit", "audio-frame-command-kit", "audio-mix-plan-kit", "audio-bus-state-kit", "audio-volume-policy-kit", "audio-mute-command-kit", "audio-visibility-suspension-kit", "audio-device-change-observation-kit", "audio-stale-generation-rejection-kit", "audio-dispose-plan-kit", "audio-dispose-result-kit", "audio-observation-kit", "audio-journal-kit", "audio-editor-capability-kit", "audio-activation-fixture-kit", "audio-spatial-listener-fixture-kit", "audio-suspend-resume-fixture-kit", "audio-restart-leak-fixture-kit", "browser-audible-output-smoke-kit"],
-    "requiredProof": ["no context before trusted gesture", "typed blocked or failed activation", "generation-fenced activation and decode", "exact-once ambient bed", "committed listener pose", "scene/source/voice-budget cue admission", "observable mute and bounded volume", "explicit visibility policy", "stale results cannot mutate replacement generation", "restart creates no duplicate context source or listener", "dispose leaves zero active leases", "editor and diagnostics cite the same audio revision", "deployed Pages audio lifecycle smoke"]
+  "adaptiveQualityPerformanceAuthority": {
+    "parentDomain": "meadow-adaptive-quality-performance-authority-domain",
+    "mainFinding": "The required performance DSK supplies static profiles only. The host has no timing window or adaptive decision, logical quality fields do not fully control physical rendering, dynamic quality is absent from cache identity, and no quality revision or first-frame receipt exists.",
+    "existingOwnersToUpdate": ["meadow-performance-dsk", "web-host-dsk", "meadow-render-host-dsk", "meadow-webgl-renderer-v2-kit", "meadow-diagnostics-dsk", "grass-density-scaling-kit", "grass-lod-policy-kit", "grass-patch-placement-kit", "grass-clump-instancing-render-kit", "meadow-terrain-texture-dsk", "post-process-stack-dsk", "render-target-kit", "into-the-meadow-game-dsk", "game snapshot/read model", "editor capability bridge", "render surface authority", "committed frame authority"],
+    "plannedKits": ["performance-sample-id-kit", "performance-capability-snapshot-kit", "cpu-frame-time-observation-kit", "gpu-timer-capability-kit", "gpu-frame-time-observation-kit", "frame-deadline-result-kit", "rolling-performance-window-kit", "performance-percentile-kit", "performance-budget-policy-kit", "quality-tier-id-kit", "quality-revision-kit", "quality-transition-command-kit", "quality-transition-admission-kit", "quality-hysteresis-kit", "quality-cooldown-kit", "quality-transition-result-kit", "quality-topology-impact-plan-kit", "grass-budget-adapter-kit", "terrain-resolution-adapter-kit", "post-process-policy-adapter-kit", "surface-scale-adapter-kit", "quality-plan-prepare-kit", "quality-consumer-result-kit", "quality-commit-kit", "quality-rollback-kit", "stale-quality-plan-rejection-kit", "quality-frame-correlation-kit", "performance-observation-kit", "performance-journal-kit", "adaptive-quality-fixture-kit", "quality-oscillation-fixture-kit", "browser-performance-profile-smoke-kit"],
+    "requiredProof": ["static tier logical and physical parity", "sustained overload downgrade", "sustained headroom upgrade", "single-spike rejection", "hysteresis and cooldown", "GPU timing supported and unsupported paths", "hidden-tab sample policy", "topology rebuild only when required", "consumer failure rollback", "stale context and surface rejection", "editor and browser command parity", "first visible-frame quality receipt", "browser and Pages performance smoke"]
   },
   "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Shader Precision Admission Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Audio Activation and Lifecycle Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
   "validation": {
     "runtimeSourceChanged": false,
-    "audioSourceChanged": false,
+    "performanceSourceChanged": false,
     "rendererSourceChanged": false,
     "packageScriptsChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
-    "audioActivationFixtureRun": false,
-    "audioSpatialFixtureRun": false,
-    "audioLifecycleFixtureRun": false,
-    "audibleOutputSmokeRun": false,
-    "nextCommand": "npm run check after audio activation resource listener suspension cleanup and browser smoke fixtures exist"
+    "performanceFixturesAvailable": false,
+    "browserPerformanceSmokeRun": false,
+    "pagesPerformanceSmokeRun": false,
+    "branchCreated": false,
+    "pullRequestCreated": false,
+    "targetBranch": "main"
   }
 }

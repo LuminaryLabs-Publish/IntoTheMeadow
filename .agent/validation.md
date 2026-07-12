@@ -2,60 +2,61 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T20-38-07-04-00`
+**Updated:** `2026-07-11T22-08-13-04-00`
 
 ## Plan ledger
 
-**Goal:** distinguish a visually animated meadow from executable proof that browser RAF, browser editor and Node headless execution share one monotonic, bounded and reset-aware runtime clock.
+**Goal:** distinguish a canvas that fills the browser from executable proof that viewport, DPR, WebGL drawing-buffer dimensions, projection, renderer snapshot, capture and visible frame share one bounded surface revision.
 
 - [x] Review the complete accessible Publish inventory.
 - [x] Compare every eligible repository with central tracking.
 - [x] Verify central and root `.agent` coverage.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Select only `IntoTheMeadow` after skipping active unsynchronized `AetherVale` work.
-- [x] Inspect browser RAF time and delta construction.
-- [x] Inspect game state tick and reset behavior.
-- [x] Inspect render-plan time propagation and shader consumption.
-- [x] Inspect browser editor tick/reset capabilities.
-- [x] Inspect Node headless tick/reset and multi-step behavior.
-- [x] Document clock identity, admission, reset epoch, work budget and parity requirements.
+- [x] Inspect CSS canvas sizing.
+- [x] Inspect renderer DPR and drawing-buffer mutation.
+- [x] Inspect GL viewport and camera aspect derivation.
+- [x] Inspect renderer snapshot contents.
+- [x] Inspect browser editor viewport and capture capabilities.
+- [x] Inspect the existing browser observation configuration.
+- [x] Document surface identity, policy, budget, capability, fallback, revision and frame requirements.
 - [x] Change documentation only.
 - [ ] Execute fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-browser authoritative clock objects: 0
-runtime clock IDs: 0
-clock revisions: 0
-step command IDs: 0
-step admission policies: 0
-reset epochs: 0
-step work budgets: 0
-typed step results: 0
-clock journals: 0
-clock/frame correlation receipts: 0
-raw game.tick public paths: browser RAF, GameHost.game, browser editor, Node headless
+render surface IDs: 0
+surface revisions: 0
+resize command IDs: 0
+resize generations: 0
+pixel-budget policies: 0
+WebGL surface capability results: 0
+actual drawing-buffer readback records: 0
+fallback results: 0
+surface journals: 0
+capture/frame surface receipts: 0
+hard-coded DPR policy: min 1, max 2
+browser observation surface configurations: one, 1440x900 at DPR 1
 ```
 
 ## Proven from source
 
 ```txt
-browser RAF converts now to seconds
-browser RAF always passes dt = 1/60
-game state increments frame by exactly one per tick
-game state stores caller dt and time without validation
-render plan overlays caller time
-render-plan enhancer preserves dynamic time over cached topology
-WebGL renderer uploads renderPlan.time to uTime
-wind vertex shader uses uTime to calculate phase
-stop changes only a Boolean
-start schedules a later RAF on the same clock source
-browser editor runtime.tick accepts arbitrary dt and time
-browser editor runtime.reset does not reset an owned browser clock
-Node headless maintains a separate private accumulated time
-Node headless loops over caller-provided ticks without an explicit budget
-Node reset sets its private time to zero and invalidates the enhancer
+canvas CSS width and height are 100 percent of the viewport
+renderer.render invokes resize every frame
+resize samples canvas.clientWidth/clientHeight with inner-size fallback
+resize samples live devicePixelRatio
+DPR is clamped to 1 through 2
+canvas.width and canvas.height are assigned directly when different
+gl.viewport uses the requested width and height
+camera projection aspect uses requested width divided by requested height
+renderer snapshot omits width, height, DPR and surface revision
+browser.getViewport reads live browser and canvas values
+renderer.capture reads canvas width, height and data URL
+capture attaches the latest renderer snapshot independently
+browser observation forces DPR 1 and window size 1440 by 900
+browser observation checks screenshot byte size, not surface policy or correlation
 ```
 
 ## Existing proof
@@ -66,32 +67,35 @@ Current checks prove:
 required files exist
 render-plan descriptors validate
 CPU mesh data is internally aligned
-changing time does not change static topology
-renderer can consume dynamic time
-headless editor commands execute in happy paths
-an available browser can produce a screenshot
+static topology remains stable across time changes
+renderer can draw the current plan
+browser can produce one nontrivial screenshot at DPR 1
+editor viewport and capture capabilities exist
 ```
 
 Current checks do not prove:
 
 ```txt
-browser RAF rate independence
-monotonic simulation-time ownership
-large-delay clamp or rejection
-pause/resume rebasing
-reset-epoch fencing
-browser editor step admission
-finite delta and integer tick validation
-bounded multi-step execution
-browser/headless parity
-clock-to-render-frame correlation
-stale session, epoch, revision or sequence rejection
+bounded DPR and total pixel policy
+WebGL maximum-dimension admission
+actual drawing-buffer dimensions
+browser clamping detection
+rapid resize coalescing
+hidden and zero-size behavior
+fallback or rollback
+stale resize rejection
+context-generation fencing
+camera projection from committed dimensions
+renderer/capture/frame surface correlation
+high-DPR or 4K behavior
+Pages resize parity
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
+renderer source changed: no
 package scripts changed: no
 dependencies changed: no
 render output changed: no
@@ -99,95 +103,109 @@ deployment changed: no
 branch created: no
 pull request created: no
 npm run check executed: no
-browser smoke executed: no
-runtime clock fixtures available: no
+browser resize smoke executed: no
+render-surface fixtures available: no
 ```
 
-## Required DOM-free clock fixture
+## Required DOM-free policy fixture
 
-Construct a fake runtime clock with adapters for RAF, browser editor and headless commands.
+Construct fake viewport, policy and WebGL capability inputs.
 
 Acceptance assertions:
 
 ```txt
-30 Hz, 60 Hz and 144 Hz source events can produce the same admitted step sequence
-negative, NaN and infinite delta reject without mutation
-large delta follows explicit clamp, split, defer or reject policy
-non-integer or over-budget tick counts reject
-stale session, reset epoch, clock revision and step sequence reject
-accepted step advances clock revision and sequence exactly once
-result includes accepted delta, simulation time and game-state frame
-bounded journal records one row per accepted or rejected command
+finite positive CSS dimensions and DPR normalize deterministically
+DPR policy identifies requested and applied values
+maximum width, height and total pixels are never exceeded
+capability limits produce a declared fallback or typed rejection
+actual drawing-buffer readback governs committed dimensions
+stale session, context generation and surface revision reject
+newer viewport observations supersede older queued commands
+accepted resize advances surface revision exactly once
+failed allocation does not publish a new committed revision
+bounded journal records accepted, degraded and rejected commands
 ```
 
-## Required pause/resume fixture
+## Required rapid resize fixture
 
 ```txt
-advance baseline steps
-pause clock
-advance wall clock without admitted simulation steps
-resume through source-adapter rebase
-assert simulation and render time do not include paused wall duration
-assert first resumed step has one new revision and bounded delta
+submit a sequence of viewport observations before the next frame
+assert superseded commands are coalesced deterministically
+assert only the latest admitted command can commit
+assert predecessor surface remains valid until successor frame acknowledgement
+assert projection and capture do not cite an intermediate stale surface
 ```
 
-## Required reset fixture
+## Required hidden and zero-size fixture
 
 ```txt
-advance baseline clock
-capture predecessor session, epoch, revision and step
-reset
-assert reset epoch advances
-assert simulation time follows declared reset origin
-assert predecessor commands reject
-assert first post-reset state, plan and frame cite the new epoch
+commit a baseline surface
+simulate hidden page and zero CSS size
+assert explicit preserve, suspend or release policy
+assert no accidental one-pixel surface is reported as ready
+resume with a valid viewport
+assert one successor surface revision and first-frame receipt
 ```
 
-## Required browser/headless parity fixture
-
-Run an identical accepted command stream through browser and Node adapters.
-
-Assert equality for:
+## Required browser surface matrix
 
 ```txt
-clock revision
-step sequence
-simulation time
-game state frame
-last accepted delta
-render-plan time
-wind phase inputs
-committed-frame clock receipt
+320x240 DPR 1
+1440x900 DPR 1
+1920x1080 DPR 1.25
+2560x1440 DPR 2
+3840x2160 requested DPR 2
+3840x2160 requested DPR 3
+portrait and landscape transition
+browser zoom change
+context loss during resize
+```
+
+For every case assert:
+
+```txt
+requested values
+bounded candidate values
+actual drawing-buffer values
+applied DPR and quality tier
+camera aspect
+surface revision
+renderer snapshot revision
+visible-frame revision
+capture revision and dimensions
 ```
 
 ## Required browser smoke
 
 ```txt
-boot and wait for a committed frame
-record clock and frame receipt
-simulate delayed RAF callback
-assert explicit delay policy
-pause and resume
-assert no presentation-time jump
-reset through public admitted capability
-assert new reset epoch
-invoke stale editor step
-assert typed rejection and no state/render mutation
-compare browser observation with headless replay
+boot and wait for initial visible surface frame
+record surface and frame receipt
+resize viewport and change DPR
+wait for successor surface revision
+assert actual dimensions obey policy and capability limits
+capture canvas
+assert viewport, renderer, capture and frame cite one revision
+trigger rapid resize and assert coalescing
+trigger hidden/zero transition and assert explicit policy
+trigger context loss during resize and assert recovery routing
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:runtime-clock
-npm run fixture:runtime-step-admission
-npm run fixture:pause-resume-clock
-npm run fixture:reset-epoch-clock
-npm run fixture:browser-headless-clock-parity
-npm run smoke:runtime-clock-frame-correlation
+npm run fixture:render-resolution-policy
+npm run fixture:render-surface-capabilities
+npm run fixture:render-surface-budget-fallback
+npm run fixture:render-surface-stale-rejection
+npm run fixture:render-surface-allocation-failure
+npm run smoke:render-surface-resize
+npm run smoke:render-surface-dpr
+npm run smoke:render-surface-hidden-zero
+npm run smoke:render-surface-capture-correlation
+npm run smoke:render-surface-context-loss
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim deterministic stepping because state stores `dt`, or clock correctness because wind animates. Completion requires one accepted clock revision and step identity to propagate through state, render-plan time, shader input and committed-frame evidence across browser and headless execution.
+Do not claim responsive or high-DPI rendering because the canvas fills the window or a screenshot is nonempty. Completion requires one accepted surface revision and actual drawing-buffer dimensions to propagate through projection, renderer snapshot, capture and visible-frame evidence.

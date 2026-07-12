@@ -2,44 +2,45 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T11-29-40-04-00`  
-**Status:** `webgl-program-interface-admission-authority-audited`
+**Last aligned:** `2026-07-12T13-38-52-04-00`  
+**Status:** `grass-visibility-lod-authority-audited`
 
 ## Summary
 
-IntoTheMeadow is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, CPU mesh construction, a persistent WebGL renderer and browser/headless-editor readback.
+IntoTheMeadow is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a texture-driven grass descriptor stack, one persistent CPU mesh and a WebGL renderer.
 
-The current audit isolates **WebGL program-interface admission**. Shader compilation and linking are checked, but the linked program’s active attributes and uniforms are never reflected or validated as one interface artifact before mesh binding, uniform updates and draw submission. Five attributes fail only when the first mesh is bound, twelve uniform locations are never admitted, and renderer/frame readback contains no program-interface generation or fingerprint.
+The current audit isolates **grass visibility and LOD authority**. The declared LOD policy exposes near, mid, far and terrain-tint tiers, but placement selects near or mid batches from density rather than camera distance. Far and terrain-tint tiers are not selected, every grass instance is baked into one static mesh, and the renderer draws that complete mesh twice per frame without frustum, distance, hysteresis or budget admission.
 
-The preceding interaction/objective progression audit and all earlier lifecycle, host-capability, source-provider, render-surface, context, precision, committed-frame, performance, grass, audio, persistence, DSK-consumption and replay audits remain active dependencies.
+The preceding WebGL program-interface audit and all earlier runtime, host, editor, clock, provider, topology, context, surface, precision, frame, performance, audio, progression, persistence, DSK-consumption and replay audits remain active dependencies.
 
 ## Plan ledger
 
-**Goal:** require one accepted, versioned program-interface result before GPU buffers, uniform updates, draws or visible-frame claims can use a linked WebGL program.
+**Goal:** make each visible grass set a camera-bound, revisioned render decision that applies distance tiers, frustum containment, hysteresis, density budgets and first-visible-frame proof without replacing the existing grass DSK family.
 
-- [x] Compare the full Publish inventory with central tracking.
+- [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm all nine eligible repositories have ledger and root `.agent` coverage.
-- [x] Select only `IntoTheMeadow` as the oldest eligible synchronized repository.
-- [x] Trace shader compile/link, location lookup, mesh binding, uniform updates and draws.
-- [x] Inspect CPU mesh and browser observation proof.
-- [x] Preserve all 44 kits and offered services.
-- [x] Define the program-interface authority, contracts and fixture gates.
-- [x] Add a fresh timestamped tracker and audit family.
+- [x] Confirm all nine eligible repositories have central-ledger and root `.agent` coverage.
+- [x] Skip `TheOpenAbove` because newer repo-local terrain documentation at `2026-07-12T13-29-56-04-00` was not yet synchronized centrally.
+- [x] Select only `IntoTheMeadow` as the next-oldest stable repository.
+- [x] Trace grass density, batch creation, patch placement, draw grouping, LOD policy, mesh construction and draw submission.
+- [x] Identify the interaction loop, all active domains, all 44 declared kits and offered services.
+- [x] Define the grass visibility/LOD authority, results, observations and fixture gates.
+- [x] Add a fresh timestamped tracker and architecture/render/gameplay/interaction/grass/deploy audit family.
 - [x] Refresh required root `.agent` files on `main`.
 - [x] Create no branch or pull request.
-- [ ] Implement and execute the authority later.
+- [ ] Implement and execute camera-bound grass visibility later.
 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-12T11-29-40-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T11-29-40-04-00.md
-.agent/architecture-audit/2026-07-12T11-29-40-04-00-webgl-program-interface-admission-dsk-map.md
-.agent/render-audit/2026-07-12T11-29-40-04-00-unvalidated-shader-symbol-binding-gap.md
-.agent/interaction-audit/2026-07-12T11-29-40-04-00-program-interface-render-admission-map.md
-.agent/shader-interface-audit/2026-07-12T11-29-40-04-00-active-symbol-mesh-uniform-contract.md
-.agent/deploy-audit/2026-07-12T11-29-40-04-00-program-interface-browser-fixture-gate.md
+.agent/trackers/2026-07-12T13-38-52-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T13-38-52-04-00.md
+.agent/architecture-audit/2026-07-12T13-38-52-04-00-grass-visibility-lod-authority-dsk-map.md
+.agent/render-audit/2026-07-12T13-38-52-04-00-static-grass-mesh-camera-visibility-gap.md
+.agent/gameplay-audit/2026-07-12T13-38-52-04-00-density-tagged-lod-always-drawn-loop.md
+.agent/interaction-audit/2026-07-12T13-38-52-04-00-camera-grass-visibility-admission-map.md
+.agent/grass-system-audit/2026-07-12T13-38-52-04-00-distance-frustum-hysteresis-budget-contract.md
+.agent/deploy-audit/2026-07-12T13-38-52-04-00-grass-visibility-lod-fixture-gate.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -51,65 +52,70 @@ The preceding interaction/objective progression audit and all earlier lifecycle,
 
 ```txt
 boot
-  -> import the pinned meadow provider
+  -> import pinned meadow-area provider
   -> install 43 local declarations plus one external kit
-  -> create game, render-plan enhancer and WebGL renderer
-  -> compile shaders and link program
-  -> query five attribute and twelve uniform locations
-  -> expose GameHost and editor bridge
-  -> start RAF
+  -> create immutable game, grass descriptors, plan enhancer and renderer
+  -> generate density texture and patch grid
+  -> create near/mid/far static batches
+  -> assign each instance a near or mid batch from density
+  -> flatten every patch into draw groups
+  -> build one complete CPU mesh
+  -> expose GameHost/editor bridge and start RAF
 
 frame
-  -> tick game and enhance render plan
-  -> build/reuse CPU mesh
-  -> validate attribute locations only during first buffer bind
-  -> submit uniform updates without interface admission
-  -> draw outline pass and color pass
-  -> publish counts/cache snapshot without interface identity
+  -> tick game with fixed 1/60 dt
+  -> reuse static topology and mesh
+  -> derive camera matrices only
+  -> upload time/wind/light uniforms
+  -> draw the full mesh as outline
+  -> draw the full mesh as color
+  -> publish aggregate counts/cache snapshot
   -> schedule next RAF
 
 proof
-  -> Node smoke validates CPU plan and mesh arrays
-  -> Chromium smoke checks DOM markers and screenshot size
-  -> no active-symbol inventory or first-frame interface fingerprint
+  -> Node tests require grass descriptors and stable topology
+  -> renderer smoke requires a substantial static mesh
+  -> no test moves the camera across LOD thresholds or outside patch frusta
+  -> no visible-frame receipt identifies admitted/culled grass patches
 ```
 
 ## Main findings
 
 ```txt
-compile status: checked
-link status: checked
-required attributes queried: 5
-required uniforms queried: 12
-active attribute reflection: absent
-active uniform reflection: absent
-attribute type/size admission: absent
-uniform presence/type/size admission: absent
-mesh-to-program schema result: absent
-uniform-payload schema result: absent
-program/interface generation: absent
-first visible frame interface receipt: absent
+declared LOD tiers: near, mid, far, terrain-tint
+distance policy function: grass-lod-policy-kit.pick(distance)
+runtime calls to pick(distance): 0
+placement batch rule: density > 0.55 => near, otherwise mid
+far batches selected by placement: no
+terrain-tint batch representation: absent
+camera/frustum visibility result: absent
+hysteresis or transition state: absent
+visible grass budget result: absent
+grass patches baked into one mesh: yes
+full mesh draw passes per frame: 2
+per-frame grass culling: absent
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-webgl-program-interface-admission-authority-domain
+meadow-grass-visibility-lod-authority-domain
 ```
 
 ## Required flow
 
 ```txt
-shader source and required interface manifest
-  -> compile and link detached candidate
-  -> reflect active attributes and uniforms
-  -> validate names, locations, types, sizes and resource limits
-  -> validate CPU mesh layout and uniform payload schemas
-  -> reject incompatible candidate before draw
-  -> allocate program generation and interface fingerprint
-  -> admit bindings, uniform updates and draws
-  -> publish typed results and bounded journal
-  -> acknowledge first visible frame with the interface fingerprint
+committed camera and render-surface observation
+  -> allocate visibility command and camera revision
+  -> classify each patch against frustum and distance bands
+  -> apply hysteresis and prior-tier continuity
+  -> apply density, instance, vertex and draw budgets
+  -> select near, mid, far, terrain-tint or culled representation
+  -> construct immutable GrassVisibilityResult
+  -> reject stale camera/surface/topology generations
+  -> commit visible patch groups and mesh/draw generations
+  -> publish counts, reasons and bounded observations
+  -> acknowledge first visible frame with the same visibility revision
 ```
 
 ## Kit census
@@ -118,6 +124,7 @@ shader source and required interface manifest
 external provider kits: 1
 local declared DSK/kits: 43
 total declared kits: 44
+grass-specific local kits: 11
 required-v0.1 local declarations: 15
 planned local declarations: 28
 ```
@@ -128,13 +135,14 @@ The complete per-kit service inventory is in `.agent/kit-registry.json` and the 
 
 ```txt
 runtime source changed: no
-renderer/shader source changed: no
+grass source changed: no
+renderer source changed: no
 gameplay source changed: no
 package scripts or dependencies changed: no
 deployment changed: no
 npm run check: not run
 browser/Pages smoke: not run
-program-interface fixtures: unavailable
+grass visibility/LOD fixtures: unavailable
 ```
 
-Do not treat link success, non-null screenshots or a `gpu:` marker as program-interface proof. Readiness requires active-symbol reflection, exact schema compatibility, current generation admission and a visible-frame receipt.
+Do not treat density-selected batch labels, stable topology, a lower card count or successful rendering as camera-based LOD proof. Readiness requires camera-bound visibility results, reachable tiers, stale-result rejection, bounded transitions and a visible frame carrying the accepted visibility revision.

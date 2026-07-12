@@ -1,57 +1,55 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T02-38-23-04-00`
+**Updated:** `2026-07-12T04-11-54-04-00`
 
 ## Plan ledger
 
-**Goal:** distinguish authored progression data from executable proof that movement, path sampling, inspection, objective/story transition and visible feedback work through one authority.
+**Goal:** distinguish grass descriptor structure from executable proof that camera distance, frustum visibility and budgets control applied render work.
 
 - [x] Review the complete Publish inventory and central ledger.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Verify all eligible root `.agent` states.
-- [x] Select only `IntoTheMeadow` after avoiding active unsynchronized work.
-- [x] Inspect objective, target and story content.
-- [x] Inspect initial state and `advanceGameState()`.
-- [x] Inspect game construction, browser host, public host and editor capabilities.
-- [x] Inspect package checks and current smoke coverage.
-- [x] Document command, spatial, progression, parity and visible-frame proof requirements.
+- [x] Select only `IntoTheMeadow`.
+- [x] Inspect the grass density, archetype, static batch, patch, instancing and LOD kits.
+- [x] Inspect render-plan enhancement and cache behavior.
+- [x] Inspect CPU grass mesh expansion and web-host frame flow.
+- [x] Inspect existing render and renderer smoke tests.
+- [x] Document distance, frustum, budget, stale-result and visible-frame proof requirements.
 - [x] Change documentation only.
-- [ ] Execute progression fixtures after implementation exists.
+- [ ] Execute grass-visibility fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-authored objectives: 2
-authored interaction targets: 2
-authored story beats: 3
-initial active objective: walk-the-path
-initial completed objectives: 0
-initial path progress: 0
-implemented game-state transition functions: 1
-state fields mutated by advanceGameState: frame and lastTick only
-browser gameplay listeners in web host: 0
-movement capabilities in editor bridge: 0
-inspect capabilities in editor bridge: 0
-progression result schemas: 0
-visible progression-frame receipts: 0
+declared grass LOD tiers: 4
+static batch tiers: 3
+runtime patch-selected tiers: 2
+runtime far selection paths: 0
+runtime terrain-tint paths: 0
+camera inputs to patch placement: 0
+camera inputs to draw grouping: 0
+frustum tests in grass path: 0
+visible-set revisions: 0
+typed grass draw-plan results: 0
+visible grass-frame receipts: 0
 ```
 
 ## Proven from source
 
 ```txt
-walk-the-path requires action path-progress on arrival-path and progress >= 0.35
-inspect-tree requires action inspect on focal-tree and inspected=true
-focal-tree has an authored position and interaction radius
-arrival-path has an authored position and interaction radius
-path-discovery story beat is keyed to path-progress:0.25
-focal-tree story beat is keyed to inspect:focal-tree
-initial state contains player, progression and story IDs
-advanceGameState increments frame and records lastTick only
-createIntoTheMeadowGame exposes authored content but no action command
-web host ticks and renders but installs no gameplay input adapter
-editor bridge exposes tick/reset/read/render/capture only
-snapshot returns state and render data without a progression result
+density texture is deterministic and suppresses the authored path
+archetypes generate 50-100 cards, defaulting to 64
+static batches create near, mid and far variants
+LOD policy declares 32, 72, 128 and 220 distance thresholds
+patch placement chooses near for density > 0.55, otherwise mid
+patch placement never chooses far or terrain-tint
+draw grouping retains every patch instance
+enhancer cache key is source topology and per-frame update carries time only
+web host supplies no camera observation to grass enhancement
+CPU mesh builder expands every draw-group instance
+CPU mesh builder uses hard-coded 28/16/4 card slices
+debug output reports totals, not admitted work
 ```
 
 ## Existing proof
@@ -59,36 +57,33 @@ snapshot returns state and render data without a progression result
 Current checks prove:
 
 ```txt
-required source files exist
-DSK descriptors validate structurally
-authored scene-flow counts validate
-render plans and CPU mesh data validate
-renderer and headless editor smoke paths execute
+grass density descriptor exists
+static batches, patches and draw groups exist
+render contract validates structurally
+mesh buffers are triangle-aligned and internally consistent
+primitive fallback geometry is absent
+animation time does not alter topology or static mesh key
 ```
 
 Current checks do not prove:
 
 ```txt
-player movement
-path projection or progress
-path objective completion
-tree inspection
-tree objective completion
-story beat transition
-objective/story atomicity
-command sequencing or idempotence
-stale session/scene/epoch rejection
-reset progression fencing
-browser/editor/headless parity
-visible progression-frame correlation
+camera-distance LOD selection
+far-tier reachability
+terrain-tint transition
+frustum culling
+instance or card budgets
+stale camera/surface rejection
+visible-set determinism
+requested-versus-applied diagnostics parity
+first visible grass-frame correlation
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
-interaction source changed: no
-objective/story source changed: no
+grass source changed: no
 renderer source changed: no
 package scripts changed: no
 dependencies changed: no
@@ -97,102 +92,75 @@ deployment changed: no
 branch created: no
 pull request created: no
 npm run check executed: no
-progression fixtures available: no
-browser progression smoke available: no
+grass distance fixtures available: no
+grass frustum fixtures available: no
+grass budget fixtures available: no
+browser traversal smoke available: no
 ```
 
-## Required command-admission fixture
+## Required distance fixture
 
 ```txt
-accept a valid monotonic command ID and input sequence
-reject duplicate command without a second mutation
-reject stale session, scene, epoch and expected revision
-reject unknown action and target
-reject non-finite movement values
-reject movement outside configured bounds
-return typed status and reasons
+construct canonical patches at exact threshold distances
+classify through the shared LOD policy
+assert near/mid/far/tint transitions at boundaries
+assert beyond-tint produces no card work
+prove density changes do not change distance tier
 ```
 
-## Required path fixture
+## Required frustum fixture
 
 ```txt
-start from the canonical initial player position
-apply admitted movement commands
-project player position onto arrival-path geometry
-produce normalized progress from authoritative geometry
-assert monotonic policy
-emit path-discovery at 0.25 exactly once
-complete walk-the-path at 0.35 exactly once
-preserve transition identity across snapshot and replay
+construct camera and conservative patch bounds
+classify inside, intersecting and outside patches
+admit inside/intersecting patches
+reject outside patches
+assert rejected patches contribute zero instances and cards
 ```
 
-## Required inspection fixture
+## Required budget fixture
 
 ```txt
-reject focal-tree inspection outside the admitted radius
-accept inspection inside the admitted radius
-validate target scene, type and required action
-complete inspect-tree exactly once
-emit focal-tree story beat exactly once
-duplicate inspect returns prior result without mutation
+submit more visible instances/cards than configured limits
+apply deterministic tier fallback or selection reduction
+report requested and applied counts
+preserve path suppression and stable ordering
+produce the same fingerprint on repeated runs
 ```
 
-## Required atomic progression fixture
+## Required stale-result fixture
 
 ```txt
-prepare player, path, interaction, objective and story changes
-fail one staged rule and preserve predecessor state
-commit all accepted changes under one progression revision
-publish one ordered event bundle
-ensure active objective and completion ledger agree
-ensure story beat IDs agree with emitted transitions
-```
-
-## Required reset fixture
-
-```txt
-complete at least one objective
-reset into a new progression epoch
-restore canonical player and progression state
-reject predecessor-epoch commands
-ensure no predecessor event appears after reset
-acknowledge the first neutral replacement frame
-```
-
-## Required adapter parity fixture
-
-```txt
-run the same command sequence through direct domain API
-run through browser capability gateway
-run through browser editor bridge
-run through Node headless editor environment
-compare ProgressionResult and terminal state fingerprints
+create a draw plan for camera revision N
+advance camera, surface, quality or context revision
+attempt to commit predecessor plan
+reject without render-resource mutation
 ```
 
 ## Required render and frame fixture
 
 ```txt
-commit a progression result
-build the matching snapshot/read model
-render one frame carrying progression revision and result ID
-capture the browser canvas after that frame
-assert HUD/story feedback and observation cite the same revision
+commit a grass visible-set revision
+update CPU or GPU draw resources from that exact plan
+render one frame
+capture renderer diagnostics and canvas
+assert patch, instance and card counts match the committed result
+assert frame acknowledgement cites the visible-set revision
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:interaction-command
-npm run fixture:path-progress
-npm run fixture:inspect-objective
-npm run fixture:progression-atomicity
-npm run fixture:progression-reset
-npm run fixture:progression-adapter-parity
-npm run smoke:progression-visible-frame
-npm run smoke:progression-pages
+npm run fixture:grass-lod-distance
+npm run fixture:grass-frustum
+npm run fixture:grass-budget
+npm run fixture:grass-stale-plan
+npm run fixture:grass-diagnostics-parity
+npm run smoke:grass-visible-frame
+npm run smoke:grass-pages
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim playable progression because the content arrays and DSK descriptors exist. Completion requires executable commands, authoritative spatial evidence, atomic objective/story commits, adapter parity, reset fencing and a first visible frame that cites the committed progression result.
+Do not claim grass LOD or culling because policy objects and batch names exist. Completion requires executable camera-derived classification, bounded applied work, stale-plan fencing, diagnostics parity and first-visible-frame evidence.

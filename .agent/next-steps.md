@@ -1,166 +1,126 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T02-38-23-04-00`
+**Updated:** `2026-07-12T04-11-54-04-00`
 
 ## Goal
 
-Turn authored player, path, interaction, objective and story declarations into one executable progression pipeline without moving gameplay rules into renderer code.
+Make the existing grass density, patch, batch and LOD declarations produce a camera-derived visible draw plan without changing deterministic placement or moving gameplay rules into renderer code.
 
 ## Plan ledger
 
-- [ ] Preserve current meadow generation, render topology, shaders and browser composition.
+- [ ] Preserve current density texture, path suppression, archetypes, wind and visual composition.
 - [ ] Complete Runtime Session Lifecycle Authority first.
-- [ ] Replace raw `GameHost.game` exposure with a capability gateway.
-- [ ] Complete Runtime Clock and Step Admission Authority.
-- [ ] Add runtime session, scene and progression epoch identity.
-- [ ] Define `InteractionCommand` and `ProgressionResult` schemas.
-- [ ] Add monotonic command sequence and duplicate rejection.
-- [ ] Add bounded player movement commands and results.
-- [ ] Derive path progress from authoritative player/path geometry.
-- [ ] Prevent caller-supplied path progress from becoming authority.
-- [ ] Add registered-target inspection admission.
-- [ ] Define proximity and optional line-of-sight policy.
-- [ ] Evaluate objective rules after admitted movement/inspection evidence.
-- [ ] Commit player, completion ledger, active objective and story beats atomically.
-- [ ] Add one ordered event bundle per committed progression revision.
-- [ ] Add progression state to clone-safe public observations.
-- [ ] Route browser input, browser editor and Node headless commands through the same authority.
-- [ ] Add reset progression epoch and stale-command rejection.
-- [ ] Correlate progression result, snapshot, render plan, renderer observation and first visible frame.
-- [ ] Add DOM-free fixtures to `npm run check`.
-- [ ] Add browser and Pages walk-and-inspect smoke gates.
+- [ ] Complete Render Surface Resolution and WebGL Context Recovery Authority.
+- [ ] Add camera, surface, context and quality revision observations.
+- [ ] Add canonical patch bounds for every grass patch.
+- [ ] Compute patch-to-camera distance from committed camera state.
+- [ ] Apply the existing near/mid/far/terrain-tint thresholds through one owner.
+- [ ] Remove density-based near/mid selection from patch placement.
+- [ ] Add deterministic frustum admission with conservative bounds.
+- [ ] Add explicit instance and card budgets.
+- [ ] Define terrain-tint fallback output for the fourth tier.
+- [ ] Build an immutable `GrassVisibleSet`.
+- [ ] Build a typed `GrassDrawPlanResult`.
+- [ ] Reject stale camera, surface, context and quality revisions.
+- [ ] Route CPU and future GPU rendering through the same visible-set contract.
+- [ ] Report requested, admitted, culled and applied counts by tier.
+- [ ] Correlate draw-plan revision with renderer observation and first visible frame.
+- [ ] Add DOM-free distance, frustum and budget fixtures to `npm run check`.
+- [ ] Add browser and Pages camera-traversal smoke gates.
 
 ## Existing owners to update first
 
 ```txt
-into-the-meadow-game-dsk
-path-corridor-dsk
-meadow-player-dsk
-meadow-input-dsk
-meadow-interaction-dsk
-meadow-objective-dsk
-meadow-story-dsk
-meadow-ui-dsk
+grass-patch-placement-kit
+grass-clump-instancing-render-kit
+grass-lod-policy-kit
+grass-density-scaling-kit
+grass-debug-visualization-kit
+grass-patch-dsk
+gpu-grass-render-dsk
+meadow-camera-dsk
+meadow-performance-dsk
+meadow-render-host-dsk
+meadow-webgl-renderer-v2-kit
 meadow-diagnostics-dsk
-web-host-dsk
-browser editor bridge
-Node headless editor environment
-Runtime Session Lifecycle Authority
-Runtime Clock and Step Admission Authority
+meadow-render-plan/v2
+render-plan enhancer
+CPU mesh builder
+web host
 Committed Frame Observation Authority
 ```
 
 ## Candidate coordinating kits
 
 ```txt
-interaction-command-schema-kit
-interaction-command-id-kit
-interaction-sequence-kit
-interaction-target-registry-kit
-player-movement-command-kit
-path-progress-sampler-kit
-path-progress-result-kit
-inspect-command-kit
-interaction-admission-kit
-objective-rule-kit
-objective-transition-kit
-completion-ledger-kit
-story-trigger-kit
-story-transition-kit
-progression-commit-kit
-progression-result-kit
-browser-interaction-adapter-kit
-editor-interaction-capability-kit
-progression-observation-kit
-progression-frame-ack-kit
-progression-journal-kit
-path-progress-fixture-kit
-inspect-objective-fixture-kit
-browser-editor-progression-parity-fixture-kit
-visible-progression-frame-smoke-kit
+grass-view-observation-kit
+grass-camera-revision-kit
+grass-patch-bounds-kit
+grass-patch-distance-kit
+grass-lod-selection-kit
+grass-frustum-admission-kit
+grass-visible-set-kit
+grass-visible-set-revision-kit
+grass-instance-budget-kit
+grass-card-budget-kit
+grass-terrain-tint-transition-kit
+grass-draw-plan-kit
+grass-draw-plan-result-kit
+stale-grass-visibility-rejection-kit
+grass-visibility-observation-kit
+grass-visibility-journal-kit
+grass-visible-frame-ack-kit
+grass-lod-distance-fixture-kit
+grass-frustum-fixture-kit
+grass-budget-fixture-kit
+browser-grass-traversal-smoke-kit
 ```
 
-## Interaction command contract
+## Required patch classification flow
 
 ```txt
-InteractionCommand
-  commandId
-  schemaVersion
-  runtimeSessionId
-  sceneId
-  progressionEpoch
-  actorId
-  inputSequence
-  type: move | inspect
-  payload
-  expectedProgressionRevision
+committed camera observation
+  -> patch bounds lookup
+  -> conservative frustum test
+  -> nearest bounds distance
+  -> declared tier selection
+  -> quality and budget admission
+  -> visible patch result
 ```
 
-## Progression result contract
+## Required draw flow
 
 ```txt
-ProgressionResult
-  commandId
-  status: committed | rejected | duplicate | stale
-  runtimeSessionId
-  sceneId
-  progressionEpoch
-  predecessorRevision
-  committedRevision
-  playerReceipt
-  pathProgressReceipt
-  interactionReceipt
-  objectiveTransitions
-  storyTransitions
-  events
-  rejectionReasons
-```
-
-## Required path flow
-
-```txt
-move command
-  -> finite bounded input admission
-  -> terrain/corridor movement proposal
-  -> accepted player position
-  -> path projection and normalized progress
-  -> monotonic progress policy
-  -> walk-the-path threshold evaluation
-  -> objective/story transition bundle
-  -> atomic progression commit
-```
-
-## Required inspection flow
-
-```txt
-inspect command
-  -> target ID lookup
-  -> scene/type/action compatibility
-  -> player-target spatial evidence
-  -> proximity and optional visibility policy
-  -> inspect result
-  -> inspect-tree objective evaluation
-  -> focal-tree story trigger
-  -> atomic progression commit
+visible patch results
+  -> deterministic instance selection
+  -> tier-appropriate batch or terrain tint
+  -> aggregate instance/card budgets
+  -> immutable grass draw plan
+  -> typed commit result
+  -> render-resource update
+  -> visible-frame acknowledgement
 ```
 
 ## Acceptance matrix
 
 ```txt
-valid movement changes player position
-non-finite or oversized movement rejects without mutation
-path progress is derived from spatial state
-path progress cannot regress unless policy explicitly permits it
-0.35 threshold completes walk-the-path exactly once
-inspect out of range rejects
-inspect focal-tree in range completes inspect-tree exactly once
-objective and story changes share one committed revision
-duplicate command returns the prior result without a second mutation
-stale session/scene/epoch/revision rejects
-reset creates a new progression epoch
-browser, browser-editor and Node-headless commands produce the same result schema
-first visible frame cites the committed progression revision
+distance 31.999 selects near
+distance 32.001 selects mid
+distance 71.999 selects mid
+distance 72.001 selects far
+distance 127.999 selects far
+distance 128.001 selects terrain-tint
+distance beyond 220 selects no grass cards
+off-frustum patch produces no active cards
+density changes placement count but not tier policy
+path-core patches remain suppressed
+budget overflow applies deterministic fallback
+same camera and policy produce the same visible-set fingerprint
+new camera revision invalidates predecessor plans
+stale context or surface result cannot commit
+debug counts match renderer-applied counts
+first visible frame cites committed visible-set revision
 ```
 
 ## Ordered architecture queue
@@ -177,10 +137,11 @@ first visible frame cites the committed progression revision
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 7b. Adaptive Quality and Performance Budget Authority
+7c. Grass Visibility and LOD Authority
 8. Interaction Command and Objective Progression Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not add direct editor-only state mutation. Every product and tooling surface must use the same admitted command and typed progression result.
+Do not add a second grass policy inside the renderer. Patch admission, tier selection and budgets must resolve before draw submission through one shared contract.

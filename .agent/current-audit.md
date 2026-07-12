@@ -1,13 +1,13 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-12T02-38-23-04-00`
+**Audit timestamp:** `2026-07-12T04-11-54-04-00`
 
 ## Status
 
 ```txt
-status: interaction-command-objective-progression-authority-audited
-source revision reviewed: 7bf6a503a022ad4c547450308caea93aff75a4fc
+status: grass-visibility-lod-authority-audited
+source revision reviewed: e4599211818dd4a5a6f7bb33a060d4778ce2ef2a
 runtime source changed by this pass: no
 branch: main
 root .agent state: refreshed
@@ -16,25 +16,27 @@ central synchronization: pending this commit, completed by paired ledger update
 
 ## Summary
 
-The repository already authors two objectives, two interaction targets and three story beats. The initial state activates `walk-the-path`, starts the player at `{ x: 0, y: 0, z: -36 }`, fixes `pathProgress` at `0` and records only the `arrival` story beat. The only runtime state transition, `advanceGameState()`, increments `frame` and writes `lastTick`.
+The repository has a substantial deterministic grass descriptor stack: a 128×128 density texture, five clump families with two variants each, near/mid/far static batches, patch placement, draw groups, wind, a four-tier LOD policy and CPU mesh generation.
 
-No implemented surface accepts movement, path-progress or inspection commands. The web host installs no gameplay input listeners. `GameHost` publishes reads plus the raw game object, and the editor bridge exposes tick/reset/render operations only. The authored objective and story graph is therefore unreachable through the shipped product loop.
+The policy and runtime are disconnected. Density determines whether a patch instance uses a near or mid batch. The far and terrain-tint tiers are not selected. All patch instances enter draw groups, the enhanced plan is cached without camera identity, and the CPU mesh builder expands the entire field into static triangles. No authoritative visible set, frustum admission, camera revision, instance/card budget result or visible-frame receipt exists.
 
 ## Plan ledger
 
-**Goal:** define one authoritative command-to-progression transaction that makes the authored path and tree objectives reachable and correlates every accepted transition with one committed visible frame.
+**Goal:** define one camera-derived grass visible-set transaction that preserves deterministic placement while bounding patches, instances, cards and triangles by declared distance, frustum and quality policy.
 
-- [x] Compare the current Publish inventory with every central ledger entry.
+- [x] Compare all accessible Publish repositories with the central ledger.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm nine eligible root `.agent` states.
-- [x] Detect and avoid same-window unsynchronized work in `TheOpenAbove`.
-- [x] Select only `IntoTheMeadow` as the oldest stable eligible repository.
-- [x] Inspect content, state, game construction, browser host, public host, editor bridge and checks.
-- [x] Trace the complete interaction, objective and story reachability path.
+- [x] Confirm nine eligible root `.agent` states and central records.
+- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
+- [x] Inspect the render boundary and current validation minimum.
+- [x] Trace density generation, batch construction, patch placement, draw grouping and mesh expansion.
+- [x] Verify the four-tier LOD policy has no runtime consumer.
+- [x] Verify the enhancer and web host provide no camera observation to grass selection.
+- [x] Verify smoke tests check structure and topology stability, not distance/frustum behavior.
 - [x] Preserve the complete 44-kit inventory and service map.
-- [x] Define authority, candidate kits, results, invariants and fixture gates.
+- [x] Define authority, coordinating kits, result schema, invariants and fixture gates.
 - [x] Change documentation only.
-- [ ] Implement and execute the progression authority.
+- [ ] Implement and execute grass visibility and LOD authority.
 
 ## Selection comparison
 
@@ -44,15 +46,15 @@ eligible non-Cavalry repositories: 9
 new or central-ledger-missing eligible repositories: 0
 root-.agent-missing eligible repositories: 0
 
-TheOpenAbove       central 2026-07-12T00-39-05-04-00, repo-local 2026-07-12T02-29-50-04-00, skipped as active/unsynchronized
-IntoTheMeadow      central and repo-local 2026-07-12T00-58-12-04-00, selected
-HorrorCorridor     2026-07-12T01-08-06-04-00
-PhantomCommand     2026-07-12T01-20-00-04-00
-ZombieOrchard      2026-07-12T01-30-07-04-00
-TheUnmappedHouse   2026-07-12T01-41-56-04-00
-AetherVale         2026-07-12T01-58-43-04-00
-MyCozyIsland       2026-07-12T02-10-14-04-00
-PrehistoricRush    2026-07-12T02-21-55-04-00
+IntoTheMeadow      2026-07-12T02-38-23-04-00 selected oldest
+HorrorCorridor     2026-07-12T02-49-19-04-00
+PhantomCommand     2026-07-12T03-00-46-04-00
+ZombieOrchard      2026-07-12T03-11-51-04-00
+TheUnmappedHouse   2026-07-12T03-21-27-04-00
+AetherVale         2026-07-12T03-28-44-04-00
+MyCozyIsland       2026-07-12T03-39-52-04-00
+PrehistoricRush    2026-07-12T03-51-15-04-00
+TheOpenAbove       2026-07-12T04-00-32-04-00
 TheCavalryOfRome   excluded
 ```
 
@@ -62,272 +64,259 @@ Only `LuminaryLabs-Publish/IntoTheMeadow` was selected.
 
 ```txt
 startup
-  -> external meadow provider import
-  -> local DSK descriptor installation
-  -> authored meadow, objectives, story and targets loaded
-  -> initial immutable state created
-  -> renderer, GameHost and editor bridge exposed
-  -> RAF begins
+  -> load commit-pinned meadow provider
+  -> install 43 local DSK and kit descriptors
+  -> create one static meadow source plan
+  -> create density texture, grass archetypes and near/mid/far batches
+  -> create patches and assign each instance a batch from density
+  -> group every instance into static draw groups
+  -> cache the enhanced topology
+  -> build one CPU mesh and upload WebGL buffers
 
 frame
-  -> game.tick({ dt, time })
-  -> advanceGameState increments frame and lastTick
-  -> no input command is consumed
-  -> no player transform changes
-  -> no path progress changes
-  -> no interaction target is evaluated
-  -> no objective or story transition occurs
-  -> same scene topology is enhanced and rendered
-
-editor/public surfaces
-  -> read state/snapshot/diagnostics/render data
-  -> tick or reset the raw game
-  -> no movement/path/inspect/progression capability
+  -> tick game with fixed 1/60 delta
+  -> retrieve the same source topology with updated time
+  -> enhancer returns the cached grass system
+  -> no camera position enters grass selection
+  -> mesh/render path retains every grass draw-group instance
+  -> debug reports total instances and total vertices
+  -> render the full static grass field
 ```
 
 ## Source-backed findings
 
-### Authored progression exists
+### The declared policy is complete enough to express intent
 
-`ARRIVAL_OBJECTIVES` defines `walk-the-path` with `progressAtLeast: 0.35` and `inspect-tree` with `inspected: true`. `ARRIVAL_INTERACTION_TARGETS` defines `arrival-path` and `focal-tree`. `STORY_BEATS` defines arrival, path-discovery and focal-tree beats.
+`grass-lod-policy-kit` declares near, mid, far and terrain-tint tiers at 32, 72, 128 and 220 units. `grass-static-batch-kit` creates near, mid and far batches for every archetype.
 
-### Runtime state never applies those rules
+### Patch assignment uses density instead of view distance
 
-The initial state contains the player, active objective, completion ledger and story beat IDs. `advanceGameState()` only increments `frame` and stores numeric `dt` and `time`; it does not read actions or mutate player/progression state.
+`grass-patch-placement-kit.chooseBatch()` selects from near batches when density exceeds `0.55`, otherwise from mid batches. Camera position, patch distance, frustum state and the declared LOD policy are not inputs. The far batch pool is never selected.
 
-### Game construction exposes content but no progression command
+### Draw grouping retains the complete field
 
-`createIntoTheMeadowGame()` places objectives, story beats and targets under `game.content`, but the public game API contains only read methods, `tick(input)` and `reset()`. `tick()` forwards its input directly to `advanceGameState()`.
+`grass-clump-instancing-render-kit` iterates every patch and every instance and groups them by batch/material. It has no visible-set or budget input.
 
-### Browser host has no gameplay adapter
+### The enhancer caches grass without camera identity
 
-The host loads, ticks, enhances and renders. It installs the editor bridge but no keyboard, pointer or touch listeners for movement or inspection.
+`createRenderPlanEnhancer()` rebuilds only when the source topology key changes. Per-frame updates change time only. The web host does not pass camera state to the enhancer.
 
-### Editor bridge cannot prove progression
+### The active renderer is CPU-expanded, not view-admitted instancing
 
-The bridge exposes runtime status/state/snapshot/tick/reset and render/capture capabilities. It has no movement, path-progress, inspect, objective or story action.
+`addGrassField()` loops every draw group and every instance, then emits blade ribbon triangles. It hard-caps cards to 28 for near, 16 for mid and 4 for far, but does not calculate distance or frustum visibility. The resulting grass is part of one persistent CPU mesh and WebGL buffer set.
 
-### Diagnostics can overstate product completeness
+### Declared far and terrain-tint tiers are unreachable
 
-Diagnostics count authored story beats, objectives and targets. Structural counts can pass while none are reachable through the product runtime.
+Patch placement can emit only near or mid batch IDs. The mesh builder has no terrain-tint path. Therefore the policy's far and tint tiers do not affect shipped rendering.
 
-### Reset repeats the unreachable initial state
+### Diagnostics report totals, not admitted work
 
-Reset recreates the same state with path progress `0`, active `walk-the-path` and only the arrival story beat. There is no progression history, command sequence, transition result or frame receipt.
+The web host reports total descriptor grass instances and total mesh vertices. It does not report visible patch count, culled patch count, instances/cards by tier, budget pressure, visible-set revision or frame acknowledgement.
+
+### Existing checks prove structure, not runtime LOD
+
+The render-plan smoke confirms density textures, static batches, patches and draw groups exist. The renderer smoke confirms buffer consistency and topology stability. Neither changes camera distance, checks frustum rejection, reaches far/tint tiers or compares work budgets.
 
 ## Domains in use
 
 ```txt
-browser shell, DOM boot, loading and fatal projection
-external dependency manifest, dynamic provider loading and fallback
-provider, seed and content identity
-DSK declaration, census, validation and install snapshots
+browser shell, loading and visible failure projection
+external provider loading, validation and fallback
+DSK declaration, registry validation and install snapshots
 game manifest, immutable state, tick, reset, snapshot and diagnostics
-runtime lifecycle, RAF scheduling, clock and reset epoch
-player state, movement profile, terrain contact and actions
-input action maps, devices, contexts and normalization
-interaction registry, affordances, inspection state and events
-path curve, corridor, progression and validation
-objective model, flow, completion ledger and feedback
-story state, beats, dialogue and sequence execution
-public host, browser editor and headless editor capabilities
-terrain, materials, scatter, atmosphere, grass, trees and wind
-render-plan contract, enhancement, topology and CPU mesh generation
-WebGL context, programs, buffers, draws, resize and disposal
-committed state, progression, render and visible-frame observation
-validation, build and Pages deployment
+runtime lifecycle, RAF clock and reset epoch
+camera descriptors and browser view observation
+terrain, path and terrain sampling
+grass density texture generation and path suppression
+grass archetype, static batch and patch placement
+grass draw-group construction and wind descriptors
+declared grass distance LOD policy
+CPU grass mesh expansion and WebGL buffer ownership
+grass visible-set, frustum and card-budget authority
+player, input, interaction, objective, story and persistence declarations
+flowers, rocks, ground cover, trees, atmosphere and scatter
+render-plan topology, post processing and WebGL rendering
+committed draw plan and visible-frame observation
+validation, headless tools, build and Pages deployment
 DSK implementation, dependency, consumption and retirement truth
 ```
 
 ## Complete kit inventory and services
 
-### External provider
-
 ```txt
-meadow-area-kit
-  area/path/style/material normalization
-  deterministic seeded scatter
-  grass, flower, rock, mushroom and tree descriptors
-  wind and atmosphere descriptors
-  render-plan generation
-  validation, snapshot, reset and optional runtime adapter
+meadow-area-kit: area normalization, path normalization, style and material normalization, deterministic seeded scatter, grass flower rock mushroom and tree descriptors, wind and atmosphere descriptors, render-plan generation, validation snapshot reset and optional runtime adapter
+into-the-meadow-game-dsk: game-manifest, kit-stack-registry, game-state-root, boot-sequence, game-snapshot
+web-host-dsk: document-shell, browser-loop, host-debug-surface, asset-loading-host, browser-safety
+game-composition-dsk: dsk-registry, scene-composition, render-composition, simulation-composition, composition-validation
+meadow-area-bridge-dsk: meadow-area-config, meadow-feature-config, meadow-area-kit-adapter, meadow-area-state, meadow-area-validation
+meadow-terrain-texture-dsk: terrain-surface-model, material-layer-system, path-layer-system, terrain-sampler, terrain-validation
+path-corridor-dsk: path-curve-model, walkable-corridor, path-surface-detail, path-progression, path-validation
+grass-density-texture-kit: density-texture-model, density-channels, density-compositor, density-sampler, density-validation
+grass-clump-archetype-kit: clump-family-registry, card-layout-generator, texture-atlas-binding, clump-variant-generator, archetype-validation
+grass-static-batch-kit: clump-mesh-builder, batch-variant-cache, atlas-material, static-batch-lod, batch-validation
+grass-patch-placement-kit: patch-grid, density-driven-placement, clump-instance-selection, patch-instance-buffer, placement-validation
+grass-clump-instancing-render-kit: batch-registry, instance-stream, draw-group-builder, shader-binding, render-validation
+grass-shader-wind-kit: wind-uniforms, tip-bend-model, phase-field, gust-response, wind-validation
+grass-lod-policy-kit: near-lod, mid-lod, far-lod, terrain-tint-lod, lod-validation
+grass-density-scaling-kit: quality-scale, budget-scale, density-scale, profile-scale, scale-validation
+grass-debug-visualization-kit: density-view, patch-view, instance-view, lod-view, debug-validation
+grass-patch-dsk: patch-grid, blade-distribution, terrain-awareness, wind-binding, grass-validation
+gpu-grass-render-dsk: grass-instance-buffer, grass-blade-mesh, shader-wind, grass-lod-render, grass-render-validation
+wind-field-dsk: wind-state, wind-sampler, wind-zones, wind-consumers, wind-validation
+tree-object-dsk: focal-tree-model, tree-line-model, tree-materials, tree-wind-binding, tree-validation
+meadow-scatter-dsk: flower-scatter, rock-scatter, mushroom-scatter, placement-rules, scatter-validation
+meadow-atmosphere-dsk: sky-gradient, sun-system, cloud-layer, distant-hills, atmosphere-validation
+meadow-player-dsk: player-state, movement-profile, terrain-contact, player-actions, player-validation
+meadow-camera-dsk: camera-mode, camera-rig, camera-collision, camera-feel, camera-validation
+meadow-input-dsk: action-map, device-bindings, input-context, input-normalization, input-validation
+meadow-interaction-dsk: interactable-registry, affordance-rules, inspect-state, interaction-events, interaction-validation
+meadow-story-dsk: story-state, story-beats, dialogue-text, sequence-runner, story-validation
+meadow-objective-dsk: objective-model, objective-flow, completion-ledger, feedback-surface, objective-validation
+meadow-ecology-dsk: ambient-life, ecology-zones, ambience-triggers, non-gameplay-agents, ecology-validation
+meadow-audio-dsk: ambient-bed, spatial-audio-cues, audio-state, audio-events, audio-validation
+meadow-ui-dsk: minimal-hud, story-text-panel, debug-ui, ui-state, ui-validation
+meadow-save-dsk: save-model, save-slots, persistence-adapter, migration, save-validation
+meadow-diagnostics-dsk: runtime-health, render-health, determinism-checks, smoke-tests, diagnostics-report
+meadow-performance-dsk: quality-profile, budget-policy, lod-policy, adaptive-scaling, performance-validation
+meadow-render-host-dsk: renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
+meadow-webgl-renderer-v2-kit: WebGL context acquisition, shader program creation, attribute and uniform binding, CPU mesh ingestion, GPU buffer ownership, draw submission, resize, snapshot, disposal
+post-process-stack-dsk: pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
+render-target-kit: scene-color-texture, depth-texture, normal-texture, ping-pong-buffer, resize-policy
+sobel-outline-pass-kit: color-edge-threshold, depth-edge-threshold, normal-edge-threshold, outline-color, object-mask
+color-grade-pass-kit: warmth, contrast, saturation, shadow-tint, highlight-tint
+depth-fog-pass-kit: fog-near, fog-far, fog-color, distance-curve, horizon-haze
+vignette-pass-kit: radius, softness, strength, center, quality-tier
+final-composite-pass-kit: scene-input, post-input, output-target, debug-overlay, fallback-composite
+static-pages-deploy-dsk: build-config, github-pages-workflow, release-artifacts, cache-invalidation, deploy-validation
 ```
 
-### Local game and host
+## Grass system implementation census
 
 ```txt
-into-the-meadow-game-dsk
-  game-manifest, kit-stack-registry, game-state-root, boot-sequence, game-snapshot
-web-host-dsk
-  document-shell, browser-loop, host-debug-surface, asset-loading-host, browser-safety
-game-composition-dsk
-  dsk-registry, scene-composition, render-composition, simulation-composition, composition-validation
-meadow-area-bridge-dsk
-  meadow-area-config, meadow-feature-config, meadow-area-kit-adapter, meadow-area-state, meadow-area-validation
-```
-
-### Terrain, path and grass
-
-```txt
-meadow-terrain-texture-dsk
-  terrain-surface-model, material-layer-system, path-layer-system, terrain-sampler, terrain-validation
-path-corridor-dsk
-  path-curve-model, walkable-corridor, path-surface-detail, path-progression, path-validation
-grass-density-texture-kit
-  density-texture-model, density-channels, density-compositor, density-sampler, density-validation
-grass-clump-archetype-kit
-  clump-family-registry, card-layout-generator, texture-atlas-binding, clump-variant-generator, archetype-validation
-grass-static-batch-kit
-  clump-mesh-builder, batch-variant-cache, atlas-material, static-batch-lod, batch-validation
-grass-patch-placement-kit
-  patch-grid, density-driven-placement, clump-instance-selection, patch-instance-buffer, placement-validation
-grass-clump-instancing-render-kit
-  batch-registry, instance-stream, draw-group-builder, shader-binding, render-validation
-grass-shader-wind-kit
-  wind-uniforms, tip-bend-model, phase-field, gust-response, wind-validation
-grass-lod-policy-kit
-  near-lod, mid-lod, far-lod, terrain-tint-lod, lod-validation
-grass-density-scaling-kit
-  quality-scale, budget-scale, density-scale, profile-scale, scale-validation
-grass-debug-visualization-kit
-  density-view, patch-view, instance-view, lod-view, debug-validation
-grass-patch-dsk
-  patch-grid, blade-distribution, terrain-awareness, wind-binding, grass-validation
-gpu-grass-render-dsk
-  grass-instance-buffer, grass-blade-mesh, shader-wind, grass-lod-render, grass-render-validation
-```
-
-### World and experience
-
-```txt
-wind-field-dsk
-  wind-state, wind-sampler, wind-zones, wind-consumers, wind-validation
-tree-object-dsk
-  focal-tree-model, tree-line-model, tree-materials, tree-wind-binding, tree-validation
-meadow-scatter-dsk
-  flower-scatter, rock-scatter, mushroom-scatter, placement-rules, scatter-validation
-meadow-atmosphere-dsk
-  sky-gradient, sun-system, cloud-layer, distant-hills, atmosphere-validation
-meadow-player-dsk
-  player-state, movement-profile, terrain-contact, player-actions, player-validation
-meadow-camera-dsk
-  camera-mode, camera-rig, camera-collision, camera-feel, camera-validation
-meadow-input-dsk
-  action-map, device-bindings, input-context, input-normalization, input-validation
-meadow-interaction-dsk
-  interactable-registry, affordance-rules, inspect-state, interaction-events, interaction-validation
-meadow-story-dsk
-  story-state, story-beats, dialogue-text, sequence-runner, story-validation
-meadow-objective-dsk
-  objective-model, objective-flow, completion-ledger, feedback-surface, objective-validation
-meadow-ecology-dsk
-  ambient-life, ecology-zones, ambience-triggers, non-gameplay-agents, ecology-validation
-meadow-audio-dsk
-  ambient-bed, spatial-audio-cues, audio-state, audio-events, audio-validation
-meadow-ui-dsk
-  minimal-hud, story-text-panel, debug-ui, ui-state, ui-validation
-meadow-save-dsk
-  save-model, save-slots, persistence-adapter, migration, save-validation
-meadow-diagnostics-dsk
-  runtime-health, render-health, determinism-checks, smoke-tests, diagnostics-report
-meadow-performance-dsk
-  quality-profile, budget-policy, lod-policy, adaptive-scaling, performance-validation
-```
-
-### Rendering and deployment
-
-```txt
-meadow-render-host-dsk
-  renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
-meadow-webgl-renderer-v2-kit
-  context acquisition, shader programs, attribute/uniform binding, CPU mesh ingest, GPU buffers, draw, resize, snapshot, disposal
-post-process-stack-dsk
-  pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
-render-target-kit
-  scene-color-texture, depth-texture, normal-texture, ping-pong-buffer, resize-policy
-sobel-outline-pass-kit
-  color-edge-threshold, depth-edge-threshold, normal-edge-threshold, outline-color, object-mask
-color-grade-pass-kit
-  warmth, contrast, saturation, shadow-tint, highlight-tint
-depth-fog-pass-kit
-  fog-near, fog-far, fog-color, distance-curve, horizon-haze
-vignette-pass-kit
-  radius, softness, strength, center, quality-tier
-final-composite-pass-kit
-  scene-input, post-input, output-target, debug-overlay, fallback-composite
-static-pages-deploy-dsk
-  build-config, GitHub Pages workflow, release-artifacts, cache-invalidation, deploy-validation
+grass density texture resolution: 128 x 128
+grass families: short, tall, meadow, shadow, flower-edge
+variants per family: 2
+static tiers per archetype: near, mid, far
+declared policy tiers: near, mid, far, terrain-tint
+patch size: 7.2
+instances per admitted patch: floor(density * densityScale * 5), minimum 1
+runtime patch batch choices: near or mid only
+runtime far selection: 0 paths
+runtime terrain-tint selection: 0 paths
+camera inputs to grass creation: 0
+frustum inputs to grass creation: 0
+visible-set revisions: 0
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-interaction-objective-progression-authority-domain
+meadow-grass-visibility-lod-authority-domain
 ```
 
 Existing owners to update first:
 
 ```txt
-into-the-meadow-game-dsk
-path-corridor-dsk
-meadow-player-dsk
-meadow-input-dsk
-meadow-interaction-dsk
-meadow-objective-dsk
-meadow-story-dsk
-meadow-ui-dsk
+grass-density-texture-kit
+grass-clump-archetype-kit
+grass-static-batch-kit
+grass-patch-placement-kit
+grass-clump-instancing-render-kit
+grass-lod-policy-kit
+grass-density-scaling-kit
+grass-debug-visualization-kit
+grass-patch-dsk
+gpu-grass-render-dsk
+meadow-performance-dsk
+meadow-camera-dsk
+meadow-render-host-dsk
+meadow-webgl-renderer-v2-kit
 meadow-diagnostics-dsk
-web-host-dsk
-browser editor bridge
-Node headless editor environment
+render contract meadow-render-plan/v2
+render-plan enhancer
+CPU mesh builder
+web host
 Committed Frame Observation Authority
 ```
 
 Candidate coordinating kits:
 
 ```txt
-interaction-command-schema-kit
-interaction-command-id-kit
-interaction-sequence-kit
-interaction-target-registry-kit
-player-movement-command-kit
-path-progress-sampler-kit
-path-progress-result-kit
-inspect-command-kit
-interaction-admission-kit
-objective-rule-kit
-objective-transition-kit
-completion-ledger-kit
-story-trigger-kit
-story-transition-kit
-progression-commit-kit
-progression-result-kit
-browser-interaction-adapter-kit
-editor-interaction-capability-kit
-progression-observation-kit
-progression-frame-ack-kit
-progression-journal-kit
-path-progress-fixture-kit
-inspect-objective-fixture-kit
-browser-editor-progression-parity-fixture-kit
-visible-progression-frame-smoke-kit
+grass-view-observation-kit
+grass-camera-revision-kit
+grass-patch-bounds-kit
+grass-patch-distance-kit
+grass-lod-selection-kit
+grass-frustum-admission-kit
+grass-visible-set-kit
+grass-visible-set-revision-kit
+grass-instance-budget-kit
+grass-card-budget-kit
+grass-terrain-tint-transition-kit
+grass-draw-plan-kit
+grass-draw-plan-result-kit
+stale-grass-visibility-rejection-kit
+grass-visibility-observation-kit
+grass-visibility-journal-kit
+grass-visible-frame-ack-kit
+grass-lod-distance-fixture-kit
+grass-frustum-fixture-kit
+grass-budget-fixture-kit
+browser-grass-traversal-smoke-kit
+```
+
+## Grass draw-plan result contract
+
+```txt
+GrassDrawPlanResult
+  planId
+  schemaVersion
+  runtimeSessionId
+  contextGeneration
+  surfaceRevision
+  cameraRevision
+  visibleSetRevision
+  policyRevision
+  qualityRevision
+  status: committed | rejected | stale | fallback
+  patchCounts: considered, admitted, culledDistance, culledFrustum
+  instanceCountsByTier
+  cardCountsByTier
+  terrainTintPatchCount
+  budget: instanceLimit, cardLimit, appliedFallback
+  rejectionReasons
+  frameAckId
 ```
 
 ## Required invariants
 
 ```txt
-commands are sequenced and fenced by runtime session and scene
-movement and inspection payloads are finite and bounded
-path progress comes from authoritative spatial evidence, not caller truth
-inspection requires a registered target and admitted spatial policy
-one command produces at most one objective transition bundle
-objective completion and story triggers commit atomically
-completed objective IDs are unique and ordered by committed revision
-stale, duplicate and invalid commands perform zero mutation
-browser, public host and editor adapters use the same command/result schema
-snapshots expose progression revision and last accepted result
-one visible frame acknowledges the exact committed progression revision
-reset creates a new progression epoch and rejects predecessor commands
+density controls placement probability, not camera LOD
+one patch receives one tier from one versioned distance policy
+far and terrain-tint tiers are reachable
+off-frustum patches create no active grass draw work
+instance and card limits are explicit and deterministic
+quality changes create a new grass policy or draw-plan revision
+stale camera, surface or context results cannot commit
+path suppression survives every LOD tier
+diagnostics report requested and applied work
+the visible frame cites the committed visible-set revision
+```
+
+## Required proof
+
+```txt
+near, mid, far and terrain-tint thresholds are exercised at exact boundaries
+patch LOD is selected from camera distance, not grass density
+off-frustum patches are absent from the committed visible set
+far and terrain-tint tiers are reachable
+instance and card budgets remain bounded during camera traversal
+quality changes produce explicit grass-plan revisions
+stale camera or surface observations cannot commit
+path suppression remains intact after LOD selection
+browser, headless observation and renderer diagnostics agree
+the first visible frame cites the committed grass visible-set revision
+deployed Pages traversal proves bounded grass work
 ```
 
 ## Ordered safe ledges
@@ -344,10 +333,28 @@ reset creates a new progression epoch and rejects predecessor commands
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 7b. Adaptive Quality and Performance Budget Authority
+7c. Grass Visibility and LOD Authority
 8. Interaction Command and Objective Progression Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 9a. Deterministic Replay Validation Authority
 ```
 
-Documentation only. No runtime source, package, rendering or deployment behavior changed.
+## Validation
+
+```txt
+runtime source changed: no
+grass source changed: no
+renderer source changed: no
+package scripts changed: no
+dependencies changed: no
+render output changed: no
+deployment changed: no
+branch created: no
+pull request created: no
+npm run check: not run
+grass distance fixtures: unavailable
+grass frustum fixtures: unavailable
+grass budget fixtures: unavailable
+browser/Pages traversal smoke: unavailable
+```

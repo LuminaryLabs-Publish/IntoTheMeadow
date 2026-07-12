@@ -2,75 +2,93 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T02-38-23-04-00`
+**Last aligned:** `2026-07-12T04-11-54-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a persistent WebGL renderer, a browser editor bridge and a Node headless-editor environment.
+`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a persistent WebGL renderer, browser/editor surfaces and a descriptor-driven grass stack.
 
-This pass isolates the missing interaction and progression runtime. Authored content defines a path objective, a tree-inspection objective, two interaction targets and three story beats, but the game tick only increments `frame` and records `lastTick`. No browser, public-host or editor command can move the player, advance path progress, inspect the tree, complete an objective or trigger the later story beats.
+This pass isolates grass visibility and LOD authority. A four-tier distance policy is declared, but the active grass pipeline chooses near or mid batches from density, retains every instance, expands the field into one static CPU mesh and never consumes camera distance or frustum visibility.
 
 ## Plan ledger
 
-**Goal:** make authored movement, path, inspection, objective and story data executable through one admitted command and atomic progression transaction whose result reaches the first visible frame.
+**Goal:** make grass work proportional to the visible camera region through one revisioned patch-admission, LOD-selection and draw-plan transaction whose result reaches diagnostics and the first visible frame.
 
 - [x] Compare the complete accessible Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm all nine eligible repositories have a central ledger and root `.agent` state.
-- [x] Skip `TheOpenAbove` because its repo-local audit had advanced beyond its stale central timestamp during the same window.
-- [x] Select only `IntoTheMeadow` as the oldest stable eligible repository.
-- [x] Read `AGENTS.md`, authored interaction/objective/story content, game state, game construction, web host, public host, editor bridge and current checks.
-- [x] Identify the interaction loop, all domains, all 44 declared kits and their services.
-- [x] Define command admission, path sampling, inspection, atomic objective/story progression and visible-frame proof.
+- [x] Confirm all nine eligible repositories have central ledgers and root `.agent` state.
+- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
+- [x] Read `AGENTS.md`, the render contract, grass kits, enhancer, CPU mesh builder, web host and smoke tests.
+- [x] Identify the interaction loop, all domains, all 44 declared kits and every offered service.
+- [x] Trace density, batch selection, patches, draw groups, CPU expansion, cache behavior and diagnostics.
+- [x] Define distance/frustum admission, budgets, typed results and visible-frame proof.
 - [x] Add timestamped architecture and system-specific audits.
 - [x] Refresh all required root `.agent` files and the kit registry.
-- [ ] Runtime implementation and executable progression fixtures remain future work.
+- [ ] Runtime implementation and executable grass-visibility fixtures remain future work.
+
+## Selection
+
+```txt
+accessible Publish repositories: 10
+eligible non-Cavalry repositories: 9
+new or central-ledger-missing eligible repositories: 0
+root-.agent-missing eligible repositories: 0
+
+IntoTheMeadow      2026-07-12T02-38-23-04-00 selected oldest
+HorrorCorridor     2026-07-12T02-49-19-04-00
+PhantomCommand     2026-07-12T03-00-46-04-00
+ZombieOrchard      2026-07-12T03-11-51-04-00
+TheUnmappedHouse   2026-07-12T03-21-27-04-00
+AetherVale         2026-07-12T03-28-44-04-00
+MyCozyIsland       2026-07-12T03-39-52-04-00
+PrehistoricRush    2026-07-12T03-51-15-04-00
+TheOpenAbove       2026-07-12T04-00-32-04-00
+TheCavalryOfRome   excluded
+```
+
+Only `LuminaryLabs-Publish/IntoTheMeadow` was selected.
 
 ## Current interaction loop
 
 ```txt
-browser boot
-  -> load external meadow provider
-  -> install 43 local DSK descriptors
-  -> create authored arrival-meadow content
-  -> create immutable initial game state
-  -> expose raw GameHost and editor read/tick/reset capabilities
-  -> start RAF
+startup
+  -> load commit-pinned meadow provider
+  -> install 43 local DSK and kit descriptors
+  -> create one static meadow source plan
+  -> create density texture, grass archetypes and near/mid/far batches
+  -> create patches and assign each instance a batch from density
+  -> group every instance into static draw groups
+  -> cache the enhanced topology
+  -> build one CPU mesh and upload WebGL buffers
 
-runtime frame
-  -> game.tick({ dt: 1/60, time: RAF absolute time })
-  -> advanceGameState increments frame only
-  -> player remains at the initial position
-  -> pathProgress remains 0
-  -> active objective remains walk-the-path
-  -> only arrival story beat remains committed
-  -> static meadow plan is enhanced and rendered
-
-normal interaction
-  -> no keyboard/pointer/touch movement adapter
-  -> no path-progress command
-  -> no inspect command
-  -> no objective transition
-  -> no story transition
+frame
+  -> tick game with fixed 1/60 delta
+  -> retrieve the same source topology with updated time
+  -> enhancer returns the cached grass system
+  -> no camera position enters grass selection
+  -> mesh/render path retains every grass draw-group instance
+  -> debug reports total instances and total vertices
+  -> render the full static grass field
 ```
 
 ## Main finding
 
 ```txt
-authored objectives: 2
-authored interaction targets: 2
-authored story beats: 3
-runtime movement commands: 0
-runtime path-progress commands: 0
-runtime inspect commands: 0
-objective completion transitions: 0
-story trigger transitions: 0
-browser interaction adapters: 0
-editor progression capabilities: 0
-visible progression-frame receipts: 0
+declared near tier: <= 32
+declared mid tier: <= 72
+declared far tier: <= 128
+declared terrain-tint tier: <= 220
+
+camera-distance tier selection in runtime: absent
+frustum patch admission: absent
+visible-set revision: absent
+runtime far-tier selection: absent
+runtime terrain-tint transition: absent
+instance/card budget result: absent
+visible grass-frame receipt: absent
 ```
 
-The content census and DSK declarations are structurally valid, but they are not runtime consumption proof. `advanceGameState()` never reads an action, target, player movement or progression rule.
+Density controls near-versus-mid batch assignment. Camera distance does not. The renderer expands every draw-group instance into the persistent CPU mesh, so the declared LOD policy is currently descriptive rather than authoritative.
 
 ## Domains in use
 
@@ -79,18 +97,21 @@ browser shell, loading and visible failure projection
 external provider loading, validation and fallback
 DSK declaration, registry validation and install snapshots
 game manifest, immutable state, tick, reset, snapshot and diagnostics
-player state, movement profile and terrain contact declarations
-input maps, device bindings and normalization declarations
-interaction targets, affordances and inspect-state declarations
-path corridor and path-progress declarations
-objective model, flow, completion ledger and feedback declarations
-story beats, dialogue and sequence-runner declarations
-browser public host and editor capability bridge
-runtime lifecycle, RAF clock and reset
-terrain, path, grass, trees, wind, atmosphere and scatter
-render-plan enhancement, CPU mesh construction and WebGL rendering
-committed state, progression and visible-frame observation
-checks, headless tools, build and Pages deployment
+runtime lifecycle, RAF clock and reset epoch
+camera descriptors and browser view observation
+terrain, path and terrain sampling
+grass density texture generation and path suppression
+grass archetype, static batch and patch placement
+grass draw-group construction and wind descriptors
+declared grass distance LOD policy
+CPU grass mesh expansion and WebGL buffer ownership
+grass visible-set, frustum and card-budget authority
+player, input, interaction, objective, story and persistence declarations
+flowers, rocks, ground cover, trees, atmosphere and scatter
+render-plan topology, post processing and WebGL rendering
+committed draw plan and visible-frame observation
+validation, headless tools, build and Pages deployment
+DSK implementation, dependency, consumption and retirement truth
 ```
 
 ## Kits and services
@@ -99,60 +120,56 @@ checks, headless tools, build and Pages deployment
 external declared kits: 1
 local declared kits: 43
 total declared kits: 44
+grass-specific implemented kits: 11
 ```
 
-The full per-kit service map is in `.agent/current-audit.md` and `.agent/kit-registry.json`. Primary services cover deterministic meadow generation, DSK registration, terrain/path/grass/world descriptors, player/input/interaction/objective/story declarations, render-plan enhancement, WebGL rendering, diagnostics, editor surfaces and Pages deployment.
+The complete per-kit service map is in `.agent/current-audit.md` and `.agent/kit-registry.json`.
 
 ## Required parent domain
 
 ```txt
-meadow-interaction-objective-progression-authority-domain
+meadow-grass-visibility-lod-authority-domain
 ```
 
 Core composition:
 
 ```txt
-interaction-command-schema-kit
-interaction-command-id-kit
-interaction-sequence-kit
-interaction-target-registry-kit
-player-movement-command-kit
-path-progress-sampler-kit
-path-progress-result-kit
-inspect-command-kit
-interaction-admission-kit
-objective-rule-kit
-objective-transition-kit
-completion-ledger-kit
-story-trigger-kit
-story-transition-kit
-progression-commit-kit
-progression-result-kit
-browser-interaction-adapter-kit
-editor-interaction-capability-kit
-progression-observation-kit
-progression-frame-ack-kit
-progression-journal-kit
-path-progress-fixture-kit
-inspect-objective-fixture-kit
-browser-editor-progression-parity-fixture-kit
-visible-progression-frame-smoke-kit
+grass-view-observation-kit
+grass-camera-revision-kit
+grass-patch-bounds-kit
+grass-patch-distance-kit
+grass-lod-selection-kit
+grass-frustum-admission-kit
+grass-visible-set-kit
+grass-visible-set-revision-kit
+grass-instance-budget-kit
+grass-card-budget-kit
+grass-terrain-tint-transition-kit
+grass-draw-plan-kit
+grass-draw-plan-result-kit
+stale-grass-visibility-rejection-kit
+grass-visibility-observation-kit
+grass-visibility-journal-kit
+grass-visible-frame-ack-kit
+grass-lod-distance-fixture-kit
+grass-frustum-fixture-kit
+grass-budget-fixture-kit
+browser-grass-traversal-smoke-kit
 ```
 
 ## Required transaction
 
 ```txt
-sequenced command
-  -> session, scene and player admission
-  -> finite payload and target validation
-  -> movement or inspection candidate
-  -> path/target spatial evidence
-  -> objective rule evaluation
-  -> story trigger evaluation
-  -> atomic player + progression + event commit
-  -> typed ProgressionResult
-  -> committed snapshot/read model
-  -> first visible frame acknowledgement
+camera, surface and frame observation
+  -> validate runtime session, context and camera revision
+  -> derive patch bounds, distance and frustum evidence
+  -> select near, mid, far or terrain-tint through one policy
+  -> enforce instance and card budgets
+  -> build an immutable grass visible-set and draw plan
+  -> commit one visible-set revision and typed result
+  -> update render resources without stale-plan mutation
+  -> render one frame
+  -> publish grass diagnostics and visible-frame acknowledgement
 ```
 
 ## Ordered implementation gates
@@ -169,6 +186,7 @@ sequenced command
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 7b. Adaptive Quality and Performance Budget Authority
+7c. Grass Visibility and LOD Authority
 8. Interaction Command and Objective Progression Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
@@ -178,14 +196,14 @@ sequenced command
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-12T02-38-23-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T02-38-23-04-00.md
-.agent/architecture-audit/2026-07-12T02-38-23-04-00-interaction-objective-progression-dsk-map.md
-.agent/render-audit/2026-07-12T02-38-23-04-00-progression-state-visible-frame-correlation-gap.md
-.agent/gameplay-audit/2026-07-12T02-38-23-04-00-authored-objectives-unreachable-loop.md
-.agent/interaction-audit/2026-07-12T02-38-23-04-00-movement-path-inspect-command-admission-map.md
-.agent/progression-audit/2026-07-12T02-38-23-04-00-atomic-objective-story-transition-contract.md
-.agent/deploy-audit/2026-07-12T02-38-23-04-00-progression-fixture-gate.md
+.agent/trackers/2026-07-12T04-11-54-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T04-11-54-04-00.md
+.agent/architecture-audit/2026-07-12T04-11-54-04-00-grass-visibility-lod-dsk-map.md
+.agent/render-audit/2026-07-12T04-11-54-04-00-static-grass-mesh-camera-lod-gap.md
+.agent/gameplay-audit/2026-07-12T04-11-54-04-00-camera-traversal-grass-cost-loop.md
+.agent/interaction-audit/2026-07-12T04-11-54-04-00-camera-observation-grass-plan-result-map.md
+.agent/grass-system-audit/2026-07-12T04-11-54-04-00-distance-frustum-budget-contract.md
+.agent/deploy-audit/2026-07-12T04-11-54-04-00-grass-lod-visibility-fixture-gate.md
 ```
 
-Authored counts are not gameplay proof. Completion requires reachable commands, authoritative spatial evidence, atomic objective/story commits, browser/editor parity and a visible frame citing the accepted progression result.
+A declared LOD table is not runtime proof. Completion requires camera-derived patch admission, reachable far/tint tiers, bounded work, typed draw-plan results and a visible frame citing the committed grass visible-set revision.

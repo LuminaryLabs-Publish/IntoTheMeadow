@@ -1,111 +1,122 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T09-08-17-04-00`
+**Updated:** `2026-07-12T11-29-40-04-00`
 
 ## Summary
 
-Implement one interaction/objective progression authority after runtime-session, capability and committed-frame foundations. Keep browser and editor inputs as adapters over the same command/result contracts.
+Implement WebGL program-interface admission after context, precision and compile/link foundations. Keep the existing renderer and mesh builder as owners; add reflection, schema comparison, generation fencing and frame proof rather than a parallel renderer.
 
 ## Plan ledger
 
-**Goal:** make the authored arrival sequence playable without adding direct state mutation to RAF, renderer, GameHost or editor code.
+**Goal:** prevent an incompatible linked program from reaching buffer binding, uniform updates or draw submission, while preserving the last accepted program until a complete replacement is admitted.
 
-- [ ] Define runtime session, reset generation and progression revision.
-- [ ] Define canonical `InteractionCommand` and command IDs.
-- [ ] Normalize browser/editor/controller actions through one action map.
-- [ ] Build a revisioned interaction-target registry.
-- [ ] Derive immutable path-progress and inspect evidence.
-- [ ] Add typed interaction rejection reasons.
-- [ ] Implement objective-definition registry and evaluator.
-- [ ] Implement deterministic successor-objective policy.
-- [ ] Add idempotent completion ledger and receipts.
-- [ ] Parse/evaluate story triggers against the same evidence.
-- [ ] Deduplicate story-beat commits.
-- [ ] Prepare feedback/UI state before mutation.
-- [ ] Atomically commit player, inspect, objective, story and feedback state.
-- [ ] Preserve/restore predecessor state on failure.
-- [ ] Reject duplicate, stale-session, stale-reset and stale-revision commands.
-- [ ] Replace raw public mutation with explicit capabilities.
-- [ ] Add editor `interaction.dispatch` and progression readback capabilities.
-- [ ] Include progression results/revisions in snapshots and diagnostics.
-- [ ] Publish bounded observations and journals.
-- [ ] Correlate the first visible feedback frame.
-- [ ] Add deterministic, browser and Pages fixtures.
+- [ ] Define the canonical shader-interface manifest and revision.
+- [ ] Enumerate five required attributes with exact GL types and sizes.
+- [ ] Enumerate twelve required uniforms with exact GL types and sizes.
+- [ ] Reflect `ACTIVE_ATTRIBUTES` through `getActiveAttrib()`.
+- [ ] Reflect `ACTIVE_UNIFORMS` through `getActiveUniform()`.
+- [ ] Resolve and validate every required attribute location.
+- [ ] Resolve and validate every required uniform location.
+- [ ] Classify optimized-out required uniforms explicitly.
+- [ ] Observe WebGL program resource limits and current usage.
+- [ ] Define the CPU mesh-layout schema and fingerprint.
+- [ ] Compare mesh semantics/component counts with admitted attributes.
+- [ ] Define uniform-payload schemas and update operations.
+- [ ] Reject non-finite or shape-incompatible uniform batches.
+- [ ] Produce a detached `ProgramInterfaceResult`.
+- [ ] Allocate context-bound program and interface generations.
+- [ ] Install accepted candidates atomically.
+- [ ] Preserve the predecessor after candidate rejection.
+- [ ] Reject stale context/program/interface draw work.
+- [ ] Publish interface fingerprints in renderer snapshots.
+- [ ] Add bounded interface observations and journal entries.
+- [ ] Correlate the first visible frame with the accepted interface.
+- [ ] Add deterministic missing-symbol and type-mismatch fixtures.
+- [ ] Add WebGL1/WebGL2 browser and Pages smokes.
 
-## Required command
+## Required manifest
 
 ```txt
-InteractionCommand {
-  commandId
-  runtimeSessionId
-  resetGeneration
-  actorId
-  action
-  targetId
-  payload
-  source
-  inputSequence
-  expectedTargetRevision
-  expectedProgressionRevision
-  submittedAt
-}
+attributes:
+  aPosition       FLOAT_VEC3
+  aNormal         FLOAT_VEC3
+  aColor          FLOAT_VEC3
+  aOutline        FLOAT
+  aWind           FLOAT_VEC2
+
+uniforms:
+  uViewProjection FLOAT_MAT4
+  uTime           FLOAT
+  uWindDirection  FLOAT_VEC2
+  uWindStrength   FLOAT
+  uWindGust       FLOAT
+  uOutlinePass    FLOAT
+  uOutlineWidth   FLOAT
+  uLightDirection FLOAT_VEC3
+  uRimColor       FLOAT_VEC3
+  uOutlineColor   FLOAT_VEC3
+  uFogColor       FLOAT_VEC3
+  uRimStrength    FLOAT
 ```
 
-## Required aggregate result
+## Required result
 
 ```txt
-ProgressionTransactionResult {
+ProgramInterfaceResult {
   status
   reason
-  commandId
-  interactionResult
-  objectiveResult
-  storyResult
-  feedbackResult
-  predecessorProgressionRevision
-  committedProgressionRevision
-  rollbackResult
-  firstVisibleFrameId
+  contextGeneration
+  candidateProgramId
+  programGeneration
+  manifestRevision
+  activeAttributes
+  activeUniforms
+  resourceProfile
+  meshLayoutFingerprint
+  uniformPayloadFingerprint
+  interfaceFingerprint
+  failures
 }
 ```
 
-## Required state
+## Required statuses
 
 ```txt
-progression {
-  revision
-  activeObjectiveId
-  completedObjectiveIds
-  completionLedgerRevision
-  storyBeatIds
-  storyRevision
-  inspectState
-  feedbackRevision
-}
+Accepted
+RejectedMissingAttribute
+RejectedMissingUniform
+RejectedAttributeTypeMismatch
+RejectedUniformTypeMismatch
+RejectedResourceBudget
+RejectedStaleContext
+Retired
 ```
 
 ## Acceptance matrix
 
 ```txt
-path progress 0.24
-path progress 0.25
-path progress 0.34
-path progress 0.35
-inspect unknown target
-inspect focal-tree outside range
-inspect focal-tree inside range
-duplicate command ID
-out-of-order input sequence
-stale target revision
-stale progression revision
-reset-generation rejection
-objective/story atomic commit
-feedback prepare failure rollback
-browser/editor parity
-snapshot/result parity
-first visible progression-frame receipt
-local browser and deployed Pages smoke
+complete accepted interface
+missing aPosition
+missing aWind
+missing uTime
+missing uOutlinePass
+optimized-out required uniform
+attribute vector-width mismatch
+uniform scalar/vector mismatch
+uniform array-size mismatch
+mesh component-count mismatch
+uniform payload shape mismatch
+non-finite uniform payload
+resource limit exceeded
+candidate rejection preserves predecessor
+stale context generation
+stale program generation
+stale interface fingerprint
+WebGL1 accepted interface
+WebGL2 accepted interface
+first visible frame interface receipt
+local and deployed browser parity
 ```
 
 ## Ordered architecture queue
@@ -117,13 +128,20 @@ local browser and deployed Pages smoke
 3. Headless Workspace Path Authority and Filesystem Containment
 4. Runtime Clock and Step Admission Authority
 5. Source Provider Authority
-6. Render Topology / Context / Surface / Precision Authorities
-7. Committed Frame Observation and Failure Recovery
-7a. Adaptive Quality / Grass LOD / Audio Authorities
+6. Render Topology Identity Authority
+6a. WebGL Context Recovery Authority
+6b. Render Surface Resolution Authority
+6c. Shader Precision Admission Authority
+6d. WebGL Program Interface Admission Authority
+7. Committed Frame Observation Authority
+7a. Fatal Runtime Failure Recovery Authority
+7b. Adaptive Quality and Performance Budget Authority
+7c. Grass Visibility and LOD Authority
+7d. Audio Activation and Lifecycle Authority
 8. Interaction Command and Objective Progression Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not implement threshold checks as free-running frame effects. Evaluate objectives and story beats only from admitted command evidence and commit all resulting state under one progression revision.
+Do not infer interface compatibility from successful linking. Reflect the active program, validate it against exact host schemas, and install it only after one accepted result.

@@ -1,27 +1,23 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T13-38-52-04-00`
+**Updated:** `2026-07-12T13-54-00-04-00`
 
 ## Summary
 
-This documentation-only audit verifies the current grass density, batch, patch, grouping, LOD-policy, static-mesh and WebGL draw path. It proves that camera distance and frustum containment do not currently select the visible grass set. It does not prove a runtime performance regression, visual defect severity, camera-based LOD correctness or deployed behavior.
+This documentation-only reconciliation verifies that the root `.agent` entrypoints, machine registry and central ledger now describe the same grass visibility/LOD authority. The source-backed audit proves that camera distance and frustum containment do not currently select the visible grass set. It does not prove runtime performance, corrected LOD, browser parity or deployed readiness.
 
 ## Plan ledger
 
-**Goal:** separate source-backed grass visibility findings from unimplemented and unexecuted runtime proof.
+**Goal:** separate verified source and documentation state from unimplemented and unexecuted runtime proof.
 
 - [x] Compare the Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Select only `IntoTheMeadow`.
-- [x] Inspect grass density and patch placement.
-- [x] Inspect static batch and draw-group creation.
-- [x] Inspect declared LOD policy and call sites.
-- [x] Inspect topology, CPU mesh creation and camera use.
-- [x] Inspect outline/color draw submission and renderer snapshots.
-- [x] Inspect existing Node/browser proof surfaces.
+- [x] Verify all required root `.agent` files exist.
+- [x] Verify the new tracker and timestamped audit family exist.
 - [x] Preserve all 44 kits and service inventory.
-- [x] Define grass visibility contracts and fixture gates.
+- [x] Reconcile current status, timestamp, parent authority and validation boundary.
 - [x] Change documentation only.
 - [ ] Execute visibility/LOD fixtures after implementation exists.
 
@@ -39,29 +35,33 @@ LOD policy tiers:
   far <= 128
   terrain-tint <= 220
 
-grass-lod-policy-kit.pick(distance) exists: yes
-active call to pick(distance): no
-
-static batches created:
-  near
-  mid
-  far
-
-placement-selected batches:
-  near when density > 0.55
-  mid otherwise
-  far never
-  terrain-tint unavailable
-
+active call to grass-lod-policy-kit.pick(distance): no
+placement selects near when density > 0.55
+placement selects mid otherwise
+far selected by placement: no
+terrain-tint representation: absent
 draw groups include all patch instances
 CPU mesh includes all grass draw groups
 camera is read after mesh selection
-renderer draws mesh.vertexCount twice
+renderer draws complete mesh twice
 ```
 
-## Existing proof
+## Proven documentation state
 
-Current checks can prove, when executed:
+```txt
+START_HERE timestamp/status aligned: yes
+current-audit timestamp/status aligned: yes
+next-steps updated: yes
+known-gaps updated: yes
+validation updated: yes
+kit-registry current audit paths aligned: yes
+new tracker and turn ledger present: yes
+architecture/render/gameplay/interaction/grass/central-sync/deploy audits present: yes
+central ledger update requested in this run: yes
+internal change log requested in this run: yes
+```
+
+## Existing proof can establish, when run
 
 ```txt
 required files exist
@@ -74,24 +74,22 @@ CPU mesh arrays are aligned
 static topology and mesh identity are stable across time-only plans
 renderer cache behavior under tested static plans
 scene generation determinism
-browser page/editor/gpu markers and screenshot size
+browser page/editor/GPU markers and screenshot size
 ```
 
-Current checks cannot prove:
+## Existing proof cannot establish
 
 ```txt
 distance-driven near/mid/far selection
 terrain-tint representation
 frustum culling
-camera revision admission
-viewport revision admission
-hysteresis
-camera-teleport handling
-quality-budget enforcement
+camera and viewport revision admission
+hysteresis and camera teleport handling
+quality and render-budget enforcement
 per-tier visible counts
-stale visibility rejection
 candidate failure preserving predecessor
-first visible grass-visibility frame
+stale visibility rejection
+first visible grass frame
 Pages visibility/LOD behavior
 ```
 
@@ -119,58 +117,31 @@ grass visibility fixtures available: no
 ## Required deterministic fixtures
 
 ```txt
-fixture:grass-patch-bounds
-fixture:grass-frustum-inside
-fixture:grass-frustum-intersection
-fixture:grass-frustum-outside
-fixture:grass-distance-near
-fixture:grass-distance-mid
-fixture:grass-distance-far
-fixture:grass-distance-terrain-tint
-fixture:grass-distance-culled
-fixture:grass-threshold-hysteresis
-fixture:grass-camera-teleport
-fixture:grass-viewport-revision
-fixture:grass-topology-revision
-fixture:grass-quality-reduction
-fixture:grass-vertex-budget
-fixture:grass-draw-budget
-fixture:grass-candidate-failure-predecessor
-fixture:grass-stale-camera-result
-fixture:grass-stale-topology-result
-fixture:first-visible-grass-visibility-frame
+patch bounds
+frustum inside/intersection/outside
+distance near/mid/far/terrain-tint/culled
+threshold hysteresis
+camera teleport
+viewport/topology/policy revision changes
+quality, vertex and draw budgets
+candidate failure preserves predecessor
+stale camera/viewport/topology result
+first visible grass frame
 ```
 
 ## Required browser matrix
 
 ```txt
-context: WebGL2 and WebGL1 fallback
-viewport: desktop, tablet and narrow mobile
-pixel ratio: 1 and 2
-camera: default, near, mid, far, tint-only, outside field
-motion: slow threshold crossing, rapid orbit, teleport
-quality: high, medium, low, emergency
-lifecycle: initial, resize, stop/start, context loss/restore
-host: local static server and deployed GitHub Pages
-```
-
-## Required browser and Pages smoke
-
-```txt
-open fresh session
-capture camera, viewport, topology and policy revisions
-capture tested/visible/culled patch counts
-move camera through every distance tier
-verify far and terrain-tint tiers become reachable
-move camera so patches leave the frustum
-verify culled patches stop contributing blade vertices
-oscillate around thresholds and verify hysteresis
-reduce quality and verify budgets
-verify renderer snapshot carries visibility revision
-capture first visible frame with the same revision
-repeat against deployed GitHub Pages
+WebGL2 and WebGL1 fallback
+DPR 1 and 2
+desktop, tablet and narrow viewport
+default, near, mid, far, tint-only and outside-field cameras
+slow threshold crossing, rapid orbit and teleport
+high, medium, low and emergency quality
+initial, resize, stop/start and context restore
+local static host and deployed GitHub Pages
 ```
 
 ## Claim boundary
 
-The audit proves that density, not camera distance, currently selects near/mid grass batches; far and terrain-tint are unreachable from placement; all grass enters one static mesh; and the renderer draws the complete mesh. It does not prove current frame cost, user-visible severity, corrected LOD behavior, browser parity or deployment readiness.
+The audit proves the current density-selected batch and static full-mesh draw behavior and reconciles documentation state. It does not claim a performance regression, visual severity, corrected LOD behavior, browser parity or deployment readiness.

@@ -1,92 +1,82 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T05-39-42-04-00`
+**Updated:** `2026-07-12T07-19-47-04-00`
+
+## Summary
+
+This documentation-only audit verifies the current static performance policy, host frame loop, enhancer cache admission and physical renderer behavior. It does not prove measured performance, adaptive decisions, physical-policy parity, rollback or visible-frame correlation.
 
 ## Plan ledger
 
-**Goal:** distinguish a declared audio DSK from executable proof of trusted activation, versioned resources, playback, listener parity, lifecycle and cleanup.
+**Goal:** separate source-backed performance findings from unimplemented and unexecuted runtime, browser and Pages proof.
 
-- [x] Review the complete Publish inventory and central ledger.
+- [x] Compare the current Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Verify all eligible central records and root `.agent` states.
-- [x] Select only `IntoTheMeadow` from the oldest central entry.
-- [x] Preserve the newer repo-local shader precision audit.
-- [x] Inspect the audio DSK declaration, required-v0.1 registry, manifest, page shell, boot, game aggregate, web host, editor bridge and package scripts.
-- [x] Confirm no runtime audio owner or proof path exists.
-- [x] Document activation, resource, scheduling, listener, lifecycle, observation and deployment gates.
+- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
+- [x] Inspect DSK declarations, required-v0.1 registry and performance policy.
+- [x] Inspect web-host RAF, enhancer cache, game diagnostics and WebGL renderer.
+- [x] Confirm logical/physical quality mismatches.
+- [x] Preserve the complete 44-kit inventory and service map.
+- [x] Define adaptive-quality contracts and fixture gates.
 - [x] Change documentation only.
-- [ ] Execute audio fixtures after implementation exists.
-
-## Source inspection completed
-
-```txt
-local audio DSK declarations: 1
-declared audio services: 5
-required-v0.1 audio DSKs: 0
-audio manifest entries: 0
-visible audio activation controls: 0
-AudioContext owners: 0
-audio session/context/resource generations: 0
-ambient sources: 0
-spatial cue registries: 0
-listener pose observations: 0
-audio command/result types: 0
-audio snapshot/diagnostic fields: 0
-editor audio capabilities: 0
-audio fixtures and browser smokes: 0
-```
+- [ ] Execute performance fixtures after implementation exists.
 
 ## Proven from source
 
 ```txt
-meadow-audio-dsk declares ambient-bed, spatial-audio-cues, audio-state, audio-events and audio-validation
-meadow-audio-dsk is omitted from REQUIRED_V01_DSK_IDS and therefore resolves to planned
-game manifest contains route, renderer, editor and external provider data but no audio contract
-index.html has canvas, HUD and loading output but no audio activation/mute/volume control
-boot immediately starts the web host without retaining trusted gesture evidence
-game aggregate has no audio command, state, snapshot or event queue
-web host creates game, renderer, enhancer and editor bridge only
-RAF advances and renders visuals only
-editor bridge has no audio capability
-package check chain has no audio fixture or browser audio smoke
+meadow-performance-dsk is required-v0.1
+services are quality-profile, budget-policy, lod-policy, adaptive-scaling and performance-validation
+profiles are low, medium, high, ultra and auto
+default quality is high
+auto is a fixed profile
+web host supplies no runtime performance options to the enhancer
+web host measures no CPU or GPU frame duration
+web host maintains no rolling performance window
+terrain resolution is hard-coded to 96 x 124 during enhancement
+maxGrassInstances is calculated but not passed into the inspected grass construction path
+physical renderer always submits outline and color draws
+renderer snapshot contains no quality revision, budget or timing result
+enhancer cache admission is based on source topology key
+quality transition and first visible-frame results are absent
 ```
 
 ## Existing proof
 
-Current checks prove:
+Current checks can prove:
 
 ```txt
 required files exist
-local DSK descriptors expose five layers
-the audio DSK declaration is structurally valid as a planned descriptor
-render-plan and renderer structure remain valid
-deterministic scene and headless-editor checks run in Node
+DSK descriptors validate structurally
+render plans validate
+renderer topology caching works under tested static plans
+deterministic scene generation and editor commands pass when executed
 ```
 
-Current checks do not prove:
+Current checks cannot prove:
 
 ```txt
-trusted browser audio activation
-autoplay blocked-state handling
-AudioContext ownership and generation
-asset decode and stale-result fencing
-exact-once ambient playback
-spatial cue admission and voice budget
-listener pose parity
-mute and volume state
-visibility suspend/resume
-device interruption/recovery
-ordered disposal and restart leak freedom
-editor/diagnostic audio parity
-browser or Pages audible output
+CPU/GPU timing accuracy
+frame deadline classification
+adaptive downgrade or upgrade
+hysteresis or cooldown
+hidden-tab sampling policy
+manual/auto command parity
+logical/physical tier parity
+grass and terrain budget enforcement
+post-process physical-policy application
+quality-driven cache invalidation
+multi-consumer atomic commit
+rollback after partial failure
+first visible-frame quality correlation
+browser or Pages device performance
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
-audio source changed: no
+performance source changed: no
 renderer source changed: no
 package scripts changed: no
 dependencies changed: no
@@ -94,86 +84,56 @@ render output changed: no
 deployment changed: no
 branch created: no
 pull request created: no
+target branch: main
 npm run check executed: no
-audio fixtures available: no
-browser audio smoke available: no
-Pages audio smoke available: no
+performance fixtures available: no
+browser performance smoke available: no
+Pages performance smoke available: no
 ```
 
-## Required activation fixture
+## Required deterministic fixtures
 
 ```txt
-start in UNINITIALIZED
-assert no context before trusted gesture
-submit untrusted activation and reject
-submit trusted activation
-return READY, BLOCKED or FAILED with stable revision
-repeat same command and prove idempotence
-race two activations and prove one committed generation
+fixture:performance-sample-normalization
+fixture:performance-window-percentiles
+fixture:performance-budget-policy
+fixture:quality-hysteresis
+fixture:quality-cooldown
+fixture:quality-capability-envelope
+fixture:quality-manual-auto-parity
+fixture:quality-topology-impact
+fixture:quality-consumer-prepare
+fixture:quality-rollback
+fixture:quality-stale-plan
+fixture:quality-frame-correlation
 ```
 
-## Required resource-generation fixture
+## Required browser matrix
 
 ```txt
-stage manifest and decode work for generation N
-start candidate generation N+1 or dispose session
-complete predecessor decode late
-reject predecessor result without graph mutation
-prove committed resources match the active generation
-```
-
-## Required ambient and spatial fixture
-
-```txt
-activate one audio generation
-start ambient bed and prove exact-once source ownership
-submit valid and invalid spatial cue commands
-apply scene/source/cooldown/priority/voice-budget policy
-update listener pose from committed revision
-reject stale listener and cue results
-```
-
-## Required suspension and cleanup fixture
-
-```txt
-transition READY -> SUSPENDED -> READY
-verify documented visibility/pause policy
-stop and dispose the session
-assert zero active/scheduled sources
-assert buses/nodes are disconnected
-assert listener/device subscriptions are removed
-assert context is closed or terminally suspended by policy
-repeat stop/dispose and prove idempotence
-restart and prove no duplicate context, source or listener
+quality: low, medium, high, ultra, auto
+viewport: desktop, tablet, narrow mobile
+DPR: 1, 1.5, 2
+GPU timing: supported, unsupported
+visibility: visible, hidden, restored
+load: steady, transient spike, sustained overload, sustained headroom
 ```
 
 ## Required browser and Pages smoke
 
 ```txt
-open fresh page
-activate through visible keyboard/pointer reachable control
-capture activation result and audio revision
-prove ambient source and listener revision
-mute/unmute and adjust bounded volume
-hide/show page and verify policy
-stop/restart and inspect active leases
-dispose and prove cleanup
-repeat against deployed GitHub Pages URL
+open fresh session
+capture capability and predecessor-quality revisions
+collect the minimum admitted performance window
+trigger one stable downgrade or upgrade
+capture command and consumer results
+verify topology rebuild/no-rebuild decision
+verify physical grass/terrain/post settings
+capture first visible frame citing quality, topology and surface revisions
+repeat against deployed GitHub Pages
+verify no unresolved rollback or resource leases
 ```
 
-## Future commands
+## Claim boundary
 
-```bash
-npm run fixture:audio-activation
-npm run fixture:audio-resources
-npm run fixture:audio-spatial
-npm run fixture:audio-suspend-resume
-npm run fixture:audio-cleanup
-npm run smoke:audio-browser
-npm run smoke:audio-pages
-npm run check
-```
-
-## Completion boundary
-
-Do not claim audio support because the DSK validates or because a browser can instantiate Web Audio. Completion requires admitted gesture evidence, typed state, versioned resources, exact-once playback, listener parity, deterministic scheduling policy, cleanup and deployed browser proof.
+The audit proves how the inspected source currently represents and applies performance configuration. It does not prove actual frame rate, device cost, stable adaptation, visual parity or deployment readiness.

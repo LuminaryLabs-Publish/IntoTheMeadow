@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T20-38-07-04-00`
+**Updated:** `2026-07-11T22-08-13-04-00`
 
 ## Selection state
 
@@ -10,58 +10,94 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-AetherVale skipped because repo-local audit state was newer than its central ledger
+AetherVale skipped because active repo-local lifecycle work was newer than its central ledger
 IntoTheMeadow selected as the oldest stable eligible repository
 only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## Current runtime clock and step gaps
+## Current render-surface gaps
 
-### RAF time and delta disagree
+### Live browser values mutate the drawing buffer directly
 
-The browser uses absolute RAF page time but always passes `dt = 1/60`. State and presentation therefore do not share one elapsed-time model when callbacks are delayed, throttled or resumed.
+`renderer.render()` calls `resize()` every frame. The function samples live canvas CSS dimensions and `devicePixelRatio`, then immediately assigns `canvas.width` and `canvas.height` when the requested size differs.
 
-### Stop/start injects wall-clock pause into presentation
+### DPR is a hard-coded clamp, not a complete policy
 
-`stop()` only blocks callbacks. The next `start()` schedules a RAF whose timestamp includes the entire stopped interval, so wind phase jumps even though the game advances one nominal state step.
+The current rule clamps DPR from 1 through 2. It has no policy identity, revision, quality tier, minimum device support rule, total pixel budget or relationship to `meadow-performance-dsk`.
 
-### Browser reset does not reset render time
+### WebGL surface capabilities are not admitted
 
-`runtime.reset` recreates game state but does not establish a new clock origin or reset epoch. The next browser frame can pair frame-zero-like state with a large absolute render time.
-
-### Browser editor bypasses clock ownership
-
-`runtime.tick` directly accepts caller-provided `dt` and `time`. It has no finite-value validation, monotonicity check, session/epoch fence, expected revision, step sequence or work budget.
-
-### Node headless uses an independent time model
-
-The Node environment accumulates caller delta in a private variable and resets it to zero. It is not the same clock used by the browser route and cannot prove browser/headless parity.
-
-### Multi-step work is unbounded
-
-Node `runtime.tick` loops over caller-controlled `ticks`. There is no integer validation, maximum tick count, total delta limit, execution budget or partial-result classification.
-
-### Step results and journals are absent
-
-There is no typed accepted/clamped/deferred/rejected result, clock revision, step ID, reset epoch, source adapter ID or bounded journal row.
-
-### Visible-frame correlation is absent
-
-State `lastTick`, render-plan time, shader `uTime`, renderer snapshot and canvas frame do not cite one shared clock revision or step identity.
-
-## Missing clock fixtures
+The renderer does not query or record:
 
 ```txt
-RAF rate parity fixture
-large callback delay fixture
-hidden-tab throttle fixture
-stop/resume rebase fixture
-browser reset epoch fixture
-browser editor stale-step fixture
-non-finite and negative delta fixture
-headless multi-step budget fixture
-browser/headless parity fixture
-clock-to-render-frame correlation fixture
+MAX_VIEWPORT_DIMS
+MAX_RENDERBUFFER_SIZE
+gl.drawingBufferWidth
+gl.drawingBufferHeight
+browser clamping or allocation mismatch
+```
+
+### Large requested surfaces are unbounded by total pixels
+
+A 3840 by 2160 viewport at DPR 2 requests 7680 by 4320, or 33,177,600 pixels. Antialiasing, depth and browser implementation overhead are additional and unclassified.
+
+### Resize commands and revisions are absent
+
+```txt
+viewport observation ID: absent
+resize command ID: absent
+resize sequence/generation: absent
+surface ID: absent
+surface revision: absent
+context-generation fence: absent
+stale resize rejection: absent
+rapid-resize coalescing: absent
+```
+
+### Fallback and rollback are absent
+
+There is no lower-resolution fallback sequence, typed allocation failure, predecessor-surface restoration policy, last-known-good frame policy or cold-rebuild routing.
+
+### Renderer snapshots omit surface state
+
+Renderer snapshots report topology, mesh counts and cache status but not CSS size, requested/applied DPR, actual drawing-buffer size, aspect, quality tier, surface revision, context generation or committed frame.
+
+### Viewport and capture observations are not correlated
+
+`browser.getViewport` reads live browser and canvas values. `renderer.capture` reads the current canvas and independently attaches the latest renderer snapshot. Neither returns a surface revision or frame freshness result.
+
+### Existing browser proof is one configuration
+
+The observation script fixes 1440 by 900 at DPR 1 and checks screenshot byte size. It does not exercise resize, zoom, orientation, high DPR, hidden/zero-size layout, WebGL limits, fallback or capture parity.
+
+## Missing render-surface fixtures
+
+```txt
+resolution policy fixture
+WebGL capability fixture
+pixel-budget fallback fixture
+rapid resize coalescing fixture
+hidden and zero-size fixture
+actual drawing-buffer mismatch fixture
+stale context/surface revision fixture
+allocation failure fixture
+context loss during resize fixture
+capture freshness fixture
+visible-frame surface correlation fixture
+Pages resize and DPR smoke
+```
+
+## Retained runtime clock and step gaps
+
+```txt
+RAF absolute time and fixed dt disagree
+stop/start injects wall-clock pause into presentation
+browser reset does not establish a new clock origin
+browser editor bypasses clock admission
+Node headless uses an independent accumulated clock
+multi-step work is unbounded
+clock revisions, step results and journals are absent
+state, shader and frame clock correlation is absent
 ```
 
 ## Retained fatal-runtime recovery gaps
@@ -172,4 +208,4 @@ fatal candidate rollback and last-known-good frame ownership are absent
 
 ## Deployment risk
 
-A successful Pages frame can still combine a fixed nominal state delta with a wall-clock render phase. Pause, reset, browser editor calls and Node headless calls can produce different time histories without any typed rejection or visible proof. A moving wind shader is not evidence of a valid simulation clock.
+A successful full-window screenshot can still hide an oversized, clamped, stale or uncorrelated drawing buffer. Do not claim responsive or high-DPI correctness until actual WebGL dimensions and one committed surface revision are visible through projection, renderer snapshot, capture and the first rendered frame.

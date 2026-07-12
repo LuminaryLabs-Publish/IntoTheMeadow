@@ -1,32 +1,32 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-12T13-38-52-04-00`  
-**Status:** `grass-visibility-lod-authority-audited`
+**Audit timestamp:** `2026-07-12T13-54-00-04-00`  
+**Status:** `grass-visibility-lod-central-reconciled`
 
 ## Summary
 
-IntoTheMeadow declares a four-tier grass LOD policy and constructs density-driven patches, reusable static batches and draw groups. The active CPU/WebGL path does not consume camera distance or frustum evidence when choosing grass representations.
+IntoTheMeadow declares near, mid, far and terrain-tint grass LOD tiers and constructs density-driven patches, reusable static batches and draw groups. The active CPU/WebGL path does not consume camera distance or frustum evidence when choosing representations.
 
-Placement permanently assigns near or mid batches from local density, far batches are never selected, terrain-tint has no batch representation, and all instances are flattened into one static mesh. The renderer computes the camera matrix after the mesh has already been selected and then draws every vertex in both outline and color passes. Repo-local documentation is updated; runtime behavior is unchanged.
+Placement permanently assigns near or mid batches from density, far batches are never selected, terrain-tint has no representation, and every instance is flattened into one static mesh. Camera matrices are derived after mesh selection and the renderer draws the complete mesh in outline and color passes.
+
+The repo-local technical audit was newer than central tracking. This run reconciles root entrypoints, machine registry, central ledger and change log without changing runtime behavior.
 
 ## Plan ledger
 
-**Goal:** establish one authoritative grass visibility transaction from camera observation through patch classification, tier continuity, budget admission, draw generation and first-visible-frame proof.
+**Goal:** preserve the complete repository breakdown while aligning one grass visibility authority from camera observation through tier continuity, budgets, draw generation and first-visible-frame proof.
 
-- [x] Compare the ten accessible Publish repositories with central tracking.
+- [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm nine eligible repositories have central-ledger and root `.agent` coverage.
-- [x] Detect unsynchronized `TheOpenAbove` documentation at `2026-07-12T13-29-56-04-00` and avoid concurrent modification.
-- [x] Select only `IntoTheMeadow` as the next-oldest stable repository.
-- [x] Inspect the grass density texture, archetypes, static batches, patch placement, draw grouping, LOD policy and debug services.
-- [x] Inspect render-plan topology, CPU mesh creation, renderer camera use, draw submission and tests.
-- [x] Preserve all 44 declared kits and every offered service.
-- [x] Define the parent authority, command/result model, observations and fixture gates.
+- [x] Confirm nine eligible repositories have central ledgers and root `.agent` state.
+- [x] Select only `IntoTheMeadow` because repo-local documentation was newer than central tracking.
+- [x] Reconcile the interaction loop and active domains.
+- [x] Preserve one external provider plus 43 local declarations and all offered services.
+- [x] Preserve the grass density, placement, LOD, mesh, render and proof findings.
 - [x] Add timestamped architecture and system audits.
-- [x] Change documentation only on `main`.
-- [x] Create no branch or pull request.
-- [ ] Implement and execute visibility/LOD authority later.
+- [x] Refresh root `.agent`, machine registry and central tracking.
+- [x] Push only to `main`; create no branch or pull request.
+- [ ] Implement and execute the authority later.
 
 ## Selection
 
@@ -37,9 +37,7 @@ new eligible repositories: 0
 central-ledger-missing eligible repositories: 0
 root-.agent-missing eligible repositories: 0
 
-TheOpenAbove       central 2026-07-12T11-15-16-04-00
-                   repo-local 2026-07-12T13-29-56-04-00, skipped
-IntoTheMeadow      2026-07-12T11-29-40-04-00 selected
+IntoTheMeadow      central 2026-07-12T11-29-40-04-00; repo-local 2026-07-12T13-38-52-04-00; selected
 PhantomCommand     2026-07-12T11-48-43-04-00
 PrehistoricRush    2026-07-12T12-08-05-04-00
 HorrorCorridor     2026-07-12T12-21-38-04-00
@@ -47,10 +45,11 @@ ZombieOrchard      2026-07-12T12-39-25-04-00
 MyCozyIsland       2026-07-12T12-58-08-04-00
 TheUnmappedHouse   2026-07-12T13-08-15-04-00
 AetherVale         2026-07-12T13-20-00-04-00
+TheOpenAbove       2026-07-12T13-29-56-04-00
 TheCavalryOfRome   excluded
 ```
 
-Only `LuminaryLabs-Publish/IntoTheMeadow` is modified in the Publish organization by this audit.
+Only `LuminaryLabs-Publish/IntoTheMeadow` was modified in the Publish organization.
 
 ## Complete interaction loop
 
@@ -60,99 +59,76 @@ page boot
   -> install 43 local declarations plus one external provider
   -> create immutable game and source render plan
   -> create performance, wind and post-process descriptors
-  -> create density texture, archetypes and near/mid/far static batches
-  -> create patches across the full area
-  -> select near or mid batch per instance from density
-  -> flatten patch instances into batch draw groups
-  -> attach the unused four-tier LOD policy
+  -> create grass density texture and clump archetypes
+  -> create near, mid and far static batches
+  -> create patches across the area
+  -> assign near or mid batch per instance from density
+  -> flatten patch instances into draw groups
+  -> attach four-tier LOD policy without consuming pick(distance)
   -> build one topology key and one complete CPU mesh
   -> create WebGL renderer and start RAF
 
 browser frame
   -> tick game
   -> reuse enhanced plan and static mesh
-  -> resize the canvas
-  -> derive view/projection matrices from camera
+  -> resize canvas and derive camera matrices
   -> upload time, wind, light and outline uniforms
-  -> submit the full vertex count for outline pass
-  -> submit the full vertex count for color pass
-  -> publish total descriptor and mesh counts
+  -> submit complete vertex count for outline
+  -> submit complete vertex count for color
+  -> publish aggregate descriptor, mesh and cache counts
   -> schedule successor RAF
 
 editor and proof
-  -> editor reads aggregate render snapshots and captures the canvas
-  -> render-plan smoke requires grass patches and draw groups
-  -> renderer smoke checks mesh size, array lengths and time-invariant topology
-  -> no fixture changes camera position, frustum, LOD tier or visible patch set
+  -> editor reads aggregate renderer snapshots and captures canvas
+  -> render-plan checks require patches, batches and draw groups
+  -> renderer checks validate mesh size, arrays and static topology
+  -> no fixture changes camera distance, frustum, tier or visible patch set
 ```
 
 ## Source-backed findings
 
-### Declared LOD policy
+### Declared policy
 
 ```txt
-near:         <= 32
-mid:          <= 72
-far:          <= 128
-terrain-tint: <= 220
+near <= 32
+mid <= 72
+far <= 128
+terrain-tint <= 220
 selection API: pick(distance)
+active calls to pick(distance): 0
 ```
 
-`createGrassLodPolicyKit()` defines these tiers, but no active source calls `pick()`.
-
-### Actual instance classification
+### Actual classification
 
 ```txt
-density > 0.55
-  -> choose a random near batch
-
-density <= 0.55
-  -> choose a random mid batch
-
-far batch selection
-  -> unreachable from patch placement
-
-terrain-tint selection
-  -> no static batch exists
+density > 0.55 -> random near batch
+density <= 0.55 -> random mid batch
+far batch -> unreachable from placement
+terrain-tint -> no batch or render representation
+culled -> absent
 ```
 
-Density controls geometric complexity before camera observation. This is not distance LOD.
+Density currently controls both local population and permanent geometric complexity. It is not camera LOD.
 
-### Draw grouping and mesh construction
+### Mesh and draw behavior
 
-Every patch instance is copied into a draw group keyed by batch and wind shader. The mesh builder iterates every group, every instance and every selected card, then appends grass to the same collector as terrain, flowers, rocks, distant trees and the focal tree.
+Every instance is copied into a draw group keyed by batch and wind shader. The mesh builder iterates all groups and appends their geometry into the same static collector as terrain and other scene content. Camera changes do not change the topology key, patch set, batch choice or grass vertex count.
 
-The completed collector becomes one immutable mesh keyed by static topology. Camera changes do not alter the topology key, patch set, batch selection or vertex count.
-
-### Renderer behavior
-
-The renderer:
-
-```txt
-1. ensures or reuses the complete mesh
-2. derives camera matrices
-3. uploads uniforms
-4. draws mesh.vertexCount for outline
-5. draws mesh.vertexCount for color
-```
-
-There is no patch bounds test, frustum plane test, camera distance calculation, tier transition, cull reason, visibility budget or per-tier draw result.
+The renderer ensures/reuses the complete mesh, then derives camera matrices, uploads uniforms and draws the complete mesh twice. There is no patch bounds test, frustum plane test, camera distance result, tier transition, cull reason or visibility budget result.
 
 ### Observation gap
 
-Current snapshots record total descriptor counts, vertex/triangle counts and cache state. They omit:
-
 ```txt
 camera revision
+viewport revision
 visibility revision
-patches tested
-patches visible
-patches culled
+patches tested/visible/culled
 per-tier patch/instance/vertex counts
 hysteresis transitions
 budget reductions
 stale-result rejections
-first visible grass-visibility frame receipt
+visible-set fingerprint
+first visible grass frame receipt
 ```
 
 ## Domains in use
@@ -161,28 +137,28 @@ first visible grass-visibility frame receipt
 browser shell, loading and fatal projection
 external provider loading, validation and fallback
 DSK declaration, registry validation and install snapshots
-game manifest, immutable state, tick, reset, snapshot and diagnostics
+immutable game manifest, state, tick, reset, snapshot and diagnostics
 runtime lifecycle, RAF clock and reset epoch
-camera descriptors and browser-view observation
-terrain/path surface generation and sampling
-grass density textures and density scaling
-grass clump archetypes and static batch generation
-patch-grid creation and density-driven instance placement
+camera descriptors, viewport and browser-view observation
+terrain/path generation, material layers and sampling
+grass density textures and scaling
+grass clump archetypes and static batches
+patch-grid creation and density-driven placement
 draw-group aggregation and wind shader binding
-grass visibility, distance LOD, frustum culling and hysteresis
-grass instance/vertex/draw budget admission
+grass distance bands, frustum classification and hysteresis
+grass visible-set, instance, vertex and draw-budget admission
 terrain-tint representation and transition policy
 wind fields and shader animation
-flowers, rocks, ground cover, distant trees and focal-tree generation
+flowers, rocks, mushrooms, ground cover, distant trees and focal tree
 render-plan enhancement, validation and topology caching
 CPU mesh construction and immutable vertex payloads
 WebGL context, program, buffers, uniforms and draw submission
 renderer snapshots and committed-frame observation
-player, input, interaction, objective, story, ecology, audio, UI and persistence declarations
-GameHost publication and raw game reachability
+player, input, interaction, objective, story, ecology, audio, UI and persistence
+GameHost publication and raw runtime reachability
 browser editor capabilities, capture and error observation
 Node headless editor, scenarios and artifacts
-validation, build and GitHub Pages deployment
+validation, static build and GitHub Pages deployment
 ```
 
 ## Kit and service census
@@ -196,7 +172,7 @@ required-v0.1 local declarations: 15
 planned local declarations: 28
 ```
 
-The exact name and offered-service inventory for every kit is preserved in `.agent/kit-registry.json` and the current tracker.
+The exact name and service inventory for all kits is in `.agent/kit-registry.json` and the current tracker.
 
 ## Required authority
 
@@ -218,7 +194,7 @@ meadow-camera-dsk
 meadow-performance-dsk
 meadow-render-host-dsk
 meadow-webgl-renderer-v2-kit
-meadow-render-plan-v2 contract
+meadow-render-plan-v2
 meadow-mesh-builder-v2
 renderer snapshot/read model
 browser editor renderer capability
@@ -256,57 +232,44 @@ browser-grass-visibility-smoke-kit
 ## Required transaction
 
 ```txt
-committed camera, viewport, topology and performance revisions
+committed camera, viewport, topology, policy and performance revisions
   -> create GrassVisibilityCommand
-  -> classify patch bounds against current frustum
-  -> measure admitted distance to patch bounds
-  -> choose near, mid, far, terrain-tint or culled tier
-  -> apply entry/exit hysteresis against predecessor tier
+  -> classify stable patch bounds against frustum
+  -> measure camera distance to admitted bounds
+  -> choose near, mid, far, terrain-tint or culled
+  -> apply entry/exit hysteresis
   -> enforce patch, instance, vertex and draw budgets
   -> create immutable GrassVisibilityResult
-  -> reject stale camera, viewport, topology or policy revisions
-  -> build/install visible mesh or draw generation
-  -> preserve predecessor after candidate failure
+  -> reject stale revisions
+  -> stage visible mesh/draw generation
+  -> atomically install or preserve predecessor
   -> publish bounded observations and per-tier counts
-  -> acknowledge first visible frame with matching visibility revision
+  -> acknowledge first visible frame with matching revision
 ```
 
 ## Repo-local output
 
 ```txt
-.agent/START_HERE.md
-.agent/current-audit.md
-.agent/next-steps.md
-.agent/known-gaps.md
-.agent/validation.md
-.agent/kit-registry.json
-.agent/trackers/2026-07-12T13-38-52-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T13-38-52-04-00.md
-.agent/architecture-audit/2026-07-12T13-38-52-04-00-grass-visibility-lod-authority-dsk-map.md
-.agent/render-audit/2026-07-12T13-38-52-04-00-static-grass-mesh-camera-visibility-gap.md
-.agent/gameplay-audit/2026-07-12T13-38-52-04-00-density-tagged-lod-always-drawn-loop.md
-.agent/interaction-audit/2026-07-12T13-38-52-04-00-camera-grass-visibility-admission-map.md
-.agent/grass-system-audit/2026-07-12T13-38-52-04-00-distance-frustum-hysteresis-budget-contract.md
-.agent/deploy-audit/2026-07-12T13-38-52-04-00-grass-visibility-lod-fixture-gate.md
+.agent/trackers/2026-07-12T13-54-00-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T13-54-00-04-00.md
+.agent/architecture-audit/2026-07-12T13-54-00-04-00-grass-visibility-central-reconciliation-dsk-map.md
+.agent/render-audit/2026-07-12T13-54-00-04-00-camera-visible-set-ledger-reconciliation-gap.md
+.agent/gameplay-audit/2026-07-12T13-54-00-04-00-density-tagged-grass-lod-reconciliation.md
+.agent/interaction-audit/2026-07-12T13-54-00-04-00-camera-grass-admission-reconciliation.md
+.agent/grass-system-audit/2026-07-12T13-54-00-04-00-visibility-lod-registry-contract.md
+.agent/central-sync-audit/2026-07-12T13-54-00-04-00-repo-ledger-machine-registry-contract.md
+.agent/deploy-audit/2026-07-12T13-54-00-04-00-grass-visibility-fixture-central-gate.md
 ```
 
 ## Validation
 
 ```txt
-runtime source changed: no
-grass source changed: no
-renderer source changed: no
-shader source changed: no
-gameplay source changed: no
-package scripts changed: no
-dependencies changed: no
-render output changed: no
-deployment changed: no
+runtime/grass/renderer/shader/gameplay source changed: no
+package scripts/dependencies/deployment changed: no
 branch created: no
 pull request created: no
 npm run check: not run
-browser observation: not run
-Pages observation: not run
+browser/Pages observation: not run
 grass visibility fixtures: unavailable
 ```
 

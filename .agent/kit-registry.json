@@ -1,16 +1,18 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-12T05-31-59-04-00",
-  "status": "shader-precision-admission-authority-audited",
-  "currentAuditedSlice": "IntoTheMeadow Shader Precision Admission / Stage Capability / Source Normalization / Compile-Link Provenance / Program Generation / Device Matrix",
-  "latestTracker": ".agent/trackers/2026-07-12T05-31-59-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T05-31-59-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T05-31-59-04-00-shader-precision-admission-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-12T05-31-59-04-00-forced-mediump-stage-policy-gap.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T05-31-59-04-00-context-shader-compile-frame-map.md",
-  "latestShaderAudit": ".agent/shader-audit/2026-07-12T05-31-59-04-00-stage-capability-normalization-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T05-31-59-04-00-shader-precision-device-matrix-fixture-gate.md",
+  "generatedAt": "2026-07-12T05-39-42-04-00",
+  "status": "audio-activation-lifecycle-authority-audited",
+  "currentAuditedSlice": "IntoTheMeadow Audio Activation / Browser Gesture Admission / Context and Resource Generation / Ambient and Spatial Playback / Listener Pose / Suspension / Disposal / Audible-Output Proof",
+  "precedingAuditedSlice": "Shader Precision Admission at 2026-07-12T05-31-59-04-00",
+  "latestTracker": ".agent/trackers/2026-07-12T05-39-42-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T05-39-42-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T05-39-42-04-00-audio-activation-lifecycle-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-12T05-39-42-04-00-visual-frame-audio-listener-correlation-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T05-39-42-04-00-declared-ambience-silent-runtime-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T05-39-42-04-00-user-gesture-audio-command-result-map.md",
+  "latestAudioAudit": ".agent/audio-audit/2026-07-12T05-39-42-04-00-context-resource-listener-lifecycle-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T05-39-42-04-00-audio-activation-output-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
@@ -18,48 +20,54 @@
     "rootAgentStateCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "No eligible repository was new, central-ledger-missing, or root-agent-missing. IntoTheMeadow was the oldest eligible central entry."
+    "reason": "IntoTheMeadow was selected from the oldest eligible central ledger entry. A newer repo-local shader-precision audit was discovered during root refresh and preserved before this later audio audit was routed."
   },
   "census": {
     "externalDeclaredCount": 1,
     "localDeclaredCount": 43,
     "totalDeclaredCount": 44,
-    "precisionCompatibilityAdapterCount": 1,
-    "interceptedShaderStageCount": 2,
-    "forcedPrecisionPolicyCount": 1,
-    "precisionCapabilityQueryCount": 0,
-    "shaderDecisionResultCount": 0,
-    "shaderSourceFingerprintCount": 0,
-    "programGenerationCount": 0,
-    "shaderFrameReceiptCount": 0
+    "requiredV01LocalCount": 15,
+    "audioDskDeclarationCount": 1,
+    "declaredAudioServiceCount": 5,
+    "requiredV01AudioCount": 0,
+    "runtimeAudioContextOwnerCount": 0,
+    "audioManifestEntryCount": 0,
+    "audioActivationCommandCount": 0,
+    "ambientSourceCount": 0,
+    "spatialCueRegistryCount": 0,
+    "listenerObservationCount": 0,
+    "audioSnapshotFieldCount": 0,
+    "audioEditorCapabilityCount": 0,
+    "audioFixtureCount": 0
   },
   "interactionLoop": [
-    "startup creates a precision-safe canvas and WebGL context proxy",
-    "createShader records vertex or fragment stage",
-    "shaderSource removes float precision declarations and injects mediump",
-    "the base renderer compiles and links one program",
-    "each frame uses the program for outline and color passes",
-    "renderer and editor observations omit precision and program provenance"
+    "page boot creates the visual shell and starts the web host",
+    "the host imports the meadow provider and installs DSK descriptors",
+    "the game, WebGL renderer, render-plan enhancer and editor bridge are created",
+    "RAF advances immutable game state and submits visual frames",
+    "no trusted browser gesture is converted into an audio activation command",
+    "no AudioContext, ambient source, spatial cue, listener update or audio observation exists"
   ],
   "domainsInUse": [
     "browser shell loading and visible failure projection",
     "external provider loading validation and fallback",
     "DSK declaration registry validation and install snapshots",
-    "game state tick reset snapshot and diagnostics",
+    "game manifest immutable state tick reset snapshot and diagnostics",
     "runtime lifecycle RAF clock and reset epoch",
-    "camera terrain path grass scatter tree atmosphere and world descriptors",
-    "player input interaction objective story and persistence declarations",
-    "render-plan validation topology and CPU mesh construction",
-    "WebGL context shader program buffer and draw ownership",
-    "shader precision normalization and admission",
-    "committed frame diagnostics editor capture and deployment proof"
+    "camera descriptors and browser view observation",
+    "terrain path grass trees wind atmosphere and scatter",
+    "player input interaction objective story ecology audio UI and persistence declarations",
+    "render-plan enhancement CPU mesh WebGL buffers and post processing",
+    "shader precision compatibility and program construction",
+    "editor capabilities and browser error capture",
+    "validation headless tools build and Pages deployment",
+    "planned audio activation context resource mix listener lifecycle and observation authority"
   ],
   "externalKits": {
     "meadow-area-kit": {
       "status": "external-provider",
       "source": "LuminaryLabs-Agents/NexusEngine-ProtoKits",
-      "version": "0.1.0",
-      "services": ["area normalization", "path normalization", "style normalization", "deterministic scatter", "world descriptors", "render-plan generation", "validation", "snapshot", "reset"]
+      "services": ["area normalization", "path normalization", "style and material normalization", "deterministic seeded scatter", "grass flower rock mushroom and tree descriptors", "wind and atmosphere descriptors", "render-plan generation", "validation", "snapshot", "reset", "optional runtime adapter"]
     }
   },
   "declaredLocalKitServices": {
@@ -97,7 +105,7 @@
     "meadow-diagnostics-dsk": ["runtime-health", "render-health", "determinism-checks", "smoke-tests", "diagnostics-report"],
     "meadow-performance-dsk": ["quality-profile", "budget-policy", "lod-policy", "adaptive-scaling", "performance-validation"],
     "meadow-render-host-dsk": ["renderer-selection", "render-plan-ingest", "pass-order", "renderer-state", "renderer-validation"],
-    "meadow-webgl-renderer-v2-kit": ["context-acquisition", "shader-compile", "program-link", "attribute-uniform-binding", "CPU-mesh-ingestion", "GPU-buffer-ownership", "draw", "resize", "snapshot", "dispose"],
+    "meadow-webgl-renderer-v2-kit": ["WebGL context acquisition", "shader program creation", "attribute and uniform binding", "CPU mesh ingestion", "GPU buffer ownership", "draw submission", "resize", "snapshot", "disposal"],
     "post-process-stack-dsk": ["pass-registry", "render-target-system", "sobel-outline-pass", "color-grade-pass", "post-validation"],
     "render-target-kit": ["scene-color-texture", "depth-texture", "normal-texture", "ping-pong-buffer", "resize-policy"],
     "sobel-outline-pass-kit": ["color-edge-threshold", "depth-edge-threshold", "normal-edge-threshold", "outline-color", "object-mask"],
@@ -107,23 +115,25 @@
     "final-composite-pass-kit": ["scene-input", "post-input", "output-target", "debug-overlay", "fallback-composite"],
     "static-pages-deploy-dsk": ["build-config", "github-pages-workflow", "release-artifacts", "cache-invalidation", "deploy-validation"]
   },
-  "shaderPrecisionAdmissionAuthority": {
-    "parentDomain": "meadow-shader-precision-admission-authority-domain",
-    "mainFinding": "The compatibility adapter rewrites both graphics stages to mediump without device capability evidence, stage-specific policy, source fingerprints, typed compile/link results, program generation or first-frame provenance.",
-    "plannedKits": ["shader-stage-identity-kit", "graphics-context-capability-snapshot-kit", "float-precision-capability-kit", "shader-precision-policy-kit", "shader-source-normalization-kit", "shader-source-fingerprint-kit", "shader-precision-decision-kit", "shader-compile-result-kit", "shader-program-link-result-kit", "shader-program-generation-kit", "shader-precision-observation-kit", "shader-precision-journal-kit", "first-frame-shader-provenance-kit", "shader-precision-fixture-kit", "browser-shader-device-matrix-smoke-kit"],
-    "requiredProof": ["stage capability evidence", "explicit Accepted Degraded or Rejected decision", "original and normalized source fingerprints", "typed compile and link results", "program generation bound to context generation", "context restoration readmission", "renderer and capture provenance", "WebGL1 WebGL2 device matrix", "first visible frame acknowledgement"]
+  "audioActivationLifecycleAuthority": {
+    "parentDomain": "meadow-audio-activation-lifecycle-authority-domain",
+    "mainFinding": "The audio DSK declares five services but is planned and unconsumed. The browser has no gesture admission, AudioContext owner, asset/resource generation, ambient or spatial playback, listener observation, audio state, diagnostics, editor capability or fixture.",
+    "existingOwnersToUpdate": ["meadow-audio-dsk", "meadow-ecology-dsk", "meadow-input-dsk", "meadow-camera-dsk", "meadow-player-dsk", "meadow-performance-dsk", "meadow-diagnostics-dsk", "web-host-dsk", "into-the-meadow-game-dsk", "game snapshot/read model", "browser shell", "editor capability bridge", "runtime session lifecycle authority", "runtime clock and step authority", "committed frame observation authority", "static-pages-deploy-dsk"],
+    "plannedKits": ["audio-session-id-kit", "audio-session-generation-kit", "audio-lifecycle-state-kit", "audio-policy-kit", "audio-asset-manifest-kit", "audio-activation-command-kit", "audio-activation-result-kit", "user-gesture-audio-admission-kit", "audio-context-owner-kit", "audio-resource-load-plan-kit", "audio-decode-result-kit", "audio-resource-generation-kit", "ambient-bed-kit", "spatial-audio-cue-registry-kit", "spatial-audio-play-command-kit", "audio-listener-pose-kit", "audio-frame-command-kit", "audio-mix-plan-kit", "audio-bus-state-kit", "audio-volume-policy-kit", "audio-mute-command-kit", "audio-visibility-suspension-kit", "audio-device-change-observation-kit", "audio-stale-generation-rejection-kit", "audio-dispose-plan-kit", "audio-dispose-result-kit", "audio-observation-kit", "audio-journal-kit", "audio-editor-capability-kit", "audio-activation-fixture-kit", "audio-spatial-listener-fixture-kit", "audio-suspend-resume-fixture-kit", "audio-restart-leak-fixture-kit", "browser-audible-output-smoke-kit"],
+    "requiredProof": ["no context before trusted gesture", "typed blocked or failed activation", "generation-fenced activation and decode", "exact-once ambient bed", "committed listener pose", "scene/source/voice-budget cue admission", "observable mute and bounded volume", "explicit visibility policy", "stale results cannot mutate replacement generation", "restart creates no duplicate context source or listener", "dispose leaves zero active leases", "editor and diagnostics cite the same audio revision", "deployed Pages audio lifecycle smoke"]
   },
-  "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Shader Precision Admission Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
+  "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Shader Precision Admission Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Audio Activation and Lifecycle Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
   "validation": {
     "runtimeSourceChanged": false,
+    "audioSourceChanged": false,
     "rendererSourceChanged": false,
-    "shaderSourceChanged": false,
     "packageScriptsChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
-    "shaderPrecisionFixtureRun": false,
-    "deviceMatrixRun": false,
-    "firstFrameProvenanceRun": false,
-    "nextCommand": "npm run check after shader policy normalization compile-link context-restore and frame-provenance fixtures exist"
+    "audioActivationFixtureRun": false,
+    "audioSpatialFixtureRun": false,
+    "audioLifecycleFixtureRun": false,
+    "audibleOutputSmokeRun": false,
+    "nextCommand": "npm run check after audio activation resource listener suspension cleanup and browser smoke fixtures exist"
   }
 }

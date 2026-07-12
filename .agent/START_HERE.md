@@ -2,46 +2,46 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T07-19-47-04-00`
+**Last aligned:** `2026-07-12T09-06-38-04-00`
 
 ## Summary
 
-`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable state, a persistent WebGL renderer, browser/editor surfaces and descriptor-driven terrain, grass and atmosphere systems.
+`IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable state, a persistent WebGL renderer, a browser `GameHost`, a browser editor bridge and Node headless-editor surfaces.
 
-The current audit isolates **adaptive quality and performance budget authority**. `meadow-performance-dsk` is required-v0.1, but it currently returns static profiles. `auto` is another fixed profile, the host samples no CPU/GPU frame window, terrain resolution is hard-coded, physical outline/color draws ignore the profile post-process flag, runtime quality is absent from cache identity and visible frames cite no quality revision.
+The current audit isolates **editor-bridge lifecycle and browser error-journal authority**. The browser bridge installs global error listeners, retains every error in an unbounded array, clones the complete array into queries and snapshots, and overwrites `globalThis.NexusEditorEnvironment` without automatically retiring a predecessor bridge. Host `stop()` does not dispose the bridge or listeners.
 
-The preceding audio activation and shader precision audits remain active dependencies.
+The preceding adaptive-quality, audio, shader, render-surface, capability, lifecycle, interaction, persistence, DSK-consumption and replay audits remain active dependencies.
 
 ## Plan ledger
 
-**Goal:** turn performance declarations into one stable runtime transaction that observes frame cost, applies capability-aware budgets and hysteresis, prepares every affected render consumer, atomically commits one quality revision and proves the first frame rendered from it.
+**Goal:** make bridge installation, capability publication, listener ownership, bounded browser-error retention, replacement, stop/restart and disposal one session-scoped transaction with typed results.
 
 - [x] Compare the full Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have central ledger and root `.agent` coverage.
-- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
-- [x] Inspect DSK declarations, performance policy, enhancer, host, diagnostics, renderer and checks.
-- [x] Identify the full interaction loop, all domains, all 44 declared kits and every offered service.
-- [x] Define performance observation, budget, hysteresis, transition, commit, rollback and frame-proof contracts.
-- [x] Add timestamped architecture and system-specific audits.
+- [x] Avoid overlapping newer unsynchronized `PrehistoricRush` documentation.
+- [x] Select only `IntoTheMeadow` as the next-oldest stable eligible repository.
+- [x] Trace `GameHost`, editor bridge, capabilities, listener registration, error retention, capture, host stop/start and global replacement.
+- [x] Identify the complete interaction loop, all domains, all 44 declared kits and every offered service.
+- [x] Add timestamped architecture and system audits.
 - [x] Update documentation on `main`; create no branch or pull request.
-- [ ] Runtime implementation and executable adaptive-quality fixtures remain future work.
+- [ ] Implement bridge lifecycle/error-journal authority and executable browser fixtures.
 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-12T07-19-47-04-00/project-breakdown.md
+.agent/trackers/2026-07-12T09-06-38-04-00/project-breakdown.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
 .agent/validation.md
-.agent/architecture-audit/2026-07-12T07-19-47-04-00-adaptive-quality-performance-dsk-map.md
-.agent/render-audit/2026-07-12T07-19-47-04-00-static-profile-physical-render-gap.md
-.agent/gameplay-audit/2026-07-12T07-19-47-04-00-unbounded-frame-quality-loop.md
-.agent/interaction-audit/2026-07-12T07-19-47-04-00-performance-observation-quality-command-map.md
-.agent/performance-audit/2026-07-12T07-19-47-04-00-sampling-hysteresis-quality-commit-contract.md
-.agent/deploy-audit/2026-07-12T07-19-47-04-00-adaptive-quality-browser-fixture-gate.md
-.agent/turn-ledger/2026-07-12T07-19-47-04-00.md
+.agent/architecture-audit/2026-07-12T09-06-38-04-00-editor-bridge-lifecycle-error-journal-dsk-map.md
+.agent/render-audit/2026-07-12T09-06-38-04-00-stale-bridge-capture-frame-provenance-gap.md
+.agent/gameplay-audit/2026-07-12T09-06-38-04-00-bridge-replacement-listener-retention-loop.md
+.agent/interaction-audit/2026-07-12T09-06-38-04-00-bridge-install-query-dispose-command-map.md
+.agent/editor-bridge-audit/2026-07-12T09-06-38-04-00-generation-listener-error-retention-contract.md
+.agent/deploy-audit/2026-07-12T09-06-38-04-00-browser-bridge-lifecycle-fixture-gate.md
+.agent/turn-ledger/2026-07-12T09-06-38-04-00.md
 .agent/kit-registry.json
 ```
 
@@ -50,41 +50,49 @@ The preceding audio activation and shader precision audits remain active depende
 ```txt
 page boot
   -> external provider and DSK installation
-  -> game, enhancer, renderer and editor bridge
+  -> game, enhancer and WebGL renderer
+  -> global GameHost publication
+  -> global editor bridge publication and listener registration
   -> recursive RAF
 
 frame
-  -> absolute RAF time plus fixed dt 1/60
-  -> static render-plan enhancement
-  -> WebGL resize and cache admission
-  -> outline draw plus color draw
-  -> count/cache diagnostics
+  -> fixed-dt game tick with absolute RAF time
+  -> render-plan enhancement and validation
+  -> WebGL resize/cache/draw
+  -> diagnostics
   -> successor RAF
 
-quality
-  -> default high profile
-  -> no timing window
-  -> no adaptive decision
-  -> no quality command/result/revision
-  -> no multi-consumer commit
-  -> no first visible-frame quality receipt
+editor invoke
+  -> cloned arguments
+  -> capability execution
+  -> completed/unavailable/failed result
+  -> failure appended to bridge-local error array
+
+browser fault
+  -> error/unhandledrejection listener
+  -> append unsequenced entry
+  -> full-array clone from getErrors or snapshot
+
+stop/restart/replacement
+  -> RAF boolean changes
+  -> bridge/listeners/errors remain
+  -> new bootstrap can replace global pointer without retiring predecessor
 ```
 
 ## Main findings
 
 ```txt
-meadow-performance-dsk required-v0.1: yes
-quality profiles: low, medium, high, ultra, auto
-default profile: high
-auto controller: absent
-CPU frame timing window: absent
-GPU timer capability/result: absent
-quality transition command/result: absent
-quality revision: absent
-terrain profile application: hard-coded 96 x 124
-physical post-process policy application: absent
-runtime quality cache identity: absent
-visible quality-frame receipt: absent
+bridge generation: absent
+runtime-session binding: absent
+predecessor bridge retirement: absent
+listener lease identity: absent
+capability lease/revocation: absent
+error sequence/time/frame correlation: absent
+error retention count/byte/age bound: absent
+paged query and acknowledgement cursor: absent
+stale bridge invoke/capture rejection: absent
+host stop -> bridge disposal: absent
+browser bridge lifecycle fixtures: absent
 ```
 
 ## Domains and kit groups
@@ -98,26 +106,29 @@ required-v0.1 local declarations: 15
 browser/runtime/game/editor
 terrain/path/grass/tree/scatter/atmosphere
 player/input/interaction/story/objective/ecology/audio/UI/save
-performance policy/render-plan enhancement/WebGL/post processing
+performance/render-plan/WebGL/post processing
+GameHost/global capability/error observation
+headless editor/scenarios/artifacts
 validation/build/Pages
-adaptive observation/budget/hysteresis/commit/frame proof: missing
+bridge generation/listener leases/bounded error journal/replacement proof: missing
 ```
 
-The tracker and machine registry contain the complete per-kit service inventory.
+The tracker and kit registry contain the complete per-kit service inventory.
 
 ## Required parent domain
 
 ```txt
-meadow-adaptive-quality-performance-authority-domain
+meadow-editor-bridge-lifecycle-and-error-journal-authority-domain
 ```
 
-It coordinates capability evidence, CPU/GPU observations, rolling percentiles, named budgets, hysteresis, cooldown, quality commands, topology-impact planning, grass/terrain/post/surface adapters, atomic commit, rollback, stale-plan rejection, diagnostics and first-visible-frame proof.
+It coordinates bridge identity/generation, install admission, predecessor retirement, public capability leases, browser listener leases, error normalization/sequence/retention/query/acknowledgement, stale-bridge rejection, stop/dispose results, observations, journal and browser fixtures.
 
 ## Ordered architecture queue
 
 ```txt
 1. Runtime Session Lifecycle Authority
 2. Host Capability Gateway and Raw Runtime Quarantine
+2a. Editor Bridge Lifecycle and Error Journal Authority
 3. Headless Workspace Path Authority and Filesystem Containment
 4. Runtime Clock and Step Admission Authority
 5. Source Provider Authority
@@ -136,4 +147,4 @@ It coordinates capability evidence, CPU/GPU observations, rolling percentiles, n
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not implement adaptive mutation inside the renderer or treat one RAF duration as a quality decision. Keep quality state session-scoped, revisioned and committed through the existing enhancer and renderer owners.
+Do not solve this by adding another global array or by deleting whichever global happens to exist. Bridge lifecycle must be bound to runtime and host generations, and error retention must remain bounded under long-running browser observation.

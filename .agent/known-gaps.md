@@ -1,80 +1,69 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T13-38-52-04-00`
+**Updated:** `2026-07-12T13-54-00-04-00`
 
 ## Summary
 
-The leading grass gap is that LOD names exist without visibility authority. Density chooses near or mid geometry once during patch creation, far and terrain-tint are unreachable, all instances enter one static mesh, and every vertex is drawn regardless of camera distance or frustum containment.
+The repo-local and central audit records are now synchronized. The leading runtime gap remains that grass LOD names exist without camera-bound visibility authority: density permanently chooses near or mid geometry, far and terrain-tint are unreachable, all instances enter one static mesh, and every vertex is drawn regardless of camera distance or frustum containment.
 
 ## Plan ledger
 
-**Goal:** close camera visibility, tier reachability, transition, budget and frame-proof gaps while preserving previously documented runtime, program-interface, progression, editor, audio, persistence and replay gaps.
+**Goal:** close camera visibility, tier reachability, transition, budget and frame-proof gaps while preserving all preceding runtime, render, editor, progression, audio, persistence and replay gaps.
 
-- [x] Add grass visibility and LOD gaps.
+- [x] Reconcile root docs, registry and central tracking.
+- [x] Preserve grass visibility and LOD gaps.
 - [x] Preserve the preceding WebGL program-interface gap.
 - [x] Preserve earlier lifecycle, host, render, audio, persistence and replay gaps.
 - [ ] Implement in dependency order.
 
-## Selection state
-
-```txt
-10 accessible Publish repositories observed
-TheCavalryOfRome excluded
-9 eligible repositories centrally tracked with root .agent state
-TheOpenAbove skipped because repo-local 13:29:56 work was newer than central tracking
-IntoTheMeadow selected as the next-oldest stable repository
-only IntoTheMeadow changed in the Publish organization
-```
-
 ## Tier reachability gaps
 
 ```txt
-declared near tier: reachable
-declared mid tier: reachable
-declared far tier: not selected by placement
-declared terrain-tint tier: no static batch or render representation
-culled tier: absent
+near: reachable only through density-selected batch
+mid: reachable only through density-selected batch
+far: never selected by placement
+terrain-tint: no static batch or render representation
+culled: absent
 distance-based tier selection: absent
 ```
 
 ## Visibility gaps
 
 ```txt
-patch bounds admission: absent
-camera revision: absent
-viewport revision: absent
-frustum planes: absent
-inside/intersecting/outside result: absent
-distance-to-bounds result: absent
-per-patch visibility state: absent
-per-frame visible set: absent
-cull reason: absent
+stable patch bounds admission
+camera and viewport revisions
+frustum planes and classification
+distance-to-bounds result
+per-patch predecessor tier
+per-frame visible set
+cull reason
+visible-set fingerprint
 ```
 
 ## Transition gaps
 
 ```txt
-tier predecessor state: absent
-entry/exit thresholds: absent
-hysteresis: absent
-camera-teleport policy: absent
-viewport-change policy: absent
-quality-change transition policy: absent
-fade or cross-tier continuity: absent
+entry/exit thresholds
+hysteresis
+camera-teleport policy
+viewport-change policy
+quality-change transition policy
+fade or cross-tier continuity
+stale-result rejection
 ```
 
 ## Budget gaps
 
 ```txt
-visible patch budget: absent
-visible instance budget: absent
-visible vertex budget: absent
-grass draw budget: absent
-budget reduction result: absent
-priority policy: absent
-camera-distance priority: absent
-hero-area protection: absent
+visible patch budget
+visible instance budget
+visible vertex budget
+grass draw budget
+deterministic priority policy
+camera-distance priority
+hero-area protection
+budget reduction result
 ```
 
 ## Geometry and draw gaps
@@ -83,7 +72,7 @@ hero-area protection: absent
 all patch instances flattened into one mesh: yes
 camera-independent topology key: yes
 camera movement rebuilds visible set: no
-far geometry admission: absent
+far representation admission: absent
 terrain-tint output: absent
 per-tier mesh generation: absent
 per-tier draw generation: absent
@@ -94,37 +83,31 @@ full mesh color draw: always
 ## Observation gaps
 
 ```txt
-tested patch count: absent
-visible/culled patch counts: absent
-per-tier patch counts: absent
-per-tier instance counts: absent
-admitted/rejected vertex counts: absent
-transition counts: absent
-budget reduction reasons: absent
-visibility revision: absent
-visible-set fingerprint: absent
-first visible grass frame receipt: absent
-capture/visibility correlation: absent
+patches tested/visible/culled
+per-tier patch and instance counts
+admitted/rejected vertex and draw counts
+transition counts and reasons
+budget reductions
+visibility revision and fingerprint
+candidate install/rollback result
+first visible grass frame receipt
+capture/visibility correlation
 ```
 
 ## Missing proof
 
 ```txt
-near tier selected by camera distance
-mid tier selected by camera distance
-far tier selected by camera distance
-terrain-tint tier visible without blade geometry
-outside-frustum patches omitted
-edge-intersecting patches handled deterministically
-hysteresis prevents threshold flicker
-camera teleport produces one current result
-viewport resize rejects stale result
-quality reduction obeys budgets
-candidate failure preserves predecessor visible set
-stale camera result rejected
-stale topology result rejected
+camera-distance near/mid/far selection
+terrain-tint without blade geometry
+outside-frustum omission
+edge-intersection determinism
+threshold hysteresis
+camera teleport and viewport resize handling
+quality and render-budget enforcement
+candidate failure preserves predecessor
+stale camera/viewport/topology/policy rejection
 renderer snapshot carries visibility revision
-first visible frame cites the accepted visible set
+first visible frame cites accepted visible set
 local browser and deployed Pages parity
 ```
 
@@ -181,4 +164,4 @@ independent deterministic replay
 
 ## Completion boundary
 
-Do not count batch labels, card limits, stable topology or successful full-mesh draws as LOD proof. Completion requires camera-bound classification, reachable near/mid/far/tint/culled states, hysteresis, budget admission, stale-result rejection and a visible frame carrying the accepted grass visibility revision.
+Do not count batch labels, card limits, stable topology or successful full-mesh draws as LOD proof. Completion requires camera-bound classification, reachable near/mid/far/tint/culled states, hysteresis, budgets, stale-result rejection and a visible frame carrying the accepted visibility revision.

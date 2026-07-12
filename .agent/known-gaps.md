@@ -1,18 +1,18 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T11-29-40-04-00`
+**Updated:** `2026-07-12T13-38-52-04-00`
 
 ## Summary
 
-The leading render gap is that successful shader compilation and program linking are treated as sufficient readiness. The active linked interface is not reflected or compared with required attribute, uniform, mesh-layout and uniform-payload schemas before buffer binding and draw submission.
+The leading grass gap is that LOD names exist without visibility authority. Density chooses near or mid geometry once during patch creation, far and terrain-tint are unreachable, all instances enter one static mesh, and every vertex is drawn regardless of camera distance or frustum containment.
 
 ## Plan ledger
 
-**Goal:** close active-symbol, schema, generation and frame-proof gaps while preserving previously documented runtime, gameplay, editor, performance, audio, persistence, DSK-consumption and replay gaps.
+**Goal:** close camera visibility, tier reachability, transition, budget and frame-proof gaps while preserving previously documented runtime, program-interface, progression, editor, audio, persistence and replay gaps.
 
-- [x] Add WebGL program-interface admission gaps.
-- [x] Preserve the preceding interaction/objective progression gap.
+- [x] Add grass visibility and LOD gaps.
+- [x] Preserve the preceding WebGL program-interface gap.
 - [x] Preserve earlier lifecycle, host, render, audio, persistence and replay gaps.
 - [ ] Implement in dependency order.
 
@@ -22,107 +22,120 @@ The leading render gap is that successful shader compilation and program linking
 10 accessible Publish repositories observed
 TheCavalryOfRome excluded
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as the oldest eligible synchronized repository
+TheOpenAbove skipped because repo-local 13:29:56 work was newer than central tracking
+IntoTheMeadow selected as the next-oldest stable repository
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Program identity gaps
+## Tier reachability gaps
 
 ```txt
-context-bound program generation: absent
-candidate program identity: absent
-manifest revision: absent
-program-interface fingerprint: absent
-predecessor/current program transaction: absent
-retired program/interface state: absent
-stale program/interface rejection: absent
+declared near tier: reachable
+declared mid tier: reachable
+declared far tier: not selected by placement
+declared terrain-tint tier: no static batch or render representation
+culled tier: absent
+distance-based tier selection: absent
 ```
 
-## Active-symbol reflection gaps
+## Visibility gaps
 
 ```txt
-ACTIVE_ATTRIBUTES inventory: absent
-getActiveAttrib evidence: absent
-ACTIVE_UNIFORMS inventory: absent
-getActiveUniform evidence: absent
-canonical symbol normalization: absent
-symbol type/size inventory: absent
-required/optional symbol policy: absent
-optimized-out required uniform classification: absent
+patch bounds admission: absent
+camera revision: absent
+viewport revision: absent
+frustum planes: absent
+inside/intersecting/outside result: absent
+distance-to-bounds result: absent
+per-patch visibility state: absent
+per-frame visible set: absent
+cull reason: absent
 ```
 
-## Attribute admission gaps
+## Transition gaps
 
 ```txt
-required attributes queried: 5
-aggregate attribute admission result: absent
-exact GL type validation: absent
-array size validation: absent
-semantic mapping result: absent
-location admission before buffer mutation: absent
-mesh-layout fingerprint: absent
-mesh/program compatibility result: absent
+tier predecessor state: absent
+entry/exit thresholds: absent
+hysteresis: absent
+camera-teleport policy: absent
+viewport-change policy: absent
+quality-change transition policy: absent
+fade or cross-tier continuity: absent
 ```
 
-Current attribute rejection occurs only when a first mesh bind reaches `createAttributeBuffer()` with a location below zero.
-
-## Uniform admission gaps
+## Budget gaps
 
 ```txt
-required uniforms queried: 12
-non-null location admission: absent
-exact GL type validation: absent
-array size validation: absent
-host update-operation validation: absent
-finite payload batch result: absent
-pass-specific required update result: absent
-uniform-payload fingerprint: absent
+visible patch budget: absent
+visible instance budget: absent
+visible vertex budget: absent
+grass draw budget: absent
+budget reduction result: absent
+priority policy: absent
+camera-distance priority: absent
+hero-area protection: absent
 ```
 
-A missing uniform location can remain a silent no-op rather than a typed renderer failure.
-
-## Resource and compatibility gaps
+## Geometry and draw gaps
 
 ```txt
-MAX_VERTEX_ATTRIBS observation: absent
-uniform component/vector limit profile: absent
-active resource usage result: absent
-resource-budget rejection: absent
-WebGL1/WebGL2 interface compatibility result: absent
-precision decision to interface fingerprint correlation: absent
+all patch instances flattened into one mesh: yes
+camera-independent topology key: yes
+camera movement rebuilds visible set: no
+far geometry admission: absent
+terrain-tint output: absent
+per-tier mesh generation: absent
+per-tier draw generation: absent
+full mesh outline draw: always
+full mesh color draw: always
 ```
 
-## Draw and frame-proof gaps
+## Observation gaps
 
 ```txt
-draw admission command/result: absent
-outline pass interface result: absent
-color pass interface result: absent
-GPU error observation result: absent
-renderer snapshot program generation: absent
-renderer snapshot interface fingerprint: absent
-first visible program-interface frame receipt: absent
-capture/interface correlation: absent
+tested patch count: absent
+visible/culled patch counts: absent
+per-tier patch counts: absent
+per-tier instance counts: absent
+admitted/rejected vertex counts: absent
+transition counts: absent
+budget reduction reasons: absent
+visibility revision: absent
+visible-set fingerprint: absent
+first visible grass frame receipt: absent
+capture/visibility correlation: absent
 ```
 
-## Missing interface proof
+## Missing proof
 
 ```txt
-complete five-attribute admission
-complete twelve-uniform admission
-missing attribute rejection before buffer publication
-missing uniform rejection before draw
-optimized-out required uniform rejection
-attribute type/size mismatch rejection
-uniform type/size mismatch rejection
-mesh/program schema compatibility
-uniform/program schema compatibility
-resource-limit rejection
-candidate rejection preserves predecessor
-stale context/program/interface rejection
-WebGL1/WebGL2 parity
-first visible frame interface receipt
+near tier selected by camera distance
+mid tier selected by camera distance
+far tier selected by camera distance
+terrain-tint tier visible without blade geometry
+outside-frustum patches omitted
+edge-intersecting patches handled deterministically
+hysteresis prevents threshold flicker
+camera teleport produces one current result
+viewport resize rejects stale result
+quality reduction obeys budgets
+candidate failure preserves predecessor visible set
+stale camera result rejected
+stale topology result rejected
+renderer snapshot carries visibility revision
+first visible frame cites the accepted visible set
 local browser and deployed Pages parity
+```
+
+## Preserved WebGL program-interface gaps
+
+```txt
+active attribute/uniform reflection
+exact symbol type and size admission
+mesh/program and payload/program compatibility
+context-bound program generation and fingerprint
+draw admission and first visible interface frame receipt
 ```
 
 ## Preserved progression gaps
@@ -131,9 +144,7 @@ local browser and deployed Pages parity
 browser/editor interaction command surface
 canonical target evidence
 path and inspection mutation
-objective evaluation and completion ledger
-story trigger evaluation and deduplication
-atomic progression commit and rollback
+objective and story transition commit
 feedback projection
 first visible progression-frame acknowledgement
 ```
@@ -143,14 +154,13 @@ first visible progression-frame acknowledgement
 ```txt
 raw GameHost capability quarantine
 editor bridge generation and predecessor retirement
-listener leases
-bounded bridge errors
+listener leases and bounded errors
 stale capability rejection
 capture/frame provenance
 host stop/dispose parity
 ```
 
-## Preserved runtime and rendering gaps
+## Preserved runtime and data gaps
 
 ```txt
 runtime session lifecycle and ordered disposal
@@ -158,24 +168,17 @@ RAF clock and step admission
 source-provider artifact authority
 render topology identity
 WebGL context recovery
-render surface revision and physical-buffer proof
-shader precision capability admission
-committed frame observation
+render-surface revision
+shader precision admission
+committed-frame observation
 fatal frame recovery
-adaptive quality and physical-policy parity
-camera-distance/frustum grass LOD
-```
-
-## Preserved audio and data gaps
-
-```txt
-trusted audio activation and resource generations
-audio listener/output proof
-save schema, migration and atomic hydration
-DSK declaration-to-runtime consumption authority
-independent deterministic replay and first-divergence proof
+adaptive quality authority
+trusted audio activation
+save migration and atomic hydration
+DSK declaration-to-runtime consumption
+independent deterministic replay
 ```
 
 ## Completion boundary
 
-Do not treat compile/link success, queried locations, a returned renderer snapshot, a `gpu:` DOM marker or a non-empty screenshot as interface proof. Completion requires reflected active symbols, exact schema compatibility, current generations, typed binding/update/draw results and a visible frame citing the accepted interface fingerprint.
+Do not count batch labels, card limits, stable topology or successful full-mesh draws as LOD proof. Completion requires camera-bound classification, reachable near/mid/far/tint/culled states, hysteresis, budget admission, stale-result rejection and a visible frame carrying the accepted grass visibility revision.

@@ -1,7 +1,19 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T05-39-42-04-00`
+**Updated:** `2026-07-12T07-19-47-04-00`
+
+## Summary
+
+The leading performance gap is that `meadow-performance-dsk` describes profiles and budgets but owns no measurements, transition policy, revision, multi-consumer commit or visible-frame proof. Logical quality fields also diverge from the inspected physical render path.
+
+## Plan ledger
+
+**Goal:** close performance observation, stable decision, physical-policy parity, cache invalidation, rollback and frame-correlation gaps while preserving all previously documented runtime, rendering, audio and gameplay gaps.
+
+- [x] Add adaptive-quality and logical/physical parity gaps.
+- [x] Preserve prior audio, shader, surface, lifecycle, interaction and replay gaps.
+- [ ] Implement in dependency order.
 
 ## Selection state
 
@@ -9,164 +21,137 @@
 10 accessible Publish repositories observed
 TheCavalryOfRome excluded
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected from the oldest central ledger timestamp
-a newer repo-local shader-precision audit was discovered and preserved
+IntoTheMeadow selected as the oldest eligible synchronized repository
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Current audio activation and lifecycle gaps
-
-### Declaration is not implementation
+## Performance ownership gaps
 
 ```txt
-meadow-audio-dsk: present
-services: ambient-bed, spatial-audio-cues, audio-state, audio-events, audio-validation
-required-v0.1: no
-runtime owner: absent
-runtime consumption receipt: absent
+meadow-performance-dsk returns configuration, not runtime authority
+web host owns RAF but no performance sampling
+renderer owns physical work but no quality decision/result
+render-plan enhancer accepts runtime performance but host supplies none
+quality state is absent from game snapshot and editor capabilities
 ```
 
-### Activation authority is absent
+## Observation and identity gaps
 
 ```txt
-trusted user-gesture evidence: absent
-AudioActivateCommand: absent
-activation revision: absent
-READY/BLOCKED/FAILED result: absent
-idempotent retry policy: absent
-concurrent activation policy: absent
+performance sample ID: absent
+CPU frame observation: absent
+GPU timer capability/result: absent
+rolling performance window: absent
+percentile result: absent
+frame deadline result: absent
+capability snapshot: absent
+quality tier identity beyond string configuration: absent
+monotonic quality revision: absent
 ```
 
-### Context and resource ownership are absent
+## Policy and admission gaps
 
 ```txt
-AudioContext owner: absent
-audio session ID/generation: absent
-audio asset manifest: absent
-codec/fallback policy: absent
-decode plan/result: absent
-resource generation: absent
-stale decode rejection: absent
+auto is a static profile, not adaptive policy
+hysteresis: absent
+upgrade/downgrade confirmation windows: absent
+cooldown: absent
+hidden-tab sampling policy: absent
+manual/automatic command parity: absent
+quality transition command/result: absent
+stale session/context/surface/topology rejection: absent
 ```
 
-### Playback and mix are absent
+## Logical and physical parity gaps
 
 ```txt
-master/ambience/effects/UI buses: absent
-ambient bed: absent
-spatial cue registry: absent
-cue command/result: absent
-cooldown/overlap/priority policy: absent
-voice budget: absent
-mix-plan revision: absent
+profile terrainResolution is not applied
+contracted terrain resolution is hard-coded to 96 x 124
+profile postProcess does not control physical outline/color draws
+maxGrassInstances is calculated but not passed into inspected grass construction
+physical draw-count budget is absent
+surface scale/DPR quality adapter is absent
 ```
 
-### Listener authority is absent
+## Cache and commit gaps
 
 ```txt
-committed listener pose: absent
-camera/player pose revision: absent
-scene-to-audio frame correlation: absent
-stale listener rejection: absent
-audio-frame result: absent
+runtime quality is omitted from host enhancer calls
+quality revision is absent from enhancer cache admission
+topology-affecting quality fields are not a separate impact plan
+consumer prepare results are absent
+atomic grass/terrain/post/surface/renderer commit is absent
+predecessor preservation and rollback are absent
+exact topology rebuild/no-rebuild result is absent
 ```
 
-### Lifecycle policy is absent
+## Diagnostics and proof gaps
 
 ```txt
-visibility suspension policy: absent
-pause/resume audio policy: absent
-reset and route-transition policy: absent
-device-change observation: absent
-ordered audio disposal: absent
-restart duplicate-source prevention: absent
+renderer snapshot has no quality revision
+no measured CPU/GPU cost in diagnostics
+no budget or deadline status
+no transition or rollback result
+no quality state in public/editor readback
+no first visible-frame quality acknowledgement
+no screenshot/capture correlation with quality revision
 ```
 
-### Controls and observability are absent
+## Missing performance proof
 
 ```txt
-visible activation control: absent
-mute control/state: absent
-bounded volume policy/state: absent
-audio snapshot fields: absent
-audio diagnostics: absent
-editor audio capabilities: absent
-bounded audio fault journal: absent
+static tier parity
+sustained-overload downgrade
+sustained-headroom upgrade
+single-spike rejection
+hysteresis and cooldown
+GPU timing supported/unsupported paths
+hidden-tab sampling
+quality topology impact
+consumer failure rollback
+context/surface stale-plan rejection
+first visible-frame receipt
+browser and Pages performance smoke
 ```
 
-### Validation is absent
+## Preserved rendering and runtime gaps
 
 ```txt
-audio state-machine fixture: absent
-activation/autoplay fixture: absent
-resource generation fixture: absent
-spatial listener fixture: absent
-voice-budget fixture: absent
-suspend/resume fixture: absent
-restart leak fixture: absent
-browser audible-output smoke: absent
-Pages audio smoke: absent
+runtime session lifecycle and ordered disposal
+raw GameHost capability quarantine
+RAF absolute time versus fixed dt authority
+render topology identity
+WebGL context recovery
+render surface revision and physical-buffer proof
+shader precision capability admission
+committed frame observation
+fatal frame recovery
+camera-distance/frustum grass LOD
 ```
 
-## Required audio fixtures
+## Preserved audio gaps
 
 ```txt
-fixture:audio-activation-state-machine
-fixture:audio-policy-validation
-fixture:audio-resource-generation
-fixture:audio-stale-decode-rejection
-fixture:audio-exact-once-ambient
-fixture:audio-spatial-listener
-fixture:audio-cue-voice-budget
-fixture:audio-mute-volume-roundtrip
-fixture:audio-suspend-resume
-fixture:audio-dispose-idempotence
-fixture:audio-restart-no-duplicates
-smoke:browser-audible-output
-smoke:pages-audio-lifecycle
+trusted gesture activation
+AudioContext/resource generation
+ambient and spatial playback
+listener revision parity
+mute/volume/suspension policy
+ordered audio disposal
+browser audible-output proof
 ```
 
-## Retained shader and rendering gaps
+## Preserved gameplay and data gaps
 
 ```txt
-shader precision capability admission remains unimplemented
-original/normalized shader source fingerprints remain absent
-compile/link/program generation receipts remain absent
-WebGL context recovery remains non-transactional
-DPR, surface revision and committed visible-frame identity remain incomplete
-grass camera-distance/frustum LOD remains unimplemented
-adaptive quality transaction remains unimplemented
-```
-
-## Retained interaction and progression gaps
-
-```txt
-movement and inspect commands absent
-path progress and objective rules unreachable
-objective/story atomic commit absent
-browser/editor progression parity absent
-```
-
-## Retained runtime, persistence and replay gaps
-
-```txt
-RAF absolute time and fixed dt disagree
-raw GameHost exposes game authority
-fatal startup/frame recovery remains non-transactional
-save schema, migration and atomic hydration absent
-independent deterministic replay proof absent
-first-divergence and visible-frame fingerprints absent
-```
-
-## Retained DSK truth gaps
-
-```txt
-declaration status is not runtime consumption proof
-local implementations are not registry-bound
-runtime consumers bypass registry lookup
-reverse disposal is not registry-owned
+movement and inspect commands
+objective/story atomic commit
+browser/editor progression parity
+save schema, migration and atomic hydration
+independent deterministic replay and first-divergence proof
+DSK declaration-to-runtime consumption authority
 ```
 
 ## Completion boundary
 
-Do not treat `meadow-audio-dsk`, future asset filenames or a created `AudioContext` as complete audio support. Completion requires admitted user gesture, typed blocked/failure behavior, versioned resources, exact-once playback, committed listener parity, bounded scheduling, lifecycle cleanup, diagnostics and deployed browser proof.
+Do not treat the existence of low/medium/high/ultra/auto constants, a stable vertex count or a cache hit as adaptive-quality proof. Completion requires normalized observations, stable admission policy, one committed quality revision across every physical consumer, rollback and first-visible-frame evidence.

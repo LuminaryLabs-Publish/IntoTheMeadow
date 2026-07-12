@@ -2,44 +2,49 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-12T00-49-48-04-00`
+**Audit timestamp:** `2026-07-12T00-58-12-04-00`
 
 ## Summary
 
 `IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, immutable game state, descriptor-driven scene composition, CPU mesh construction, a persistent WebGL renderer, browser `GameHost` and editor surfaces, and a Node headless-editor environment.
 
-This pass audits adaptive quality and performance budgets. `meadow-performance-dsk` is included in the required v0.1 set and has source-backed profiles, but production uses an implicit static `high` profile. No frame-cost samples or automatic decisions exist, the enhancer cache excludes quality identity, several budgets are not enforced, and profile fields for terrain resolution and post-processing do not control their consumers.
+This pass audits deterministic replay validation. The source includes `stableStringify()` and `validateDeterminism()`, while `npm run check` runs `deterministic-scene-smoke.mjs`. The test constructs one game with the local fallback provider, does not tick or reset it, reads the same snapshot twice and compares the serialized strings. This proves read stability only, not deterministic construction, simulation, replay, provider parity or rendered-frame agreement.
 
 ## Plan ledger
 
-**Goal:** define one cadence-independent quality transaction from frame observations through decision, complete budget allocation, render preparation, atomic commit or rollback and first visible frame proof.
+**Goal:** define one canonical and provider-aware replay transaction from independent construction through command/tick execution, reset, checkpoint comparison, exact divergence and first visible frame proof.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm nine eligible central ledgers and root `.agent` states.
-- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
-- [x] Inspect `AGENTS.md`, package checks, DSK registry, performance policy, scene configuration, enhancer, grass consumers, post stack, renderer and web host.
+- [x] Select only `IntoTheMeadow` because newer repo-local work required reconciliation and it remained the oldest central entry.
+- [x] Inspect `AGENTS.md`, package checks, deterministic validator, game construction, state, snapshot and render-plan smoke.
 - [x] Identify the interaction loop, all domains, all kits and every declared service.
-- [x] Define the adaptive-quality parent domain and fixture boundary.
+- [x] Define canonical value, provider, seed, replay, reset, cadence, divergence and frame-proof boundaries.
 - [x] Change documentation only.
-- [ ] Runtime implementation and executable adaptive-quality fixtures remain future work.
+- [ ] Runtime implementation and executable replay fixtures remain future work.
 
 ## Selection comparison
 
 ```txt
-IntoTheMeadow      2026-07-11T23-10-51-04-00 selected
-HorrorCorridor     2026-07-11T23-18-16-04-00
-PhantomCommand     2026-07-11T23-28-29-04-00
-ZombieOrchard      2026-07-11T23-48-14-04-00
-TheUnmappedHouse   2026-07-12T00-01-25-04-00
-AetherVale         2026-07-12T00-10-23-04-00
-MyCozyIsland       2026-07-12T00-20-01-04-00
-PrehistoricRush    2026-07-12T00-30-49-04-00
-TheOpenAbove       2026-07-12T00-39-05-04-00
+accessible Publish repositories: 10
+eligible non-Cavalry repositories: 9
+central ledger entries: 9
+root .agent states: 9
+
+IntoTheMeadow      central 2026-07-11T23-10-51-04-00, newer repo-local audit, selected
+HorrorCorridor     central 2026-07-11T23-18-16-04-00
+PhantomCommand     central 2026-07-11T23-28-29-04-00
+ZombieOrchard      central 2026-07-11T23-48-14-04-00
+TheUnmappedHouse   central 2026-07-12T00-01-25-04-00
+AetherVale         central 2026-07-12T00-10-23-04-00
+MyCozyIsland       central 2026-07-12T00-20-01-04-00
+PrehistoricRush    central 2026-07-12T00-30-49-04-00
+TheOpenAbove       central 2026-07-12T00-39-05-04-00
 TheCavalryOfRome   excluded
 ```
 
-Only `LuminaryLabs-Publish/IntoTheMeadow` was changed in the Publish organization.
+Only `LuminaryLabs-Publish/IntoTheMeadow` is changed in the Publish organization.
 
 ## Interaction loop
 
@@ -52,23 +57,22 @@ browser boot
   -> expose GameHost and editor bridge
   -> request RAF
 
-first enhanced plan
-  -> no style.performance in arrival scene
-  -> createMeadowPerformancePolicy defaults to high
-  -> filter flowers and tree-line objects
-  -> build grass from quality density scale
-  -> hard-code terrain topology to 96 x 124
-  -> create post descriptor from scene configuration
-  -> cache by sourceTopologyKey
-
 browser frame
-  -> game.tick with dt 1/60 and RAF absolute time
-  -> raw plan changes by time only
-  -> enhancer cache hit retains original quality topology
-  -> renderer independently clamps DPR to 1 through 2
-  -> renderer submits outline then color/fog draw
-  -> publish plan, renderer and editor observations
-  -> collect no frame-cost sample or quality decision
+  -> game.tick({ dt: 1/60, time: RAF absolute time })
+  -> immutable frame increments
+  -> lastTick records dt and time
+  -> enhancer and renderer submit the meadow frame
+  -> host/editor observations update
+
+deterministic check
+  -> validateSceneFlow()
+  -> createIntoTheMeadowGame()
+  -> no externalKits, so local fallback provider
+  -> validateDeterminism(() => game.getSnapshot())
+  -> snapshot A from unchanged game
+  -> snapshot B from unchanged game
+  -> stable string comparison
+  -> Boolean pass/fail
 ```
 
 ## Domains in use
@@ -77,42 +81,44 @@ browser frame
 browser shell, DOM boot and visible failure projection
 external dependency manifest and dynamic provider loading
 source-provider selection, validation and fallback
+provider, seed and content identity
 DSK declaration, census, validation and install snapshots
 game manifest, build and content identity
 immutable game state, frame mutation and reset
 game snapshot and diagnostics
 runtime lifecycle, RAF scheduling and stop/start
 runtime clock, step admission and reset epoch
-performance samples and elapsed-time windows
-quality profile schema, admission and revision
-adaptive decision, hysteresis, cooldown and manual override
-budget allocation, reservation, consumption and violation reporting
-quality transition prepare, commit, rollback and journaling
-terrain, grass, scatter, post-process and surface quality consumers
-GameHost capability projection
-browser editor capability routing
-Node headless editor, workspace and artifact operations
+canonical value schema and serialization
+determinism fingerprints and checkpoint projections
+replay scenario, command sequence and tick schedule
+independent runtime construction and replay execution
+reset replay and cadence normalization
+first divergence and bounded replay journal
+browser/headless deterministic parity
 player, input, interaction, objective, story and persistence declarations
 terrain, path, materials, scatter and atmosphere
 grass density, archetypes, batching, placement, instancing, wind and LOD
 tree, wind, performance and post-process enhancement
-render-plan v2 contract, quality fingerprint and topology identity
+render-plan v2 contract and topology identity
 CPU mesh construction
 WebGL context, shader, buffer, draw, resize and disposal
 render surface, context recovery and committed-frame observation
-quality-to-visible-frame and capture correlation
+state/render-plan/visible-frame replay correlation
 static checks, browser observation, build and Pages deployment
 DSK implementation, dependency, consumption and retirement truth
 ```
 
 ## Complete kit inventory and services
 
-### External
+### External provider
 
 ```txt
 meadow-area-kit
-  area/path/style/material normalization; deterministic scatter; grass, flower, rock,
-  mushroom and tree descriptors; wind and atmosphere; render-plan generation;
+  area/path/style/material normalization
+  deterministic seeded scatter
+  grass, flower, rock, mushroom and tree descriptors
+  wind and atmosphere descriptors
+  render-plan generation
   validation, snapshot, reset and optional runtime adapter
 ```
 
@@ -203,7 +209,7 @@ meadow-performance-dsk
 meadow-render-host-dsk
   renderer-selection, render-plan-ingest, pass-order, renderer-state, renderer-validation
 meadow-webgl-renderer-v2-kit
-  context acquisition, shader program creation, attribute/uniform binding, CPU mesh ingest,
+  context acquisition, shader programs, attribute/uniform binding, CPU mesh ingest,
   GPU buffer ownership, draw submission, resize, snapshot and disposal
 post-process-stack-dsk
   pass-registry, render-target-system, sobel-outline-pass, color-grade-pass, post-validation
@@ -225,134 +231,97 @@ static-pages-deploy-dsk
 
 ## Main findings
 
-### Static auto profile
+### Same-instance read stability only
 
-`QUALITY_PROFILES.auto` is a fixed object. The runtime creates no frame sample, window, decision, hysteresis or cooldown state.
+`validateDeterminism()` invokes the supplied callback twice and compares the two serialized results. The smoke passes the same live `game.getSnapshot()` callback without any intervening tick, reset or mutation.
 
-### Implicit high profile
+### Fallback-only test path
 
-`ARRIVAL_MEADOW_CONFIG.style` has no performance descriptor. The policy therefore defaults to `high` without an admission or observation result.
+`deterministic-scene-smoke.mjs` calls `createIntoTheMeadowGame()` without `externalKits`, so it exercises the local fallback provider rather than the commit-pinned provider used by production boot.
 
-### Quality-blind cache identity
+### No independent construction
 
-`createRenderPlanEnhancer()` caches by source topology only. Runtime performance inputs are consulted only during rebuild and are omitted from the cache key. The web host passes no runtime performance argument.
+The check does not create runtime A and runtime B. Constructor nondeterminism, shared mutable provider state, cache residue and process-order dependencies are outside the test.
 
-### Partial budget enforcement
+### No simulation or reset replay
 
-```txt
-maxFlowerObjects: source-order filter
-maxTreeLineObjects: source-order filter
-maxGrassInstances: calculated, not enforced
-maxSmallScatterObjects: calculated, unused
-mushrooms: hard-coded local limit 14
-```
+The test executes no tick sequence, interaction command, objective transition, story trigger, stop/start or reset/replay cycle.
 
-### Ignored profile fields
+### Canonicalization contract absent
 
-`terrainResolution` is superseded by hard-coded 96 x 124 terrain segments. `postProcess` does not control stack construction or actual outline/color draw submission. DPR is independently clamped by the renderer.
+`stableStringify()` sorts plain object keys but admits arbitrary JavaScript values. `NaN`, `Infinity`, `-0`, sparse arrays, unsupported prototypes, typed values, cycles and accessor behavior have no explicit policy.
 
-### Validation and proof gaps
+### No diagnostic divergence
 
-The enhancer does not call `performance.validate()`. Unknown quality labels can fall back to high behavior while retaining an invalid label. No quality revision, fingerprint, budget result or first-frame acknowledgement reaches renderer, GameHost, editor or capture observations.
+The result contains only `passed` and a generic failure string. It does not identify checkpoint, tick, domain, path, provider, seed or left/right fingerprints.
+
+### No presentation proof
+
+Game snapshots include the base render plan, but deterministic validation does not compare enhanced plans, renderer generations, committed frames, captures or the production visible surface.
 
 ## Required parent domain
 
 ```txt
-meadow-adaptive-quality-budget-authority-domain
+meadow-deterministic-replay-validation-authority-domain
 ```
 
 Planned coordinating kits:
 
 ```txt
-performance-sample-envelope-kit
-performance-window-timebase-kit
-quality-profile-schema-kit
-quality-profile-admission-kit
-quality-decision-policy-kit
-quality-transition-command-kit
-quality-transition-id-kit
-quality-revision-kit
-performance-budget-ledger-kit
-grass-instance-budget-kit
-scatter-budget-kit
-terrain-resolution-policy-kit
-post-process-quality-policy-kit
-render-plan-quality-fingerprint-kit
-quality-cache-invalidation-kit
-quality-transition-prepare-kit
-quality-transition-commit-kit
-quality-transition-rollback-kit
-effective-quality-observation-kit
-quality-frame-ack-kit
-quality-cadence-parity-fixture-kit
-quality-budget-enforcement-fixture-kit
-quality-transition-browser-smoke-kit
-```
-
-## Required transaction
-
-```txt
-collect valid post-frame samples
-  -> update elapsed-time window
-  -> decide with hysteresis and cooldown
-  -> admit transition against session, renderer, surface and quality revision
-  -> allocate complete consumer budgets
-  -> prepare detached plan and resources
-  -> validate every consumer binding and ceiling
-  -> atomically commit or roll back
-  -> render first successor frame
-  -> publish quality result, fingerprint, budgets and frame receipt
+canonical-value-schema-kit
+canonical-serializer-kit
+determinism-fingerprint-kit
+provider-identity-kit
+provider-fingerprint-kit
+seed-policy-kit
+replay-run-id-kit
+replay-scenario-schema-kit
+replay-input-sequence-kit
+replay-tick-schedule-kit
+independent-runtime-construction-kit
+replay-execution-kit
+reset-replay-kit
+cadence-normalization-kit
+state-projection-fingerprint-kit
+render-plan-fingerprint-kit
+visible-frame-determinism-ack-kit
+first-divergence-kit
+replay-result-kit
+determinism-journal-kit
+same-seed-independent-build-fixture-kit
+fallback-external-parity-fixture-kit
+tick-reset-replay-fixture-kit
+cadence-parity-fixture-kit
+browser-headless-replay-fixture-kit
 ```
 
 ## Required proof
 
 ```txt
-profile schema and fingerprint determinism
-unknown profile rejection
-30/60/120 Hz decision parity
-hidden/suspended frame policy
-complete grass and scatter budget ceilings
-terrain, post and surface profile bindings
-quality-only cache invalidation
-idempotent duplicate and stale rejection
-consumer failure rollback
-context-loss classification
-browser/headless observation parity
-first visible quality-frame correlation
-Pages degrade and recovery smoke
-```
-
-## Ordered safe ledges
-
-```txt
-1. Runtime Session Lifecycle Authority
-2. Host Capability Gateway and Raw Runtime Quarantine
-3. Headless Workspace Path Authority and Filesystem Containment
-4. Runtime Clock and Step Admission Authority
-5. Source Provider Authority
-6. Render Topology Identity Authority
-6a. WebGL Context Recovery Authority
-6b. Render Surface Resolution Authority
-7. Committed Frame Observation Authority
-7a. Fatal Runtime Failure Recovery Authority
-7b. Adaptive Quality and Performance Budget Authority
-8. Interaction Command and Objective Authority
-8a. Persistence Continuity Authority
-9. DSK Runtime Consumption Authority
+canonical-value rejection and versioning
+same provider/seed/content across independent builds
+fallback and external provider replay classification
+same sequenced commands and normalized ticks
+reset and replay parity
+30/60/120 Hz committed-tick parity
+browser/headless result parity
+negative controls for seed/provider/input/content changes
+exact first-divergence reporting
+state, render-plan and first visible frame correlation
 ```
 
 ## Validation status
 
 ```txt
 runtime source changed: no
-performance source changed: no
-renderer source changed: no
+determinism source changed: no
 package scripts changed: no
 dependencies changed: no
+rendering changed: no
 deployment changed: no
 branch created: no
 pull request created: no
 npm run check: not run
-browser performance smoke: not run
-adaptive-quality fixtures: unavailable
+new replay fixtures: unavailable
+browser replay smoke: unavailable
 ```

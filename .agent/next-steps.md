@@ -1,116 +1,120 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T07-19-47-04-00`
+**Updated:** `2026-07-12T09-06-38-04-00`
 
 ## Summary
 
-Implement one session-scoped adaptive-quality authority after runtime clock, render-surface and committed-frame foundations. It must convert frame and capability observations into stable quality transitions, apply every physical consumer under one revision and correlate the first visible frame with that committed result.
+Implement bridge lifecycle and bounded browser error retention immediately after runtime-session and public-capability foundations. Keep the browser bridge as an adapter over those authorities rather than a second lifecycle owner.
 
 ## Plan ledger
 
-**Goal:** make `meadow-performance-dsk` an executable authority without introducing a second renderer, grass owner or surface owner.
+**Goal:** make editor bridge installation, replacement, capability invocation, error observation, query, stop and disposal deterministic and bounded.
 
-- [ ] Define `PerformanceSample`, sample identity and capability evidence.
-- [ ] Instrument CPU frame cost around tick, enhancement and rendering.
-- [ ] Add optional GPU timer capability and typed unsupported result.
-- [ ] Define rolling windows, percentiles, minimum samples and hidden-tab policy.
-- [ ] Define named frame, topology, grass, terrain, post and surface budgets.
-- [ ] Define `QualityTier` and monotonic `QualityRevision`.
-- [ ] Make `auto` a controller policy rather than a static profile alias.
-- [ ] Add hysteresis, asymmetric upgrade/downgrade windows and cooldown.
-- [ ] Route manual and automatic changes through one command/result contract.
-- [ ] Bind transitions to runtime, context, surface, topology and predecessor-quality revisions.
-- [ ] Derive topology impact before mutation.
-- [ ] Pass committed runtime quality into `createRenderPlanEnhancer`.
-- [ ] Include topology-affecting quality fields in enhancer and renderer cache admission.
-- [ ] Apply profile terrain resolution rather than hard-coded segment counts.
-- [ ] Enforce committed grass instance and density budgets.
-- [ ] Apply physical post-process/outline policy to submitted work.
-- [ ] Add a surface-scale adapter only through render-surface authority.
-- [ ] Prepare all required consumers without exposing partial state.
-- [ ] Commit one quality revision or preserve/restore the predecessor.
-- [ ] Reject stale prepared plans after reset, context loss or surface replacement.
-- [ ] Publish clone-safe diagnostics and editor capability results.
-- [ ] Acknowledge the first visible frame using quality, topology and surface revisions.
-- [ ] Add deterministic policy, browser matrix and Pages fixtures.
+- [ ] Define `EditorBridgeId` and monotonic `EditorBridgeGeneration`.
+- [ ] Bind every bridge to `runtimeSessionId` and `hostGeneration`.
+- [ ] Replace implicit install with `EditorBridgeInstallCommand/Result`.
+- [ ] Admit predecessor generation before global replacement.
+- [ ] Retire predecessor capability and listener leases before successor commit.
+- [ ] Represent every registered capability as a revocable lease.
+- [ ] Represent `error` and `unhandledrejection` handlers as listener leases.
+- [ ] Define normalized `BrowserErrorEntry` with sequence, time, frame and generation evidence.
+- [ ] Add count, byte and age retention limits.
+- [ ] Coalesce repeated errors by stable fingerprint and time window.
+- [ ] Add dropped-entry counters and reason classification.
+- [ ] Replace full-array cloning with paged cursor queries.
+- [ ] Add explicit acknowledgement/clear policy.
+- [ ] Reject invokes, snapshots and captures from stale/disposed bridges.
+- [ ] Correlate captures with bridge, runtime, frame and surface revisions.
+- [ ] Decide and encode stop policy: keep diagnostics active, suspend, or dispose.
+- [ ] Make disposal ordered, idempotent and typed.
+- [ ] Remove the global only when its generation still matches.
+- [ ] Expose bounded bridge observations through diagnostics and editor readback.
+- [ ] Add browser restart, replacement, error-flood and listener-retirement fixtures.
+- [ ] Repeat the lifecycle matrix against deployed GitHub Pages.
 
-## Required command
+## Required commands
 
 ```txt
-QualityTransitionCommand {
+EditorBridgeInstallCommand {
   commandId
   runtimeSessionId
-  rendererGeneration
-  predecessorQualityRevision
-  targetTier
+  hostGeneration
+  predecessorBridgeGeneration
+  capabilityManifestRevision
+  errorRetentionPolicyRevision
+}
+
+BrowserErrorQueryCommand {
+  bridgeId
+  bridgeGeneration
+  afterSequence
+  limit
+}
+
+BrowserErrorAckCommand {
+  bridgeId
+  bridgeGeneration
+  throughSequence
+}
+
+EditorBridgeDisposeCommand {
+  bridgeId
+  bridgeGeneration
   reason
-  performanceWindowId
-  capabilitySnapshotId
-  expectedTopologyKey
-  expectedSurfaceRevision
 }
 ```
 
-## Required result
+## Required results
 
 ```txt
-QualityTransitionResult {
+EditorBridgeInstallResult {
   status
-  reason
-  commandId
-  predecessorQualityRevision
-  committedQualityRevision
-  targetTier
-  consumerResults
-  topologyResult
-  rollbackResult
-  firstVisibleFrameId
+  bridgeId
+  bridgeGeneration
+  predecessorRetirementResult
+  capabilityLeaseCount
+  listenerLeaseCount
 }
-```
 
-## Required performance sample
+BrowserErrorQueryResult {
+  status
+  entries
+  nextSequence
+  retainedCount
+  retainedBytes
+  droppedCounts
+}
 
-```txt
-PerformanceSample {
-  sampleId
-  runtimeSessionId
-  frameId
-  surfaceRevision
-  qualityRevision
-  visibilityState
-  cpuFrameMs
-  gpuFrameMs | unsupported
-  deadlineMs
-  descriptorCounts
-  vertexCount
-  drawCount
-  topologyRebuilt
-  observedAt
+EditorBridgeDisposeResult {
+  status
+  revokedCapabilityCount
+  removedListenerCount
+  releasedEntryCount
+  globalRemovalResult
 }
 ```
 
 ## Acceptance matrix
 
 ```txt
-manual low/medium/high/ultra parity
-static profile logical/physical parity
-auto sustained-overload downgrade
-auto sustained-headroom upgrade
-single-spike rejection
-hysteresis around threshold
-cooldown enforcement
-GPU timer supported/unsupported paths
-hidden-tab sample classification
-quality topology rebuild only when required
-grass and terrain budget enforcement
-post-process physical-policy parity
-consumer prepare failure
-consumer commit failure and rollback
-stale context/surface/quality plan rejection
-editor/browser command parity
-first visible-frame quality receipt
-local browser and deployed Pages smoke
+first install
+idempotent dispose
+stop/start under selected policy
+successor install retires predecessor
+stale predecessor invoke rejection
+stale predecessor capture rejection
+error event normalization
+unhandled rejection normalization
+capability error normalization
+10,000-event count and byte bound
+age expiry
+fingerprint coalescing
+paged query and acknowledgement
+listener count returns to baseline
+current capture cites current frame/surface/bridge
+local browser smoke
+GitHub Pages smoke
 ```
 
 ## Ordered architecture queue
@@ -118,6 +122,7 @@ local browser and deployed Pages smoke
 ```txt
 1. Runtime Session Lifecycle Authority
 2. Host Capability Gateway and Raw Runtime Quarantine
+2a. Editor Bridge Lifecycle and Error Journal Authority
 3. Headless Workspace Path Authority and Filesystem Containment
 4. Runtime Clock and Step Admission Authority
 5. Source Provider Authority
@@ -136,4 +141,4 @@ local browser and deployed Pages smoke
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not change quality directly from one RAF duration or from the renderer. Keep policy, admission and revision ownership in the performance domain, then adapt the existing enhancer, renderer, grass, terrain, post and surface owners.
+Do not add another independent global owner. Update the existing host, GameHost and bridge adapters to consume runtime-session, capability and frame authorities.

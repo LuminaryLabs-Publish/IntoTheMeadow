@@ -1,19 +1,20 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-12T19-41-13-04-00",
-  "status": "frame-scheduler-step-admission-authority-audited",
-  "currentAuditedSlice": "Browser Frame Scheduler / RAF Lease / Fixed-Step Admission / Refresh-Rate Parity / Render-Simulation Clock Correlation / First-Frame Proof",
-  "precedingAuditedSlice": "Exploration Progression Central Reconciliation at 2026-07-12T17-58-43-04-00",
-  "latestTracker": ".agent/trackers/2026-07-12T19-41-13-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T19-41-13-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T19-41-13-04-00-frame-scheduler-step-admission-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-12T19-41-13-04-00-render-simulation-clock-correlation-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T19-41-13-04-00-refresh-rate-dependent-simulation-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T19-41-13-04-00-stop-start-frame-admission-map.md",
-  "latestFrameClockAudit": ".agent/frame-clock-audit/2026-07-12T19-41-13-04-00-raf-lease-fixed-step-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T19-41-13-04-00-frame-clock-fixture-gate.md",
+  "generatedAt": "2026-07-12T19-49-41-04-00",
+  "status": "frame-scheduler-step-admission-central-reconciled",
+  "currentAuditedSlice": "Frame Scheduler Central Reconciliation / Runtime Clock / RAF Lease / Fixed-Step Admission / Refresh-Rate Parity / Render-Simulation Clock Correlation / First-Frame Proof",
+  "precedingAuditedSlice": "Frame Scheduler Step Admission Authority at 2026-07-12T19-41-13-04-00",
+  "latestTracker": ".agent/trackers/2026-07-12T19-49-41-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T19-49-41-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T19-49-41-04-00-frame-scheduler-central-reconciliation-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-12T19-49-41-04-00-clocked-visible-frame-central-reconciliation.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T19-49-41-04-00-refresh-rate-simulation-central-reconciliation.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T19-49-41-04-00-frame-callback-step-admission-map.md",
+  "latestFrameSchedulerAudit": ".agent/frame-scheduler-audit/2026-07-12T19-49-41-04-00-clock-raf-step-lifecycle-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T19-49-41-04-00-frame-clock-fixture-central-gate.md",
   "retainedAudits": {
+    "detailedFrameScheduler": ".agent/architecture-audit/2026-07-12T19-41-13-04-00-frame-scheduler-step-admission-dsk-map.md",
     "explorationProgression": ".agent/architecture-audit/2026-07-12T17-58-43-04-00-exploration-progression-central-reconciliation-dsk-map.md",
     "dskRuntimeConsumption": ".agent/dsk-runtime-audit/2026-07-12T15-49-09-04-00-declaration-provider-consumption-contract.md",
     "grassVisibility": ".agent/grass-system-audit/2026-07-12T13-54-00-04-00-visibility-lod-registry-contract.md"
@@ -27,7 +28,7 @@
     "rootAgentMissingCount": 0,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "No new, ledger-missing or root-agent-missing eligible repository existed. IntoTheMeadow had the oldest synchronized eligible central-ledger timestamp."
+    "reason": "No new, ledger-missing or root-agent-missing eligible repository existed. IntoTheMeadow was selected because its 2026-07-12T19-41-13-04-00 repo-local frame-scheduler audit was newer than the 2026-07-12T17-58-43-04-00 central ledger entry."
   },
   "census": {
     "externalDeclaredCount": 1,
@@ -68,8 +69,8 @@
     "externalKit": "meadow-area-kit",
     "externalServiceCount": 11,
     "localKitCount": 43,
-    "completeInventory": ".agent/trackers/2026-07-12T19-41-13-04-00/project-breakdown.md#complete-kit-and-offered-service-inventory",
-    "detailedPredecessorInventory": ".agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md#complete-kit-and-offered-service-inventory"
+    "completeInventory": ".agent/trackers/2026-07-12T19-49-41-04-00/project-breakdown.md#complete-kit-and-offered-service-inventory",
+    "detailedPredecessorInventory": ".agent/trackers/2026-07-12T19-41-13-04-00/project-breakdown.md#complete-kit-and-offered-service-inventory"
   },
   "runtimeState": {
     "descriptorValidation": "implemented",

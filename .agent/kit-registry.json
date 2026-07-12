@@ -1,19 +1,20 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-12T17-49-51-04-00",
-  "status": "exploration-progression-authority-audited",
-  "currentAuditedSlice": "Gameplay Command Ingress / Player Movement / Path Progress / Focal-Tree Inspection / Objective and Story Progression / First-Frame Proof",
-  "precedingAuditedSlice": "DSK Runtime Consumption Authority at 2026-07-12T15-49-09-04-00",
-  "latestTracker": ".agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T17-49-51-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T17-49-51-04-00-exploration-progression-authority-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-12T17-49-51-04-00-gameplay-result-visible-frame-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T17-49-51-04-00-inert-exploration-progression-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T17-49-51-04-00-input-movement-inspect-objective-admission-map.md",
-  "latestProgressionAudit": ".agent/progression-audit/2026-07-12T17-49-51-04-00-path-inspect-objective-story-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T17-49-51-04-00-playable-loop-fixture-gate.md",
+  "generatedAt": "2026-07-12T17-58-43-04-00",
+  "status": "exploration-progression-central-reconciled",
+  "currentAuditedSlice": "Exploration Progression Central Reconciliation / Gameplay Command Ingress / Movement / Path Progress / Focal-Tree Inspection / Objective and Story Progression / First-Frame Proof",
+  "precedingAuditedSlice": "Exploration Progression Authority at 2026-07-12T17-49-51-04-00",
+  "latestTracker": ".agent/trackers/2026-07-12T17-58-43-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T17-58-43-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T17-58-43-04-00-exploration-progression-central-reconciliation-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-12T17-58-43-04-00-gameplay-frame-provenance-central-reconciliation.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T17-58-43-04-00-inert-exploration-loop-central-reconciliation.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T17-58-43-04-00-gameplay-command-evidence-central-reconciliation.md",
+  "latestProgressionAudit": ".agent/progression-audit/2026-07-12T17-58-43-04-00-objective-story-exactly-once-central-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T17-58-43-04-00-playable-loop-central-sync-gate.md",
   "retainedAudits": {
+    "detailedExplorationProgression": ".agent/architecture-audit/2026-07-12T17-49-51-04-00-exploration-progression-authority-dsk-map.md",
     "dskRuntimeConsumption": ".agent/dsk-runtime-audit/2026-07-12T15-49-09-04-00-declaration-provider-consumption-contract.md",
     "grassVisibility": ".agent/grass-system-audit/2026-07-12T13-54-00-04-00-visibility-lod-registry-contract.md"
   },
@@ -26,8 +27,7 @@
     "rootAgentMissingCount": 0,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "skippedConcurrentRepo": "LuminaryLabs-Publish/TheOpenAbove",
-    "reason": "No new, ledger-missing or root-agent-missing eligible repository existed. TheOpenAbove was the oldest central entry but received concurrent documentation commits during selection, so IntoTheMeadow was chosen as the next-oldest stable eligible repository."
+    "reason": "No new, ledger-missing or root-agent-missing eligible repository existed. IntoTheMeadow had the oldest eligible stable central timestamp after TheOpenAbove completed its newer documentation run."
   },
   "census": {
     "externalDeclaredCount": 1,
@@ -71,7 +71,8 @@
     "externalKit": "meadow-area-kit",
     "externalServiceCount": 11,
     "localKitCount": 43,
-    "auditedCompleteInventory": ".agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md#complete-kit-and-offered-service-inventory"
+    "auditedCompleteInventory": ".agent/trackers/2026-07-12T17-58-43-04-00/project-breakdown.md#all-kits",
+    "detailedFiveServiceInventory": ".agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md#complete-kit-and-offered-service-inventory"
   },
   "runtimeState": {
     "descriptorValidation": "implemented",

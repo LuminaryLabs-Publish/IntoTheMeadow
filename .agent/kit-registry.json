@@ -1,18 +1,18 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-12T07-19-47-04-00",
-  "status": "adaptive-quality-performance-budget-authority-audited",
-  "currentAuditedSlice": "IntoTheMeadow Adaptive Quality / CPU-GPU Observation / Performance Windows / Hysteresis / Multi-Consumer Commit / First Visible Frame Proof",
-  "precedingAuditedSlice": "Audio Activation and Lifecycle Authority at 2026-07-12T05-39-42-04-00",
-  "latestTracker": ".agent/trackers/2026-07-12T07-19-47-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T07-19-47-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T07-19-47-04-00-adaptive-quality-performance-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-12T07-19-47-04-00-static-profile-physical-render-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T07-19-47-04-00-unbounded-frame-quality-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T07-19-47-04-00-performance-observation-quality-command-map.md",
-  "latestPerformanceAudit": ".agent/performance-audit/2026-07-12T07-19-47-04-00-sampling-hysteresis-quality-commit-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T07-19-47-04-00-adaptive-quality-browser-fixture-gate.md",
+  "generatedAt": "2026-07-12T09-06-38-04-00",
+  "status": "editor-bridge-lifecycle-error-journal-authority-audited",
+  "currentAuditedSlice": "Browser Editor Bridge Generation / Capability and Listener Leases / Bounded Error Journal / Replacement / Disposal / Capture Provenance",
+  "precedingAuditedSlice": "Adaptive Quality and Performance Budget Authority at 2026-07-12T07-19-47-04-00",
+  "latestTracker": ".agent/trackers/2026-07-12T09-06-38-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T09-06-38-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T09-06-38-04-00-editor-bridge-lifecycle-error-journal-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-12T09-06-38-04-00-stale-bridge-capture-frame-provenance-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T09-06-38-04-00-bridge-replacement-listener-retention-loop.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T09-06-38-04-00-bridge-install-query-dispose-command-map.md",
+  "latestEditorBridgeAudit": ".agent/editor-bridge-audit/2026-07-12T09-06-38-04-00-generation-listener-error-retention-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T09-06-38-04-00-browser-bridge-lifecycle-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
@@ -20,34 +20,31 @@
     "rootAgentStateCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "No eligible repository was new, central-ledger-missing or root-agent-missing. IntoTheMeadow was the oldest eligible synchronized central entry."
+    "skippedActiveRepo": "LuminaryLabs-Publish/PrehistoricRush",
+    "reason": "No eligible repository was new, central-ledger-missing or root-agent-missing. PrehistoricRush had newer unsynchronized repo-local audit work, so IntoTheMeadow was selected as the next-oldest stable central entry."
   },
   "census": {
     "externalDeclaredCount": 1,
     "localDeclaredCount": 43,
     "totalDeclaredCount": 44,
     "requiredV01LocalCount": 15,
-    "requiredPerformanceDskCount": 1,
-    "qualityProfileCount": 5,
-    "runtimePerformanceSampleCount": 0,
-    "rollingPerformanceWindowCount": 0,
-    "qualityTransitionCommandCount": 0,
-    "qualityRevisionCount": 0,
-    "physicalQualityParityResultCount": 0,
-    "firstQualityFrameReceiptCount": 0,
-    "adaptiveQualityFixtureCount": 0
+    "browserBridgeGenerationCount": 0,
+    "browserListenerLeaseCount": 0,
+    "boundedBrowserErrorJournalCount": 0,
+    "browserBridgeLifecycleFixtureCount": 0
   },
   "interactionLoop": [
-    "page boot imports the meadow provider and installs DSK descriptors",
-    "game enhancer renderer and editor bridge are created",
-    "RAF advances game state with fixed dt and absolute time",
-    "render plan is enhanced with the default static high profile",
-    "renderer resizes reuses or rebuilds the mesh and submits outline and color draws",
-    "debug readback reports counts and cache labels but no performance or quality result",
-    "no observation window decision command revision commit rollback or first-frame receipt exists"
+    "page boot imports the provider and installs DSK descriptors",
+    "game enhancer renderer GameHost and editor bridge are created",
+    "editor bridge registers browser error and unhandled rejection listeners",
+    "RAF advances game state and renders the meadow",
+    "editor capabilities execute against GameHost canvas and browser state",
+    "browser and capability faults append to an unbounded bridge-local array",
+    "queries and snapshots clone the complete retained error history",
+    "host stop does not dispose the bridge and successor bootstrap can overwrite globals without retiring predecessors"
   ],
   "domainsInUse": [
-    "browser shell loading and visible failure projection",
+    "browser shell loading and fatal projection",
     "external provider loading validation and fallback",
     "DSK declaration registry validation and install snapshots",
     "game manifest immutable state tick reset snapshot and diagnostics",
@@ -57,9 +54,11 @@
     "player input interaction objective story ecology audio UI and persistence declarations",
     "render-plan enhancement topology caching CPU mesh and WebGL rendering",
     "post-process declarations shader precision and physical draw submission",
-    "editor capability surface and browser error capture",
-    "validation headless tools build and Pages deployment",
-    "adaptive performance sampling quality transition commit rollback and frame proof missing"
+    "GameHost global publication and raw game reachability",
+    "browser editor capabilities capture and error observation",
+    "Node headless editor scenarios and artifact output",
+    "validation build and Pages deployment",
+    "editor bridge generation listener leases bounded error journal replacement and disposal authority missing"
   ],
   "externalKits": {
     "meadow-area-kit": {
@@ -113,24 +112,23 @@
     "final-composite-pass-kit": ["scene-input", "post-input", "output-target", "debug-overlay", "fallback-composite"],
     "static-pages-deploy-dsk": ["build-config", "github-pages-workflow", "release-artifacts", "cache-invalidation", "deploy-validation"]
   },
-  "adaptiveQualityPerformanceAuthority": {
-    "parentDomain": "meadow-adaptive-quality-performance-authority-domain",
-    "mainFinding": "The required performance DSK supplies static profiles only. The host has no timing window or adaptive decision, logical quality fields do not fully control physical rendering, dynamic quality is absent from cache identity, and no quality revision or first-frame receipt exists.",
-    "existingOwnersToUpdate": ["meadow-performance-dsk", "web-host-dsk", "meadow-render-host-dsk", "meadow-webgl-renderer-v2-kit", "meadow-diagnostics-dsk", "grass-density-scaling-kit", "grass-lod-policy-kit", "grass-patch-placement-kit", "grass-clump-instancing-render-kit", "meadow-terrain-texture-dsk", "post-process-stack-dsk", "render-target-kit", "into-the-meadow-game-dsk", "game snapshot/read model", "editor capability bridge", "render surface authority", "committed frame authority"],
-    "plannedKits": ["performance-sample-id-kit", "performance-capability-snapshot-kit", "cpu-frame-time-observation-kit", "gpu-timer-capability-kit", "gpu-frame-time-observation-kit", "frame-deadline-result-kit", "rolling-performance-window-kit", "performance-percentile-kit", "performance-budget-policy-kit", "quality-tier-id-kit", "quality-revision-kit", "quality-transition-command-kit", "quality-transition-admission-kit", "quality-hysteresis-kit", "quality-cooldown-kit", "quality-transition-result-kit", "quality-topology-impact-plan-kit", "grass-budget-adapter-kit", "terrain-resolution-adapter-kit", "post-process-policy-adapter-kit", "surface-scale-adapter-kit", "quality-plan-prepare-kit", "quality-consumer-result-kit", "quality-commit-kit", "quality-rollback-kit", "stale-quality-plan-rejection-kit", "quality-frame-correlation-kit", "performance-observation-kit", "performance-journal-kit", "adaptive-quality-fixture-kit", "quality-oscillation-fixture-kit", "browser-performance-profile-smoke-kit"],
-    "requiredProof": ["static tier logical and physical parity", "sustained overload downgrade", "sustained headroom upgrade", "single-spike rejection", "hysteresis and cooldown", "GPU timing supported and unsupported paths", "hidden-tab sample policy", "topology rebuild only when required", "consumer failure rollback", "stale context and surface rejection", "editor and browser command parity", "first visible-frame quality receipt", "browser and Pages performance smoke"]
+  "editorBridgeLifecycleAuthority": {
+    "parentDomain": "meadow-editor-bridge-lifecycle-and-error-journal-authority-domain",
+    "mainFinding": "The browser bridge has no runtime-bound generation, predecessor retirement or listener leases. It retains all browser and capability faults in an unbounded array, clones the full history into queries and snapshots, and remains active after host stop.",
+    "existingOwnersToUpdate": ["web-host-dsk", "meadow-diagnostics-dsk", "into-the-meadow-game-dsk", "src/hosts/web-host.js", "src/boot/expose-game-host.js", "src/editor/install-editor-bridge.js", "runtime session lifecycle authority", "host capability gateway authority", "committed frame authority"],
+    "plannedKits": ["editor-bridge-id-kit", "editor-bridge-generation-kit", "editor-bridge-install-command-kit", "editor-bridge-install-admission-kit", "editor-bridge-predecessor-retirement-kit", "editor-bridge-publication-kit", "editor-capability-lease-kit", "browser-listener-lease-kit", "browser-error-entry-kit", "browser-error-sequence-kit", "browser-error-normalization-kit", "browser-error-retention-policy-kit", "browser-error-journal-kit", "browser-error-query-kit", "browser-error-ack-kit", "editor-bridge-stop-policy-kit", "editor-bridge-dispose-plan-kit", "editor-bridge-dispose-result-kit", "stale-editor-bridge-rejection-kit", "editor-bridge-observation-kit", "editor-bridge-lifecycle-journal-kit", "editor-bridge-restart-fixture-kit", "browser-error-flood-fixture-kit", "browser-listener-retirement-fixture-kit", "browser-editor-bridge-smoke-kit"],
+    "requiredProof": ["first install", "successor replacement", "predecessor capability and listener retirement", "stale invoke and capture rejection", "stop/start policy", "error normalization", "count byte and age retention bounds", "fingerprint coalescing", "paged query and acknowledgement", "listener baseline restoration", "capture frame surface and bridge provenance", "browser and Pages lifecycle smoke"]
   },
-  "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Shader Precision Admission Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Audio Activation and Lifecycle Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
+  "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Editor Bridge Lifecycle and Error Journal Authority", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Shader Precision Admission Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Audio Activation and Lifecycle Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
   "validation": {
     "runtimeSourceChanged": false,
-    "performanceSourceChanged": false,
-    "rendererSourceChanged": false,
+    "editorBridgeSourceChanged": false,
     "packageScriptsChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
-    "performanceFixturesAvailable": false,
-    "browserPerformanceSmokeRun": false,
-    "pagesPerformanceSmokeRun": false,
+    "browserBridgeFixturesAvailable": false,
+    "browserBridgeSmokeRun": false,
+    "pagesBridgeSmokeRun": false,
     "branchCreated": false,
     "pullRequestCreated": false,
     "targetBranch": "main"

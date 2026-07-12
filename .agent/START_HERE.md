@@ -2,44 +2,42 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T13-54-00-04-00`  
-**Status:** `grass-visibility-lod-central-reconciled`
+**Last aligned:** `2026-07-12T15-49-09-04-00`  
+**Status:** `dsk-runtime-consumption-authority-audited`
 
 ## Summary
 
-IntoTheMeadow is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a texture-driven grass descriptor stack, one persistent CPU mesh and a WebGL renderer.
+IntoTheMeadow is a deterministic meadow environment and editor proof with one pinned external provider, 43 local DSK/kit descriptors, a persistent WebGL renderer, `GameHost`, browser editor bridge and Node headless-editor tooling.
 
-The current source-backed audit isolates grass visibility and LOD authority. Near, mid, far and terrain-tint tiers are declared, but placement chooses only near or mid batches from density. The distance policy is not consumed, every instance is baked into one static mesh, and the renderer draws that complete mesh twice without frustum, distance, hysteresis or visible-budget admission.
-
-This timestamp reconciles that repo-local audit with the machine registry and `LuminaryLabs-Dev/LuminaryLabs`. Runtime behavior is unchanged.
+The current audit isolates DSK declaration-to-runtime consumption. The repository validates and snapshots descriptor metadata, but it does not resolve executable providers or bind services. The active tick only increments `frame` and records time, so player, input, interaction, objective, story, ecology, audio, UI and persistence declarations are not consumed by gameplay.
 
 ## Plan ledger
 
-**Goal:** keep one authoritative documentation state while defining camera-bound, revisioned grass visibility and first-frame proof through existing grass/render owners.
+**Goal:** make capability status truthful and establish one authoritative gameplay path from installed DSK providers through command consumption, state/progression commit and first-visible-frame proof.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have central-ledger and root `.agent` coverage.
-- [x] Select only `IntoTheMeadow` because repo-local grass documentation was newer than central tracking.
-- [x] Preserve the interaction loop, all domains, all 44 declared kits and offered services.
-- [x] Preserve the source-backed density/static-mesh finding.
-- [x] Add a fresh reconciliation tracker and architecture/system audits.
-- [x] Synchronize root entrypoints, machine registry and central tracking.
+- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
+- [x] Identify the complete interaction loop and all domains.
+- [x] Preserve all 44 declared kits and every offered service.
+- [x] Trace descriptor validation, install snapshots, game state, authored content and host consumption.
+- [x] Add a fresh tracker and architecture/system audits.
+- [x] Refresh root `.agent` state and central tracking.
 - [x] Push only to `main`; create no branch or pull request.
-- [ ] Implement and execute camera-bound visibility later.
+- [ ] Implement executable provider binding and gameplay fixtures later.
 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-12T13-54-00-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T13-54-00-04-00.md
-.agent/architecture-audit/2026-07-12T13-54-00-04-00-grass-visibility-central-reconciliation-dsk-map.md
-.agent/render-audit/2026-07-12T13-54-00-04-00-camera-visible-set-ledger-reconciliation-gap.md
-.agent/gameplay-audit/2026-07-12T13-54-00-04-00-density-tagged-grass-lod-reconciliation.md
-.agent/interaction-audit/2026-07-12T13-54-00-04-00-camera-grass-admission-reconciliation.md
-.agent/grass-system-audit/2026-07-12T13-54-00-04-00-visibility-lod-registry-contract.md
-.agent/central-sync-audit/2026-07-12T13-54-00-04-00-repo-ledger-machine-registry-contract.md
-.agent/deploy-audit/2026-07-12T13-54-00-04-00-grass-visibility-fixture-central-gate.md
+.agent/trackers/2026-07-12T15-49-09-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T15-49-09-04-00.md
+.agent/architecture-audit/2026-07-12T15-49-09-04-00-dsk-runtime-consumption-authority-map.md
+.agent/render-audit/2026-07-12T15-49-09-04-00-gameplay-state-visible-frame-provenance-gap.md
+.agent/gameplay-audit/2026-07-12T15-49-09-04-00-declared-gameplay-inert-tick-loop.md
+.agent/interaction-audit/2026-07-12T15-49-09-04-00-input-target-objective-admission-map.md
+.agent/dsk-runtime-audit/2026-07-12T15-49-09-04-00-declaration-provider-consumption-contract.md
+.agent/deploy-audit/2026-07-12T15-49-09-04-00-dsk-consumption-gameplay-fixture-gate.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -47,73 +45,73 @@ This timestamp reconciles that repo-local audit with the machine registry and `L
 .agent/kit-registry.json
 ```
 
-## Interaction loop
+## Current loop
 
 ```txt
 boot
-  -> import pinned meadow-area provider
-  -> install 43 local declarations plus one external kit
-  -> create immutable game, render plan, performance, wind and post descriptors
-  -> generate density texture, clump archetypes and near/mid/far batches
-  -> create patch grid and choose near/mid instances from density
-  -> flatten every instance into draw groups
-  -> attach but do not consume the distance LOD policy
-  -> build one complete static CPU mesh
-  -> expose GameHost/editor bridge and start RAF
+  -> load pinned meadow provider
+  -> create and structurally validate 43 local descriptors
+  -> snapshot 15 active-v0.1 and 28 planned declarations
+  -> create meadow render source, game state, renderer, GameHost and editor bridge
+  -> start RAF
 
 frame
-  -> tick game with fixed 1/60 dt
-  -> reuse static topology and mesh
-  -> derive camera matrices
-  -> upload time/wind/light/outline uniforms
-  -> draw the complete mesh as outline
-  -> draw the complete mesh as color
-  -> publish aggregate counts/cache snapshot
-  -> schedule successor RAF
+  -> game.tick({ time, dt: 1/60 })
+  -> increment frame and record lastTick only
+  -> reuse static render source with time overlay
+  -> enhance and render the visual plan
+  -> publish visual/debug snapshots
 
-proof
-  -> Node checks require descriptors, groups and aligned static mesh arrays
-  -> browser checks require page/editor/GPU markers and screenshot output
-  -> no fixture traverses LOD bands, frustum states or visibility revisions
+missing gameplay consumption
+  -> no browser input sample
+  -> no gameplay command router
+  -> no player movement or path progress
+  -> no interaction target query or inspect result
+  -> no objective/story transition
+  -> no feedback, audio or save consumer
 ```
 
 ## Main findings
 
 ```txt
-declared LOD tiers: near, mid, far, terrain-tint
-active calls to grass-lod-policy-kit.pick(distance): 0
-placement batch rule: density > 0.55 => near; otherwise mid
-far selected by placement: no
-terrain-tint representation: absent
-culled representation: absent
-patch bounds/frustum result: absent
-hysteresis: absent
-visible patch/instance/vertex/draw budgets: absent
-all grass baked into one static mesh: yes
-full-mesh draw passes per frame: 2
+external provider declarations: 1
+local DSK/kit declarations: 43
+total declarations: 44
+required-v0.1 declarations: 15
+planned declarations: 28
+concrete per-kit install results: 0
+runtime capability generation: absent
+DSK consumption receipts: absent
+runtime gameplay commands: 0
+story beats authored: 3
+objectives authored: 2
+interaction targets authored: 2
+state fields changed by tick: frame and lastTick only
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-grass-visibility-lod-authority-domain
+meadow-dsk-runtime-consumption-authority-domain
 ```
 
 ## Required flow
 
 ```txt
-committed camera, viewport, topology, policy and performance revisions
-  -> allocate GrassVisibilityCommand
-  -> classify stable patch bounds against the frustum
-  -> measure camera distance to admitted bounds
-  -> apply tier hysteresis and deterministic budgets
-  -> choose near, mid, far, terrain-tint or culled
-  -> produce immutable GrassVisibilityResult
-  -> reject stale generations
-  -> stage and atomically install mesh/draw generation
-  -> preserve predecessor after candidate failure
-  -> publish per-tier observations
-  -> acknowledge first visible frame with matching visibility revision
+DSK declarations
+  -> resolve immutable provider identities and service contracts
+  -> validate dependencies and install order
+  -> prepare executable service instances
+  -> prove readiness and declared/realized parity
+  -> atomically publish runtime capability generation
+
+Gameplay input or editor command
+  -> normalize and admit command
+  -> invoke bound player/interaction/objective/story services
+  -> publish DSK consumption receipts
+  -> atomically commit gameplay state
+  -> project world and feedback
+  -> acknowledge first visible gameplay frame
 ```
 
 ## Kit census
@@ -122,24 +120,20 @@ committed camera, viewport, topology, policy and performance revisions
 external provider kits: 1
 local declared DSK/kits: 43
 total declared kits: 44
-grass-specific local kits: 11
-required-v0.1 local declarations: 15
-planned local declarations: 28
 ```
 
-The exact kit and service inventory is in `.agent/kit-registry.json` and the current tracker.
+The complete kit and offered-service inventory is retained in the current tracker and `.agent/kit-registry.json`.
 
 ## Validation boundary
 
 ```txt
-runtime/grass/renderer/gameplay source changed: no
-package scripts or dependencies changed: no
-deployment changed: no
+runtime/gameplay/render source changed: no
+package scripts/dependencies/deployment changed: no
 npm run check: not run
-browser/Pages smoke: not run
-grass visibility fixtures: unavailable
+browser/Pages gameplay smoke: not run
+DSK consumption fixtures: not implemented
 branch created: no
 pull request created: no
 ```
 
-Do not treat density-selected batch labels, lower card counts, stable topology or successful full-mesh rendering as camera-based LOD proof.
+Do not treat `active-v0.1`, a valid five-service descriptor or a DSK snapshot row as proof that an executable service was installed or consumed.

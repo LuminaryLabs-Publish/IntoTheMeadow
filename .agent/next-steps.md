@@ -1,76 +1,56 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T15-49-09-04-00`
+**Updated:** `2026-07-12T17-49-51-04-00`
 
 ## Summary
 
-The next implementation boundary is to turn the existing DSK declaration catalog into a truthful runtime capability registry, then consume those capabilities through one minimal exploration loop. Extend the existing game, host and DSK owners; do not add a parallel framework.
+The next product boundary is a minimal playable exploration loop built on truthful executable DSK providers. Extend the existing input, player, path, interaction, objective, story, UI and save owners; do not create a parallel gameplay framework.
 
 ## Plan ledger
 
-**Goal:** prove one complete player-action transaction using resolved DSK providers, typed service results, atomic progression state and first-visible-frame acknowledgement.
+**Goal:** prove one complete player-action transaction from admitted command through deterministic movement or inspection, exactly-once progression and first-visible-frame acknowledgement.
 
-- [ ] Add versioned service contracts to active DSK declarations.
-- [ ] Add immutable provider identity, version, source and fingerprint.
-- [ ] Replace empty `requires` lists with real capability dependencies.
-- [ ] Add a provider registry and deterministic dependency graph.
-- [ ] Define `DskInstallCommand` and per-kit `DskInstallResult`.
-- [ ] Prepare executable services before publishing a capability generation.
-- [ ] Run readiness probes and declared/offered/realized parity checks.
-- [ ] Keep planned declarations unavailable at runtime.
-- [ ] Add rollback and disposal for candidate provider generations.
-- [ ] Add normalized keyboard/pointer/editor gameplay input samples.
-- [ ] Add an idempotent gameplay command router.
-- [ ] Implement player movement and terrain/path projection.
-- [ ] Implement interaction-target queries and admitted inspection.
-- [ ] Implement objective progression and exactly-once completion.
-- [ ] Implement story trigger evaluation and sequence results.
-- [ ] Project player feedback through the existing UI owner.
-- [ ] Bind save consumption after committed gameplay revisions exist.
-- [ ] Record `DskConsumptionReceipt` rows per command/service.
-- [ ] Publish capability, gameplay, objective and story revisions.
-- [ ] Correlate render/HUD output with the accepted gameplay result.
-- [ ] Acknowledge the first visible gameplay frame.
-- [ ] Add Node provider/dependency/rollback fixtures.
-- [ ] Add deterministic movement/interaction/progression fixtures.
-- [ ] Add browser and GitHub Pages gameplay smokes.
+### Foundation
+- [ ] Implement the existing DSK runtime-consumption authority first.
+- [ ] Resolve immutable provider identities and real service contracts.
+- [ ] Publish a ready runtime capability generation.
+- [ ] Keep planned declarations unavailable.
 
-## Required install command
+### Command and movement
+- [ ] Add gameplay session and state revisions.
+- [ ] Add normalized keyboard, pointer and editor command samples.
+- [ ] Add idempotent `GameplayCommand` routing.
+- [ ] Implement deterministic player motion proposals.
+- [ ] Produce terrain-contact and path-projection results.
+- [ ] Commit player transform and path progress atomically.
 
-```txt
-DskInstallCommand {
-  commandId
-  runtimeSessionId
-  expectedCapabilityGeneration
-  declarations[]
-  providerCatalogRevision
-  sourcePolicyRevision
-}
-```
+### Interaction and progression
+- [ ] Build a revisioned interaction-target index.
+- [ ] Require exact target identity and range evidence for inspection.
+- [ ] Evaluate `path-progress:0.25` once.
+- [ ] Complete `walk-the-path` at progress `>= 0.35` once.
+- [ ] Evaluate `inspect:focal-tree` once.
+- [ ] Complete `inspect-tree` from accepted inspection once.
+- [ ] Add objective and story transition ledgers.
+- [ ] Reject duplicate, stale and unavailable commands with zero mutation.
 
-## Required install result
+### Projection and persistence
+- [ ] Publish typed `GameplayResult` and DSK-consumption receipts.
+- [ ] Project feedback through the existing UI owner.
+- [ ] Bind saves only to committed gameplay revisions.
+- [ ] Correlate player/camera/feedback projection with the accepted result.
+- [ ] Publish `GameplayVisibleFrameAck`.
 
-```txt
-DskInstallResult {
-  status
-  reason
-  commandId
-  declarationId
-  providerId
-  predecessorCapabilityGeneration
-  capabilityGeneration
-  declaredServices[]
-  offeredServices[]
-  realizedServices[]
-  missingServices[]
-  dependencyResults[]
-  readinessResults[]
-  failures[]
-}
-```
+### Proof
+- [ ] Add movement, terrain and path determinism fixtures.
+- [ ] Add threshold crossing and high-delta fixtures.
+- [ ] Add exact target and range-admission fixtures.
+- [ ] Add objective/story exactly-once and failure rollback fixtures.
+- [ ] Add browser keyboard and editor-command smokes.
+- [ ] Add built-output and GitHub Pages parity proof.
 
-## Required gameplay command
+## Required command
 
 ```txt
 GameplayCommand {
@@ -78,72 +58,58 @@ GameplayCommand {
   sessionId
   capabilityGeneration
   expectedGameplayRevision
+  inputContext
   action
   payload
 }
 ```
 
-## Required consumption receipt
+## Required result
 
 ```txt
-DskConsumptionReceipt {
+GameplayResult {
   commandId
-  capabilityGeneration
-  kitId
-  providerId
-  serviceId
-  invocationId
-  inputFingerprint
-  resultFingerprint
-  stateRevisionBefore
-  stateRevisionAfter
   status
+  reason
+  gameplayRevisionBefore
+  gameplayRevisionAfter
+  playerResult
+  pathProgressResult
+  inspectResult
+  objectiveTransitions[]
+  storyTransitions[]
+  consumptionReceiptIds[]
+  feedbackProjectionId
+  saveEligibleRevision
 }
 ```
 
 ## Minimal playable slice
 
 ```txt
-1. Normalize WASD or editor movement commands.
-2. Move the player deterministically over the terrain/path.
-3. Derive pathProgress from committed movement.
-4. Emit path-discovery once at 0.25.
+1. Normalize WASD or editor movement.
+2. Move the player deterministically over terrain/path.
+3. Derive committed path progress.
+4. Fire path-discovery once at 0.25.
 5. Complete walk-the-path once at 0.35.
-6. Query focal-tree range from committed transforms.
-7. Admit inspect-tree only with valid target evidence.
-8. Emit focal-tree story result and complete inspect-tree once.
-9. Project feedback and acknowledge the first visible frame.
-10. Save only committed gameplay revisions.
+6. Query focal-tree from committed transforms.
+7. Admit inspection only with exact in-range evidence.
+8. Fire focal-tree story and inspect-tree completion once.
+9. Project feedback and acknowledge its first frame.
+10. Persist only the committed gameplay revision.
 ```
 
-## Capability truth rules
-
-```txt
-declared != installed
-validated != ready
-installed != active
-active != consumed
-planned declarations expose no callable capability
-no active capability without provider identity and readiness proof
-no gameplay commit without service consumption receipts
-```
-
-## Updated architecture order
+## Architecture order
 
 ```txt
 1. Runtime Session Lifecycle Authority
 2. Host Capability Gateway and Raw Runtime Quarantine
-2a. Editor Bridge Lifecycle and Error Journal Authority
 3. Runtime Clock and Step Admission Authority
-4. Source Provider Authority
-5. Render Topology, Context, Surface and Program Authorities
-6. Committed Frame and Failure Recovery Authorities
-7. Adaptive Quality and Grass Visibility Authorities
-8. DSK Runtime Consumption Authority
-8a. Interaction Command and Objective Progression Authority
-8b. Audio Activation and Lifecycle Authority
-8c. Persistence Continuity Authority
-9. Deterministic Replay Validation Authority
+4. Source Provider and DSK Runtime Consumption Authority
+5. Exploration and Progression Authority
+6. Render/Feedback Visible-Frame Authority
+7. Audio and Persistence Consumption
+8. Deterministic Replay and Pages Proof
 ```
 
-The full 44-kit service map remains in the current tracker and machine registry.
+The full 44-kit service inventory remains in the current tracker and machine registry.

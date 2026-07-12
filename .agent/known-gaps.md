@@ -1,133 +1,113 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T17-58-43-04-00`
+**Updated:** `2026-07-12T19-41-13-04-00`
 
 ## Summary
 
-The leading product gap is the first playable exploration transaction. The repository has authored path, objective, story and focal-tree content, but no command ingress, movement/path evidence, inspection admission, progression reducer, exactly-once ledger, feedback result, save binding or visible gameplay acknowledgement.
+The leading infrastructure gap is frame-clock ownership. The browser loop has no RAF lease, scheduler generation, elapsed-time policy, fixed-step accumulator, catch-up budget, lifecycle result or render/simulation correlation.
 
 ## Plan ledger
 
-**Goal:** close playable-loop gaps while preserving the upstream DSK provider, lifecycle, render, grass, audio, persistence and replay findings.
+**Goal:** close timing and callback ownership gaps before activating dt-dependent gameplay.
 
-- [x] Record command-ingress and movement gaps.
-- [x] Record target-inspection and progression gaps.
-- [x] Record atomicity, duplicate and visible-proof gaps.
-- [x] Preserve upstream DSK runtime-consumption gaps.
-- [x] Reconcile the detailed `17-49-51` gap audit into current routing.
+- [x] Record refresh-rate dependency.
+- [x] Record stall and render/simulation divergence.
+- [x] Record stop/start duplicate-chain risk.
+- [x] Record raw tick and invalid temporal input exposure.
+- [x] Record proof and deployment gaps.
+- [x] Preserve exploration, DSK, lifecycle, rendering, grass, audio, save and replay gaps.
 - [ ] Implement in dependency order.
 
-## Command and input gaps
+## Clock gaps
 
 ```txt
-gameplay session/revision identity
-normalized browser input samples
-editor gameplay command capability
-command router and command id
-input context and focus admission
-duplicate and stale command rejection
+runtime clock id and generation
+monotonic sample result
+prior-sample revision
+first/normal/stalled/regressed classification
+finite and nonnegative time admission
+maximum elapsed policy
+wall-time metadata separation
 ```
 
-## Movement and path gaps
+## Scheduler gaps
 
 ```txt
-player velocity and motion proposal
-terrain-contact result
-path/corridor projection result
-path-progress revision
-movement collision/bounds policy
-large-delta and threshold-crossing policy
-atomic player/path commit
+scheduler generation
+RAF request handle
+RAF lease identity
+callback sequence
+single-successor invariant
+cancel result
+stale callback rejection
+typed start/stop/fatal results
+ordered disposal
 ```
 
-## Interaction gaps
+## Fixed-step gaps
 
 ```txt
-revisioned target index
-exact target-id admission
-committed player-transform evidence
-distance and affordance result
-unknown/stale/out-of-range rejection
-inspect result identity
-duplicate inspection handling
+fixed-step policy
+accumulator
+maximum accumulated seconds
+maximum steps per frame
+maximum step CPU budget
+deferred-time result
+dropped-time result
+pause/resume accumulator policy
 ```
 
-## Progression gaps
+## Render correlation gaps
 
 ```txt
-path-discovery threshold evaluator
-walk-the-path completion evaluator
-focal-tree story evaluator
-inspect-tree completion evaluator
-objective transition result
-story sequence result
-exactly-once completion ledgers
-ordered multi-transition handling
-rollback after candidate failure
+simulation time
+interpolation alpha
+render-time projection
+clock revision in render snapshot
+simulation revision in render snapshot
+frame result
+first visible clocked-frame acknowledgement
 ```
 
-## Projection and save gaps
+## Capability gaps
 
 ```txt
-GameplayResult
-DskConsumptionReceipt rows
-feedback projection result
-gameplay revision in render plan
-objective/story revisions in snapshots
-save eligibility bound to committed revision
-first visible gameplay frame acknowledgement
+raw GameHost.game exposes tick and reset
+tick accepts caller-owned time and dt
+negative/NaN/Infinity values are not rejected
+reset allocates no clock or scheduler generation
+editor capability does not express frame authority
 ```
 
-## Authored but unreachable
+## Proof gaps
 
 ```txt
-path-progress:0.25 -> path-discovery
-path progress >= 0.35 -> walk-the-path completion
-inspect:focal-tree -> focal-tree story
-accepted focal-tree inspection -> inspect-tree completion
+30/60/120 Hz parity
+jitter parity
+long-stall bounded catch-up
+stop/start single-chain
+late callback zero mutation
+invalid-time rejection
+pause/resume
+fatal lease retirement
+render/simulation correlation
+source/build/Pages parity
 ```
 
-## Upstream DSK gaps retained
+## Preserved product gaps
 
 ```txt
-provider identity, version and fingerprint
-real dependency graph
-per-kit install results
-readiness and rollback
-runtime capability generation
-declared/offered/realized service parity
-planned-capability rejection
-```
-
-## Preserved platform gaps
-
-```txt
-runtime session lifecycle and ordered disposal
-RAF cancellation and fixed-step admission
-raw GameHost capability quarantine
-WebGL context/program/frame ownership
-camera-bound grass visible set and LOD
+executable DSK provider binding and readiness
+playable input, movement and path progression
+focal-tree inspection and exactly-once objective/story progression
+camera-bound grass visibility and LOD
 audio user-gesture lifecycle
-atomic save/migration continuity
+atomic save and migration continuity
 independent deterministic replay
-```
-
-## Required fixture matrix
-
-```txt
-input normalization
-movement and terrain contact
-path projection and progress thresholds
-high-delta crossing
-target identity and range
-objective/story exactly once
-duplicate/stale command zero mutation
-candidate failure rollback
-feedback/save revision binding
-browser and Pages playable-loop parity
+WebGL context loss and restoration
 ```
 
 ## Completion boundary
 
-Do not count authored content, descriptor labels, visual animation or editor capture as gameplay proof. Completion requires executable providers, admitted commands, deterministic evidence, atomic progression, exactly-once results and a visible frame citing the committed gameplay revision.
+A healthy screenshot or increasing frame counter is not timing proof. Completion requires admitted monotonic samples, bounded fixed-step batches, exactly one live RAF chain, correlated render snapshots and executable parity fixtures.

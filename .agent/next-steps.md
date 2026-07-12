@@ -2,46 +2,51 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T22-08-13-04-00`
+**Updated:** `2026-07-11T23-10-51-04-00`
 
 ## Goal
 
-Make browser viewport and DPR changes pass through one bounded, revisioned render-surface transaction before camera projection, renderer state, capture or visible-frame evidence claims the new resolution.
+Make save, reload, migration, reset and hydration pass through one versioned persistence transaction before game state, diagnostics, renderer observations or the visible frame claim resumed continuity.
 
 ## Plan ledger
 
-- [ ] Preserve the existing meadow descriptors, topology, shaders and full-window composition.
+- [ ] Preserve current meadow generation, render topology, shaders and browser composition.
 - [ ] Complete Runtime Session Lifecycle Authority first.
-- [ ] Complete Host Capability Gateway and remove raw capability bypasses.
+- [ ] Complete Host Capability Gateway and remove raw game mutation bypasses.
 - [ ] Complete Runtime Clock and Step Admission Authority.
-- [ ] Complete Render Topology Identity and WebGL Context Recovery authorities.
-- [ ] Introduce `RenderSurfaceState` with surface ID, context generation, surface revision and actual dimensions.
-- [ ] Convert viewport/DPR observations into typed `ResizeCommand` values.
-- [ ] Add finite positive dimension validation and rapid-resize coalescing.
-- [ ] Define a versioned DPR policy and total pixel budget.
-- [ ] Query WebGL maximum dimensions per context generation.
-- [ ] Derive bounded candidate dimensions and declared fallback tiers.
-- [ ] Read back `gl.drawingBufferWidth` and `gl.drawingBufferHeight` after allocation.
-- [ ] Classify browser clamping, capability overflow and allocation failure.
-- [ ] Commit one surface revision only after actual-size validation.
-- [ ] Derive projection aspect from committed actual dimensions.
-- [ ] Add fallback, rollback or explicit quarantine policy for failed candidates.
-- [ ] Add surface revision and dimensions to renderer snapshots and diagnostics.
-- [ ] Require browser viewport and canvas capture observations to cite surface and frame identity.
-- [ ] Add visible-frame acknowledgement for the first frame on each committed surface.
-- [ ] Add DOM-free, browser and Pages resize/DPR fixtures.
-- [ ] Wire fixtures into `npm run check` or an explicit browser gate.
+- [ ] Complete Committed Frame Observation and Fatal Runtime Recovery prerequisites.
+- [ ] Upgrade `meadow-save-dsk` from planned descriptor to implementation-backed owner.
+- [ ] Define a versioned `MeadowSaveEnvelope` and canonical persistable-state boundary.
+- [ ] Add slot registry, checkpoint ID, state revision and reset epoch.
+- [ ] Add integrity fingerprint and content-manifest identity.
+- [ ] Add browser persistence capability with typed storage failure classification.
+- [ ] Route browser UI, GameHost, browser editor and headless editor through shared commands.
+- [ ] Implement atomic save write and read-back verification.
+- [ ] Parse and classify every candidate independently.
+- [ ] Add deterministic candidate precedence.
+- [ ] Add pure ordered migrations and migration history.
+- [ ] Reconcile scene, objective, story and content identities before hydration.
+- [ ] Prepare hydration state detached from the live graph.
+- [ ] Commit state atomically or preserve the predecessor.
+- [ ] Rebuild or invalidate derived render state explicitly.
+- [ ] Add first-visible-frame acknowledgement for hydrated checkpoints.
+- [ ] Define reset, new-game and clear-slot persistence policies.
+- [ ] Add bounded persistence journal and diagnostics.
+- [ ] Add DOM-free, browser and Pages reload fixtures.
+- [ ] Wire persistence fixtures into `npm run check` or an explicit acceptance gate.
 
 ## Existing owners to update first
 
 ```txt
+meadow-save-dsk
+into-the-meadow-game-dsk
 web-host-dsk
-meadow-render-host-dsk
-meadow-webgl-renderer-v2-kit
-meadow-performance-dsk
 meadow-diagnostics-dsk
+GameHost capability gateway
 browser editor bridge
-WebGL Context Recovery Authority
+Node headless environment
+Runtime Session Lifecycle Authority
+Runtime Clock and Step Admission Authority
 Committed Frame Observation Authority
 Fatal Runtime Failure Recovery Authority
 ```
@@ -49,106 +54,148 @@ Fatal Runtime Failure Recovery Authority
 ## Candidate coordinating kits
 
 ```txt
-render-surface-id-kit
-render-surface-revision-kit
-viewport-observation-kit
-device-pixel-ratio-policy-kit
-render-pixel-budget-kit
-webgl-surface-capability-kit
-resize-command-kit
-resize-coalescing-kit
-render-surface-plan-kit
-drawing-buffer-allocation-kit
-render-surface-fallback-kit
-render-surface-commit-kit
-render-surface-rollback-kit
-stale-surface-observation-rejection-kit
-render-surface-observation-kit
-capture-surface-correlation-kit
-visible-frame-surface-ack-kit
-render-surface-journal-kit
-render-surface-fixture-kit
-browser-resize-dpr-smoke-kit
+save-schema-descriptor-kit
+save-slot-registry-kit
+checkpoint-id-kit
+state-revision-kit
+reset-epoch-kit
+save-envelope-kit
+save-integrity-fingerprint-kit
+persistence-capability-kit
+save-command-kit
+save-admission-kit
+save-write-result-kit
+save-candidate-read-kit
+save-candidate-classifier-kit
+save-migration-kit
+save-reconciliation-kit
+hydration-plan-kit
+hydration-commit-kit
+hydration-rollback-kit
+persistence-journal-kit
+persistence-observation-kit
+visible-frame-hydration-ack-kit
+persistence-fixture-kit
+browser-reload-continuity-smoke-kit
 ```
 
-## Required state
+## Required save envelope
 
 ```txt
-RenderSurfaceState
-  surfaceId
+MeadowSaveEnvelope
+  schemaId
+  schemaVersion
+  checkpointId
+  slotId
+  createdAt
+  updatedAt
+  gameManifestId
+  gameManifestVersion
+  contentRevision
   runtimeSessionId
-  contextGeneration
-  surfaceRevision
-  policyId
-  policyRevision
-  cssWidth
-  cssHeight
-  requestedDpr
-  appliedDpr
-  requestedBufferWidth
-  requestedBufferHeight
-  actualBufferWidth
-  actualBufferHeight
-  aspect
-  qualityTier
-  fallbackReason
-  lastResizeCommandId
-  committedFrameId
+  resetEpoch
+  stateRevision
+  payload
+  migrationHistory
+  integrityFingerprint
 ```
 
-## Required command
+## Required commands
 
 ```txt
-ResizeCommand
+SaveCommand
   commandId
   runtimeSessionId
-  contextGeneration
-  expectedSurfaceRevision
-  viewportObservationId
-  cssWidth
-  cssHeight
-  devicePixelRatio
-  visibilityState
-  qualityPreference
+  resetEpoch
+  expectedStateRevision
+  slotId
+  reason
+
+LoadCommand
+  commandId
+  runtimeSessionId
+  resetEpoch
+  slotId or candidateId
+
+DeleteCheckpointCommand
+  commandId
+  runtimeSessionId
+  resetEpoch
+  slotId
+  expectedCheckpointId
 ```
 
-## Required result
+## Required results
 
 ```txt
-ResizeResult
+SaveResult
   commandId
   status
   reason
-  predecessorSurfaceRevision
-  committedSurfaceRevision
-  requestedDimensions
-  boundedDimensions
-  actualDimensions
-  appliedDpr
-  qualityTier
-  fallbackReason
+  slotId
+  checkpointId
+  schemaVersion
+  stateRevision
+  fingerprint
+  writeVerified
+
+HydrationResult
+  commandId
+  status
+  reason
+  checkpointId
+  sourceSchemaVersion
+  migratedSchemaVersion
+  predecessorStateRevision
+  committedStateRevision
   committedFrameId
+```
+
+## Persistable-state boundary
+
+```txt
+persist
+  active scene identity
+  player transform and progression state
+  non-derivable world state
+  objective completion ledger
+  story beat ledger
+  interaction receipts required for idempotency
+  state revision and reset epoch
+
+rebuild
+  provider instances
+  DSK descriptors and install snapshots
+  render plans
+  enhancer caches
+  WebGL resources
+  editor bridge objects
+  derived diagnostics
 ```
 
 ## Acceptance cases
 
 ```txt
-320x240 at DPR 1
-1440x900 at DPR 1
-1920x1080 at DPR 1.25
-2560x1440 at DPR 2
-3840x2160 at requested DPR 2 and 3
-DPR below 1 policy case
-rapid resize sequence
-portrait/landscape orientation transition
-hidden and zero-sized canvas
-maximum WebGL dimension overflow
-pixel-budget overflow
-browser drawing-buffer clamp
-allocation failure and fallback
-stale session, context generation and surface revision
-context loss during resize
-capture before and after first frame on new surface
+empty storage
+valid current checkpoint
+multiple valid slots with deterministic precedence
+malformed JSON beside a valid checkpoint
+unknown schema
+migratable predecessor
+content mismatch
+integrity mismatch
+storage denied
+quota exceeded
+write/read-back mismatch
+duplicate and stale commands
+reset versus load race
+save versus load race
+hydration validation failure
+hydration rollback
+browser reload continuity
+headless envelope parity
+first visible hydrated frame
+Pages reload continuity
 ```
 
 ## Ordered architecture queue
@@ -165,7 +212,8 @@ capture before and after first frame on new surface
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
 8. Interaction Command and Objective Authority
+8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
 ```
 
-Do not fix this only by lowering the DPR cap. The required boundary is a typed transaction that admits viewport observations against policy and capability limits, reads back actual drawing-buffer dimensions and correlates the committed surface with projection, capture and a visible frame.
+Do not implement persistence as an unversioned `localStorage.setItem()` call. The required boundary admits canonical state, verifies durable storage, migrates and reconciles candidates, hydrates without partial mutation and correlates the result with the first visible frame.

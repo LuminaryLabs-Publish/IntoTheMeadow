@@ -12,7 +12,7 @@ branch: main
 root .agent state: refreshed
 preceding editor-bridge lifecycle audit: preserved
 preceding adaptive-quality audit: preserved
-central synchronization: paired ledger update required
+central synchronization: complete
 ```
 
 ## Summary
@@ -35,6 +35,7 @@ No runtime authority consumes that authored progression. `advanceGameState()` in
 - [x] Define commands, evidence, ledgers, results, revisions, rollback and proof.
 - [x] Add timestamped architecture and system audits.
 - [x] Change documentation only on `main`.
+- [x] Synchronize central ledger and internal change log.
 - [ ] Implement and execute progression authority later.
 
 ## Selection comparison

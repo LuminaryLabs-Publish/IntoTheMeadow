@@ -1,156 +1,132 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T15-49-09-04-00`
+**Updated:** `2026-07-12T17-49-51-04-00`
 
 ## Summary
 
-The leading architecture gap is declaration-to-runtime consumption. Forty-three local DSK/kits are structurally described, but active status does not prove provider resolution, executable service installation, readiness or command consumption. The simulation currently advances only `frame` and `lastTick`.
+The leading product gap is now the first playable exploration transaction. The repository has authored path, objective, story and focal-tree content, but no command ingress, movement/path evidence, inspection admission, progression reducer, exactly-once ledger, feedback result, save binding or visible gameplay acknowledgement.
 
 ## Plan ledger
 
-**Goal:** close capability-truth, gameplay-consumption and visible-proof gaps while preserving earlier lifecycle, render, grass, audio, persistence and replay findings.
+**Goal:** close playable-loop gaps while preserving the upstream DSK provider, lifecycle, render, grass, audio, persistence and replay findings.
 
-- [x] Record declaration, provider, dependency and install gaps.
-- [x] Record inert gameplay and unreachable authored-content gaps.
-- [x] Record consumption, observation and first-frame gaps.
-- [x] Preserve previous grass visibility and WebGL authority gaps.
+- [x] Record command-ingress and movement gaps.
+- [x] Record target-inspection and progression gaps.
+- [x] Record atomicity, duplicate and visible-proof gaps.
+- [x] Preserve upstream DSK runtime-consumption gaps.
 - [ ] Implement in dependency order.
 
-## Declaration and provider gaps
+## Command and input gaps
 
 ```txt
-service contract version
-provider identity and version
-immutable provider source/fingerprint
-provider registry
-real dependency lists
-dependency graph and install order
-per-kit install command/result
-readiness probe
-candidate rollback
-provider disposal and retirement
-```
-
-## Capability-state gaps
-
-```txt
-Declared/Validated/Installed/Ready/Active distinction
-runtime capability generation
-declared/offered/realized service parity
-planned-capability rejection
-degraded capability state
-stale generation rejection
-bounded capability observation
-```
-
-Current `active-v0.1` is assigned from required-list membership, not runtime readiness.
-
-## Consumption gaps
-
-```txt
-callable service registry
-command-to-service binding
-service invocation identity
-DSK consumption receipt
-input/result fingerprints
-state revision before/after
-exactly-once command handling
-duplicate command parity
-```
-
-## Gameplay gaps
-
-```txt
-browser keyboard/pointer/gamepad listeners
-input normalization and context
+gameplay session/revision identity
+normalized browser input samples
 editor gameplay command capability
-player velocity and movement integration
-terrain contact and path projection
-path progress mutation
-interaction target query
-inspection state and result
-objective progress/completion
-story trigger evaluation
-feedback and HUD projection
-audio event consumption
-save binding to committed gameplay
+command router and command id
+input context and focus admission
+duplicate and stale command rejection
 ```
 
-## Authored-content reachability gaps
+## Movement and path gaps
 
 ```txt
-path-discovery trigger at path-progress:0.25
-focal-tree trigger at inspect:focal-tree
-walk-the-path completion at progress >= 0.35
-inspect-tree completion from admitted inspection
+player velocity and motion proposal
+terrain-contact result
+path/corridor projection result
+path-progress revision
+movement collision/bounds policy
+large-delta and threshold-crossing policy
+atomic player/path commit
 ```
 
-All four conditions are authored but not evaluated by the runtime.
-
-## State and frame gaps
+## Interaction gaps
 
 ```txt
-gameplay state revision
-objective revision
-story revision
-interaction result id
-capability generation in render plan
-DSK receipt ids in snapshot
+revisioned target index
+exact target-id admission
+committed player-transform evidence
+distance and affordance result
+unknown/stale/out-of-range rejection
+inspect result identity
+duplicate inspection handling
+```
+
+## Progression gaps
+
+```txt
+path-discovery threshold evaluator
+walk-the-path completion evaluator
+focal-tree story evaluator
+inspect-tree completion evaluator
+objective transition result
+story sequence result
+exactly-once completion ledgers
+ordered multi-transition handling
+rollback after candidate failure
+```
+
+## Projection and save gaps
+
+```txt
+GameplayResult
+DskConsumptionReceipt rows
 feedback projection result
+gameplay revision in render plan
+objective/story revisions in snapshots
+save eligibility bound to committed revision
 first visible gameplay frame acknowledgement
 ```
 
-## Test gaps
+## Authored but unreachable
 
 ```txt
-missing/wrong provider
-service contract mismatch
-cyclic dependency
-readiness failure and rollback
-planned declaration unavailable
-active declaration callable
-movement determinism
-path-progress thresholds
-inspect target evidence
-objective/story exactly-once behavior
-stale capability generation
-service consumption receipt
-local/Pages gameplay parity
+path-progress:0.25 -> path-discovery
+path progress >= 0.35 -> walk-the-path completion
+inspect:focal-tree -> focal-tree story
+accepted focal-tree inspection -> inspect-tree completion
 ```
 
-## Preserved grass and render gaps
+## Upstream DSK gaps retained
 
 ```txt
-camera-bound grass visible set
-near/mid/far/terrain-tint/culled reachability
-frustum classification and hysteresis
-visible patch/instance/vertex/draw budgets
-WebGL program-interface reflection and schema admission
-context/surface/program generations
-committed render-frame observation
+provider identity, version and fingerprint
+real dependency graph
+per-kit install results
+readiness and rollback
+runtime capability generation
+declared/offered/realized service parity
+planned-capability rejection
 ```
 
-## Preserved host and lifecycle gaps
+## Preserved platform gaps
 
 ```txt
 runtime session lifecycle and ordered disposal
-RAF cancellation and step admission
+RAF cancellation and fixed-step admission
 raw GameHost capability quarantine
-editor bridge generation and bounded errors
-source-provider artifact authority
-fatal runtime recovery
+WebGL context/program/frame ownership
+camera-bound grass visible set and LOD
+audio user-gesture lifecycle
+atomic save/migration continuity
+independent deterministic replay
 ```
 
-## Preserved product gaps
+## Required fixture matrix
 
 ```txt
-audio user-gesture activation and lifecycle
-save migration and atomic hydration
-adaptive quality authority
-independent deterministic replay
+input normalization
+movement and terrain contact
+path projection and progress thresholds
+high-delta crossing
+target identity and range
+objective/story exactly once
+duplicate/stale command zero mutation
+candidate failure rollback
+feedback/save revision binding
+browser and Pages playable-loop parity
 ```
 
 ## Completion boundary
 
-Do not count a descriptor snapshot, `active-v0.1` label, generic provide token, content count or successful visual frame as DSK runtime proof. Completion requires concrete providers, installed callable services, command consumption receipts, committed gameplay transitions and a visible frame citing the accepted capability and gameplay revisions.
+Do not count authored content, descriptor labels, visual animation or editor capture as gameplay proof. Completion requires executable providers, admitted commands, deterministic evidence, atomic progression, exactly-once results and a visible frame citing the committed gameplay revision.

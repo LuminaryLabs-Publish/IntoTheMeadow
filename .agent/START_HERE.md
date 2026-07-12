@@ -2,50 +2,48 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T09-21-40-04-00`
+**Last aligned:** `2026-07-12T11-29-40-04-00`  
+**Status:** `webgl-program-interface-admission-authority-audited`
 
 ## Summary
 
-IntoTheMeadow is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a persistent WebGL renderer and browser/editor readback.
+IntoTheMeadow is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, CPU mesh construction, a persistent WebGL renderer and browser/headless-editor readback.
 
-The current audit isolates **interaction command and objective progression authority**. The repo authors two objectives, two interaction targets and three story beats, but `advanceGameState()` only increments the frame and records dt/time. Browser and editor paths expose no movement, path-progress or inspect command, so completion and story state never advance.
+The current audit isolates **WebGL program-interface admission**. Shader compilation and linking are checked, but the linked program’s active attributes and uniforms are never reflected or validated as one interface artifact before mesh binding, uniform updates and draw submission. Five attributes fail only when the first mesh is bound, twelve uniform locations are never admitted, and renderer/frame readback contains no program-interface generation or fingerprint.
 
-This reconciliation also corrected audit-state drift: the human docs had advanced to progression while the machine registry still pointed to editor-bridge lifecycle and the central ledger still pointed to adaptive quality. All current pointers now identify the same progression slice. The local census is also normalized to 15 active plus 28 planned equals 43 local declarations.
-
-The immediately preceding editor-bridge lifecycle/error-journal audit and all earlier performance, audio, shader, render-surface, capability, lifecycle, persistence, DSK-consumption and replay audits remain active dependencies.
+The preceding interaction/objective progression audit and all earlier lifecycle, host-capability, source-provider, render-surface, context, precision, committed-frame, performance, grass, audio, persistence, DSK-consumption and replay audits remain active dependencies.
 
 ## Plan ledger
 
-**Goal:** convert authored interaction/objective/story descriptors into one admitted, deterministic and visibly proven gameplay transaction while keeping repo-local and central audit identity consistent.
+**Goal:** require one accepted, versioned program-interface result before GPU buffers, uniform updates, draws or visible-frame claims can use a linked WebGL program.
 
 - [x] Compare the full Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have ledger and root `.agent` coverage.
-- [x] Select only `IntoTheMeadow` because newer repo-local work required central reconciliation.
-- [x] Inspect DSK registration, installation, game state, content, host and editor surfaces.
-- [x] Identify the interaction loop, all domains, all 44 kits and offered services.
-- [x] Define command, target evidence, objective/story commit, rollback and frame-proof contracts.
-- [x] Reconcile `START_HERE`, the machine registry and the central ledger.
+- [x] Select only `IntoTheMeadow` as the oldest eligible synchronized repository.
+- [x] Trace shader compile/link, location lookup, mesh binding, uniform updates and draws.
+- [x] Inspect CPU mesh and browser observation proof.
+- [x] Preserve all 44 kits and offered services.
+- [x] Define the program-interface authority, contracts and fixture gates.
 - [x] Add a fresh timestamped tracker and audit family.
-- [x] Push documentation to `main`; create no branch or PR.
-- [ ] Runtime implementation and executable progression fixtures remain future work.
+- [x] Refresh required root `.agent` files on `main`.
+- [x] Create no branch or pull request.
+- [ ] Implement and execute the authority later.
 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-12T09-21-40-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T09-21-40-04-00.md
-.agent/architecture-audit/2026-07-12T09-21-40-04-00-interaction-objective-progression-reconciliation-dsk-map.md
-.agent/render-audit/2026-07-12T09-21-40-04-00-progression-feedback-frame-registry-gap.md
-.agent/gameplay-audit/2026-07-12T09-21-40-04-00-authored-progression-no-command-loop.md
-.agent/interaction-audit/2026-07-12T09-21-40-04-00-progression-command-central-sync-map.md
-.agent/central-sync-audit/2026-07-12T09-21-40-04-00-repo-ledger-machine-registry-contract.md
-.agent/deploy-audit/2026-07-12T09-21-40-04-00-progression-fixture-central-gate.md
+.agent/trackers/2026-07-12T11-29-40-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T11-29-40-04-00.md
+.agent/architecture-audit/2026-07-12T11-29-40-04-00-webgl-program-interface-admission-dsk-map.md
+.agent/render-audit/2026-07-12T11-29-40-04-00-unvalidated-shader-symbol-binding-gap.md
+.agent/interaction-audit/2026-07-12T11-29-40-04-00-program-interface-render-admission-map.md
+.agent/shader-interface-audit/2026-07-12T11-29-40-04-00-active-symbol-mesh-uniform-contract.md
+.agent/deploy-audit/2026-07-12T11-29-40-04-00-program-interface-browser-fixture-gate.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
 .agent/validation.md
-.agent/progression-audit/2026-07-12T09-08-17-04-00-target-evidence-ledger-story-contract.md
 .agent/kit-registry.json
 ```
 
@@ -53,91 +51,90 @@ The immediately preceding editor-bridge lifecycle/error-journal audit and all ea
 
 ```txt
 boot
-  -> install 43 local descriptors plus one external meadow provider
-  -> import objective, target and story content
-  -> create default progression state
-  -> start RAF and editor bridge
+  -> import the pinned meadow provider
+  -> install 43 local declarations plus one external kit
+  -> create game, render-plan enhancer and WebGL renderer
+  -> compile shaders and link program
+  -> query five attribute and twelve uniform locations
+  -> expose GameHost and editor bridge
+  -> start RAF
 
 frame
-  -> game.tick({time,dt})
-  -> increment frame and record lastTick only
-  -> no action command or target evidence
-  -> no objective/story evaluation
-  -> render unchanged progression state
+  -> tick game and enhance render plan
+  -> build/reuse CPU mesh
+  -> validate attribute locations only during first buffer bind
+  -> submit uniform updates without interface admission
+  -> draw outline pass and color pass
+  -> publish counts/cache snapshot without interface identity
+  -> schedule next RAF
 
-editor
-  -> read, tick, reset, render and capture
-  -> no interaction/progression command capability
+proof
+  -> Node smoke validates CPU plan and mesh arrays
+  -> Chromium smoke checks DOM markers and screenshot size
+  -> no active-symbol inventory or first-frame interface fingerprint
 ```
 
 ## Main findings
 
 ```txt
-authored objectives: 2
-authored targets: 2
-authored story beats: 3
-active initial objective: walk-the-path
-initial path progress: 0
-runtime path-progress mutation: absent
-runtime inspect mutation: absent
-objective completion evaluator: absent
-story trigger evaluator: absent
-feedback projection: absent
-visible progression-frame receipt: absent
+compile status: checked
+link status: checked
+required attributes queried: 5
+required uniforms queried: 12
+active attribute reflection: absent
+active uniform reflection: absent
+attribute type/size admission: absent
+uniform presence/type/size admission: absent
+mesh-to-program schema result: absent
+uniform-payload schema result: absent
+program/interface generation: absent
+first visible frame interface receipt: absent
 ```
-
-## Domains and kit census
-
-```txt
-external declared kits: 1
-local declared kits: 43
-total declared kits: 44
-required-v0.1 local kits: 15
-planned local kits: 28
-
-active domains:
-  browser/runtime/game/editor
-  DSK declaration and installation
-  meadow/render/terrain/grass/atmosphere
-  authored player/input/interaction/objective/story/UI/save descriptors
-  WebGL/post/diagnostics/build/Pages
-
-missing progression authority:
-  command admission
-  canonical target evidence
-  objective/story atomic commit
-  feedback projection
-  reset/stale-work rejection
-  browser/editor parity
-  visible-frame proof
-```
-
-The tracker and machine registry contain the complete per-kit service inventory.
 
 ## Required parent domain
 
 ```txt
-meadow-interaction-objective-progression-authority-domain
+meadow-webgl-program-interface-admission-authority-domain
 ```
 
-It coordinates session/reset/progression revisions, action commands, target queries, path and inspect evidence, objective evaluation, completion ledger, story triggers, atomic commit/rollback, feedback, diagnostics, editor parity and first-visible-frame acknowledgement.
-
-## Ordered architecture queue
+## Required flow
 
 ```txt
-1. Runtime Session Lifecycle Authority
-2. Host Capability Gateway and Raw Runtime Quarantine
-2a. Editor Bridge Lifecycle and Error Journal Authority
-3. Headless Workspace Path Authority and Filesystem Containment
-4. Runtime Clock and Step Admission Authority
-5. Source Provider Authority
-6. Render Topology / Context / Surface / Precision Authorities
-7. Committed Frame Observation and Failure Recovery
-7a. Adaptive Quality / Grass LOD / Audio Authorities
-8. Interaction Command and Objective Progression Authority
-8a. Persistence Continuity Authority
-9. DSK Runtime Consumption Authority
-9a. Deterministic Replay Validation Authority
+shader source and required interface manifest
+  -> compile and link detached candidate
+  -> reflect active attributes and uniforms
+  -> validate names, locations, types, sizes and resource limits
+  -> validate CPU mesh layout and uniform payload schemas
+  -> reject incompatible candidate before draw
+  -> allocate program generation and interface fingerprint
+  -> admit bindings, uniform updates and draws
+  -> publish typed results and bounded journal
+  -> acknowledge first visible frame with the interface fingerprint
 ```
 
-Do not implement objective checks as side effects inside RAF or mutate progression through the raw `game` object. Keep action admission, evidence, evaluation and commit under one revisioned authority.
+## Kit census
+
+```txt
+external provider kits: 1
+local declared DSK/kits: 43
+total declared kits: 44
+required-v0.1 local declarations: 15
+planned local declarations: 28
+```
+
+The complete per-kit service inventory is in `.agent/kit-registry.json` and the current tracker.
+
+## Validation boundary
+
+```txt
+runtime source changed: no
+renderer/shader source changed: no
+gameplay source changed: no
+package scripts or dependencies changed: no
+deployment changed: no
+npm run check: not run
+browser/Pages smoke: not run
+program-interface fixtures: unavailable
+```
+
+Do not treat link success, non-null screenshots or a `gpu:` marker as program-interface proof. Readiness requires active-symbol reflection, exact schema compatibility, current generation admission and a visible-frame receipt.

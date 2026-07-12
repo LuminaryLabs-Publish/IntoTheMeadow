@@ -12,7 +12,7 @@ branch: main
 root .agent state: refreshed
 preceding audio activation audit: preserved
 preceding shader precision audit: preserved
-central synchronization: paired ledger update required
+central synchronization: complete
 ```
 
 ## Summary
@@ -33,6 +33,7 @@ The browser host calls `game.tick({ time, dt: 1/60 })`, enhances the plan and re
 - [x] Identify logical/physical quality mismatches and cache-invalidating gaps.
 - [x] Define observations, budgets, hysteresis, commands, results, revisions, rollback and proof.
 - [x] Add timestamped architecture and system audits.
+- [x] Synchronize central ledger and internal change log.
 - [ ] Implement and execute adaptive-quality authority.
 
 ## Selection comparison

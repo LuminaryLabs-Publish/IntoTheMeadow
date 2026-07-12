@@ -2,41 +2,40 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Audit timestamp:** `2026-07-11T23-10-51-04-00`
+**Audit timestamp:** `2026-07-12T00-49-48-04-00`
 
 ## Summary
 
 `IntoTheMeadow` contains one external meadow provider, 43 local DSK/kit declarations, immutable game state, descriptor-driven scene composition, CPU mesh construction, a persistent WebGL renderer, browser `GameHost` and editor surfaces, and a Node headless-editor environment.
 
-This pass audits persistence continuity. `meadow-save-dsk` declares save-model, save-slots, persistence-adapter, migration and save-validation, but the registry marks it as planned rather than a required v0.1 implementation. Browser startup and reset always create a default state, snapshots are live inspection packets rather than save envelopes, and no public capability can save, resolve, migrate, hydrate or verify a checkpoint.
+This pass audits adaptive quality and performance budgets. `meadow-performance-dsk` is included in the required v0.1 set and has source-backed profiles, but production uses an implicit static `high` profile. No frame-cost samples or automatic decisions exist, the enhancer cache excludes quality identity, several budgets are not enforced, and profile fields for terrain resolution and post-processing do not control their consumers.
 
 ## Plan ledger
 
-**Goal:** define one schema-versioned and failure-safe transaction from live state through checkpoint storage, reload admission, migration, reconciliation, hydration and first visible resumed frame.
+**Goal:** define one cadence-independent quality transaction from frame observations through decision, complete budget allocation, render preparation, atomic commit or rollback and first visible frame proof.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm nine eligible central ledgers and root `.agent` states.
-- [x] Skip repositories with newer unsynchronized repo-local audit work.
-- [x] Select only `IntoTheMeadow` as the oldest fully synchronized eligible repository.
-- [x] Inspect `AGENTS.md`, package checks, manifest, registry, state, snapshot, browser host, GameHost and editor surfaces.
+- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
+- [x] Inspect `AGENTS.md`, package checks, DSK registry, performance policy, scene configuration, enhancer, grass consumers, post stack, renderer and web host.
 - [x] Identify the interaction loop, all domains, all kits and every declared service.
-- [x] Define the persistence parent domain and fixture boundary.
+- [x] Define the adaptive-quality parent domain and fixture boundary.
 - [x] Change documentation only.
-- [ ] Runtime implementation and executable persistence fixtures remain future work.
+- [ ] Runtime implementation and executable adaptive-quality fixtures remain future work.
 
 ## Selection comparison
 
 ```txt
-HorrorCorridor     central 21:21, newer repo-local audit, skipped
-PhantomCommand     central 21:31, newer repo-local audit, skipped
-ZombieOrchard      central 21:40, newer repo-local audit, skipped
-TheUnmappedHouse   central 21:48, newer repo-local audit, skipped
-AetherVale         central 22:02, newer repo-local audit, skipped
-IntoTheMeadow      central 22:08, selected oldest fully synchronized
-MyCozyIsland       central 22:20
-PrehistoricRush    central 22:38
-TheOpenAbove       central 22:58
+IntoTheMeadow      2026-07-11T23-10-51-04-00 selected
+HorrorCorridor     2026-07-11T23-18-16-04-00
+PhantomCommand     2026-07-11T23-28-29-04-00
+ZombieOrchard      2026-07-11T23-48-14-04-00
+TheUnmappedHouse   2026-07-12T00-01-25-04-00
+AetherVale         2026-07-12T00-10-23-04-00
+MyCozyIsland       2026-07-12T00-20-01-04-00
+PrehistoricRush    2026-07-12T00-30-49-04-00
+TheOpenAbove       2026-07-12T00-39-05-04-00
 TheCavalryOfRome   excluded
 ```
 
@@ -48,29 +47,28 @@ Only `LuminaryLabs-Publish/IntoTheMeadow` was changed in the Publish organizatio
 browser boot
   -> load commit-pinned meadow-area-kit
   -> validate and install 43 local descriptors
-  -> create meadow source and static render plan
-  -> createInitialGameState
-  -> create renderer and enhancer
+  -> create arrival-meadow source plan
+  -> create render-plan enhancer and WebGL renderer
   -> expose GameHost and editor bridge
   -> request RAF
 
+first enhanced plan
+  -> no style.performance in arrival scene
+  -> createMeadowPerformancePolicy defaults to high
+  -> filter flowers and tree-line objects
+  -> build grass from quality density scale
+  -> hard-code terrain topology to 96 x 124
+  -> create post descriptor from scene configuration
+  -> cache by sourceTopologyKey
+
 browser frame
-  -> game.tick
-  -> replace immutable state with frame + 1 and lastTick
-  -> enhance and render the plan
-  -> publish game, render and diagnostic observations
-
-reset
-  -> replace state with createInitialGameState
-  -> no checkpoint, reset epoch or persistence result
-
-reload
-  -> create a new default graph
-  -> no slot discovery, parsing, migration, reconciliation or hydration
-
-browser and Node editors
-  -> read state/snapshot, tick, reset, inspect and capture
-  -> no persistence domain or save/load command
+  -> game.tick with dt 1/60 and RAF absolute time
+  -> raw plan changes by time only
+  -> enhancer cache hit retains original quality topology
+  -> renderer independently clamps DPR to 1 through 2
+  -> renderer submits outline then color/fog draw
+  -> publish plan, renderer and editor observations
+  -> collect no frame-cost sample or quality decision
 ```
 
 ## Domains in use
@@ -85,46 +83,40 @@ immutable game state, frame mutation and reset
 game snapshot and diagnostics
 runtime lifecycle, RAF scheduling and stop/start
 runtime clock, step admission and reset epoch
-persistence schema, slots and checkpoint identity
-save envelope, serialization and integrity fingerprint
-storage capability and failure classification
-save command admission and atomic write verification
-candidate parsing, classification and precedence
-schema migration and migration history
-content reconciliation
-hydration planning, atomic commit and rollback
-persistence journal and observation
+performance samples and elapsed-time windows
+quality profile schema, admission and revision
+adaptive decision, hysteresis, cooldown and manual override
+budget allocation, reservation, consumption and violation reporting
+quality transition prepare, commit, rollback and journaling
+terrain, grass, scatter, post-process and surface quality consumers
 GameHost capability projection
 browser editor capability routing
 Node headless editor, workspace and artifact operations
-player, input, interaction, objective and story declarations
+player, input, interaction, objective, story and persistence declarations
 terrain, path, materials, scatter and atmosphere
 grass density, archetypes, batching, placement, instancing, wind and LOD
 tree, wind, performance and post-process enhancement
-render-plan v2 contract and topology identity
+render-plan v2 contract, quality fingerprint and topology identity
 CPU mesh construction
 WebGL context, shader, buffer, draw, resize and disposal
 render surface, context recovery and committed-frame observation
-checkpoint-to-visible-frame and capture correlation
+quality-to-visible-frame and capture correlation
 static checks, browser observation, build and Pages deployment
 DSK implementation, dependency, consumption and retirement truth
 ```
 
 ## Complete kit inventory and services
 
-### External kit
+### External
 
 ```txt
 meadow-area-kit
-  area/path/style/material normalization
-  deterministic seeded scatter
-  grass, flower, rock, mushroom and tree descriptors
-  wind and atmosphere descriptors
-  render-plan generation
+  area/path/style/material normalization; deterministic scatter; grass, flower, rock,
+  mushroom and tree descriptors; wind and atmosphere; render-plan generation;
   validation, snapshot, reset and optional runtime adapter
 ```
 
-### Local game, host and composition
+### Local game and host
 
 ```txt
 into-the-meadow-game-dsk
@@ -168,7 +160,7 @@ gpu-grass-render-dsk
   grass-instance-buffer, grass-blade-mesh, shader-wind, grass-lod-render, grass-render-validation
 ```
 
-### World, player and experience
+### World and experience
 
 ```txt
 wind-field-dsk
@@ -231,98 +223,103 @@ static-pages-deploy-dsk
   build-config, GitHub Pages workflow, release-artifacts, cache-invalidation, deploy-validation
 ```
 
-## Main finding: declared save services have no runtime path
+## Main findings
 
-### The save DSK is planned
+### Static auto profile
 
-`meadow-save-dsk` is present in `LOCAL_DSK_IDS` and its five services are generated into a descriptor. It is absent from `REQUIRED_V01_DSK_IDS`, so its descriptor status is `planned`, not an implementation-backed active capability.
+`QUALITY_PROFILES.auto` is a fixed object. The runtime creates no frame sample, window, decision, hysteresis or cooldown state.
 
-### Startup and reset always construct defaults
+### Implicit high profile
 
-`createIntoTheMeadowGame()` creates initial state immediately. `startWebHost()` provides no hydration input, and `game.reset()` replaces the live state with another default object.
+`ARRIVAL_MEADOW_CONFIG.style` has no performance descriptor. The policy therefore defaults to `high` without an admission or observation result.
 
-### The snapshot is not a save envelope
+### Quality-blind cache identity
 
-`createGameSnapshot()` bundles manifest, state, render plan and diagnostics. It has no schema ID, slot, checkpoint ID, reset epoch, state revision, content revision, migration history, integrity fingerprint or hydration result.
+`createRenderPlanEnhancer()` caches by source topology only. Runtime performance inputs are consulted only during rebuild and are omitted from the cache key. The web host passes no runtime performance argument.
 
-### Persistence is absent from every public adapter
+### Partial budget enforcement
 
-GameHost exposes raw game authority and read observations. Browser and Node editor capabilities include runtime, scene, renderer, camera, browser and workspace operations, but no persistence operation.
+```txt
+maxFlowerObjects: source-order filter
+maxTreeLineObjects: source-order filter
+maxGrassInstances: calculated, not enforced
+maxSmallScatterObjects: calculated, unused
+mushrooms: hard-coded local limit 14
+```
+
+### Ignored profile fields
+
+`terrainResolution` is superseded by hard-coded 96 x 124 terrain segments. `postProcess` does not control stack construction or actual outline/color draw submission. DPR is independently clamped by the renderer.
+
+### Validation and proof gaps
+
+The enhancer does not call `performance.validate()`. Unknown quality labels can fall back to high behavior while retaining an invalid label. No quality revision, fingerprint, budget result or first-frame acknowledgement reaches renderer, GameHost, editor or capture observations.
 
 ## Required parent domain
 
 ```txt
-meadow-persistence-continuity-authority-domain
+meadow-adaptive-quality-budget-authority-domain
 ```
 
 Planned coordinating kits:
 
 ```txt
-save-schema-descriptor-kit
-save-slot-registry-kit
-checkpoint-id-kit
-state-revision-kit
-reset-epoch-kit
-save-envelope-kit
-save-integrity-fingerprint-kit
-persistence-capability-kit
-save-command-kit
-save-admission-kit
-save-write-result-kit
-save-candidate-read-kit
-save-candidate-classifier-kit
-save-migration-kit
-save-reconciliation-kit
-hydration-plan-kit
-hydration-commit-kit
-hydration-rollback-kit
-persistence-journal-kit
-persistence-observation-kit
-visible-frame-hydration-ack-kit
-persistence-fixture-kit
-browser-reload-continuity-smoke-kit
+performance-sample-envelope-kit
+performance-window-timebase-kit
+quality-profile-schema-kit
+quality-profile-admission-kit
+quality-decision-policy-kit
+quality-transition-command-kit
+quality-transition-id-kit
+quality-revision-kit
+performance-budget-ledger-kit
+grass-instance-budget-kit
+scatter-budget-kit
+terrain-resolution-policy-kit
+post-process-quality-policy-kit
+render-plan-quality-fingerprint-kit
+quality-cache-invalidation-kit
+quality-transition-prepare-kit
+quality-transition-commit-kit
+quality-transition-rollback-kit
+effective-quality-observation-kit
+quality-frame-ack-kit
+quality-cadence-parity-fixture-kit
+quality-budget-enforcement-fixture-kit
+quality-transition-browser-smoke-kit
 ```
 
 ## Required transaction
 
 ```txt
-SaveCommand
-  -> admit session, reset epoch and expected state revision
-  -> capture canonical persistable state
-  -> validate current schema and content identity
-  -> compute integrity fingerprint
-  -> atomically write a named slot
-  -> read back and verify the exact candidate
-  -> publish typed SaveResult and bounded journal
-
-startup or LoadCommand
-  -> enumerate slots independently
-  -> parse and classify every candidate
-  -> select by one versioned precedence policy
-  -> migrate supported predecessors
-  -> reconcile scene, objective, story and content identities
-  -> construct detached candidate state
-  -> commit one state revision or preserve the predecessor
-  -> rebuild derived render state
-  -> render and acknowledge the first hydrated frame
-  -> publish typed HydrationResult and journal
+collect valid post-frame samples
+  -> update elapsed-time window
+  -> decide with hysteresis and cooldown
+  -> admit transition against session, renderer, surface and quality revision
+  -> allocate complete consumer budgets
+  -> prepare detached plan and resources
+  -> validate every consumer binding and ceiling
+  -> atomically commit or roll back
+  -> render first successor frame
+  -> publish quality result, fingerprint, budgets and frame receipt
 ```
 
 ## Required proof
 
 ```txt
-fresh boot produces an explicit no-save result
-valid save survives browser reload
-malformed candidates cannot crash startup or hide a valid candidate
-unsupported schema and incompatible content fail explicitly
-supported predecessor schema migrates deterministically
-duplicate and stale commands are idempotent or rejected
-quota, denial and read-back mismatch preserve the prior valid checkpoint
-reset follows an explicit slot and epoch policy
-hydration failure causes no partial state or frame mutation
-browser and headless adapters share envelope and result semantics
-state, snapshot, renderer, diagnostics and first visible frame cite one checkpoint
-Pages proves deployed reload continuity
+profile schema and fingerprint determinism
+unknown profile rejection
+30/60/120 Hz decision parity
+hidden/suspended frame policy
+complete grass and scatter budget ceilings
+terrain, post and surface profile bindings
+quality-only cache invalidation
+idempotent duplicate and stale rejection
+consumer failure rollback
+context-loss classification
+browser/headless observation parity
+first visible quality-frame correlation
+Pages degrade and recovery smoke
 ```
 
 ## Ordered safe ledges
@@ -338,6 +335,7 @@ Pages proves deployed reload continuity
 6b. Render Surface Resolution Authority
 7. Committed Frame Observation Authority
 7a. Fatal Runtime Failure Recovery Authority
+7b. Adaptive Quality and Performance Budget Authority
 8. Interaction Command and Objective Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
@@ -347,7 +345,7 @@ Pages proves deployed reload continuity
 
 ```txt
 runtime source changed: no
-persistence source changed: no
+performance source changed: no
 renderer source changed: no
 package scripts changed: no
 dependencies changed: no
@@ -355,6 +353,6 @@ deployment changed: no
 branch created: no
 pull request created: no
 npm run check: not run
-browser reload smoke: not run
-persistence fixtures: unavailable
+browser performance smoke: not run
+adaptive-quality fixtures: unavailable
 ```

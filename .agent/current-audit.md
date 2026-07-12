@@ -1,24 +1,28 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-12T19-41-13-04-00`  
-**Status:** `frame-scheduler-step-admission-authority-audited`
+**Audit timestamp:** `2026-07-12T19-49-41-04-00`  
+**Status:** `frame-scheduler-step-admission-central-reconciled`
 
 ## Summary
 
 IntoTheMeadow declares 44 kit surfaces and renders a deterministic meadow, but its browser frame loop has no clock or callback authority. Simulation receives a constant `1/60` step once per RAF callback, visual wind consumes absolute RAF time, stop/start does not retire a pending callback, and raw host access can bypass scheduler ownership.
 
+The repo-local `19-41-13` source audit is now reconciled across root routing, machine registry and central tracking.
+
 ## Plan ledger
 
-**Goal:** define the authoritative frame transaction required before playable movement, path progress, objectives, story, audio or persistence can safely consume time.
+**Goal:** define and centrally reconcile the authoritative frame transaction required before playable movement, path progress, objectives, story, audio or persistence can safely consume time.
 
 - [x] Compare the full Publish inventory and central ledger.
-- [x] Select only IntoTheMeadow under the oldest eligible synchronized rule.
+- [x] Exclude `TheCavalryOfRome`.
+- [x] Select only `IntoTheMeadow` because repo-local audit state was newer than central tracking.
 - [x] Inspect boot, scheduler, state, renderer, host exposure and tests.
 - [x] Preserve all domains, kits and offered services.
 - [x] Define clock, RAF lease, fixed-step, lifecycle and render-correlation contracts.
-- [x] Add a new timestamped tracker and audit family.
+- [x] Add a new timestamped tracker and reconciliation audit family.
 - [x] Refresh root `.agent` state and machine registry.
+- [x] Update the central repo ledger and internal change log.
 - [x] Push only to `main`; create no branch or pull request.
 - [ ] Implement and execute the authority later.
 
@@ -31,7 +35,7 @@ new eligible repositories: 0
 central-ledger-missing eligible repositories: 0
 root-.agent-missing eligible repositories: 0
 
-IntoTheMeadow      2026-07-12T17-58-43-04-00 selected
+IntoTheMeadow      central 2026-07-12T17-58-43-04-00; repo-local 2026-07-12T19-41-13-04-00; selected
 PhantomCommand     2026-07-12T18-11-53-04-00
 PrehistoricRush    2026-07-12T18-18-59-04-00
 HorrorCorridor     2026-07-12T18-38-51-04-00
@@ -55,7 +59,7 @@ boot
 frame(now)
   -> derive time = now / 1000
   -> tick exactly once with dt = 1/60
-  -> commit frame and lastTick without input validation
+  -> commit frame and lastTick without temporal admission
   -> enhance static-topology render plan
   -> pass absolute time to wind shader
   -> draw outline and color passes
@@ -66,6 +70,9 @@ lifecycle
   -> stop sets stopped = true
   -> start sets stopped = false and requests RAF
   -> no RAF handle, lease, generation or stale callback rejection
+
+public mutation
+  -> window.GameHost.game exposes direct tick and reset
 ```
 
 ## Domains in use
@@ -132,8 +139,8 @@ runtime frame authorities: 0
 The exact inventory is in:
 
 ```txt
+.agent/trackers/2026-07-12T19-49-41-04-00/project-breakdown.md
 .agent/trackers/2026-07-12T19-41-13-04-00/project-breakdown.md
-.agent/trackers/2026-07-12T17-49-51-04-00/project-breakdown.md
 .agent/kit-registry.json
 ```
 
@@ -164,14 +171,14 @@ RAF callback
 ## Current output
 
 ```txt
-.agent/trackers/2026-07-12T19-41-13-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T19-41-13-04-00.md
-.agent/architecture-audit/2026-07-12T19-41-13-04-00-frame-scheduler-step-admission-dsk-map.md
-.agent/render-audit/2026-07-12T19-41-13-04-00-render-simulation-clock-correlation-gap.md
-.agent/gameplay-audit/2026-07-12T19-41-13-04-00-refresh-rate-dependent-simulation-loop.md
-.agent/interaction-audit/2026-07-12T19-41-13-04-00-stop-start-frame-admission-map.md
-.agent/frame-clock-audit/2026-07-12T19-41-13-04-00-raf-lease-fixed-step-contract.md
-.agent/deploy-audit/2026-07-12T19-41-13-04-00-frame-clock-fixture-gate.md
+.agent/trackers/2026-07-12T19-49-41-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T19-49-41-04-00.md
+.agent/architecture-audit/2026-07-12T19-49-41-04-00-frame-scheduler-central-reconciliation-dsk-map.md
+.agent/render-audit/2026-07-12T19-49-41-04-00-clocked-visible-frame-central-reconciliation.md
+.agent/gameplay-audit/2026-07-12T19-49-41-04-00-refresh-rate-simulation-central-reconciliation.md
+.agent/interaction-audit/2026-07-12T19-49-41-04-00-frame-callback-step-admission-map.md
+.agent/frame-scheduler-audit/2026-07-12T19-49-41-04-00-clock-raf-step-lifecycle-contract.md
+.agent/deploy-audit/2026-07-12T19-49-41-04-00-frame-clock-fixture-central-gate.md
 ```
 
 ## Validation

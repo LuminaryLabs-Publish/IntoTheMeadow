@@ -1,167 +1,156 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T13-54-00-04-00`
+**Updated:** `2026-07-12T15-49-09-04-00`
 
 ## Summary
 
-The repo-local and central audit records are now synchronized. The leading runtime gap remains that grass LOD names exist without camera-bound visibility authority: density permanently chooses near or mid geometry, far and terrain-tint are unreachable, all instances enter one static mesh, and every vertex is drawn regardless of camera distance or frustum containment.
+The leading architecture gap is declaration-to-runtime consumption. Forty-three local DSK/kits are structurally described, but active status does not prove provider resolution, executable service installation, readiness or command consumption. The simulation currently advances only `frame` and `lastTick`.
 
 ## Plan ledger
 
-**Goal:** close camera visibility, tier reachability, transition, budget and frame-proof gaps while preserving all preceding runtime, render, editor, progression, audio, persistence and replay gaps.
+**Goal:** close capability-truth, gameplay-consumption and visible-proof gaps while preserving earlier lifecycle, render, grass, audio, persistence and replay findings.
 
-- [x] Reconcile root docs, registry and central tracking.
-- [x] Preserve grass visibility and LOD gaps.
-- [x] Preserve the preceding WebGL program-interface gap.
-- [x] Preserve earlier lifecycle, host, render, audio, persistence and replay gaps.
+- [x] Record declaration, provider, dependency and install gaps.
+- [x] Record inert gameplay and unreachable authored-content gaps.
+- [x] Record consumption, observation and first-frame gaps.
+- [x] Preserve previous grass visibility and WebGL authority gaps.
 - [ ] Implement in dependency order.
 
-## Tier reachability gaps
+## Declaration and provider gaps
 
 ```txt
-near: reachable only through density-selected batch
-mid: reachable only through density-selected batch
-far: never selected by placement
-terrain-tint: no static batch or render representation
-culled: absent
-distance-based tier selection: absent
+service contract version
+provider identity and version
+immutable provider source/fingerprint
+provider registry
+real dependency lists
+dependency graph and install order
+per-kit install command/result
+readiness probe
+candidate rollback
+provider disposal and retirement
 ```
 
-## Visibility gaps
+## Capability-state gaps
 
 ```txt
-stable patch bounds admission
-camera and viewport revisions
-frustum planes and classification
-distance-to-bounds result
-per-patch predecessor tier
-per-frame visible set
-cull reason
-visible-set fingerprint
+Declared/Validated/Installed/Ready/Active distinction
+runtime capability generation
+declared/offered/realized service parity
+planned-capability rejection
+degraded capability state
+stale generation rejection
+bounded capability observation
 ```
 
-## Transition gaps
+Current `active-v0.1` is assigned from required-list membership, not runtime readiness.
+
+## Consumption gaps
 
 ```txt
-entry/exit thresholds
-hysteresis
-camera-teleport policy
-viewport-change policy
-quality-change transition policy
-fade or cross-tier continuity
-stale-result rejection
+callable service registry
+command-to-service binding
+service invocation identity
+DSK consumption receipt
+input/result fingerprints
+state revision before/after
+exactly-once command handling
+duplicate command parity
 ```
 
-## Budget gaps
+## Gameplay gaps
 
 ```txt
-visible patch budget
-visible instance budget
-visible vertex budget
-grass draw budget
-deterministic priority policy
-camera-distance priority
-hero-area protection
-budget reduction result
+browser keyboard/pointer/gamepad listeners
+input normalization and context
+editor gameplay command capability
+player velocity and movement integration
+terrain contact and path projection
+path progress mutation
+interaction target query
+inspection state and result
+objective progress/completion
+story trigger evaluation
+feedback and HUD projection
+audio event consumption
+save binding to committed gameplay
 ```
 
-## Geometry and draw gaps
+## Authored-content reachability gaps
 
 ```txt
-all patch instances flattened into one mesh: yes
-camera-independent topology key: yes
-camera movement rebuilds visible set: no
-far representation admission: absent
-terrain-tint output: absent
-per-tier mesh generation: absent
-per-tier draw generation: absent
-full mesh outline draw: always
-full mesh color draw: always
+path-discovery trigger at path-progress:0.25
+focal-tree trigger at inspect:focal-tree
+walk-the-path completion at progress >= 0.35
+inspect-tree completion from admitted inspection
 ```
 
-## Observation gaps
+All four conditions are authored but not evaluated by the runtime.
+
+## State and frame gaps
 
 ```txt
-patches tested/visible/culled
-per-tier patch and instance counts
-admitted/rejected vertex and draw counts
-transition counts and reasons
-budget reductions
-visibility revision and fingerprint
-candidate install/rollback result
-first visible grass frame receipt
-capture/visibility correlation
+gameplay state revision
+objective revision
+story revision
+interaction result id
+capability generation in render plan
+DSK receipt ids in snapshot
+feedback projection result
+first visible gameplay frame acknowledgement
 ```
 
-## Missing proof
+## Test gaps
 
 ```txt
-camera-distance near/mid/far selection
-terrain-tint without blade geometry
-outside-frustum omission
-edge-intersection determinism
-threshold hysteresis
-camera teleport and viewport resize handling
-quality and render-budget enforcement
-candidate failure preserves predecessor
-stale camera/viewport/topology/policy rejection
-renderer snapshot carries visibility revision
-first visible frame cites accepted visible set
-local browser and deployed Pages parity
+missing/wrong provider
+service contract mismatch
+cyclic dependency
+readiness failure and rollback
+planned declaration unavailable
+active declaration callable
+movement determinism
+path-progress thresholds
+inspect target evidence
+objective/story exactly-once behavior
+stale capability generation
+service consumption receipt
+local/Pages gameplay parity
 ```
 
-## Preserved WebGL program-interface gaps
+## Preserved grass and render gaps
 
 ```txt
-active attribute/uniform reflection
-exact symbol type and size admission
-mesh/program and payload/program compatibility
-context-bound program generation and fingerprint
-draw admission and first visible interface frame receipt
+camera-bound grass visible set
+near/mid/far/terrain-tint/culled reachability
+frustum classification and hysteresis
+visible patch/instance/vertex/draw budgets
+WebGL program-interface reflection and schema admission
+context/surface/program generations
+committed render-frame observation
 ```
 
-## Preserved progression gaps
-
-```txt
-browser/editor interaction command surface
-canonical target evidence
-path and inspection mutation
-objective and story transition commit
-feedback projection
-first visible progression-frame acknowledgement
-```
-
-## Preserved editor and host gaps
-
-```txt
-raw GameHost capability quarantine
-editor bridge generation and predecessor retirement
-listener leases and bounded errors
-stale capability rejection
-capture/frame provenance
-host stop/dispose parity
-```
-
-## Preserved runtime and data gaps
+## Preserved host and lifecycle gaps
 
 ```txt
 runtime session lifecycle and ordered disposal
-RAF clock and step admission
+RAF cancellation and step admission
+raw GameHost capability quarantine
+editor bridge generation and bounded errors
 source-provider artifact authority
-render topology identity
-WebGL context recovery
-render-surface revision
-shader precision admission
-committed-frame observation
-fatal frame recovery
-adaptive quality authority
-trusted audio activation
+fatal runtime recovery
+```
+
+## Preserved product gaps
+
+```txt
+audio user-gesture activation and lifecycle
 save migration and atomic hydration
-DSK declaration-to-runtime consumption
+adaptive quality authority
 independent deterministic replay
 ```
 
 ## Completion boundary
 
-Do not count batch labels, card limits, stable topology or successful full-mesh draws as LOD proof. Completion requires camera-bound classification, reachable near/mid/far/tint/culled states, hysteresis, budgets, stale-result rejection and a visible frame carrying the accepted visibility revision.
+Do not count a descriptor snapshot, `active-v0.1` label, generic provide token, content count or successful visual frame as DSK runtime proof. Completion requires concrete providers, installed callable services, command consumption receipts, committed gameplay transitions and a visible frame citing the accepted capability and gameplay revisions.

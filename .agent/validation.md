@@ -2,26 +2,23 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-12T00-49-48-04-00`
+**Updated:** `2026-07-12T00-58-12-04-00`
 
 ## Plan ledger
 
-**Goal:** distinguish static quality profiles and readable render statistics from executable proof that quality decisions are cadence-independent, budgets are complete, transitions are atomic and the committed profile reaches a visible frame.
+**Goal:** distinguish repeated reads of one unchanged fallback-backed game from executable proof that independent runtimes reproduce construction, simulation, reset, progression, render plans and the first visible frame.
 
 - [x] Review the complete accessible Publish inventory.
 - [x] Compare every eligible repository with central tracking.
 - [x] Verify central and root `.agent` coverage.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow` as the oldest eligible central-ledger entry.
-- [x] Inspect the required-v0.1 DSK registry and performance descriptor.
-- [x] Inspect the production scene performance input.
-- [x] Inspect enhancer cache identity and quality consumption.
-- [x] Inspect grass, scatter, terrain and post-process consumers.
-- [x] Inspect renderer DPR, draw submission and snapshot shape.
-- [x] Inspect the browser frame loop and current package validation scripts.
-- [x] Document sampling, decision, budget, transition, rollback and visible-frame proof requirements.
+- [x] Select only `IntoTheMeadow` because newer repo-local work required central reconciliation.
+- [x] Inspect `validate-determinism.js` and `deterministic-scene-smoke.mjs`.
+- [x] Inspect game construction, provider fallback, state, snapshot and reset.
+- [x] Inspect render-plan smoke and package check coverage.
+- [x] Document canonical schema, independent construction, provider parity, replay, divergence and frame-proof requirements.
 - [x] Change documentation only.
-- [ ] Execute fixtures after implementation exists.
+- [ ] Execute replay fixtures after implementation exists.
 
 ## Source inspection completed
 
@@ -29,43 +26,34 @@
 external declared kits: 1
 local declared kits: 43
 total declared kits: 44
-required-v0.1 local kits: 15
-performance DSK required-v0.1: yes
-named quality profiles: 5
-runtime performance sample types: 0
-elapsed-time performance windows: 0
-adaptive decision results: 0
-quality transition commands: 0
-quality transition results: 0
-quality revisions: 0
-quality fingerprints: 0
-performance budget ledgers: 0
-first visible quality-frame receipts: 0
-adaptive-quality fixture commands: 0
+determinism validator functions: 2
+deterministic smoke files: 1
+independent runtimes constructed by smoke: 1
+external production providers exercised by smoke: 0
+ticks executed by smoke: 0
+resets executed by smoke: 0
+command sequences executed by smoke: 0
+checkpoint fingerprints: 0
+first-divergence results: 0
+visible replay-frame receipts: 0
 ```
 
 ## Proven from source
 
 ```txt
-meadow-performance-dsk defines low, medium, high, ultra and auto
-all five profiles are static objects
-arrival-meadow supplies no style.performance object
-policy default quality is high
-web host supplies no runtime performance input to the enhancer
-enhancer cache identity is sourceTopologyKey only
-maxFlowerObjects limits wildflowers by source order
-maxTreeLineObjects limits tree-line objects by source order
-maxGrassInstances is calculated but not passed as a global ceiling
-maxSmallScatterObjects is calculated but not consumed
-mushroom limit is hard-coded to 14
-terrain topology is hard-coded to 96 x 124
-profile.terrainResolution is not consumed
-profile.postProcess is not consumed
-renderer independently clamps DPR between 1 and 2
-renderer always submits outline and color/fog draws
-enhancer does not call performance.validate()
-renderer snapshot has no quality revision or fingerprint
-npm run check has no adaptive-quality fixture
+stableStringify recursively sorts plain object keys
+validateDeterminism calls the supplied callback twice
+the two serialized results are compared with strict string equality
+failure output is one generic string
+deterministic-scene-smoke validates authored scene-flow counts
+it creates one game with no externalKits
+that selects the local fallback provider
+it reads game.getSnapshot twice without a tick or reset
+game snapshot contains manifest, state, base render plan and diagnostics
+game tick increments frame and records lastTick only
+game reset constructs another initial state
+render-plan smoke separately checks topology-key stability across a time overlay
+npm run check includes no independent replay fixture
 ```
 
 ## Existing proof
@@ -73,43 +61,41 @@ npm run check has no adaptive-quality fixture
 Current checks prove:
 
 ```txt
-required files exist
+required source files exist
 DSK descriptors validate structurally
+scene-flow authored counts validate
+two adjacent reads of one unchanged fallback-backed snapshot are equal
 render-plan descriptors validate
-CPU mesh data is internally aligned
-static topology remains stable across time changes
-renderer can draw the current plan
-headless-editor runtime and existing command surfaces operate
+one time-only render-plan update preserves topology identity
+CPU mesh data and renderer smoke remain internally valid
+headless editor commands operate for existing domains
 ```
 
 Current checks do not prove:
 
 ```txt
-valid profile schema admission
-unknown profile rejection
-frame-cost sampling
-elapsed-time decision windows
-cadence parity
-hysteresis or cooldown
-visibility and suspension handling
-complete budget allocation and enforcement
-terrain-resolution profile binding
-post-process and actual draw binding
-surface/DPR profile binding
-quality-aware cache invalidation
-transition idempotency or stale rejection
-consumer prepare/commit/rollback
-context-loss behavior during transition
-browser/headless quality observation parity
-first visible quality-frame correlation
-Pages degrade and recovery behavior
+canonical-value admission
+serializer schema/version identity
+independent game construction determinism
+production external-provider determinism
+provider or seed fingerprints
+same-seed checkpoint replay
+command/tick sequence replay
+reset and stop/start replay
+30/60/120 Hz parity
+objective/story progression replay
+browser/headless parity
+source/enhanced render-plan fingerprint parity
+first visible frame parity
+negative controls
+exact first-divergence location
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
-performance source changed: no
+determinism source changed: no
 renderer source changed: no
 package scripts changed: no
 dependencies changed: no
@@ -118,140 +104,118 @@ deployment changed: no
 branch created: no
 pull request created: no
 npm run check executed: no
-browser performance smoke executed: no
-adaptive-quality fixtures available: no
+replay fixtures available: no
+browser replay smoke available: no
 ```
 
-## Required profile fixture
+## Required canonical-value fixture
 
 ```txt
-validate all canonical profile fields and ranges
-reject unknown profile names
-reject unsupported consumer requirements
-compute deterministic profile and quality fingerprints
-prove the same canonical profile produces the same fingerprint
-prove profile version changes alter compatibility identity
+plain canonical values serialize identically across independent calls
+object keys use one deterministic ordering policy
+finite-number and -0 policy is explicit
+NaN and Infinity reject
+undefined and sparse arrays reject or receive explicit tagged semantics
+cycles reject with a typed path
+Date, Map, Set, typed values and custom prototypes reject or use versioned adapters
+accessor properties and getter side effects reject
+schema and serializer version participate in fingerprint identity
 ```
 
-## Required performance-window fixture
+## Required independent-build fixture
 
 ```txt
-feed monotonic CPU and optional GPU samples
-classify invalid, hidden, suspended and context-lost frames
-use elapsed duration rather than sample count
-produce the same decision for equivalent 30, 60 and 120 Hz traces
-require declared sustained evidence before degrade or recovery
-prove hysteresis and cooldown prevent threshold thrashing
-bound retained sample history
+construct runtime A and runtime B separately
+construct separate provider instances
+admit identical manifest, content, provider and seed identity
+compare construction checkpoint fingerprints
+repeat in reversed construction order
+assert no shared mutable provider, enhancer or cache state
+change seed/provider/content as negative controls
 ```
 
-## Required budget fixture
-
-Construct an adversarially dense source plan.
-
-Acceptance assertions:
+## Required provider fixture
 
 ```txt
-all consumers reserve before topology generation
-grass instances and cards remain within admitted totals
-flowers, mushrooms, rocks, tree line and small scatter remain within totals
-terrain vertices and triangles match the admitted resolution policy
-post-process pass and draw counts match the admitted profile
-drawing-buffer pixels and DPR remain within the admitted surface policy
-dropped work and remaining budget are reported
-no consumer silently ignores a required profile field
+fallback provider replay is deterministic
+external production-provider replay is deterministic
+provider ID, version and fingerprint are recorded
+fallback/external differences are classified rather than silently treated as parity
+provider import/export failure produces a typed result
 ```
 
-## Required cache fixture
+## Required tick and reset fixture
 
 ```txt
-same source and same quality revision produce cache hits
-same source with a new quality revision rebuilds enhancer exactly once
-renderer topology changes exactly once when required
-quality change without topology change still updates effective-quality observation
-stale predecessor plans cannot replace the successor
-quality fingerprint appears in plan, renderer and capture observations
+admit one sequenced command stream
+admit one normalized committed-tick schedule
+compare state checkpoints after every command/tick boundary
+reset both runtimes into a new replay epoch
+replay the same scenario
+assert terminal state, objective and story fingerprints match
+inject changed command order and changed dt negative controls
 ```
 
-## Required transition fixture
+## Required cadence fixture
 
 ```txt
-commit a baseline quality and visible frame
-admit a transition against session, renderer, surface and expected quality revision
-allocate a complete budget ledger
-prepare detached plan and resource candidates
-validate every consumer result
-commit one successor quality revision
-wait for first visible quality frame
-assert plan, renderer, GameHost, editor and frame share identity
-inject failure before and after resource preparation
-assert the predecessor plan and frame remain authoritative or rollback succeeds
-return one typed transition result and bounded journal row
+run presentation schedules representing 30, 60 and 120 Hz
+map all schedules to the same committed simulation ticks
+assert state and progression fingerprints are identical
+classify render interpolation differences separately
+exclude hidden/suspended intervals by explicit policy
 ```
 
-## Required browser matrix
+## Required divergence fixture
 
 ```txt
-manual high-to-low transition
-auto slow-trace degradation
-auto fast-trace recovery
-alternating threshold trace
-hidden-tab interval
-manual quality lock and release
-invalid profile
-invalid budget override
-duplicate transition
-stale expected revision
-shader preparation failure
-buffer preparation failure
-WebGL context loss during transition
-stop/start during sampling
-pagehide/pageshow during sampling
+change one admitted value
+stop comparison at the first mismatch
+report checkpoint ID
+report committed tick ID
+report domain and canonical path
+report left/right fingerprints
+report value summaries and classification
+preserve bounded evidence
 ```
 
-For every successful transition assert:
+## Required render and frame fixture
 
 ```txt
-transition ID and quality revision
-requested and effective profile
-quality and budget fingerprints
-terrain, grass, scatter, post and surface settings
-enhancer and renderer rebuild counts
-renderer generation and surface revision
-committed visible frame ID
-capture and editor observation identity
+compare source render-plan fingerprints
+compare enhanced render-plan fingerprints
+compare topology and quality identity
+compare renderer observations
+wait for the first visible replay frame
+assert state, plan, renderer, frame and capture cite the same replay checkpoint
 ```
 
-## Required browser smoke
+## Required browser/headless fixture
 
 ```txt
-boot and wait for initial committed frame
-observe explicit effective high-quality result
-feed deterministic slow trace through supported test capability
-observe admitted degradation and committed low-quality frame
-verify all effective consumer settings and budgets
-feed deterministic recovery trace
-observe committed recovered frame
-inject one candidate failure and verify predecessor ownership
-assert no duplicate RAF or sampler work
-assert no unbounded buffer or journal growth
+run the same ReplayScenario through Node
+run it through browser GameHost capability gateway
+run it through the browser editor bridge
+run it through the Node headless editor environment
+assert one shared ReplayResult schema and terminal fingerprints
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:performance-profiles
-npm run fixture:performance-window
-npm run fixture:performance-cadence
-npm run fixture:performance-budgets
-npm run fixture:quality-cache
-npm run fixture:quality-transition
-npm run fixture:quality-rollback
-npm run smoke:quality-browser
-npm run smoke:quality-pages
+npm run fixture:canonical-values
+npm run fixture:deterministic-independent-build
+npm run fixture:deterministic-provider-parity
+npm run fixture:deterministic-tick-replay
+npm run fixture:deterministic-reset-replay
+npm run fixture:deterministic-cadence
+npm run fixture:deterministic-first-divergence
+npm run fixture:deterministic-browser-headless
+npm run smoke:deterministic-visible-frame
+npm run smoke:deterministic-pages
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim adaptive quality because `auto` exists or a static profile changes object counts. Completion requires cadence-independent evidence, full consumer budget enforcement, transactional transition and rollback, and a first visible frame that cites the committed quality revision and fingerprint.
+Do not claim deterministic replay because the same unchanged snapshot serializes equally twice. Completion requires canonical admission, independent runtime construction, production-provider coverage, checkpointed tick/reset replay, negative controls, exact divergence evidence and a first visible frame that cites the same replay result.

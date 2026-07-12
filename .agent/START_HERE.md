@@ -2,45 +2,44 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-12T13-38-52-04-00`  
-**Status:** `grass-visibility-lod-authority-audited`
+**Last aligned:** `2026-07-12T13-54-00-04-00`  
+**Status:** `grass-visibility-lod-central-reconciled`
 
 ## Summary
 
 IntoTheMeadow is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a texture-driven grass descriptor stack, one persistent CPU mesh and a WebGL renderer.
 
-The current audit isolates **grass visibility and LOD authority**. The declared LOD policy exposes near, mid, far and terrain-tint tiers, but placement selects near or mid batches from density rather than camera distance. Far and terrain-tint tiers are not selected, every grass instance is baked into one static mesh, and the renderer draws that complete mesh twice per frame without frustum, distance, hysteresis or budget admission.
+The current source-backed audit isolates grass visibility and LOD authority. Near, mid, far and terrain-tint tiers are declared, but placement chooses only near or mid batches from density. The distance policy is not consumed, every instance is baked into one static mesh, and the renderer draws that complete mesh twice without frustum, distance, hysteresis or visible-budget admission.
 
-The preceding WebGL program-interface audit and all earlier runtime, host, editor, clock, provider, topology, context, surface, precision, frame, performance, audio, progression, persistence, DSK-consumption and replay audits remain active dependencies.
+This timestamp reconciles that repo-local audit with the machine registry and `LuminaryLabs-Dev/LuminaryLabs`. Runtime behavior is unchanged.
 
 ## Plan ledger
 
-**Goal:** make each visible grass set a camera-bound, revisioned render decision that applies distance tiers, frustum containment, hysteresis, density budgets and first-visible-frame proof without replacing the existing grass DSK family.
+**Goal:** keep one authoritative documentation state while defining camera-bound, revisioned grass visibility and first-frame proof through existing grass/render owners.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have central-ledger and root `.agent` coverage.
-- [x] Skip `TheOpenAbove` because newer repo-local terrain documentation at `2026-07-12T13-29-56-04-00` was not yet synchronized centrally.
-- [x] Select only `IntoTheMeadow` as the next-oldest stable repository.
-- [x] Trace grass density, batch creation, patch placement, draw grouping, LOD policy, mesh construction and draw submission.
-- [x] Identify the interaction loop, all active domains, all 44 declared kits and offered services.
-- [x] Define the grass visibility/LOD authority, results, observations and fixture gates.
-- [x] Add a fresh timestamped tracker and architecture/render/gameplay/interaction/grass/deploy audit family.
-- [x] Refresh required root `.agent` files on `main`.
-- [x] Create no branch or pull request.
-- [ ] Implement and execute camera-bound grass visibility later.
+- [x] Select only `IntoTheMeadow` because repo-local grass documentation was newer than central tracking.
+- [x] Preserve the interaction loop, all domains, all 44 declared kits and offered services.
+- [x] Preserve the source-backed density/static-mesh finding.
+- [x] Add a fresh reconciliation tracker and architecture/system audits.
+- [x] Synchronize root entrypoints, machine registry and central tracking.
+- [x] Push only to `main`; create no branch or pull request.
+- [ ] Implement and execute camera-bound visibility later.
 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-12T13-38-52-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T13-38-52-04-00.md
-.agent/architecture-audit/2026-07-12T13-38-52-04-00-grass-visibility-lod-authority-dsk-map.md
-.agent/render-audit/2026-07-12T13-38-52-04-00-static-grass-mesh-camera-visibility-gap.md
-.agent/gameplay-audit/2026-07-12T13-38-52-04-00-density-tagged-lod-always-drawn-loop.md
-.agent/interaction-audit/2026-07-12T13-38-52-04-00-camera-grass-visibility-admission-map.md
-.agent/grass-system-audit/2026-07-12T13-38-52-04-00-distance-frustum-hysteresis-budget-contract.md
-.agent/deploy-audit/2026-07-12T13-38-52-04-00-grass-visibility-lod-fixture-gate.md
+.agent/trackers/2026-07-12T13-54-00-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T13-54-00-04-00.md
+.agent/architecture-audit/2026-07-12T13-54-00-04-00-grass-visibility-central-reconciliation-dsk-map.md
+.agent/render-audit/2026-07-12T13-54-00-04-00-camera-visible-set-ledger-reconciliation-gap.md
+.agent/gameplay-audit/2026-07-12T13-54-00-04-00-density-tagged-grass-lod-reconciliation.md
+.agent/interaction-audit/2026-07-12T13-54-00-04-00-camera-grass-admission-reconciliation.md
+.agent/grass-system-audit/2026-07-12T13-54-00-04-00-visibility-lod-registry-contract.md
+.agent/central-sync-audit/2026-07-12T13-54-00-04-00-repo-ledger-machine-registry-contract.md
+.agent/deploy-audit/2026-07-12T13-54-00-04-00-grass-visibility-fixture-central-gate.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -54,46 +53,44 @@ The preceding WebGL program-interface audit and all earlier runtime, host, edito
 boot
   -> import pinned meadow-area provider
   -> install 43 local declarations plus one external kit
-  -> create immutable game, grass descriptors, plan enhancer and renderer
-  -> generate density texture and patch grid
-  -> create near/mid/far static batches
-  -> assign each instance a near or mid batch from density
-  -> flatten every patch into draw groups
-  -> build one complete CPU mesh
+  -> create immutable game, render plan, performance, wind and post descriptors
+  -> generate density texture, clump archetypes and near/mid/far batches
+  -> create patch grid and choose near/mid instances from density
+  -> flatten every instance into draw groups
+  -> attach but do not consume the distance LOD policy
+  -> build one complete static CPU mesh
   -> expose GameHost/editor bridge and start RAF
 
 frame
   -> tick game with fixed 1/60 dt
   -> reuse static topology and mesh
-  -> derive camera matrices only
-  -> upload time/wind/light uniforms
-  -> draw the full mesh as outline
-  -> draw the full mesh as color
+  -> derive camera matrices
+  -> upload time/wind/light/outline uniforms
+  -> draw the complete mesh as outline
+  -> draw the complete mesh as color
   -> publish aggregate counts/cache snapshot
-  -> schedule next RAF
+  -> schedule successor RAF
 
 proof
-  -> Node tests require grass descriptors and stable topology
-  -> renderer smoke requires a substantial static mesh
-  -> no test moves the camera across LOD thresholds or outside patch frusta
-  -> no visible-frame receipt identifies admitted/culled grass patches
+  -> Node checks require descriptors, groups and aligned static mesh arrays
+  -> browser checks require page/editor/GPU markers and screenshot output
+  -> no fixture traverses LOD bands, frustum states or visibility revisions
 ```
 
 ## Main findings
 
 ```txt
 declared LOD tiers: near, mid, far, terrain-tint
-distance policy function: grass-lod-policy-kit.pick(distance)
-runtime calls to pick(distance): 0
-placement batch rule: density > 0.55 => near, otherwise mid
-far batches selected by placement: no
-terrain-tint batch representation: absent
-camera/frustum visibility result: absent
-hysteresis or transition state: absent
-visible grass budget result: absent
-grass patches baked into one mesh: yes
-full mesh draw passes per frame: 2
-per-frame grass culling: absent
+active calls to grass-lod-policy-kit.pick(distance): 0
+placement batch rule: density > 0.55 => near; otherwise mid
+far selected by placement: no
+terrain-tint representation: absent
+culled representation: absent
+patch bounds/frustum result: absent
+hysteresis: absent
+visible patch/instance/vertex/draw budgets: absent
+all grass baked into one static mesh: yes
+full-mesh draw passes per frame: 2
 ```
 
 ## Required parent domain
@@ -105,17 +102,18 @@ meadow-grass-visibility-lod-authority-domain
 ## Required flow
 
 ```txt
-committed camera and render-surface observation
-  -> allocate visibility command and camera revision
-  -> classify each patch against frustum and distance bands
-  -> apply hysteresis and prior-tier continuity
-  -> apply density, instance, vertex and draw budgets
-  -> select near, mid, far, terrain-tint or culled representation
-  -> construct immutable GrassVisibilityResult
-  -> reject stale camera/surface/topology generations
-  -> commit visible patch groups and mesh/draw generations
-  -> publish counts, reasons and bounded observations
-  -> acknowledge first visible frame with the same visibility revision
+committed camera, viewport, topology, policy and performance revisions
+  -> allocate GrassVisibilityCommand
+  -> classify stable patch bounds against the frustum
+  -> measure camera distance to admitted bounds
+  -> apply tier hysteresis and deterministic budgets
+  -> choose near, mid, far, terrain-tint or culled
+  -> produce immutable GrassVisibilityResult
+  -> reject stale generations
+  -> stage and atomically install mesh/draw generation
+  -> preserve predecessor after candidate failure
+  -> publish per-tier observations
+  -> acknowledge first visible frame with matching visibility revision
 ```
 
 ## Kit census
@@ -129,20 +127,19 @@ required-v0.1 local declarations: 15
 planned local declarations: 28
 ```
 
-The complete per-kit service inventory is in `.agent/kit-registry.json` and the current tracker.
+The exact kit and service inventory is in `.agent/kit-registry.json` and the current tracker.
 
 ## Validation boundary
 
 ```txt
-runtime source changed: no
-grass source changed: no
-renderer source changed: no
-gameplay source changed: no
+runtime/grass/renderer/gameplay source changed: no
 package scripts or dependencies changed: no
 deployment changed: no
 npm run check: not run
 browser/Pages smoke: not run
-grass visibility/LOD fixtures: unavailable
+grass visibility fixtures: unavailable
+branch created: no
+pull request created: no
 ```
 
-Do not treat density-selected batch labels, stable topology, a lower card count or successful rendering as camera-based LOD proof. Readiness requires camera-bound visibility results, reachable tiers, stale-result rejection, bounded transitions and a visible frame carrying the accepted visibility revision.
+Do not treat density-selected batch labels, lower card counts, stable topology or successful full-mesh rendering as camera-based LOD proof.

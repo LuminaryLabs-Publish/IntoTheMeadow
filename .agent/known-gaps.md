@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-12T00-49-48-04-00`
+**Updated:** `2026-07-12T00-58-12-04-00`
 
 ## Selection state
 
@@ -10,131 +10,140 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as the oldest eligible central-ledger entry
+IntoTheMeadow selected because newer repo-local work required reconciliation
 only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## Current adaptive-quality gaps
+## Current deterministic-replay gaps
 
-### Auto is a static profile
+### Determinism check is a same-instance read check
 
-`QUALITY_PROFILES.auto` is a fixed set of multipliers. No runtime sample window or adaptive decision changes it.
-
-### Production quality is implicit
-
-The arrival scene has no `style.performance` descriptor. `createMeadowPerformancePolicy()` therefore defaults to `high` without an admission result, revision or observation receipt.
-
-### Performance sampling is absent
+`deterministic-scene-smoke.mjs` constructs one game, performs no tick or reset, and compares two immediate `game.getSnapshot()` reads.
 
 ```txt
-post-frame CPU sample: absent
-GPU timing sample: absent
-sample identity: absent
-visibility and suspension classification: absent
-elapsed-time performance window: absent
-outlier policy: absent
-bounded sample history: absent
+independent construction: absent
+second provider instance: absent
+second game instance: absent
+shared-state detection: absent
+constructor-order variation: absent
 ```
 
-### Adaptive decision policy is absent
+### Production provider is not exercised
+
+The smoke calls `createIntoTheMeadowGame()` without `externalKits`, so the local fallback provider is selected. The commit-pinned external provider used by browser production is outside the deterministic gate.
 
 ```txt
-degrade threshold: absent
-recover threshold: absent
-hysteresis: absent
-cooldown: absent
-minimum profile residency: absent
-quality decision result: absent
-manual override and auto-lock policy: absent
+provider ID/version admission: absent
+provider fingerprint: absent
+fallback/external parity classification: absent
+production-provider replay fixture: absent
 ```
 
-### Quality transition authority is absent
+### Simulation replay is absent
 
 ```txt
-transition command and ID: absent
-quality revision: absent
-expected-revision admission: absent
-session, renderer and surface fences: absent
-consumer prepare/commit/rollback: absent
-idempotent duplicate result: absent
-stale transition rejection: absent
-bounded transition journal: absent
+sequenced commands: absent
+normalized tick schedule: absent
+intermediate checkpoints: absent
+reset replay: absent
+stop/start replay: absent
+30/60/120 Hz committed-tick parity: absent
+objective/story replay: absent
 ```
 
-### Enhancer cache ignores quality
+### Canonical-value policy is absent
 
-`createRenderPlanEnhancer()` caches by source topology only. Quality profile, budget overrides, terrain resolution, post policy, surface policy and quality revision do not participate in cache identity.
-
-A quality-only change can therefore reuse the predecessor plan indefinitely.
-
-### Grass budget is not enforced
-
-The policy computes `maxGrassInstances`, but grass placement receives only a quality scale. Patch creation has no global reservation ledger and can exceed the declared total.
-
-### Scatter budget is incomplete
+`stableStringify()` sorts object keys but does not reject or tag unsupported JavaScript values.
 
 ```txt
-maxFlowerObjects: applied by source-order filtering
-maxTreeLineObjects: applied by source-order filtering
-maxSmallScatterObjects: unused
-mushroom ceiling: hard-coded to 14 outside policy
-rock ceiling: no performance-policy enforcement
-stable priority and dropped-work result: absent
+NaN/Infinity policy: absent
+-0 policy: absent
+undefined policy: absent
+sparse-array policy: absent
+Date/Map/Set policy: absent
+typed-value tags: absent
+cycle rejection result: absent
+accessor/getter policy: absent
+schema and serializer version: absent
 ```
 
-### Terrain quality binding is absent
-
-Profiles declare `terrainResolution`, but the enhancer hard-codes terrain segments to `96 x 124`.
-
-### Post-process quality binding is absent
-
-Profiles declare `postProcess`, but stack construction is driven separately by scene configuration. The renderer always submits an outline pass and a color/fog pass.
-
-### Surface quality binding is absent
-
-The renderer independently clamps device pixel ratio from 1 through 2. No profile owns DPR, drawing-buffer pixel ceiling or surface revision.
-
-### Performance validation is not consumed
-
-The enhancer does not call `performance.validate()`. An unknown quality label can retain that label while profile lookup and grass scaling silently fall back to `high`.
-
-### Quality observation is incomplete
+### Fingerprints are absent
 
 ```txt
-quality profile version: absent from renderer snapshot
-quality revision: absent
-quality fingerprint: absent
-budget ledger and violations: absent
-consumer effective settings: absent
-transition result: absent
-first visible quality-frame receipt: absent
-GameHost/editor/headless parity proof: absent
+provider fingerprint: absent
+seed fingerprint: absent
+content fingerprint: absent
+scenario fingerprint: absent
+state checkpoint fingerprint: absent
+objective/story fingerprint: absent
+source render-plan fingerprint: absent
+enhanced render-plan fingerprint: absent
+visible-frame fingerprint: absent
 ```
 
-## Missing adaptive-quality fixtures
+### Divergence reporting is absent
+
+The validator returns a Boolean and one generic failure string.
 
 ```txt
-profile schema fixture
-unknown profile fixture
-quality fingerprint fixture
-performance-window fixture
+replay run ID: absent
+checkpoint ID: absent
+committed tick ID: absent
+domain/path: absent
+left/right fingerprints: absent
+classification: absent
+bounded evidence journal: absent
+```
+
+### Browser/headless/frame proof is absent
+
+```txt
+browser replay command: absent
+headless replay command: absent
+shared replay result schema: absent
+renderer replay identity: absent
+first visible replay-frame acknowledgement: absent
+capture replay identity: absent
+Pages replay smoke: absent
+```
+
+## Missing deterministic-replay fixtures
+
+```txt
+canonical-value fixture
+independent fallback construction fixture
+independent external-provider construction fixture
+fallback/external parity fixture
+same-seed replay fixture
+changed-seed negative control
+changed-provider negative control
+changed-command-order negative control
+tick-sequence checkpoint fixture
+reset-and-replay fixture
+stop/start replay fixture
 30/60/120 Hz cadence-parity fixture
-visibility and suspension fixture
-hysteresis and cooldown fixture
-complete budget-allocation fixture
-grass hard-ceiling fixture
-scatter hard-ceiling fixture
-terrain-resolution binding fixture
-post-process draw-binding fixture
-surface pixel-budget fixture
-quality-aware cache invalidation fixture
-transition idempotency and stale fixture
-consumer preparation failure fixture
-rollback fixture
-context-loss transition fixture
-browser degrade/recovery smoke
-first visible quality-frame fixture
-Pages degrade/recovery smoke
+browser/headless parity fixture
+first-divergence fixture
+state/render/frame correlation fixture
+visible replay-frame browser smoke
+Pages replay smoke
+```
+
+## Retained adaptive-quality gaps
+
+```txt
+auto remains a static profile
+frame/GPU sampling absent
+hysteresis, cooldown and minimum residency absent
+quality transition command/revision/result absent
+quality-aware cache identity absent
+maxGrassInstances not globally enforced
+maxSmallScatterObjects unused
+terrainResolution not bound to terrain topology
+postProcess not bound to actual pass submission
+surface/DPR budget not owned by quality
+consumer prepare/commit/rollback absent
+first visible quality-frame receipt absent
 ```
 
 ## Retained persistence gaps
@@ -144,144 +153,46 @@ meadow-save-dsk remains a planned declaration
 browser boot always starts fresh
 reset silently discards state
 save schema, slot registry and checkpoint identity absent
-save/load commands absent from all public adapters
+save/load commands absent from public adapters
 candidate admission, migration and reconciliation absent
 hydration commit and rollback absent
-storage failure classification absent
 first visible hydrated-frame receipt absent
-reload continuity fixtures absent
 ```
 
-## Retained render-surface gaps
-
-```txt
-DPR policy remains a hard-coded 1 through 2 clamp
-pixel and WebGL surface budgets are absent
-resize commands and surface revisions are absent
-actual drawing-buffer readback is absent
-fallback and rollback are absent
-renderer, viewport, capture and visible frame lack one surface identity
-```
-
-## Retained runtime clock and step gaps
+## Retained runtime and rendering gaps
 
 ```txt
 RAF absolute time and fixed dt disagree
-stop/start injects wall-clock pause into presentation
-browser reset does not establish a new clock origin
-browser editor bypasses clock admission
-Node headless uses an independent accumulated clock
-multi-step work is unbounded
-clock revisions, step results and journals are absent
-state, shader and frame clock correlation is absent
+stop/start can retain or duplicate scheduling state
+clock revisions and typed step results absent
+WebGL context generations and transactional restore absent
+DPR/pixel budget and surface revision absent
+committed state/plan/frame identity absent
+fatal startup/frame recovery remains non-transactional
 ```
 
-## Retained fatal-runtime recovery gaps
+## Retained DSK and capability gaps
 
 ```txt
-startup acquisitions are not transactional
-public globals can publish before full readiness
-frame state mutates before frame success
-renderer mutation is not staged
-fatal handling is only presentation
-capabilities survive fatal state
-capture remains stale-capable
-in-place restart reuses the damaged graph
-disposal is disconnected from failure
-late predecessor callbacks are not fenced
-```
-
-## Retained WebGL context recovery gaps
-
-```txt
-context events are unowned
-context and resource generations are absent
-same topology can conceal invalid GPU resources
-renderer readiness and capture are not fenced
-restoration is not transactional
-repeated restoration and late-event fixtures are absent
-```
-
-## Retained DSK registry truth gaps
-
-```txt
-multiple declaration sources can drift
-descriptor status is policy rather than runtime evidence
-dependency requirements are empty
-implementation and service bindings are absent
-installDsks() creates no local instances
+declaration status is not runtime consumption proof
+local implementations are not registry-bound
 runtime consumers bypass registry lookup
-renderer descriptor services drift from implementation
-runtime diagnostics report counts rather than consumption truth
-registry-owned reverse disposal is absent
-registry tests prove shape rather than runtime consumption
+reverse disposal is not registry-owned
+GameHost exposes raw game authority
+session/lifecycle fences and fatal capability quarantine absent
+public observations are not revisioned
 ```
 
-## Retained interaction and objective gaps
+## Retained interaction and progression gaps
 
 ```txt
 path-progress and inspect commands absent
 player path progress remains zero
-inspection receipts absent
-objective predicates and completion results absent
-story transitions absent
+objective completion and story transitions absent
 browser/editor interaction parity absent
 committed-frame progression acknowledgement absent
 ```
 
-## Retained workspace path gaps
+## Completion boundary
 
-```txt
-segment-aware containment absent
-symlink escape policy absent
-new-write ancestor containment absent
-root/session/revision identity absent
-operation budgets and typed filesystem results absent
-```
-
-## Retained host capability gaps
-
-```txt
-GameHost exposes raw game authority
-capability registration remains bypassable
-session and lifecycle fences absent
-transport success can conceal domain failure
-public observations are not revisioned
-fatal capability quarantine is absent
-```
-
-## Retained lifecycle gaps
-
-```txt
-RAF request handles not retained
-stop does not cancel pending callbacks
-stop/start can create duplicate RAF chains
-boot discards the host controller
-fatal handling does not coordinate disposal
-cold replacement-session ownership is absent
-```
-
-## Retained source-provider gaps
-
-```txt
-provider selection has no typed admission result
-external and fallback plans lack parity classification
-production import/export failure cannot reach the local fallback
-provider failure cleanup and retry policy are absent
-```
-
-## Retained render and committed-frame gaps
-
-```txt
-render-affecting cache projection incomplete
-rebuild is not transactional
-enhancer and renderer invalidation are uncoordinated
-state, plan, renderer and canvas lack one commit identity
-editor tick and reset bypass visible rendering
-WebGL context and resource generation are absent
-fatal candidate rollback and last-known-good frame ownership are absent
-```
-
-## Deployment risk
-
-A successful page load can conceal a static high-quality plan, ignored profile fields, unenforced budgets and a quality-blind cache. Do not claim adaptive quality until elapsed-time evidence drives a typed transition, every consumer honors the admitted budget, failure preserves the predecessor and the first visible frame cites the committed quality revision.
+Do not close deterministic validation because repeated reads are equal. Completion requires canonical admission, independent runtime replay, production-provider coverage, reset/cadence parity, exact first divergence and state/render/visible-frame correlation.

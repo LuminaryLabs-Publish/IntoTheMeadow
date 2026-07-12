@@ -4,28 +4,28 @@
 
 **Branch:** `main`
 
-**Last aligned:** `2026-07-12T00-49-48-04-00`
+**Last aligned:** `2026-07-12T00-58-12-04-00`
 
 ## Summary
 
 `IntoTheMeadow` is a DSK-composed browser meadow with one commit-pinned external provider, 43 local declarations, immutable game state, a persistent WebGL renderer, browser editor capabilities and a Node headless-editor environment.
 
-This pass isolates adaptive quality and performance-budget authority. `meadow-performance-dsk` is required and implementation-backed, but its profiles are static. Production defaults to `high`, records no frame-cost samples, applies only part of its declared budgets, ignores profile terrain/post fields and caches enhanced topology without quality identity.
+This pass isolates deterministic replay validation. The current deterministic smoke constructs one fallback-backed game and compares two adjacent reads of the same unchanged snapshot. It does not prove independent construction, production-provider determinism, tick/reset replay, cadence parity, browser/headless parity or visible-frame agreement.
 
 ## Plan ledger
 
-**Goal:** turn measured performance into one cadence-independent, budget-complete and rollback-safe quality transition whose identity reaches the first visible frame.
+**Goal:** replace same-instance read stability with canonical, provider-aware and checkpointed deterministic replay whose first divergence can be located and whose identity reaches the first visible frame.
 
 - [x] Compare the complete accessible Publish inventory with the central ledger.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm all nine eligible repositories have central ledger and root `.agent` state.
-- [x] Select only `IntoTheMeadow` as the oldest eligible repository.
-- [x] Trace performance profiles, scene defaults, enhancer caching, grass/scatter budgets, terrain topology, post-processing, renderer draws and browser RAF.
+- [x] Select only `IntoTheMeadow` because newer repo-local work required central reconciliation and it remained the oldest central entry.
+- [x] Inspect deterministic validation, game construction, immutable state, snapshots, render-plan smoke and package checks.
 - [x] Preserve the complete interaction loop, domain map, kit inventory and service map.
-- [x] Define sample, window, decision, budget, transition, rollback, observation and visible-frame requirements.
+- [x] Define canonical serialization, scenario, replay, reset, cadence, divergence and visible-frame requirements.
 - [x] Add timestamped architecture and system-specific audits.
 - [x] Refresh all required root `.agent` files.
-- [ ] Runtime implementation and executable adaptive-quality fixtures remain future work.
+- [ ] Runtime implementation and executable deterministic-replay fixtures remain future work.
 
 ## Current interaction loop
 
@@ -38,78 +38,72 @@ browser boot
   -> expose GameHost and editor bridge
   -> begin RAF
 
-first enhancement
-  -> arrival scene supplies no performance profile
-  -> policy defaults to high
-  -> partial object limits and grass density applied
-  -> terrain resolution hard-coded
-  -> post stack created independently
-  -> plan cached by source topology only
-
 runtime frame
   -> tick with fixed dt and RAF absolute time
-  -> enhancer reuses cached quality topology
-  -> renderer submits outline and color/fog draws
-  -> no performance sample or decision result
+  -> update immutable frame/lastTick state
+  -> enhance and render meadow plan
+  -> publish host/editor observations
 
-quality transition
-  -> no command surface
-  -> no quality revision or budget ledger
-  -> no consumer prepare/commit/rollback
-  -> no first visible quality-frame receipt
+deterministic smoke
+  -> create one game without externalKits
+  -> use local fallback provider
+  -> read the same unchanged snapshot twice
+  -> stableStringify both values
+  -> compare two strings
+  -> no tick, reset, second runtime or frame proof
 ```
 
 ## Main finding
 
 ```txt
-meadow-performance-dsk required: yes
-production quality selection: implicit high
-auto profile: static constant
-frame-cost sampling: absent
-elapsed-time decision window: absent
-quality transition command/result: absent
-quality-aware enhancer cache key: absent
-maxGrassInstances enforcement: absent
-maxSmallScatterObjects enforcement: absent
-terrainResolution profile binding: absent
-postProcess profile binding: absent
-surface/DPR profile binding: absent
-quality revision and fingerprint: absent
-first visible quality-frame receipt: absent
+same-instance read stability: proven
+independent runtime determinism: unproven
+external production provider: untested
+seed/provider fingerprint: absent
+tick sequence replay: absent
+reset replay: absent
+30/60/120 Hz parity: absent
+browser/headless parity: absent
+first divergence: absent
+state/render/frame correlation: absent
 ```
+
+`stableStringify()` sorts object keys but defines no canonical-value schema. Unsupported JavaScript values can lose semantic type, collide or throw.
 
 ## Required parent domain
 
 ```txt
-meadow-adaptive-quality-budget-authority-domain
+meadow-deterministic-replay-validation-authority-domain
 ```
 
 Core composition:
 
 ```txt
-performance-sample-envelope-kit
-performance-window-timebase-kit
-quality-profile-schema-kit
-quality-profile-admission-kit
-quality-decision-policy-kit
-quality-transition-command-kit
-quality-transition-id-kit
-quality-revision-kit
-performance-budget-ledger-kit
-grass-instance-budget-kit
-scatter-budget-kit
-terrain-resolution-policy-kit
-post-process-quality-policy-kit
-render-plan-quality-fingerprint-kit
-quality-cache-invalidation-kit
-quality-transition-prepare-kit
-quality-transition-commit-kit
-quality-transition-rollback-kit
-effective-quality-observation-kit
-quality-frame-ack-kit
-quality-cadence-parity-fixture-kit
-quality-budget-enforcement-fixture-kit
-quality-transition-browser-smoke-kit
+canonical-value-schema-kit
+canonical-serializer-kit
+determinism-fingerprint-kit
+provider-identity-kit
+provider-fingerprint-kit
+seed-policy-kit
+replay-run-id-kit
+replay-scenario-schema-kit
+replay-input-sequence-kit
+replay-tick-schedule-kit
+independent-runtime-construction-kit
+replay-execution-kit
+reset-replay-kit
+cadence-normalization-kit
+state-projection-fingerprint-kit
+render-plan-fingerprint-kit
+visible-frame-determinism-ack-kit
+first-divergence-kit
+replay-result-kit
+determinism-journal-kit
+same-seed-independent-build-fixture-kit
+fallback-external-parity-fixture-kit
+tick-reset-replay-fixture-kit
+cadence-parity-fixture-kit
+browser-headless-replay-fixture-kit
 ```
 
 ## Ordered implementation gates
@@ -129,18 +123,20 @@ quality-transition-browser-smoke-kit
 8. Interaction Command and Objective Authority
 8a. Persistence Continuity Authority
 9. DSK Runtime Consumption Authority
+9a. Deterministic Replay Validation Authority
 ```
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-12T00-49-48-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-12T00-49-48-04-00.md
-.agent/architecture-audit/2026-07-12T00-49-48-04-00-adaptive-quality-budget-dsk-map.md
-.agent/render-audit/2026-07-12T00-49-48-04-00-quality-cache-consumer-frame-gap.md
-.agent/interaction-audit/2026-07-12T00-49-48-04-00-quality-transition-admission-map.md
-.agent/performance-audit/2026-07-12T00-49-48-04-00-sampling-budget-transition-contract.md
-.agent/deploy-audit/2026-07-12T00-49-48-04-00-adaptive-quality-fixture-gate.md
+.agent/trackers/2026-07-12T00-58-12-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-12T00-58-12-04-00.md
+.agent/architecture-audit/2026-07-12T00-58-12-04-00-deterministic-replay-validation-dsk-map.md
+.agent/render-audit/2026-07-12T00-58-12-04-00-replay-state-render-frame-fingerprint-gap.md
+.agent/gameplay-audit/2026-07-12T00-58-12-04-00-snapshot-read-versus-replay-loop.md
+.agent/interaction-audit/2026-07-12T00-58-12-04-00-replay-scenario-admission-result-map.md
+.agent/determinism-audit/2026-07-12T00-58-12-04-00-canonical-snapshot-replay-contract.md
+.agent/deploy-audit/2026-07-12T00-58-12-04-00-deterministic-replay-fixture-gate.md
 ```
 
-A static profile object is not adaptive quality. Success requires measured evidence, complete budget enforcement, consumer-coherent transition, failure rollback and a visible frame that cites the committed quality revision.
+Two equal adjacent snapshots are not replay proof. Success requires independent runtimes, admitted provider/seed/content identity, normalized command and tick sequences, exact divergence evidence and a first visible frame that cites the replay checkpoint.

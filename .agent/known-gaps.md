@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T23-10-51-04-00`
+**Updated:** `2026-07-12T00-49-48-04-00`
 
 ## Selection state
 
@@ -10,124 +10,146 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-repositories with newer unsynchronized repo-local work skipped
-IntoTheMeadow selected as the oldest fully synchronized eligible repository
+IntoTheMeadow selected as the oldest eligible central-ledger entry
 only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## Current persistence gaps
+## Current adaptive-quality gaps
 
-### Save services are declarations only
+### Auto is a static profile
 
-`meadow-save-dsk` advertises save-model, save-slots, persistence-adapter, migration and save-validation, but it is not a required v0.1 DSK and has no source-backed runtime instance.
+`QUALITY_PROFILES.auto` is a fixed set of multipliers. No runtime sample window or adaptive decision changes it.
 
-### Browser boot always starts fresh
+### Production quality is implicit
 
-`startWebHost()` loads the provider, creates the game and starts rendering. It performs no slot discovery, candidate resolution, schema admission or hydration.
+The arrival scene has no `style.performance` descriptor. `createMeadowPerformancePolicy()` therefore defaults to `high` without an admission result, revision or observation receipt.
 
-### Reset silently discards state
-
-`game.reset()` creates the initial state again. It has no reset epoch, checkpoint policy, slot effect, predecessor receipt or typed result.
-
-### Snapshot is not a save envelope
-
-The current game snapshot includes manifest, state, render plan and diagnostics but lacks:
+### Performance sampling is absent
 
 ```txt
-save schema ID and version
-slot and checkpoint identity
-state revision
-reset epoch
-content revision
-created and updated timestamps
-migration history
-integrity fingerprint
-storage provenance
-hydration status
+post-frame CPU sample: absent
+GPU timing sample: absent
+sample identity: absent
+visibility and suspension classification: absent
+elapsed-time performance window: absent
+outlier policy: absent
+bounded sample history: absent
 ```
 
-### Persistence capabilities are absent
+### Adaptive decision policy is absent
 
 ```txt
-GameHost persistence commands: absent
-browser editor persistence domain: absent
-Node headless persistence domain: absent
-save/list/load/delete/clear commands: absent
-shared typed persistence results: absent
+degrade threshold: absent
+recover threshold: absent
+hysteresis: absent
+cooldown: absent
+minimum profile residency: absent
+quality decision result: absent
+manual override and auto-lock policy: absent
 ```
 
-### Candidate admission is absent
+### Quality transition authority is absent
 
 ```txt
-slot registry: absent
-independent candidate reads: absent
-parse failure classification: absent
-schema support classification: absent
-content compatibility classification: absent
-integrity verification: absent
-candidate precedence: absent
-one-bad-slot isolation: absent
+transition command and ID: absent
+quality revision: absent
+expected-revision admission: absent
+session, renderer and surface fences: absent
+consumer prepare/commit/rollback: absent
+idempotent duplicate result: absent
+stale transition rejection: absent
+bounded transition journal: absent
 ```
 
-### Migration and reconciliation are absent
+### Enhancer cache ignores quality
+
+`createRenderPlanEnhancer()` caches by source topology only. Quality profile, budget overrides, terrain resolution, post policy, surface policy and quality revision do not participate in cache identity.
+
+A quality-only change can therefore reuse the predecessor plan indefinitely.
+
+### Grass budget is not enforced
+
+The policy computes `maxGrassInstances`, but grass placement receives only a quality scale. Patch creation has no global reservation ledger and can exceed the declared total.
+
+### Scatter budget is incomplete
 
 ```txt
-ordered pure migration functions: absent
-intermediate validation: absent
-migration history: absent
-scene identity reconciliation: absent
-objective and story reconciliation: absent
-interaction-receipt reconciliation: absent
-content-manifest compatibility result: absent
+maxFlowerObjects: applied by source-order filtering
+maxTreeLineObjects: applied by source-order filtering
+maxSmallScatterObjects: unused
+mushroom ceiling: hard-coded to 14 outside policy
+rock ceiling: no performance-policy enforcement
+stable priority and dropped-work result: absent
 ```
 
-### Hydration is not transactional
+### Terrain quality binding is absent
+
+Profiles declare `terrainResolution`, but the enhancer hard-codes terrain segments to `96 x 124`.
+
+### Post-process quality binding is absent
+
+Profiles declare `postProcess`, but stack construction is driven separately by scene configuration. The renderer always submits an outline pass and a color/fog pass.
+
+### Surface quality binding is absent
+
+The renderer independently clamps device pixel ratio from 1 through 2. No profile owns DPR, drawing-buffer pixel ceiling or surface revision.
+
+### Performance validation is not consumed
+
+The enhancer does not call `performance.validate()`. An unknown quality label can retain that label while profile lookup and grass scaling silently fall back to `high`.
+
+### Quality observation is incomplete
 
 ```txt
-detached candidate state: absent
-predecessor checkpoint: absent
-atomic state revision commit: absent
-derived render invalidation: absent
-rollback after failure: absent
-stale hydration rejection: absent
-first visible hydrated-frame acknowledgement: absent
+quality profile version: absent from renderer snapshot
+quality revision: absent
+quality fingerprint: absent
+budget ledger and violations: absent
+consumer effective settings: absent
+transition result: absent
+first visible quality-frame receipt: absent
+GameHost/editor/headless parity proof: absent
 ```
 
-### Storage failure policy is absent
+## Missing adaptive-quality fixtures
 
 ```txt
-storage denied classification
-quota exceeded classification
-serialization failure
-partial write classification
-read-back verification
-atomic promotion strategy
-delete failure classification
-last-known-good checkpoint retention
+profile schema fixture
+unknown profile fixture
+quality fingerprint fixture
+performance-window fixture
+30/60/120 Hz cadence-parity fixture
+visibility and suspension fixture
+hysteresis and cooldown fixture
+complete budget-allocation fixture
+grass hard-ceiling fixture
+scatter hard-ceiling fixture
+terrain-resolution binding fixture
+post-process draw-binding fixture
+surface pixel-budget fixture
+quality-aware cache invalidation fixture
+transition idempotency and stale fixture
+consumer preparation failure fixture
+rollback fixture
+context-loss transition fixture
+browser degrade/recovery smoke
+first visible quality-frame fixture
+Pages degrade/recovery smoke
 ```
 
-## Missing persistence fixtures
+## Retained persistence gaps
 
 ```txt
-empty storage fixture
-current-schema save fixture
-malformed-candidate fixture
-unsupported-schema fixture
-migration fixture
-content-reconciliation fixture
-integrity-failure fixture
-multi-slot precedence fixture
-storage-denied fixture
-quota fixture
-write/read-back mismatch fixture
-duplicate and stale command fixture
-reset/load race fixture
-save/load race fixture
-hydration rollback fixture
-browser reload continuity fixture
-headless envelope parity fixture
-first visible hydrated-frame fixture
-Pages reload continuity smoke
+meadow-save-dsk remains a planned declaration
+browser boot always starts fresh
+reset silently discards state
+save schema, slot registry and checkpoint identity absent
+save/load commands absent from all public adapters
+candidate admission, migration and reconciliation absent
+hydration commit and rollback absent
+storage failure classification absent
+first visible hydrated-frame receipt absent
+reload continuity fixtures absent
 ```
 
 ## Retained render-surface gaps
@@ -262,4 +284,4 @@ fatal candidate rollback and last-known-good frame ownership are absent
 
 ## Deployment risk
 
-A successful page load or headless snapshot can hide complete progress loss on reload. Do not claim save, resume or migration support until an admitted checkpoint survives storage verification, compatibility handling and hydration, and one visible frame cites the same checkpoint and committed state revision.
+A successful page load can conceal a static high-quality plan, ignored profile fields, unenforced budgets and a quality-blind cache. Do not claim adaptive quality until elapsed-time evidence drives a typed transition, every consumer honors the admitted budget, failure preserves the predecessor and the first visible frame cites the committed quality revision.

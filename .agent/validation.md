@@ -1,11 +1,11 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T19-41-13-04-00`
+**Updated:** `2026-07-12T19-49-41-04-00`
 
 ## Summary
 
-This documentation-only pass verifies that the browser loop advances once per RAF callback with a fixed `1/60` dt, renders from absolute RAF time, retains no cancellable RAF lease and exposes raw game mutation. It defines the missing scheduler and step-admission proof boundary without claiming implementation.
+This documentation-only reconciliation verifies that the browser loop advances once per RAF callback with a fixed `1/60` dt, renders from absolute RAF time, retains no cancellable RAF lease and exposes raw game mutation. It aligns the missing scheduler and step-admission proof boundary across repo-local and central tracking without claiming implementation.
 
 ## Plan ledger
 
@@ -13,11 +13,11 @@ This documentation-only pass verifies that the browser loop advances once per RA
 
 - [x] Compare Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only IntoTheMeadow.
-- [x] Verify root `.agent` and central head alignment.
-- [x] Inspect host, state, renderer, GameHost and tests.
+- [x] Select only IntoTheMeadow because repo-local audit state was newer than central tracking.
+- [x] Verify root `.agent` and central coverage.
+- [x] Inspect host, state, renderer, GameHost and package checks.
 - [x] Preserve all 44 kits and offered services.
-- [x] Add the timestamped frame-clock audit family.
+- [x] Add the timestamped central-reconciliation audit family.
 - [x] Change documentation only.
 - [ ] Execute timing fixtures after implementation.
 
@@ -35,6 +35,20 @@ stop does not cancel a RAF handle
 start requests a RAF callback
 raw GameHost.game is exposed
 renderer has a dispose method but host stop does not invoke it
+```
+
+## Proven documentation state
+
+```txt
+START_HERE current: yes
+current-audit current: yes
+next-steps current: yes
+known-gaps current: yes
+validation current: yes
+kit-registry current after final update: yes
+tracker and turn ledger present: yes
+architecture/render/gameplay/interaction/frame-scheduler/deploy audits present: yes
+central ledger and internal change log required: yes
 ```
 
 ## Existing checks can establish, when run

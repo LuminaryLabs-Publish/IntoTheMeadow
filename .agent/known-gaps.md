@@ -1,18 +1,18 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T07-19-47-04-00`
+**Updated:** `2026-07-12T09-06-38-04-00`
 
 ## Summary
 
-The leading performance gap is that `meadow-performance-dsk` describes profiles and budgets but owns no measurements, transition policy, revision, multi-consumer commit or visible-frame proof. Logical quality fields also diverge from the inspected physical render path.
+The leading bridge gap is that browser diagnostics have no generation, predecessor retirement, listener leases or bounded error journal. A replaced or stopped bridge can retain listeners and errors, while queries clone the complete history.
 
 ## Plan ledger
 
-**Goal:** close performance observation, stable decision, physical-policy parity, cache invalidation, rollback and frame-correlation gaps while preserving all previously documented runtime, rendering, audio and gameplay gaps.
+**Goal:** close bridge identity, replacement, bounded retention, stale-capability, disposal and capture-provenance gaps while preserving all previously documented runtime, rendering, performance, audio and gameplay gaps.
 
-- [x] Add adaptive-quality and logical/physical parity gaps.
-- [x] Preserve prior audio, shader, surface, lifecycle, interaction and replay gaps.
+- [x] Add editor-bridge lifecycle and error-journal gaps.
+- [x] Preserve prior adaptive-quality, audio, shader, surface, lifecycle, interaction, persistence, DSK-consumption and replay gaps.
 - [ ] Implement in dependency order.
 
 ## Selection state
@@ -21,97 +21,73 @@ The leading performance gap is that `meadow-performance-dsk` describes profiles 
 10 accessible Publish repositories observed
 TheCavalryOfRome excluded
 9 eligible repositories centrally tracked with root .agent state
-IntoTheMeadow selected as the oldest eligible synchronized repository
+PrehistoricRush skipped because a newer repo-local audit was active and unsynchronized
+IntoTheMeadow selected as the next-oldest stable repository
 only IntoTheMeadow changed in the Publish organization
 ```
 
-## Performance ownership gaps
+## Bridge ownership gaps
 
 ```txt
-meadow-performance-dsk returns configuration, not runtime authority
-web host owns RAF but no performance sampling
-renderer owns physical work but no quality decision/result
-render-plan enhancer accepts runtime performance but host supplies none
-quality state is absent from game snapshot and editor capabilities
+bridge ID beyond fixed environment string: absent
+bridge generation/revision: absent
+runtime-session binding: absent
+host-generation binding: absent
+predecessor replacement admission: absent
+predecessor retirement transaction: absent
+capability lease identity/revocation: absent
+listener lease identity/retirement: absent
+stop-policy result: absent
+disposal result/idempotence proof: absent
+stale bridge rejection: absent
 ```
 
-## Observation and identity gaps
+## Browser error-journal gaps
 
 ```txt
-performance sample ID: absent
-CPU frame observation: absent
-GPU timer capability/result: absent
-rolling performance window: absent
-percentile result: absent
-frame deadline result: absent
-capability snapshot: absent
-quality tier identity beyond string configuration: absent
-monotonic quality revision: absent
+monotonic error sequence: absent
+monotonic observation time: absent
+frame/host/bridge correlation: absent
+stable fingerprint: absent
+repeat coalescing: absent
+maximum entry count: absent
+maximum encoded bytes: absent
+maximum age: absent
+per-type quota: absent
+dropped-entry counters: absent
+paged query: absent
+acknowledgement cursor: absent
+full-history clone in getErrors: present
+full-history clone in snapshot: present
 ```
 
-## Policy and admission gaps
+## Capture and readback gaps
 
 ```txt
-auto is a static profile, not adaptive policy
-hysteresis: absent
-upgrade/downgrade confirmation windows: absent
-cooldown: absent
-hidden-tab sampling policy: absent
-manual/automatic command parity: absent
-quality transition command/result: absent
-stale session/context/surface/topology rejection: absent
+capture command ID: absent
+bridge generation in capture: absent
+runtime session in capture: absent
+frame ID/revision in capture: absent
+surface revision in capture: absent
+pixel/readback parity result: absent
+stale predecessor capture rejection: absent
 ```
 
-## Logical and physical parity gaps
+## Missing bridge proof
 
 ```txt
-profile terrainResolution is not applied
-contracted terrain resolution is hard-coded to 96 x 124
-profile postProcess does not control physical outline/color draws
-maxGrassInstances is calculated but not passed into inspected grass construction
-physical draw-count budget is absent
-surface scale/DPR quality adapter is absent
-```
-
-## Cache and commit gaps
-
-```txt
-runtime quality is omitted from host enhancer calls
-quality revision is absent from enhancer cache admission
-topology-affecting quality fields are not a separate impact plan
-consumer prepare results are absent
-atomic grass/terrain/post/surface/renderer commit is absent
-predecessor preservation and rollback are absent
-exact topology rebuild/no-rebuild result is absent
-```
-
-## Diagnostics and proof gaps
-
-```txt
-renderer snapshot has no quality revision
-no measured CPU/GPU cost in diagnostics
-no budget or deadline status
-no transition or rollback result
-no quality state in public/editor readback
-no first visible-frame quality acknowledgement
-no screenshot/capture correlation with quality revision
-```
-
-## Missing performance proof
-
-```txt
-static tier parity
-sustained-overload downgrade
-sustained-headroom upgrade
-single-spike rejection
-hysteresis and cooldown
-GPU timing supported/unsupported paths
-hidden-tab sampling
-quality topology impact
-consumer failure rollback
-context/surface stale-plan rejection
-first visible-frame receipt
-browser and Pages performance smoke
+single install/dispose
+successor replacement
+predecessor listener retirement
+stale capability rejection
+stop/start policy
+error/rejection/capability failure normalization
+large error-flood retention bound
+fingerprint coalescing
+paged query and acknowledgement
+listener count baseline restoration
+current capture provenance
+browser and Pages bridge lifecycle smoke
 ```
 
 ## Preserved rendering and runtime gaps
@@ -126,6 +102,7 @@ render surface revision and physical-buffer proof
 shader precision capability admission
 committed frame observation
 fatal frame recovery
+adaptive quality and performance budgets
 camera-distance/frustum grass LOD
 ```
 
@@ -154,4 +131,4 @@ DSK declaration-to-runtime consumption authority
 
 ## Completion boundary
 
-Do not treat the existence of low/medium/high/ultra/auto constants, a stable vertex count or a cache hit as adaptive-quality proof. Completion requires normalized observations, stable admission policy, one committed quality revision across every physical consumer, rollback and first-visible-frame evidence.
+Do not treat a frozen bridge object or an explicit `dispose()` helper as lifecycle proof. Completion requires generation-bound installation and replacement, exactly-once lease retirement, bounded journal behavior under fault floods, stale-bridge rejection and current-frame capture evidence.

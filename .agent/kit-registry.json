@@ -1,19 +1,17 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-12T09-21-40-04-00",
-  "status": "interaction-objective-progression-authority-audited",
-  "currentAuditedSlice": "Interaction Command / Canonical Target Evidence / Objective and Story Atomic Progression / Feedback Projection / Visible-Frame Proof",
-  "precedingAuditedSlice": "Editor Bridge Lifecycle and Error Journal Authority at 2026-07-12T09-06-38-04-00",
-  "latestTracker": ".agent/trackers/2026-07-12T09-21-40-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T09-21-40-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T09-21-40-04-00-interaction-objective-progression-reconciliation-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-12T09-21-40-04-00-progression-feedback-frame-registry-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T09-21-40-04-00-authored-progression-no-command-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T09-21-40-04-00-progression-command-central-sync-map.md",
-  "latestProgressionAudit": ".agent/progression-audit/2026-07-12T09-08-17-04-00-target-evidence-ledger-story-contract.md",
-  "latestCentralSyncAudit": ".agent/central-sync-audit/2026-07-12T09-21-40-04-00-repo-ledger-machine-registry-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T09-21-40-04-00-progression-fixture-central-gate.md",
+  "generatedAt": "2026-07-12T11-29-40-04-00",
+  "status": "webgl-program-interface-admission-authority-audited",
+  "currentAuditedSlice": "WebGL Program Interface Reflection / Attribute and Uniform Admission / Mesh and Payload Compatibility / Program Generation / First-Frame Proof",
+  "precedingAuditedSlice": "Interaction Command and Objective Progression Authority at 2026-07-12T09-21-40-04-00",
+  "latestTracker": ".agent/trackers/2026-07-12T11-29-40-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T11-29-40-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T11-29-40-04-00-webgl-program-interface-admission-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-12T11-29-40-04-00-unvalidated-shader-symbol-binding-gap.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T11-29-40-04-00-program-interface-render-admission-map.md",
+  "latestShaderInterfaceAudit": ".agent/shader-interface-audit/2026-07-12T11-29-40-04-00-active-symbol-mesh-uniform-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T11-29-40-04-00-program-interface-browser-fixture-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
@@ -21,7 +19,7 @@
     "rootAgentStateCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "reason": "IntoTheMeadow had a complete repo-local progression audit newer than the central ledger, and its machine registry required alignment with the fresh reconciliation tracker."
+    "reason": "All eligible repositories were tracked and had root .agent state. IntoTheMeadow was the oldest eligible synchronized entry; newer repo-local PrehistoricRush work was observed and not modified."
   },
   "census": {
     "externalDeclaredCount": 1,
@@ -29,21 +27,20 @@
     "totalDeclaredCount": 44,
     "requiredV01LocalCount": 15,
     "plannedLocalCount": 28,
-    "authoredObjectiveCount": 2,
-    "authoredInteractionTargetCount": 2,
-    "authoredStoryBeatCount": 3,
-    "runtimeProgressionCommandSurfaceCount": 0,
-    "visibleProgressionFrameReceiptCount": 0
+    "requiredAttributeCount": 5,
+    "requiredUniformCount": 12,
+    "activeProgramInterfaceResultCount": 0,
+    "visibleProgramInterfaceFrameReceiptCount": 0
   },
   "interactionLoop": [
     "page boot imports the commit-pinned provider and installs 43 local descriptors",
-    "game state starts with walk-the-path active, pathProgress zero, no completed objectives and arrival story active",
-    "RAF submits time and fixed dt to game.tick",
-    "advanceGameState increments frame and records lastTick only",
-    "browser and editor paths produce no interaction command or canonical target evidence",
-    "objective and story evaluators do not run",
-    "renderer submits a progression-neutral frame",
-    "GameHost and editor expose no typed progression result or visible feedback-frame receipt"
+    "the precision compatibility wrapper acquires WebGL2 or WebGL and normalizes float declarations",
+    "the renderer compiles vertex and fragment shaders and links one program",
+    "five attribute and twelve uniform locations are queried without active-symbol reflection",
+    "the first topology bind validates only negative attribute locations and uploads CPU mesh arrays",
+    "twelve uniform updates are submitted without location type or payload admission",
+    "outline and color draws execute and a counts/cache snapshot is published",
+    "Node and Chromium proof surfaces do not capture an interface generation or fingerprint"
   ],
   "domainsInUse": [
     "browser shell loading and fatal projection",
@@ -55,11 +52,14 @@
     "terrain path grass trees wind atmosphere and scatter",
     "player input interaction objective story ecology audio UI and persistence declarations",
     "render-plan enhancement topology caching CPU mesh and WebGL rendering",
-    "post-process declarations shader precision and physical draw submission",
+    "shader precision compatibility compilation and program linking",
+    "program interface manifest reflection and active symbol admission",
+    "mesh layout and uniform payload compatibility",
+    "GPU buffers uniform updates draw admission and disposal",
+    "program interface generation fingerprint observation and first-frame proof",
     "GameHost global publication and raw game reachability",
     "browser editor capabilities capture and error observation",
-    "validation headless tools build and Pages deployment",
-    "interaction command canonical target evidence objective story feedback and visible-frame authority missing"
+    "validation headless tools build and Pages deployment"
   ],
   "externalKits": {
     "meadow-area-kit": {
@@ -113,24 +113,25 @@
     "final-composite-pass-kit": ["scene-input", "post-input", "output-target", "debug-overlay", "fallback-composite"],
     "static-pages-deploy-dsk": ["build-config", "github-pages-workflow", "release-artifacts", "cache-invalidation", "deploy-validation"]
   },
-  "interactionObjectiveProgressionAuthority": {
-    "parentDomain": "meadow-interaction-objective-progression-authority-domain",
-    "mainFinding": "Authored interaction objective and story descriptors are imported into the game, but the only runtime mutation increments frame and records dt/time. No browser/editor gameplay commands, canonical target evidence, objective/story evaluator, atomic progression commit, feedback projection or visible frame receipt exists.",
-    "existingOwnersToUpdate": ["meadow-input-dsk", "meadow-player-dsk", "path-corridor-dsk", "meadow-interaction-dsk", "meadow-objective-dsk", "meadow-story-dsk", "meadow-ui-dsk", "into-the-meadow-game-dsk", "game-composition-dsk", "web-host-dsk", "meadow-diagnostics-dsk", "GameHost capability surface", "browser editor bridge", "game snapshot/read model", "committed-frame authority", "persistence continuity authority"],
-    "plannedKits": ["progression-session-id-kit", "progression-reset-generation-kit", "progression-state-revision-kit", "interaction-command-id-kit", "interaction-command-kit", "interaction-command-admission-kit", "interaction-action-map-kit", "interaction-target-registry-kit", "interaction-target-revision-kit", "interaction-target-query-kit", "interaction-proximity-evidence-kit", "path-progress-evidence-kit", "inspect-evidence-kit", "interaction-result-kit", "stale-interaction-command-rejection-kit", "objective-definition-registry-kit", "objective-evaluation-kit", "objective-completion-result-kit", "objective-successor-policy-kit", "completion-ledger-commit-kit", "story-trigger-parser-kit", "story-trigger-evaluation-kit", "story-beat-deduplication-kit", "story-progression-result-kit", "progression-transaction-kit", "progression-rollback-kit", "feedback-state-kit", "progression-ui-projection-kit", "progression-observation-kit", "progression-journal-kit", "visible-progression-frame-ack-kit", "interaction-objective-fixture-kit", "browser-editor-progression-parity-fixture-kit"],
-    "requiredProof": ["path story and objective thresholds", "inspect range admission", "objective successor order", "completion and story idempotence", "invalid stale and duplicate rejection", "atomic objective story and feedback commit", "rollback", "reset-generation safety", "browser editor parity", "snapshot result parity", "first visible progression frame receipt", "browser and Pages smoke"]
+  "webglProgramInterfaceAdmissionAuthority": {
+    "parentDomain": "meadow-webgl-program-interface-admission-authority-domain",
+    "mainFinding": "The renderer checks shader compilation and program linking, then queries five attribute and twelve uniform locations without reflecting or admitting the active interface. Attribute absence fails only during first mesh binding, required uniform absence can remain a silent no-op, and no program/interface generation or visible-frame fingerprint exists.",
+    "existingOwnersToUpdate": ["meadow-webgl-renderer-v2-kit", "meadow-render-host-dsk", "post-process-stack-dsk", "render-target-kit", "meadow-diagnostics-dsk", "meadow-performance-dsk", "precision compatibility wrapper", "CPU mesh builder v2", "renderer snapshot/read model", "committed-frame authority", "browser editor renderer capability", "browser observation script", "renderer-v2 smoke fixture"],
+    "plannedKits": ["shader-interface-manifest-kit", "shader-symbol-definition-kit", "program-interface-reflection-kit", "active-attribute-inventory-kit", "active-uniform-inventory-kit", "attribute-location-admission-kit", "uniform-location-admission-kit", "program-resource-limit-profile-kit", "mesh-layout-schema-kit", "mesh-program-layout-compatibility-kit", "uniform-payload-schema-kit", "uniform-update-result-kit", "program-interface-compatibility-policy-kit", "program-interface-fingerprint-kit", "program-interface-result-kit", "program-generation-kit", "draw-interface-admission-kit", "shader-interface-observation-kit", "shader-interface-journal-kit", "first-frame-program-interface-ack-kit", "missing-attribute-fixture-kit", "missing-uniform-fixture-kit", "optimized-out-uniform-fixture-kit", "browser-program-interface-smoke-kit"],
+    "requiredProof": ["exact five-attribute admission", "exact twelve-uniform admission", "missing and optimized-out required symbol rejection", "attribute and uniform type/size mismatch rejection", "mesh and uniform payload schema compatibility", "resource-budget rejection", "candidate rejection preserves predecessor", "stale context program and interface rejection", "WebGL1 WebGL2 parity", "snapshot and capture interface correlation", "first visible program-interface frame", "local and deployed browser smoke"]
   },
-  "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Editor Bridge Lifecycle and Error Journal Authority", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Shader Precision Admission Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Audio Activation and Lifecycle Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
+  "implementationOrder": ["Runtime Session Lifecycle Authority", "Host Capability Gateway and Raw Runtime Quarantine", "Editor Bridge Lifecycle and Error Journal Authority", "Headless Workspace Path Authority and Filesystem Containment", "Runtime Clock and Step Admission Authority", "Source Provider Authority", "Render Topology Identity Authority", "WebGL Context Recovery Authority", "Render Surface Resolution Authority", "Shader Precision Admission Authority", "WebGL Program Interface Admission Authority", "Committed Frame Observation Authority", "Fatal Runtime Failure Recovery Authority", "Adaptive Quality and Performance Budget Authority", "Grass Visibility and LOD Authority", "Audio Activation and Lifecycle Authority", "Interaction Command and Objective Progression Authority", "Persistence Continuity Authority", "DSK Runtime Consumption Authority", "Deterministic Replay Validation Authority"],
   "validation": {
     "runtimeSourceChanged": false,
-    "gameplaySourceChanged": false,
     "rendererSourceChanged": false,
+    "shaderSourceChanged": false,
+    "gameplaySourceChanged": false,
     "packageScriptsChanged": false,
     "localValidationRun": false,
     "browserValidationRun": false,
-    "progressionFixturesAvailable": false,
-    "browserProgressionSmokeRun": false,
-    "pagesProgressionSmokeRun": false,
+    "programInterfaceFixturesAvailable": false,
+    "browserProgramInterfaceSmokeRun": false,
+    "pagesProgramInterfaceSmokeRun": false,
     "branchCreated": false,
     "pullRequestCreated": false,
     "targetBranch": "main"

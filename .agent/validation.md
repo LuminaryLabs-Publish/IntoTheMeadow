@@ -1,11 +1,11 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T17-49-51-04-00`
+**Updated:** `2026-07-12T17-58-43-04-00`
 
 ## Summary
 
-This documentation-only audit verifies that the first authored exploration loop remains unreachable. It preserves the 44-kit inventory and defines the missing command, movement, inspection, progression, projection and deployment proof boundaries. It does not claim executable provider installation or playable gameplay.
+This documentation-only reconciliation verifies that the first authored exploration loop remains unreachable. It preserves the 44-kit inventory and defines the missing command, movement, inspection, progression, projection and deployment proof boundaries. It does not claim executable provider installation or playable gameplay.
 
 ## Plan ledger
 
@@ -13,10 +13,10 @@ This documentation-only audit verifies that the first authored exploration loop 
 
 - [x] Compare the Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only `IntoTheMeadow` after avoiding the active concurrent candidate.
-- [x] Verify required root `.agent` files and timestamped audit family.
+- [x] Select only `IntoTheMeadow` as the oldest eligible stable repository.
+- [x] Verify required root `.agent` files and the new timestamped reconciliation family.
 - [x] Preserve all 44 kits and offered services.
-- [x] Inspect the current DSK/state/content/host/render boundaries.
+- [x] Inspect and reconcile the DSK/state/content/host/render boundaries.
 - [x] Change documentation only.
 - [ ] Execute provider and playable-loop fixtures after implementation exists.
 
@@ -52,9 +52,10 @@ current-audit current: yes
 next-steps current: yes
 known-gaps current: yes
 validation current: yes
-kit-registry current: yes
+kit-registry current after final update: yes
 tracker and turn ledger present: yes
 architecture/render/gameplay/interaction/progression/deploy audits present: yes
+central ledger and change log required after repo-local completion: yes
 ```
 
 ## Existing checks can establish, when run
@@ -123,6 +124,7 @@ dependencies changed: no
 deployment changed: no
 branch created: no
 pull request created: no
+target branch: main
 npm run check executed: no
 browser gameplay smoke executed: no
 Pages gameplay smoke executed: no

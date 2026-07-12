@@ -1,7 +1,7 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T17-49-51-04-00`
+**Updated:** `2026-07-12T17-58-43-04-00`
 
 ## Summary
 
@@ -112,4 +112,4 @@ GameplayResult {
 8. Deterministic Replay and Pages Proof
 ```
 
-The full 44-kit service inventory remains in the current tracker and machine registry.
+The full 44-kit service inventory remains in the current tracker and machine registry. The `17-58-43` reconciliation family is the current routing layer; the `17-49-51` family remains the detailed source audit.

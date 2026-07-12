@@ -1,18 +1,19 @@
 {
   "schema": "luminarylabs.agent.kit-registry.v1",
   "repo": "LuminaryLabs-Publish/IntoTheMeadow",
-  "generatedAt": "2026-07-12T13-38-52-04-00",
-  "status": "grass-visibility-lod-authority-audited",
-  "currentAuditedSlice": "Grass Patch Visibility / Distance LOD / Frustum Culling / Hysteresis / Budget Admission / First-Frame Proof",
-  "precedingAuditedSlice": "WebGL Program Interface Admission Authority at 2026-07-12T11-29-40-04-00",
-  "latestTracker": ".agent/trackers/2026-07-12T13-38-52-04-00/project-breakdown.md",
-  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T13-38-52-04-00.md",
-  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T13-38-52-04-00-grass-visibility-lod-authority-dsk-map.md",
-  "latestRenderAudit": ".agent/render-audit/2026-07-12T13-38-52-04-00-static-grass-mesh-camera-visibility-gap.md",
-  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T13-38-52-04-00-density-tagged-lod-always-drawn-loop.md",
-  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T13-38-52-04-00-camera-grass-visibility-admission-map.md",
-  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-12T13-38-52-04-00-distance-frustum-hysteresis-budget-contract.md",
-  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T13-38-52-04-00-grass-visibility-lod-fixture-gate.md",
+  "generatedAt": "2026-07-12T13-54-00-04-00",
+  "status": "grass-visibility-lod-central-reconciled",
+  "currentAuditedSlice": "Grass Patch Visibility / Distance LOD / Frustum Culling / Hysteresis / Budget Admission / Central Reconciliation / First-Frame Proof",
+  "precedingAuditedSlice": "Grass Visibility and LOD Authority at 2026-07-12T13-38-52-04-00",
+  "latestTracker": ".agent/trackers/2026-07-12T13-54-00-04-00/project-breakdown.md",
+  "latestTurnLedger": ".agent/turn-ledger/2026-07-12T13-54-00-04-00.md",
+  "latestArchitectureAudit": ".agent/architecture-audit/2026-07-12T13-54-00-04-00-grass-visibility-central-reconciliation-dsk-map.md",
+  "latestRenderAudit": ".agent/render-audit/2026-07-12T13-54-00-04-00-camera-visible-set-ledger-reconciliation-gap.md",
+  "latestGameplayAudit": ".agent/gameplay-audit/2026-07-12T13-54-00-04-00-density-tagged-grass-lod-reconciliation.md",
+  "latestInteractionAudit": ".agent/interaction-audit/2026-07-12T13-54-00-04-00-camera-grass-admission-reconciliation.md",
+  "latestGrassSystemAudit": ".agent/grass-system-audit/2026-07-12T13-54-00-04-00-visibility-lod-registry-contract.md",
+  "latestCentralSyncAudit": ".agent/central-sync-audit/2026-07-12T13-54-00-04-00-repo-ledger-machine-registry-contract.md",
+  "latestDeployAudit": ".agent/deploy-audit/2026-07-12T13-54-00-04-00-grass-visibility-fixture-central-gate.md",
   "selection": {
     "accessibleRepoCount": 10,
     "eligibleRepoCount": 9,
@@ -20,8 +21,7 @@
     "rootAgentStateCount": 9,
     "selectedRepo": "LuminaryLabs-Publish/IntoTheMeadow",
     "excludedRepo": "LuminaryLabs-Publish/TheCavalryOfRome",
-    "skippedRepo": "LuminaryLabs-Publish/TheOpenAbove",
-    "reason": "All eligible repositories were tracked and had root .agent state. TheOpenAbove was oldest centrally but had newer repo-local documentation at 2026-07-12T13-29-56-04-00, so IntoTheMeadow was selected as the next-oldest stable repository."
+    "reason": "All eligible repositories were tracked and had root .agent state. IntoTheMeadow was selected because its repo-local grass visibility audit at 2026-07-12T13-38-52-04-00 was newer than its central ledger at 2026-07-12T11-29-40-04-00."
   },
   "census": {
     "externalDeclaredCount": 1,
@@ -40,7 +40,7 @@
     "the enhancer creates density texture, archetypes, near/mid/far batches and patches",
     "patch placement chooses near or mid batches from density rather than camera distance",
     "draw groups flatten every patch instance by batch and wind shader",
-    "the LOD policy object is attached and validated but pick(distance) is not consumed",
+    "the LOD policy is attached and validated but pick(distance) is not consumed",
     "the mesh builder bakes every grass group into one complete static CPU mesh",
     "the renderer derives camera matrices after mesh selection and draws the full mesh twice",
     "tests prove descriptor presence and static topology, not camera visibility or LOD transitions"
@@ -118,10 +118,16 @@
   },
   "grassVisibilityLodAuthority": {
     "parentDomain": "meadow-grass-visibility-lod-authority-domain",
-    "mainFinding": "The repository declares near, mid, far and terrain-tint grass LOD tiers, but patch placement permanently selects only near or mid batches from density. The LOD policy pick(distance) function is unused, all grass instances are baked into one static mesh, and the renderer draws the complete mesh twice without camera-distance or frustum admission.",
-    "existingOwnersToUpdate": ["grass-lod-policy-kit", "grass-static-batch-kit", "grass-patch-placement-kit", "grass-clump-instancing-render-kit", "grass-debug-visualization-kit", "grass-patch-dsk", "gpu-grass-render-dsk", "meadow-camera-dsk", "meadow-performance-dsk", "meadow-render-host-dsk", "meadow-webgl-renderer-v2-kit", "meadow-render-plan-v2 contract", "meadow-mesh-builder-v2", "renderer snapshot/read model", "browser editor renderer capability", "browser observation script", "renderer-v2 smoke fixture"],
+    "mainFinding": "Near, mid, far and terrain-tint tiers are declared, but patch placement permanently selects only near or mid batches from density. pick(distance) is unused, all grass enters one static mesh, and the renderer draws that complete mesh twice without camera-distance or frustum admission.",
+    "existingOwnersToUpdate": ["grass-lod-policy-kit", "grass-static-batch-kit", "grass-patch-placement-kit", "grass-clump-instancing-render-kit", "grass-debug-visualization-kit", "grass-patch-dsk", "gpu-grass-render-dsk", "meadow-camera-dsk", "meadow-performance-dsk", "meadow-render-host-dsk", "meadow-webgl-renderer-v2-kit", "meadow-render-plan-v2", "meadow-mesh-builder-v2", "renderer snapshot/read model", "browser editor renderer capability", "browser observation script", "renderer-v2 smoke fixture"],
     "plannedKits": ["grass-visibility-command-kit", "grass-visibility-command-id-kit", "camera-visibility-revision-kit", "grass-patch-bounds-kit", "grass-frustum-classification-kit", "grass-distance-band-kit", "grass-lod-transition-policy-kit", "grass-lod-hysteresis-kit", "grass-terrain-tint-representation-kit", "grass-visibility-budget-kit", "grass-visible-set-kit", "grass-visibility-result-kit", "grass-visible-mesh-generation-kit", "grass-draw-generation-kit", "stale-grass-visibility-rejection-kit", "grass-visibility-observation-kit", "grass-visibility-journal-kit", "first-grass-visibility-frame-ack-kit", "grass-distance-tier-fixture-kit", "grass-frustum-cull-fixture-kit", "grass-hysteresis-fixture-kit", "grass-budget-fixture-kit", "browser-grass-visibility-smoke-kit"],
     "requiredProof": ["camera-distance near mid far and terrain-tint reachability", "outside-frustum culling", "edge-intersection determinism", "threshold hysteresis", "camera teleport and viewport revision handling", "quality and vertex/draw budget admission", "candidate failure preserves predecessor", "stale camera viewport topology and policy rejection", "snapshot and capture visibility correlation", "first visible grass frame", "local and deployed browser parity"]
+  },
+  "documentationSynchronization": {
+    "repoLocalPreviousTimestamp": "2026-07-12T13-38-52-04-00",
+    "centralPreviousTimestamp": "2026-07-12T11-29-40-04-00",
+    "reconciledTimestamp": "2026-07-12T13-54-00-04-00",
+    "requiredAlignedSurfaces": ["START_HERE", "current-audit", "next-steps", "known-gaps", "validation", "kit-registry", "central repo ledger", "internal change log"]
   },
   "webglProgramInterfaceAdmissionAuthority": {
     "parentDomain": "meadow-webgl-program-interface-admission-authority-domain",

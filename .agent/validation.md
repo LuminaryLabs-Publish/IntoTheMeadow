@@ -1,51 +1,55 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T05-31-59-04-00`
+**Updated:** `2026-07-12T05-39-42-04-00`
 
 ## Plan ledger
 
-**Goal:** distinguish a shader that happened to compile from an admitted precision policy whose exact program is proven on the visible frame.
+**Goal:** distinguish a declared audio DSK from executable proof of trusted activation, versioned resources, playback, listener parity, lifecycle and cleanup.
 
-- [x] Review the Publish inventory and central ledger.
+- [x] Review the complete Publish inventory and central ledger.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Verify all eligible root `.agent` states.
-- [x] Select only `IntoTheMeadow`.
-- [x] Inspect the precision wrapper, base renderer, web host and current tests.
-- [x] Confirm both graphics stages are rewritten to mediump.
-- [x] Confirm precision capability and program-generation evidence is absent.
-- [x] Document policy, normalization, compile/link and device-matrix proof requirements.
+- [x] Verify all eligible central records and root `.agent` states.
+- [x] Select only `IntoTheMeadow` from the oldest central entry.
+- [x] Preserve the newer repo-local shader precision audit.
+- [x] Inspect the audio DSK declaration, required-v0.1 registry, manifest, page shell, boot, game aggregate, web host, editor bridge and package scripts.
+- [x] Confirm no runtime audio owner or proof path exists.
+- [x] Document activation, resource, scheduling, listener, lifecycle, observation and deployment gates.
 - [x] Change documentation only.
-- [ ] Execute shader precision fixtures after implementation exists.
+- [ ] Execute audio fixtures after implementation exists.
 
 ## Source inspection completed
 
 ```txt
-shader stages intercepted: 2
-float precision declarations removed: all matching declarations
-precision inserted: mediump float
-precision capability queries: 0
-typed precision decisions: 0
-source fingerprints: 0
-typed compile results: 0
-typed link results: 0
-program generation fields: 0
-precision-aware frame receipts: 0
+local audio DSK declarations: 1
+declared audio services: 5
+required-v0.1 audio DSKs: 0
+audio manifest entries: 0
+visible audio activation controls: 0
+AudioContext owners: 0
+audio session/context/resource generations: 0
+ambient sources: 0
+spatial cue registries: 0
+listener pose observations: 0
+audio command/result types: 0
+audio snapshot/diagnostic fields: 0
+editor audio capabilities: 0
+audio fixtures and browser smokes: 0
 ```
 
 ## Proven from source
 
 ```txt
-the compatibility canvas caches one wrapped context per type/options key
-the WebGL proxy records shader type at createShader
-shaderSource rewrites both vertex and fragment sources
-the base vertex shader performs wind, outline, matrix and depth calculations
-the base fragment shader performs lighting, rim and fog calculations
-compile/link failures throw string errors
-successful renderer snapshots omit shader and program provenance
-the debug HUD reports geometry/cache state only
-the Node renderer smoke does not create a WebGL context
-the browser observation uses one discovered Chromium environment
+meadow-audio-dsk declares ambient-bed, spatial-audio-cues, audio-state, audio-events and audio-validation
+meadow-audio-dsk is omitted from REQUIRED_V01_DSK_IDS and therefore resolves to planned
+game manifest contains route, renderer, editor and external provider data but no audio contract
+index.html has canvas, HUD and loading output but no audio activation/mute/volume control
+boot immediately starts the web host without retaining trusted gesture evidence
+game aggregate has no audio command, state, snapshot or event queue
+web host creates game, renderer, enhancer and editor bridge only
+RAF advances and renders visuals only
+editor bridge has no audio capability
+package check chain has no audio fixture or browser audio smoke
 ```
 
 ## Existing proof
@@ -53,31 +57,37 @@ the browser observation uses one discovered Chromium environment
 Current checks prove:
 
 ```txt
-render-plan structure validates
-CPU mesh buffers are internally consistent
-animation time does not change topology
-one Chromium can produce a non-fatal screenshot when available
+required files exist
+local DSK descriptors expose five layers
+the audio DSK declaration is structurally valid as a planned descriptor
+render-plan and renderer structure remain valid
+deterministic scene and headless-editor checks run in Node
 ```
 
 Current checks do not prove:
 
 ```txt
-stage precision capability
-required/preferred/fallback policy
-precision equivalence across WebGL1/WebGL2
-original/normalized source identity
-compile and link result provenance
-context-restoration readmission
-program generation
-first-frame shader provenance
+trusted browser audio activation
+autoplay blocked-state handling
+AudioContext ownership and generation
+asset decode and stale-result fencing
+exact-once ambient playback
+spatial cue admission and voice budget
+listener pose parity
+mute and volume state
+visibility suspend/resume
+device interruption/recovery
+ordered disposal and restart leak freedom
+editor/diagnostic audio parity
+browser or Pages audible output
 ```
 
 ## Execution status
 
 ```txt
 runtime source changed: no
+audio source changed: no
 renderer source changed: no
-shader source changed: no
 package scripts changed: no
 dependencies changed: no
 render output changed: no
@@ -85,51 +95,85 @@ deployment changed: no
 branch created: no
 pull request created: no
 npm run check executed: no
-shader policy fixtures available: no
-real WebGL precision matrix available: no
-context restoration precision fixture available: no
-first-frame shader provenance fixture available: no
+audio fixtures available: no
+browser audio smoke available: no
+Pages audio smoke available: no
 ```
 
-## Required fixtures
+## Required activation fixture
 
 ```txt
-policy fixture:
-  feed vertex and fragment capability matrices
-  assert Accepted, Degraded or Rejected
-  assert deterministic decision fingerprint
+start in UNINITIALIZED
+assert no context before trusted gesture
+submit untrusted activation and reject
+submit trusted activation
+return READY, BLOCKED or FAILED with stable revision
+repeat same command and prove idempotence
+race two activations and prove one committed generation
+```
 
-normalization fixture:
-  preserve original source
-  inject only the decided stage precision
-  fingerprint normalized source
+## Required resource-generation fixture
 
-compile/link fixture:
-  compile exact normalized sources
-  capture stage result and driver log
-  link ordered shader results
-  publish one program generation
+```txt
+stage manifest and decode work for generation N
+start candidate generation N+1 or dispose session
+complete predecessor decode late
+reject predecessor result without graph mutation
+prove committed resources match the active generation
+```
 
-context restoration fixture:
-  lose and restore context
-  query capabilities again
-  reject predecessor program generation
-  acknowledge first frame from restored generation
+## Required ambient and spatial fixture
+
+```txt
+activate one audio generation
+start ambient bed and prove exact-once source ownership
+submit valid and invalid spatial cue commands
+apply scene/source/cooldown/priority/voice-budget policy
+update listener pose from committed revision
+reject stale listener and cue results
+```
+
+## Required suspension and cleanup fixture
+
+```txt
+transition READY -> SUSPENDED -> READY
+verify documented visibility/pause policy
+stop and dispose the session
+assert zero active/scheduled sources
+assert buses/nodes are disconnected
+assert listener/device subscriptions are removed
+assert context is closed or terminally suspended by policy
+repeat stop/dispose and prove idempotence
+restart and prove no duplicate context, source or listener
+```
+
+## Required browser and Pages smoke
+
+```txt
+open fresh page
+activate through visible keyboard/pointer reachable control
+capture activation result and audio revision
+prove ambient source and listener revision
+mute/unmute and adjust bounded volume
+hide/show page and verify policy
+stop/restart and inspect active leases
+dispose and prove cleanup
+repeat against deployed GitHub Pages URL
 ```
 
 ## Future commands
 
 ```bash
-npm run fixture:shader-precision-policy
-npm run fixture:shader-source-normalization
-npm run fixture:shader-compile-link
-npm run fixture:shader-context-restore
-npm run smoke:shader-webgl1
-npm run smoke:shader-webgl2
-npm run smoke:shader-pages
+npm run fixture:audio-activation
+npm run fixture:audio-resources
+npm run fixture:audio-spatial
+npm run fixture:audio-suspend-resume
+npm run fixture:audio-cleanup
+npm run smoke:audio-browser
+npm run smoke:audio-pages
 npm run check
 ```
 
 ## Completion boundary
 
-Do not claim shader precision correctness from a successful screenshot alone. Completion requires capability evidence, an admitted stage decision, exact source/program identity and first-frame provenance.
+Do not claim audio support because the DSK validates or because a browser can instantiate Web Audio. Completion requires admitted gesture evidence, typed state, versioned resources, exact-once playback, listener parity, deterministic scheduling policy, cleanup and deployed browser proof.

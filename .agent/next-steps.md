@@ -1,153 +1,116 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T05-39-42-04-00`
+**Updated:** `2026-07-12T07-19-47-04-00`
 
-## Goal
+## Summary
 
-Turn the planned `meadow-audio-dsk` into one browser-safe, session-scoped audio authority without placing playback ownership inside the renderer or exposing mutable Web Audio objects through public/editor surfaces.
+Implement one session-scoped adaptive-quality authority after runtime clock, render-surface and committed-frame foundations. It must convert frame and capability observations into stable quality transitions, apply every physical consumer under one revision and correlate the first visible frame with that committed result.
 
 ## Plan ledger
 
-- [ ] Preserve all existing visual, render-plan and shader behavior.
-- [ ] Complete Runtime Session Lifecycle Authority first.
-- [ ] Complete trusted input/command admission needed for user-gesture evidence.
-- [ ] Add a versioned audio policy and asset manifest.
-- [ ] Add `AudioActivateCommand` and typed READY/BLOCKED/FAILED/STALE results.
-- [ ] Create one AudioContext owner per runtime/audio generation.
-- [ ] Stage decode and node-graph work before live commit.
-- [ ] Add deterministic resource identity and stale-generation rejection.
-- [ ] Add master, ambience, effects and UI buses.
-- [ ] Add exact-once ambient-bed ownership.
-- [ ] Add a spatial-cue registry and command admission policy.
-- [ ] Add listener pose from committed camera/player observation.
-- [ ] Add bounded overlap, cooldown and voice-budget policy.
-- [ ] Add mute, master-volume and user preference state.
-- [ ] Define pause, visibility, route transition, reset and device-change behavior.
-- [ ] Add diagnostics and clone-safe editor observation.
-- [ ] Add ordered stop/dispose with zero active leases.
-- [ ] Add DOM-free state-machine, scheduling and cleanup fixtures.
-- [ ] Add browser and Pages activation/suspend/resume/restart smoke gates.
+**Goal:** make `meadow-performance-dsk` an executable authority without introducing a second renderer, grass owner or surface owner.
 
-## Existing owners to update first
+- [ ] Define `PerformanceSample`, sample identity and capability evidence.
+- [ ] Instrument CPU frame cost around tick, enhancement and rendering.
+- [ ] Add optional GPU timer capability and typed unsupported result.
+- [ ] Define rolling windows, percentiles, minimum samples and hidden-tab policy.
+- [ ] Define named frame, topology, grass, terrain, post and surface budgets.
+- [ ] Define `QualityTier` and monotonic `QualityRevision`.
+- [ ] Make `auto` a controller policy rather than a static profile alias.
+- [ ] Add hysteresis, asymmetric upgrade/downgrade windows and cooldown.
+- [ ] Route manual and automatic changes through one command/result contract.
+- [ ] Bind transitions to runtime, context, surface, topology and predecessor-quality revisions.
+- [ ] Derive topology impact before mutation.
+- [ ] Pass committed runtime quality into `createRenderPlanEnhancer`.
+- [ ] Include topology-affecting quality fields in enhancer and renderer cache admission.
+- [ ] Apply profile terrain resolution rather than hard-coded segment counts.
+- [ ] Enforce committed grass instance and density budgets.
+- [ ] Apply physical post-process/outline policy to submitted work.
+- [ ] Add a surface-scale adapter only through render-surface authority.
+- [ ] Prepare all required consumers without exposing partial state.
+- [ ] Commit one quality revision or preserve/restore the predecessor.
+- [ ] Reject stale prepared plans after reset, context loss or surface replacement.
+- [ ] Publish clone-safe diagnostics and editor capability results.
+- [ ] Acknowledge the first visible frame using quality, topology and surface revisions.
+- [ ] Add deterministic policy, browser matrix and Pages fixtures.
+
+## Required command
 
 ```txt
-meadow-audio-dsk
-meadow-ecology-dsk
-meadow-input-dsk
-meadow-camera-dsk
-meadow-player-dsk
-meadow-performance-dsk
-meadow-diagnostics-dsk
-web-host-dsk
-into-the-meadow-game-dsk
-game snapshot/read model
-browser shell
-editor capability bridge
-runtime session lifecycle authority
-runtime clock and step authority
-committed frame observation authority
-static-pages-deploy-dsk
+QualityTransitionCommand {
+  commandId
+  runtimeSessionId
+  rendererGeneration
+  predecessorQualityRevision
+  targetTier
+  reason
+  performanceWindowId
+  capabilitySnapshotId
+  expectedTopologyKey
+  expectedSurfaceRevision
+}
 ```
 
-## Candidate coordinating kits
+## Required result
 
 ```txt
-audio-session-id-kit
-audio-session-generation-kit
-audio-lifecycle-state-kit
-audio-policy-kit
-audio-asset-manifest-kit
-audio-activation-command-kit
-audio-activation-result-kit
-user-gesture-audio-admission-kit
-audio-context-owner-kit
-audio-resource-load-plan-kit
-audio-decode-result-kit
-audio-resource-generation-kit
-ambient-bed-kit
-spatial-audio-cue-registry-kit
-spatial-audio-play-command-kit
-audio-listener-pose-kit
-audio-frame-command-kit
-audio-mix-plan-kit
-audio-bus-state-kit
-audio-volume-policy-kit
-audio-mute-command-kit
-audio-visibility-suspension-kit
-audio-device-change-observation-kit
-audio-stale-generation-rejection-kit
-audio-dispose-plan-kit
-audio-dispose-result-kit
-audio-observation-kit
-audio-journal-kit
-audio-editor-capability-kit
-audio-activation-fixture-kit
-audio-spatial-listener-fixture-kit
-audio-suspend-resume-fixture-kit
-audio-restart-leak-fixture-kit
-browser-audible-output-smoke-kit
+QualityTransitionResult {
+  status
+  reason
+  commandId
+  predecessorQualityRevision
+  committedQualityRevision
+  targetTier
+  consumerResults
+  topologyResult
+  rollbackResult
+  firstVisibleFrameId
+}
 ```
 
-## Required activation flow
+## Required performance sample
 
 ```txt
-trusted browser gesture
-  -> gesture evidence
-  -> AudioActivateCommand
-  -> session/route/policy/revision admission
-  -> create or resume context generation
-  -> load/decode candidate resources
-  -> build candidate buses and sources
-  -> commit READY or return typed blocked/failure result
-```
-
-## Required frame flow
-
-```txt
-committed clock + scene + listener pose
-  -> AudioFrameCommand
-  -> ambience and cue eligibility
-  -> cooldown, priority, overlap and voice budget
-  -> immutable mix plan
-  -> apply only to matching audio generation
-  -> AudioFrameResult and observation
-```
-
-## Required lifecycle flow
-
-```txt
-pause/visibility/reset/transition/stop/dispose
-  -> explicit policy decision
-  -> reject new playback when required
-  -> fence stale decode and cue callbacks
-  -> stop/disconnect sources and nodes
-  -> remove listener/device subscriptions
-  -> release decoded resources
-  -> close or suspend context
-  -> typed terminal result
+PerformanceSample {
+  sampleId
+  runtimeSessionId
+  frameId
+  surfaceRevision
+  qualityRevision
+  visibilityState
+  cpuFrameMs
+  gpuFrameMs | unsupported
+  deadlineMs
+  descriptorCounts
+  vertexCount
+  drawCount
+  topologyRebuilt
+  observedAt
+}
 ```
 
 ## Acceptance matrix
 
 ```txt
-page load before gesture creates no AudioContext
-trusted gesture produces READY or explicit BLOCKED/FAILED
-second identical activation is idempotent
-concurrent activation is coalesced or typed in-progress
-ambient bed begins exactly once per generation
-listener revision follows committed camera/player pose
-invalid or stale listener pose is rejected
-spatial cue cites source, scene and audio generation
-voice overflow applies deterministic admission policy
-mute/unmute roundtrip preserves prior bounded volume
-hidden-tab policy matches the documented state transition
-reset and restart create no duplicate sources or listeners
-stale decode and cue callbacks cannot mutate replacement generation
-dispose leaves zero active contexts, nodes, sources and event leases
-editor and diagnostics report the same audio revision
-visual rendering remains live while audio is blocked or failed
-Pages smoke proves activation, suspension, resume and cleanup
+manual low/medium/high/ultra parity
+static profile logical/physical parity
+auto sustained-overload downgrade
+auto sustained-headroom upgrade
+single-spike rejection
+hysteresis around threshold
+cooldown enforcement
+GPU timer supported/unsupported paths
+hidden-tab sample classification
+quality topology rebuild only when required
+grass and terrain budget enforcement
+post-process physical-policy parity
+consumer prepare failure
+consumer commit failure and rollback
+stale context/surface/quality plan rejection
+editor/browser command parity
+first visible-frame quality receipt
+local browser and deployed Pages smoke
 ```
 
 ## Ordered architecture queue
@@ -173,4 +136,4 @@ Pages smoke proves activation, suspension, resume and cleanup
 9a. Deterministic Replay Validation Authority
 ```
 
-Do not create or resume Web Audio from the RAF, renderer or untrusted editor command. Activation must originate from admitted browser gesture evidence, and all later operations must cite the committed audio generation.
+Do not change quality directly from one RAF duration or from the renderer. Keep policy, admission and revision ownership in the performance domain, then adapt the existing enhancer, renderer, grass, terrain, post and surface owners.

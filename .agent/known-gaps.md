@@ -2,7 +2,7 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`
 
-**Updated:** `2026-07-11T22-08-13-04-00`
+**Updated:** `2026-07-11T23-10-51-04-00`
 
 ## Selection state
 
@@ -10,81 +10,135 @@
 10 accessible LuminaryLabs-Publish repositories observed
 TheCavalryOfRome excluded by rule
 9 eligible repositories centrally tracked with root .agent state
-AetherVale skipped because active repo-local lifecycle work was newer than its central ledger
-IntoTheMeadow selected as the oldest stable eligible repository
+repositories with newer unsynchronized repo-local work skipped
+IntoTheMeadow selected as the oldest fully synchronized eligible repository
 only IntoTheMeadow changed in the Publish organization for this pass
 ```
 
-## Current render-surface gaps
+## Current persistence gaps
 
-### Live browser values mutate the drawing buffer directly
+### Save services are declarations only
 
-`renderer.render()` calls `resize()` every frame. The function samples live canvas CSS dimensions and `devicePixelRatio`, then immediately assigns `canvas.width` and `canvas.height` when the requested size differs.
+`meadow-save-dsk` advertises save-model, save-slots, persistence-adapter, migration and save-validation, but it is not a required v0.1 DSK and has no source-backed runtime instance.
 
-### DPR is a hard-coded clamp, not a complete policy
+### Browser boot always starts fresh
 
-The current rule clamps DPR from 1 through 2. It has no policy identity, revision, quality tier, minimum device support rule, total pixel budget or relationship to `meadow-performance-dsk`.
+`startWebHost()` loads the provider, creates the game and starts rendering. It performs no slot discovery, candidate resolution, schema admission or hydration.
 
-### WebGL surface capabilities are not admitted
+### Reset silently discards state
 
-The renderer does not query or record:
+`game.reset()` creates the initial state again. It has no reset epoch, checkpoint policy, slot effect, predecessor receipt or typed result.
+
+### Snapshot is not a save envelope
+
+The current game snapshot includes manifest, state, render plan and diagnostics but lacks:
 
 ```txt
-MAX_VIEWPORT_DIMS
-MAX_RENDERBUFFER_SIZE
-gl.drawingBufferWidth
-gl.drawingBufferHeight
-browser clamping or allocation mismatch
+save schema ID and version
+slot and checkpoint identity
+state revision
+reset epoch
+content revision
+created and updated timestamps
+migration history
+integrity fingerprint
+storage provenance
+hydration status
 ```
 
-### Large requested surfaces are unbounded by total pixels
-
-A 3840 by 2160 viewport at DPR 2 requests 7680 by 4320, or 33,177,600 pixels. Antialiasing, depth and browser implementation overhead are additional and unclassified.
-
-### Resize commands and revisions are absent
+### Persistence capabilities are absent
 
 ```txt
-viewport observation ID: absent
-resize command ID: absent
-resize sequence/generation: absent
-surface ID: absent
-surface revision: absent
-context-generation fence: absent
-stale resize rejection: absent
-rapid-resize coalescing: absent
+GameHost persistence commands: absent
+browser editor persistence domain: absent
+Node headless persistence domain: absent
+save/list/load/delete/clear commands: absent
+shared typed persistence results: absent
 ```
 
-### Fallback and rollback are absent
-
-There is no lower-resolution fallback sequence, typed allocation failure, predecessor-surface restoration policy, last-known-good frame policy or cold-rebuild routing.
-
-### Renderer snapshots omit surface state
-
-Renderer snapshots report topology, mesh counts and cache status but not CSS size, requested/applied DPR, actual drawing-buffer size, aspect, quality tier, surface revision, context generation or committed frame.
-
-### Viewport and capture observations are not correlated
-
-`browser.getViewport` reads live browser and canvas values. `renderer.capture` reads the current canvas and independently attaches the latest renderer snapshot. Neither returns a surface revision or frame freshness result.
-
-### Existing browser proof is one configuration
-
-The observation script fixes 1440 by 900 at DPR 1 and checks screenshot byte size. It does not exercise resize, zoom, orientation, high DPR, hidden/zero-size layout, WebGL limits, fallback or capture parity.
-
-## Missing render-surface fixtures
+### Candidate admission is absent
 
 ```txt
-resolution policy fixture
-WebGL capability fixture
-pixel-budget fallback fixture
-rapid resize coalescing fixture
-hidden and zero-size fixture
-actual drawing-buffer mismatch fixture
-stale context/surface revision fixture
-allocation failure fixture
-context loss during resize fixture
-capture freshness fixture
-visible-frame surface correlation fixture
-Pages resize and DPR smoke
+slot registry: absent
+independent candidate reads: absent
+parse failure classification: absent
+schema support classification: absent
+content compatibility classification: absent
+integrity verification: absent
+candidate precedence: absent
+one-bad-slot isolation: absent
+```
+
+### Migration and reconciliation are absent
+
+```txt
+ordered pure migration functions: absent
+intermediate validation: absent
+migration history: absent
+scene identity reconciliation: absent
+objective and story reconciliation: absent
+interaction-receipt reconciliation: absent
+content-manifest compatibility result: absent
+```
+
+### Hydration is not transactional
+
+```txt
+detached candidate state: absent
+predecessor checkpoint: absent
+atomic state revision commit: absent
+derived render invalidation: absent
+rollback after failure: absent
+stale hydration rejection: absent
+first visible hydrated-frame acknowledgement: absent
+```
+
+### Storage failure policy is absent
+
+```txt
+storage denied classification
+quota exceeded classification
+serialization failure
+partial write classification
+read-back verification
+atomic promotion strategy
+delete failure classification
+last-known-good checkpoint retention
+```
+
+## Missing persistence fixtures
+
+```txt
+empty storage fixture
+current-schema save fixture
+malformed-candidate fixture
+unsupported-schema fixture
+migration fixture
+content-reconciliation fixture
+integrity-failure fixture
+multi-slot precedence fixture
+storage-denied fixture
+quota fixture
+write/read-back mismatch fixture
+duplicate and stale command fixture
+reset/load race fixture
+save/load race fixture
+hydration rollback fixture
+browser reload continuity fixture
+headless envelope parity fixture
+first visible hydrated-frame fixture
+Pages reload continuity smoke
+```
+
+## Retained render-surface gaps
+
+```txt
+DPR policy remains a hard-coded 1 through 2 clamp
+pixel and WebGL surface budgets are absent
+resize commands and surface revisions are absent
+actual drawing-buffer readback is absent
+fallback and rollback are absent
+renderer, viewport, capture and visible frame lack one surface identity
 ```
 
 ## Retained runtime clock and step gaps
@@ -208,4 +262,4 @@ fatal candidate rollback and last-known-good frame ownership are absent
 
 ## Deployment risk
 
-A successful full-window screenshot can still hide an oversized, clamped, stale or uncorrelated drawing buffer. Do not claim responsive or high-DPI correctness until actual WebGL dimensions and one committed surface revision are visible through projection, renderer snapshot, capture and the first rendered frame.
+A successful page load or headless snapshot can hide complete progress loss on reload. Do not claim save, resume or migration support until an admitted checkpoint survives storage verification, compatibility handling and hydration, and one visible frame cites the same checkpoint and committed state revision.

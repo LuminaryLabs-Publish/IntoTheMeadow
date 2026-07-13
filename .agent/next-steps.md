@@ -1,15 +1,16 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-13T02-28-51-04-00`
+**Updated:** `2026-07-13T02-39-44-04-00`  
+**Status:** `headless-workspace-path-containment-central-reconciled`
 
 ## Summary
 
-Harden the Node headless workspace boundary before expanding remote editor transports or relying on generated capture evidence. Provider-source parity remains the next independent source-integrity dependency after filesystem containment.
+Harden the Node headless workspace boundary before expanding remote editor transports or relying on generated capture evidence. Repo-local and central documentation now agree on the authority boundary; runtime implementation and executable proof remain open.
 
 ## Plan ledger
 
-**Goal:** establish one canonical, cross-platform workspace operation transaction with zero-mutation rejection and executable containment proof.
+**Goal:** establish one canonical, cross-platform workspace-operation transaction with zero-mutation rejection and executable containment proof.
 
 ### Root identity and policy
 
@@ -27,7 +28,7 @@ Harden the Node headless workspace boundary before expanding remote editor trans
 - [ ] Canonicalize existing targets before execution.
 - [ ] Canonicalize the nearest existing parent for new targets.
 - [ ] Re-check containment after canonicalization.
-- [ ] Add an explicit symlink policy.
+- [ ] Add explicit symlink, junction and reparse-point policies.
 
 ### Capture artifacts
 
@@ -35,7 +36,7 @@ Harden the Node headless workspace boundary before expanding remote editor trans
 - [ ] Normalize and bound labels.
 - [ ] Allocate opaque capture IDs.
 - [ ] Derive filenames only from admitted IDs.
-- [ ] Bind artifacts to provider, render-plan, topology and metrics fingerprints.
+- [ ] Bind artifacts to provider, render-plan, topology, mesh and metrics fingerprints.
 - [ ] Return hashes, byte counts and root generation.
 - [ ] Add a typed paired JSON/SVG commit result.
 
@@ -43,7 +44,7 @@ Harden the Node headless workspace boundary before expanding remote editor trans
 
 - [ ] Add `WorkspaceOperationCommand` and `WorkspaceOperationResult`.
 - [ ] Stage writes inside the admitted destination parent.
-- [ ] Replace destination atomically where supported.
+- [ ] Replace destinations atomically where supported.
 - [ ] Clean temporary files on failure.
 - [ ] Reject stale root or policy generations with zero mutation.
 - [ ] Define conflict and expected-file-revision policy.
@@ -90,4 +91,4 @@ WorkspaceOperationResult {
 
 ## Preserved dependencies
 
-After workspace containment, retain separate work for provider-source admission/parity, DSK runtime consumption, frame lifecycle, WebGL recovery, playable exploration/progression, persistence and visible-frame provenance. Do not merge filesystem policy into meadow gameplay domains.
+After workspace containment, retain separate work for provider-source admission/parity, DSK runtime consumption, frame lifecycle, WebGL recovery, playable exploration/progression, persistence and visible-frame provenance. Filesystem policy must not move into meadow gameplay or rendering domains.

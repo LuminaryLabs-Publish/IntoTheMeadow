@@ -1,27 +1,28 @@
 # IntoTheMeadow Current Audit
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-13T00-10-19-04-00`  
-**Status:** `provider-source-parity-authority-audited`
+**Audit timestamp:** `2026-07-13T02-28-51-04-00`  
+**Status:** `headless-workspace-path-containment-authority-audited`
 
 ## Summary
 
-The browser and headless proof surfaces do not consume the same meadow provider. Browser boot dynamically imports the commit-pinned ProtoKit and throws before game creation if import or export validation fails. Node headless/editor and deterministic tests omit external kits, so `createIntoTheMeadowGame()` silently chooses the local fallback.
+The Node headless environment exposes `workspace.list`, `workspace.read` and `workspace.write`, plus renderer capture that writes JSON and SVG artifacts. All of these paths are protected by `safePath()`, which resolves the candidate and accepts it when the resulting string starts with the root string.
 
-The browser provider advertises version `0.1.0`; the fallback render plan advertises `local-source-plan-v1`. Both can satisfy the broad render-plan shape, but no typed provider-admission result, service manifest, source digest, parity comparison or visible-frame receipt establishes that the same scene semantics were exercised.
+That test does not prove path-segment containment. A sibling whose name shares the root prefix can pass, and filesystem symlinks remain unresolved during admission. Capture labels also participate directly in artifact filenames. No canonical-root generation, symlink policy, typed operation result, atomic write or adversarial fixture closes the boundary.
 
 ## Plan ledger
 
-**Goal:** define one provider-source authority that admits explicit external or fallback mode, validates the selected contract and proves browser/headless semantic parity.
+**Goal:** define one canonical workspace transaction from editor command through path admission, filesystem effect and evidence publication.
 
-- [x] Compare the full Publish inventory and central ledger.
+- [x] Compare the full current Publish inventory and central ledger.
 - [x] Select only the oldest eligible synchronized repository.
-- [x] Inspect browser provider loading and fallback reachability.
-- [x] Inspect DSK external status and validation semantics.
-- [x] Inspect game snapshots and diagnostics for provider lineage.
-- [x] Inspect headless/editor and deterministic-test construction paths.
+- [x] Inspect Node environment root and artifact-root setup.
+- [x] Inspect workspace list/read/write capabilities.
+- [x] Inspect renderer capture label and artifact path construction.
+- [x] Inspect terminal and scenario reachability.
+- [x] Inspect current headless smoke coverage.
 - [x] Preserve the complete 44-kit service inventory.
-- [x] Define provider admission, fallback, conformance and parity proof.
+- [x] Define canonical-root, symlink, atomic-write and fixture boundaries.
 - [ ] Implement and execute the authority later.
 
 ## Selection
@@ -34,15 +35,15 @@ central-ledger-missing eligible repositories: 0
 root-.agent-missing eligible repositories: 0
 unsynchronized eligible repositories: 0
 
-IntoTheMeadow      2026-07-12T21-40-09-04-00 selected oldest
-PhantomCommand     2026-07-12T22-15-00-04-00
-PrehistoricRush    2026-07-12T22-18-39-04-00
-HorrorCorridor     2026-07-12T22-44-30-04-00
-ZombieOrchard      2026-07-12T23-00-53-04-00
-MyCozyIsland       2026-07-12T23-08-37-04-00
-TheUnmappedHouse   2026-07-12T23-20-51-04-00
-AetherVale         2026-07-12T23-40-11-04-00
-TheOpenAbove       2026-07-13T00-00-02-04-00
+IntoTheMeadow      2026-07-13T00-18-48-04-00 selected oldest
+PhantomCommand     2026-07-13T00-40-00-04-00
+PrehistoricRush    2026-07-13T00-58-50-04-00
+HorrorCorridor     2026-07-13T01-08-28-04-00
+ZombieOrchard      2026-07-13T01-18-20-04-00
+MyCozyIsland       2026-07-13T01-40-00-04-00
+TheUnmappedHouse   2026-07-13T01-49-49-04-00
+AetherVale         2026-07-13T02-15-51-04-00
+TheOpenAbove       2026-07-13T02-18-03-04-00
 TheCavalryOfRome   excluded
 ```
 
@@ -51,87 +52,93 @@ Only `LuminaryLabs-Publish/IntoTheMeadow` is modified in the Publish organizatio
 ## Complete interaction loop
 
 ```txt
-browser page
-  -> boot-game selects canvas/HUD
-  -> startWebHost calls loadExternalKits
-  -> read manifest URL pinned to ProtoKits commit
-  -> dynamic import module
-  -> require createMeadowAreaKit function
-  -> create game with external factory
-  -> mark external DSK row loaded from factory truthiness
-  -> create external meadow provider
-  -> enhance and render frames
-  -> expose GameHost and browser editor bridge
+Node CLI / interactive stdio / scenario
+  -> createEnvironment({ root, artifactRoot })
+  -> root = resolve(configured root)
+  -> artifactRoot = safePath(root, configured artifact path)
+  -> create NexusEngine headless environment
+  -> register runtime, scene, renderer, camera, browser and workspace capabilities
+  -> terminal or loop invokes action
 
-browser import/export failure
-  -> loadExternalKits throws
-  -> createIntoTheMeadowGame is never called
-  -> local fallback is never selected
-  -> generic boot failure is projected
+workspace list/read/write
+  -> receive caller-controlled path
+  -> resolve(root, path)
+  -> accept when target.startsWith(root)
+  -> call readdir, readFile or mkdir + writeFile
 
-Node headless/editor
-  -> createEnvironment calls createIntoTheMeadowGame with no external kits
-  -> local fallback provider is selected
-  -> local-source-plan-v1 is enhanced, meshed, measured and captured
-
-deterministic test
-  -> createIntoTheMeadowGame with no external kits
-  -> local fallback provider only
-  -> snapshot determinism is checked without browser provider execution
+renderer capture
+  -> receive caller-controlled label
+  -> captureId = label + topologyKey
+  -> resolve JSON and SVG paths through safePath(artifactRoot, ...)
+  -> write both artifacts
+  -> publish relative artifact paths
 ```
+
+The browser route remains separate: it renders the actual canvas and exposes no Node workspace capability through `window.NexusEditorEnvironment`.
 
 ## Domains in use
 
 ```txt
-browser document shell, loading and fatal projection
-game manifest and immutable source configuration
-external CDN module import and commit pinning
-provider factory export-shape validation
-local fallback provider generation
-DSK declaration, external status and local validation
-meadow area, path, scatter, tree, wind and atmosphere generation
-render-plan enhancement and contract normalization
-CPU mesh generation and WebGL presentation
-GameHost and browser editor observation
-Node headless editor, SVG capture and workspace capabilities
-deterministic scene and static smoke tests
+browser shell and external provider loading
+immutable game state, reset, snapshots and diagnostics
+meadow generation and render-plan composition
+CPU mesh construction and WebGL presentation
+browser GameHost and editor observation
+Node headless runtime and terminal transport
+scenario and loop execution
+workspace root and artifact-root configuration
+filesystem list, read, directory creation and write
+capture naming, JSON packet and SVG persistence
+static, deterministic and headless smoke tests
 build and GitHub Pages deployment
+```
 
-declared but inert:
-  input, player, interaction, objective, story, ecology, audio, UI, save and adaptive performance
+Declared but inert:
 
-missing:
-  provider session/source identity
-  provider contract and service manifest admission
-  provider commit/version compatibility result
-  explicit external/fallback policy and terminal result
-  provider snapshot lineage in game snapshots
-  source-plan digest and semantic conformance
-  browser/headless/test parity result
-  first visible frame tied to admitted provider source
+```txt
+input, player, interaction, objective, story, ecology, audio, UI, save, adaptive performance
+```
+
+Missing:
+
+```txt
+workspace root ID and generation
+canonical root and artifact-root result
+relative-path-only request contract
+path-segment containment admission
+existing-target realpath verification
+new-target canonical-parent verification
+symlink disposition
+capability policy revision
+capture-label normalization
+artifact identity independent of path
+atomic write and paired artifact result
+typed WorkspaceOperationResult
+bounded redacted observation and journal
+cross-platform adversarial fixtures
 ```
 
 ## Source-backed findings
 
-### Browser fallback is unreachable
+### String-prefix admission can accept an external sibling
 
-`startWebHost()` awaits `loadExternalKits()` before creating the game. `loadExternalKits()` throws on a missing URL, failed dynamic import or missing `createMeadowAreaKit` export. The fallback inside `createIntoTheMeadowGame()` is therefore not a browser recovery path.
+For a root `/work/IntoTheMeadow`, a resolved sibling `/work/IntoTheMeadow-output/file` still starts with the root string. A request such as `../IntoTheMeadow-output/file` can therefore pass the current condition even though `path.relative(root, target)` escapes the root.
 
-### Headless and deterministic proof use fallback only
+### Symlinks are outside the current decision
 
-`createEnvironment()` and `deterministic-scene-smoke.mjs` call `createIntoTheMeadowGame()` without external kits. Both select `createFallbackMeadowAreaKit`.
+`resolve()` is lexical. It does not dereference links. Once admitted, `readdir`, `readFile`, `mkdir` and `writeFile` follow filesystem paths. A link below the root can redirect an operation elsewhere unless the target or nearest existing parent is canonicalized and checked under an explicit symlink policy.
 
-### External readiness is not validated
+### Mutation is reachable from the editor transport
 
-`installDsks()` marks the external row `loaded` when the factory value is truthy. Its overall `validation.passed` comes only from local DSK validation. It does not validate provider version, service IDs, runtime adapter, plan contract or commit identity.
+The environment advertises the workspace domain and registers list, read and write capabilities. The CLI supports direct commands, interactive stdio and scenario execution. The write surface is therefore intentionally reachable, even though `.editor/environment.json` labels the environment `permissive-observation`.
 
-### Provider lineage is incomplete
+### Capture artifact placement shares the same boundary
 
-The browser manifest contains the pinned URL and the render plan exposes a version. The game snapshot omits `meadow.getSnapshot()`, provider mode, provider commit, module URL, service manifest and plan digest. Diagnostics report one external row even when its status is `deferred`.
+`renderer.capture` accepts a label, inserts it into `captureId`, then uses that ID in JSON and SVG filenames. The same helper protects the artifact root. Labels must be normalized as metadata and mapped to opaque artifact IDs rather than being trusted as path components.
 
-### Existing proof does not establish parity
+### Existing proof covers normal flow only
 
-The Node deterministic test exercises only the fallback. Static checks verify the manifest and host structure, not a successful import of the pinned provider. No fixture compares external and fallback plans under the same config.
+The environment, command and loop smokes use safe labels and do not call workspace list/read/write. No declared check attempts sibling-prefix escape, absolute paths, traversal, symlinks, stale roots or partial paired capture writes.
 
 ## Kit and service census
 
@@ -141,7 +148,7 @@ local declared kits: 43
 total kit surfaces: 44
 required-v0.1 declarations: 15
 planned declarations: 28
-implemented provider-source parity authorities: 0
+implemented workspace-containment authorities: 0
 ```
 
 The exact inventory is in the current tracker and `.agent/kit-registry.json`.
@@ -149,31 +156,29 @@ The exact inventory is in the current tracker and `.agent/kit-registry.json`.
 ## Required authority
 
 ```txt
-meadow-provider-source-parity-authority-domain
+meadow-headless-workspace-path-containment-authority-domain
 ```
 
 ## Required transaction
 
 ```txt
-ProviderLoadCommand
-  -> bind runtime session, environment and expected provider policy
-  -> resolve manifest source ID, URL, commit and expected contract version
-  -> load external candidate or select admitted fallback mode
-  -> validate factory export and service manifest
-  -> instantiate candidate in detached state
-  -> validate provider snapshot and render-plan contract
-  -> calculate provider and plan fingerprints
-  -> commit one ProviderLoadResult
-  -> expose source lineage through snapshots and diagnostics
-  -> compare external/fallback semantic fixture outputs
-  -> acknowledge first visible frame from the admitted provider generation
-
-failure
-  -> return rejected, fallback-selected or terminal result
-  -> never silently change provider source
-  -> never report external readiness from declaration count alone
+WorkspaceOperationCommand
+  -> bind editor session, environment and expected root generation
+  -> bind capability and policy revision
+  -> canonicalize configured root
+  -> normalize a relative path or capture label
+  -> reject absolute, malformed and parent-escaping requests
+  -> verify path.relative containment
+  -> apply explicit symlink policy
+  -> canonicalize existing target or nearest existing parent
+  -> verify containment again
+  -> execute list/read or atomic in-root write
+  -> publish Accepted, Rejected, Stale, Failed or Cancelled
+  -> record bounded redacted evidence
 ```
+
+Rejected or stale commands must perform zero filesystem mutation. Cross-root access, if ever required, needs a separately named allowlisted capability.
 
 ## Validation
 
-Documentation only. No source, package, dependency or deployment behavior changed. Existing checks were inspected but not run. No external module load, fallback selection, source parity or Pages proof is claimed.
+Documentation only. No source, package, dependency, workspace or deployment behavior changed. No hostile path, symlink or capture label was executed. No containment, security incident or deployment-readiness claim is made.

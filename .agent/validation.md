@@ -1,62 +1,63 @@
 # Validation
 
-**Updated:** `2026-07-13T05-40-11-04-00`  
+**Updated:** `2026-07-13T10-59-22-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Audit type:** documentation and source analysis only
 
 ## Summary
 
-Source review confirms that the browser editor bridge exposes direct tick/reset mutation beside the independently running RAF loop, returns only a generic capability wrapper, and remains published after host stop. Documentation was updated, but no runtime authority or executable browser fixture was added.
+Source review confirms that viewport sizing is performed as direct renderer mutation: global DPR and client dimensions are sampled during render, zero measurements use global-window fallback, the canvas backing store changes before frame success, and renderer/readback/capture surfaces expose no common viewport or visible-frame revision.
 
 ## Plan ledger
 
-**Goal:** state exactly what was inspected, changed, synchronized, and left unproven.
+**Goal:** state exactly what was inspected, changed, synchronized and left unproven.
 
 - [x] Confirm the repository default branch is `main`.
 - [x] Compare the full ten-repository Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Detect and preserve the repo-local `05-31-58` host-lifecycle audit ahead of central tracking.
-- [x] Read `README.md`, `index.html`, browser boot, web host, GameHost exposure, editor bridge, game construction, game state, package scripts, and prior audits.
-- [x] Confirm direct `runtime.tick` and `runtime.reset` mutation.
-- [x] Confirm raw `GameHost.game` exposure.
-- [x] Confirm RAF mutation remains independently active.
-- [x] Confirm editor mutation results contain no command/state/render/scheduler revisions.
-- [x] Confirm capture can run before a matching successor frame is acknowledged.
-- [x] Confirm host stop does not dispose or revoke the editor bridge.
-- [x] Confirm error storage is unbounded and generationless.
+- [x] Confirm all nine eligible repositories have root `.agent` state.
+- [x] Select IntoTheMeadow by the oldest eligible central timestamp.
+- [x] Read `README.md`, `package.json`, `index.html`, boot, GameHost, web host, game state, renderer compatibility/base implementations, editor bridge and prior audits.
+- [x] Confirm per-render DPR and CSS-size sampling.
+- [x] Confirm zero-size measurements use global window fallback.
+- [x] Confirm no total pixel budget or GPU-limit admission.
+- [x] Confirm canvas backing-store mutation precedes render success.
+- [x] Confirm camera/WebGL viewport use the successor backing dimensions.
+- [x] Confirm renderer snapshot omits viewport evidence.
+- [x] Confirm viewport readback and capture are independently sampled.
 - [x] Preserve the complete 44-kit service inventory.
 - [x] Add a new timestamped tracker and audit family.
 - [x] Refresh required root `.agent` documents and machine state.
 - [x] Change documentation only.
 - [x] Create no branch or pull request.
-- [ ] Execute editor admission and lifecycle fixtures later.
+- [ ] Execute viewport authority fixtures later.
 
 ## Confirmed by source review
 
 ```txt
-index.html boots src/boot/boot-game.js
-startWebHost creates game, renderer, enhancer, GameHost, and editor bridge
-RAF callback calls game.tick with dt 1/60 and RAF-derived time
-GameHost exposes the raw game object
-editor bridge registers runtime.tick against gameHost.game.tick
-editor bridge registers runtime.reset against gameHost.game.reset
-invoke returns generic completed/failed wrappers
-lastPlan and lastRender change only in RAF rendering
-renderer.capture encodes the current canvas immediately
-host stop only sets stopped true
-host start schedules RAF without editor generation change
-bridge dispose exists but host stop/fatal does not call it
-error, rejection, and capability errors append to one unbounded array
+index.html fixes main and canvas to the full viewport
+renderer resize runs inside every render
+DPR is sampled from globalThis.devicePixelRatio
+DPR is clamped to 1..2
+CSS dimensions use canvas.clientWidth/clientHeight
+falsy CSS dimensions fall back to global innerWidth/innerHeight
+canvas.width and canvas.height are assigned before mesh/draw success
+WebGL viewport uses backing dimensions
+perspective aspect uses backing dimensions
+renderer snapshot omits CSS/DPR/backing/aspect/viewport revision
+browser.getViewport reads global layout, DPR and canvas backing dimensions
+renderer.capture encodes current canvas and attaches last renderer snapshot
+no ResizeObserver, viewport command, rollback or first-frame ack exists
 ```
 
 ## Source-derived but not executed
 
 ```txt
-reset can complete before successor pixels are rendered
-external ticks can interleave with RAF ticks without an ordering receipt
-stopped hosts can retain mutation-capable editor globals
-bridge replacement can leave predecessor listeners active
-unbounded errors can grow across the environment lifetime
+zero-sized hosts can request full-window backing allocation
+large high-DPR surfaces can exceed a safe total pixel budget
+failure after resize can leave successor backing dimensions with predecessor metadata
+layout changes while stopped can produce new browser dimensions and old canvas dimensions
+capture during transition can combine unrelated pixels and renderer metadata
 ```
 
 These are reachable ownership and correlation findings, not claims of a production incident.
@@ -65,8 +66,8 @@ These are reachable ownership and correlation findings, not claims of a producti
 
 ```txt
 new timestamped project breakdown and turn ledger
-new architecture, render, gameplay, interaction, editor-bridge, deploy, and central-sync audits
-START_HERE, current audit, next steps, known gaps, validation, and kit registry refreshed
+new architecture, render, gameplay, interaction, viewport, deploy and central-sync audits
+START_HERE, current audit, next steps, known gaps, validation and kit registry refreshed
 central repository ledger and internal change log synchronized separately
 ```
 
@@ -76,12 +77,15 @@ central repository ledger and internal change log synchronized separately
 npm install
 npm run check
 browser boot smoke
-RAF plus editor tick concurrency
-reset plus capture correlation
-stale or duplicate editor command
-stop/fatal mutation rejection
-bridge replacement and listener counting
-error journal overflow
+ResizeObserver fixture
+zero-size and restore fixture
+DPR transition fixture
+browser zoom fixture
+pixel-budget or GPU-limit fixture
+failure-after-resize injection
+rollback fixture
+viewport readback parity
+capture/frame correlation
 production build
 built-output browser smoke
 GitHub Pages smoke
@@ -91,6 +95,7 @@ GitHub Pages smoke
 
 ```txt
 runtime JavaScript changed: no
+CSS changed: no
 gameplay changed: no
 provider loading changed: no
 renderer behavior changed: no
@@ -104,4 +109,4 @@ pull request created: no
 
 ## Claim boundary
 
-This audit does not claim editor mutation admission, deterministic command ordering, host retirement, bounded errors, state/render correlation, capture correctness, browser parity, or production readiness. Those properties remain unimplemented and unproven.
+This audit does not claim host measurement authority, zero-size deferral, bounded allocation, atomic viewport adoption, rollback, renderer/readback parity, capture correctness, browser parity or production readiness. Those properties remain unimplemented and unproven.

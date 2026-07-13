@@ -1,135 +1,97 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T21-40-09-04-00`
+**Updated:** `2026-07-13T00-10-19-04-00`
 
 ## Summary
 
-The leading render-surface gap is WebGL context and GPU-resource recovery. The renderer owns one context generation implicitly, has no loss/restoration listeners, and can publish a normal snapshot after draw calls without proving the canvas displayed the frame.
+The leading source-integrity gap is browser/headless provider divergence. The browser requires the pinned external provider, while Node proof surfaces silently use a local fallback. Current validation cannot prove which provider produced a snapshot or whether both implementations are semantically equivalent.
 
 ## Plan ledger
 
-**Goal:** close context-lifecycle and resource-rebuild gaps without merging them into frame scheduling, grass visibility or product gameplay domains.
+**Goal:** close provider-source identity, admission, fallback and parity gaps without merging them into renderer or gameplay ownership.
 
-- [x] Record missing context event ownership.
-- [x] Record missing draw suspension and snapshot truthfulness.
-- [x] Record missing program/location/buffer generation.
-- [x] Record missing restoration rebuild and rollback.
-- [x] Record stale callback/resource and repeated-loss risks.
-- [x] Record browser, built-output and Pages proof gaps.
-- [x] Preserve scheduler, progression, DSK, grass, audio, save and replay gaps.
+- [x] Record the browser-only external import path.
+- [x] Record the headless/test-only fallback path.
+- [x] Record missing provider contract/version/service validation.
+- [x] Record incomplete snapshot lineage and misleading external counts.
+- [x] Record missing cross-source parity and visible-frame proof.
 - [ ] Implement in dependency order.
 
-## Context identity gaps
+## Identity gaps
 
 ```txt
-renderer ID
-canvas ID
-context ID
-context generation
-context phase
-expected predecessor generation
-loss event ID and sequence
-restoration command/result identity
+provider source ID
+provider generation
+environment/source profile
+structured owner/repo/commit/module identity
+expected contract version
+provider fingerprint
+render-plan fingerprint
 ```
 
-## Event ownership gaps
+## Admission gaps
 
 ```txt
-owned webglcontextlost listener
-owned webglcontextrestored listener
-preventDefault policy
-listener lease and removal result
-stale canvas/event rejection
-repeated-loss classification
-unrecoverable context result
+typed load command and result
+factory export schema
+provider version compatibility
+required/provided service manifest
+candidate snapshot validation
+representative render-plan validation
+atomic provider installation
+stale provider result rejection
 ```
 
-## Draw and snapshot gaps
+## Fallback gaps
 
 ```txt
-draw admission while Ready only
-ContextLostResult
-ContextSuspendedResult
-gl.isContextLost evidence
-typed draw result
-snapshot context phase
-snapshot context/resource generation
-snapshot visible-frame correlation
-first visible restored-frame acknowledgement
+browser fallback policy
+explicit fallback-selected result
+fallback reason and source lineage
+terminal external-required result
+no-silent-substitution invariant
+fallback compatibility profile
 ```
 
-## GPU-resource gaps
+## Snapshot and diagnostics gaps
 
 ```txt
-resource manifest
-resource generation
-program lease
-shader artifact identity
-attribute/uniform binding manifest
-buffer lease and role
-candidate rebuild ownership
-partial-resource rollback
-atomic resource-generation install
-exact-once predecessor retirement
-stale resource rejection
-```
-
-## Recovery gaps
-
-```txt
-preserved detached CPU mesh
-preserved last-good render-plan evidence
-candidate shader/program rebuild
-candidate buffer rebuild
-baseline GL-state restoration
-viewport restoration
-candidate validation
-bounded retry or ReloadRequired policy
-scheduler-coordinated resume
-recovery journal
-```
-
-## Public capability gaps
-
-```txt
-GameHost readback can report a completed renderer snapshot while context state is unknown
-renderer exposes dispose but no suspend/recover operation
-host stop does not retire renderer or context listeners
-editor bridge has no context-loss/recovery capability contract
-fatal projection only covers thrown errors
+game snapshot omits meadow/provider snapshot
+provider mode and commit absent
+external count does not distinguish loaded from deferred
+no provider result journal
+no plan digest
+no first visible provider-frame acknowledgement
 ```
 
 ## Proof gaps
 
 ```txt
-loss before first frame
-loss between outline and color passes
-loss during topology rebuild
-program rebuild failure
-buffer rebuild failure
-partial candidate rollback
-repeated loss/restoration
-stale event and callback zero mutation
-unrecoverable context / ReloadRequired
-first visible recovered frame
-source/build/Pages parity
+pinned external module execution
+failed import/export handling
+external version mismatch
+explicit browser fallback
+external/fallback semantic comparison
+determinism per source profile
+browser/headless/test parity
+built-output and Pages source lineage
 ```
 
-## Preserved product and infrastructure gaps
+## Preserved gaps
 
 ```txt
-runtime clock and single-chain RAF ownership
-executable DSK provider binding and readiness
-playable input, movement and path progression
-focal-tree inspection and exactly-once objective/story progression
+WebGL context and resource recovery
+single-chain frame scheduling
+executable DSK provider consumption
+playable input, movement and progression
 camera-bound grass visibility and LOD
 audio user-gesture lifecycle
-atomic save and migration continuity
-independent deterministic replay
-editor-bridge lifecycle and bounded error journal
+atomic save and migration
+independent replay
+editor lifecycle and bounded errors
 ```
 
 ## Completion boundary
 
-A healthy renderer snapshot, increasing frame counter or successful `drawArrays` call is not recovery proof. Completion requires an admitted context event, context/resource generations, a validated detached rebuild, atomic installation, stale-handle rejection and the first visible frame citing the successor generation.
+A commit-pinned URL is not provider admission proof. Completion requires a typed source result, validated provider contract, explicit fallback policy, source-plan fingerprints and a visible frame tied to the admitted provider generation.

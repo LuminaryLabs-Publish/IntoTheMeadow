@@ -1,198 +1,296 @@
-# Current audit: web-host lifecycle retirement authority
+# Current Audit: Browser Editor Capability Admission Authority
 
-**Updated:** `2026-07-13T05-31-58-04-00`  
+**Updated:** `2026-07-13T05-40-11-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `web-host-lifecycle-retirement-authority-audited`
+**Status:** `browser-editor-capability-admission-authority-central-reconciled`  
+**Immediate predecessor:** `web-host-lifecycle-retirement-authority-audited` at `2026-07-13T05-31-58-04-00`
 
 ## Summary
 
-The browser host owns frame scheduling and constructs the game, renderer, plan enhancer, public `GameHost`, and browser editor bridge. Its public lifecycle surface does not own terminal cleanup. `stop()` and fatal handling mark the loop stopped without disposing participants or revoking public capabilities.
+The browser runtime has two independent mutation paths over one game state root: the recursive RAF loop and editor capabilities exposed through `window.NexusEditorEnvironment`. The editor bridge calls raw `game.tick()` and `game.reset()` through `GameHost.game`, but does not bind a command ID, expected state revision, scheduler generation, mutation lease, lifecycle phase, or matching visible-frame acknowledgement.
+
+The preceding host-lifecycle audit remains directly coupled. `stop()` and fatal handling pause RAF through a boolean but do not dispose or revoke the editor bridge, so editor mutation can remain available after the host is stopped.
 
 ## Plan ledger
 
-**Goal:** make host creation, running, pause, resume, failure, stopping, and terminal retirement explicit phases with exactly-once participant cleanup.
+**Goal:** define one typed editor command boundary that separates observation from mutation, admits mutations at scheduler boundaries, and correlates accepted changes with visible rendering.
 
-- [x] Trace the page boot path.
-- [x] Trace frame scheduling and rescheduling.
-- [x] Trace `stop()`, `start()`, and fatal behavior.
-- [x] Verify renderer and bridge disposal surfaces exist.
-- [x] Verify the host does not invoke those surfaces.
-- [x] Verify `GameHost` has no revoke or generation boundary.
-- [x] Verify current static proof does not execute lifecycle behavior.
-- [x] Define the required DSK and transaction.
-- [ ] Implement and validate the authority later.
+- [x] Compare the complete Publish inventory against central tracking.
+- [x] Exclude `TheCavalryOfRome`.
+- [x] Detect the repo-local `05-31-58` host-lifecycle audit ahead of central tracking.
+- [x] Select only IntoTheMeadow and preserve that audit as the predecessor.
+- [x] Trace browser boot, host construction, GameHost exposure, bridge registration, RAF, tick/reset, capture, errors, stop/start, and disposal.
+- [x] Identify all active domains.
+- [x] Preserve all 44 declared kit surfaces and offered services.
+- [x] Define the browser editor capability-admission authority and candidate kit family.
+- [x] Add the current timestamped tracker and system audits.
+- [x] Change no runtime source, dependency, script, test, or workflow.
+- [x] Push only to `main`; create no branch or pull request.
+- [ ] Implement and execute authority fixtures later.
 
-## Source-backed interaction loop
+## Complete interaction loop
 
 ```txt
-src/boot/boot-game.js
-  -> startWebHost(...)
-  -> catch boot rejection and project a static failure
+index.html
+  -> src/boot/boot-game.js
+  -> startWebHost()
+  -> load pinned meadow-area-kit
+  -> create game, renderer, plan enhancer
+  -> expose window.GameHost including raw game
+  -> install window.NexusEditorEnvironment
+  -> start recursive requestAnimationFrame loop
 
-src/hosts/web-host.js
-  -> loadExternalKits()
-  -> createIntoTheMeadowGame()
-  -> createMeadowWebglRendererV2()
-  -> createRenderPlanEnhancer()
-  -> exposeGameHost()
-  -> installIntoTheMeadowEditorBridge()
-  -> requestAnimationFrame(frame)
-
-frame(now)
-  -> return when stopped
-  -> game.tick({ time: now / 1000, dt: 1/60 })
+RAF callback
+  -> game.tick({ time: now / 1000, dt: 1 / 60 })
   -> get and enhance render plan
   -> validate render contract
   -> renderer.render(plan)
-  -> schedule successor RAF
+  -> replace lastPlan / lastRender
+  -> request successor RAF
 
-stop()
+editor observation
+  -> lookup capability
+  -> clone arguments
+  -> read state, snapshot, render plan, renderer, viewport, errors, or canvas
+  -> return generic completed/failed result
+
+editor mutation
+  -> runtime.tick or runtime.reset
+  -> direct game mutation through raw GameHost.game
+  -> no scheduler lease or expected revision
+  -> generic completed result before a matching frame is proven
+
+stop/fatal
   -> stopped = true
-
-start()
-  -> if stopped, set false and schedule RAF
-
-showFatal(error)
-  -> stopped = true
-  -> project error
+  -> RAF returns without scheduling successor
+  -> editor bridge, listeners, GameHost, and mutation capabilities remain published
 ```
-
-## Source findings
-
-### The host exposes pause-like methods without declaring their semantics
-
-`src/hosts/web-host.js` returns `stop()` and `start()`. `stop()` only sets `stopped = true`; it does not identify or cancel the pending RAF. The queued callback can still execute once and return at the guard.
-
-### Terminal resources already expose disposal surfaces
-
-`src/renderers/meadow-webgl-renderer-v2.js` exposes `dispose()`, which deletes attribute buffers and the WebGL program. `src/editor/install-editor-bridge.js` exposes `dispose()`, which detaches `error` and `unhandledrejection` listeners and deletes `NexusEditorEnvironment` when it still owns the global.
-
-The host never calls either method.
-
-### Fatal handling is not terminal cleanup
-
-`showFatal()` stops future frame work and updates the HUD, but leaves the renderer, editor listeners, global bridge, and `GameHost` installed. Editor calls can therefore continue to reach a stopped or failed host generation.
-
-### Public `GameHost` has no revoke path
-
-`src/boot/expose-game-host.js` assigns an immutable object to `globalThis.GameHost` and returns it. There is no lease, generation, ownership test, dispose method, or conditional delete.
-
-### Repeated boot can orphan predecessor participants
-
-A second `startWebHost()` call creates a new renderer and editor bridge, overwrites public globals, and installs new global error listeners. The predecessor host retains its resources and callbacks unless external code retained and manually disposed it. No duplicate-start admission or predecessor retirement result exists.
-
-### Existing proof is structural
-
-`tests/static-smoke.mjs` checks required files and source markers for renderer and editor-bridge construction. The package test chain does not list a web-host stop/start/fatal lifecycle fixture.
-
-## Reachable failure paths
-
-```txt
-explicit stop
-  -> host marked stopped
-  -> WebGL buffers/program remain allocated
-  -> editor listeners remain attached
-  -> GameHost and NexusEditorEnvironment remain callable
-
-fatal render error
-  -> host marked stopped and error shown
-  -> same resources and capabilities remain installed
-
-duplicate boot or hot reload
-  -> successor globals overwrite predecessor globals
-  -> predecessor listeners and renderer can remain live
-  -> no generation identifies which host owns later observations
-
-stop then start
-  -> same participants are reused
-  -> no typed pause/resume result proves they remained valid
-  -> no discontinuity or first-resumed-frame acknowledgement exists
-```
-
-These are source-derived lifecycle gaps, not measured production leaks or failures.
 
 ## Domains in use
 
 ```txt
-browser document shell and boot failure projection
-external provider loading and module admission
-immutable game state, reset, snapshots, and diagnostics
-DSK registry, validation, and composition
-meadow generation: area, terrain, path, grass, trees, scatter, wind, atmosphere
-render-plan enhancement and validation
-CPU mesh generation and WebGL presentation
-RAF scheduling and fixed-delta game ticking
-public GameHost capability projection
-browser editor capabilities, capture, and error observation
-Node headless runtime, terminal, scenarios, loops, workspace, and artifacts
-static checks, build, GitHub Pages, and internal audit tracking
+browser shell, canvas, loading, fatal projection, global capability exposure
+external provider loading and local fallback generation
+immutable game state, frame count, reset, snapshot, diagnostics
+DSK declaration registry, required/planned state, validation
+meadow area, terrain, path, scatter, trees, grass, wind, atmosphere
+render-plan enhancement, contract normalization, CPU mesh generation
+WebGL context, programs, buffers, submission, resize, snapshot, disposal
+RAF scheduling, host lifecycle, fatal handling, pause/resume
+GameHost observations and raw game exposure
+browser editor capability registration, invocation, mutation, capture, errors, disposal
+Node headless environment, workspace, terminal, scenario, loop, artifact evidence
+static, deterministic, renderer, editor, build, and Pages proof surfaces
+missing editor capability admission, lifecycle generation, and visible-frame authority
 ```
 
-## Missing authority
+## Kit census
 
 ```txt
-host session ID and generation
-lifecycle phase and revision
-Created/Starting/Running/Paused/Stopping/Stopped/Failed/Retired states
-RAF request identity and cancel receipt
-pause/resume versus retire policy
-participant registry and dependency order
-renderer disposal receipt
-editor-bridge listener-detachment receipt
-global capability lease and revocation
-fatal cleanup policy
-duplicate-start and stale-generation rejection
-typed HostLifecycleResult
-bounded lifecycle observation and journal
-first resumed, stopped, failed, and retired visible acknowledgements
-browser and headless lifecycle fixtures
+external provider kits: 1
+local declared DSK/kits: 43
+total kit surfaces: 44
+required-v0.1 local declarations: 15
+planned local declarations: 28
+implemented editor admission authorities: 0
+planned editor authority kits including parent: 26
+```
+
+## Implemented kit families
+
+```txt
+provider/composition:
+  meadow-area-kit
+  into-the-meadow-game-dsk
+  web-host-dsk
+  game-composition-dsk
+  meadow-area-bridge-dsk
+
+world:
+  meadow-terrain-texture-dsk
+  path-corridor-dsk
+  wind-field-dsk
+  tree-object-dsk
+  meadow-scatter-dsk
+  meadow-atmosphere-dsk
+
+ grass:
+  grass-density-texture-kit
+  grass-clump-archetype-kit
+  grass-static-batch-kit
+  grass-patch-placement-kit
+  grass-clump-instancing-render-kit
+  grass-shader-wind-kit
+  grass-lod-policy-kit
+  grass-density-scaling-kit
+  grass-debug-visualization-kit
+  grass-patch-dsk
+  gpu-grass-render-dsk
+
+planned gameplay/application:
+  meadow-player-dsk
+  meadow-camera-dsk
+  meadow-input-dsk
+  meadow-interaction-dsk
+  meadow-story-dsk
+  meadow-objective-dsk
+  meadow-ecology-dsk
+  meadow-audio-dsk
+  meadow-ui-dsk
+  meadow-save-dsk
+  meadow-diagnostics-dsk
+  meadow-performance-dsk
+
+render/deploy:
+  meadow-render-host-dsk
+  meadow-webgl-renderer-v2-kit
+  post-process-stack-dsk
+  render-target-kit
+  sobel-outline-pass-kit
+  color-grade-pass-kit
+  depth-fog-pass-kit
+  vignette-pass-kit
+  final-composite-pass-kit
+  static-pages-deploy-dsk
+```
+
+The complete per-kit service table is preserved in `.agent/trackers/2026-07-13T05-40-11-04-00/project-breakdown.md` and `.agent/kit-registry.json`.
+
+## Offered service groups
+
+```txt
+provider/composition:
+  deterministic area generation, external/fallback provider adaptation,
+  manifests, DSK registry, boot, state, snapshots, and validation
+
+world/grass:
+  terrain/path models, deterministic scatter, density fields, clump archetypes,
+  placement, instancing, shader wind, LOD, trees, atmosphere, and diagnostics
+
+planned gameplay:
+  player, camera, input, interaction, story, objectives, ecology, audio,
+  UI, persistence, diagnostics, and adaptive performance contracts
+
+render/deploy:
+  render-plan ingest, WebGL ownership/submission, post-process descriptors,
+  resize/snapshot/disposal, static build, Pages workflow, and deploy validation
+
+editor/headless host surfaces:
+  public state/render observations, direct tick/reset mutation, canvas capture,
+  browser error observation, terminal/scenario/loop execution, workspace and artifacts
+```
+
+## Source-backed findings
+
+```txt
+runtime.tick capability: direct gameHost.game.tick call
+runtime.reset capability: direct gameHost.game.reset call
+raw game on GameHost: exposed
+RAF game.tick path: active
+shared command sequencing: absent
+editor environment generation: absent
+capability policy revision: absent
+expected state/render revision: absent
+scheduler mutation lease: absent
+stale/duplicate command result: absent
+mutation-visible-frame acknowledgement: absent
+capture readiness/correlation result: absent
+stop-time editor mutation rejection: absent
+bridge retirement from host stop/fatal: absent
+bounded generation-scoped error journal: absent
+```
+
+## Main failure paths
+
+```txt
+reset between RAF callbacks
+  -> state becomes initial successor
+  -> lastPlan / lastRender remain predecessor
+  -> capture can return predecessor canvas as completed
+
+external tick while RAF is active
+  -> editor and RAF both advance frame count
+  -> no ordering receipt explains state history
+
+host stop or fatal
+  -> RAF mutation pauses
+  -> editor tick/reset remain callable
+
+bridge replacement
+  -> global binding can be overwritten
+  -> predecessor listeners are not automatically retired
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-web-host-lifecycle-retirement-authority-domain
+meadow-browser-editor-capability-admission-authority-domain
 ```
 
 ## Required transaction
 
 ```txt
-StartWebHostCommand
-  -> bind document, runtime, provider, and host generations
-  -> reject duplicate active ownership or retire predecessor explicitly
-  -> create game, renderer, enhancer, GameHost lease, and editor bridge
-  -> wait for required readiness
-  -> enter Running and publish Accepted
+EditorCapabilityCommand
+  -> bind environment ID and generation
+  -> bind capability registry and policy revisions
+  -> classify observation or mutation
+  -> validate arguments and expected state/render revisions
+  -> reject stale, duplicate, unavailable, busy, or retired commands with zero mutation
+  -> acquire an exclusive scheduler lease for mutation
+  -> execute tick/reset at one admitted simulation boundary
+  -> publish EditorCapabilityResult with before/after revisions
+  -> refresh render evidence when user-visible state changes
+  -> acknowledge the first matching visible frame
+  -> release lease exactly once
+  -> append bounded redacted command/error observations
+```
 
-PauseWebHostCommand
-  -> validate active generation
-  -> cancel or account for the pending RAF
-  -> stop frame admission without disposing retained participants
-  -> publish Paused and a pause receipt
+## Planned coordinating kits
 
-ResumeWebHostCommand
-  -> validate retained participant generations
-  -> reset scheduling time/discontinuity state
-  -> allocate one successor RAF
-  -> enter Running
-  -> acknowledge the first resumed frame
+```txt
+meadow-browser-editor-capability-admission-authority-domain
+editor-environment-id-kit
+editor-environment-generation-kit
+editor-capability-registry-revision-kit
+editor-capability-policy-kit
+editor-command-id-kit
+editor-capability-command-kit
+editor-capability-classification-kit
+editor-observation-admission-kit
+editor-mutation-admission-kit
+editor-argument-validation-kit
+editor-expected-state-revision-kit
+editor-scheduler-generation-kit
+editor-scheduler-lease-kit
+editor-step-boundary-kit
+editor-tick-transaction-kit
+editor-reset-transaction-kit
+editor-state-transition-result-kit
+editor-render-correlation-kit
+editor-visible-frame-ack-kit
+stale-editor-command-rejection-kit
+retired-editor-environment-rejection-kit
+editor-command-journal-kit
+bounded-editor-error-journal-kit
+editor-environment-retirement-kit
+editor-capability-fixture-gate-kit
+```
 
-RetireWebHostCommand
-  -> idempotently enter Stopping
-  -> cancel the active RAF
-  -> reject new editor mutations
-  -> dispose editor bridge and detach listeners
-  -> revoke NexusEditorEnvironment and GameHost leases
-  -> dispose WebGL buffers and program exactly once
-  -> retire game and enhancer participants when they gain disposal contracts
-  -> publish Stopped, Degraded, Failed, or Retired
+## Retained architecture priorities
 
-FatalHostResult
-  -> preserve bounded diagnostics
-  -> run the same retirement transaction or an explicitly documented degraded-retention policy
-  -> expose only provider-independent recovery controls
+```txt
+web-host lifecycle retirement
+workspace canonical containment
+provider-source parity
+WebGL context/resource recovery
+single-chain fixed-step scheduling
+executable DSK provider consumption
+playable exploration and progression
+camera-bound grass visibility/LOD
+audio user-gesture lifecycle
+atomic save/migration and independent replay
 ```
 
 ## Validation boundary
 
-No runtime source changed. No browser, WebGL, duplicate-start, stop/start, fatal-cleanup, listener-count, capability-revocation, or deployed-origin fixture was executed. No leak, lifecycle correctness, or production-readiness claim is made.
+Documentation only. No runtime authority, scheduler lease, bridge retirement, frame correlation, bounded error journal, browser fixture, build fixture, or Pages fixture was executed.

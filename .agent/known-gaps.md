@@ -1,86 +1,108 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-13T00-10-19-04-00`
+**Updated:** `2026-07-13T02-28-51-04-00`
 
 ## Summary
 
-The leading source-integrity gap is browser/headless provider divergence. The browser requires the pinned external provider, while Node proof surfaces silently use a local fallback. Current validation cannot prove which provider produced a snapshot or whether both implementations are semantically equivalent.
+The leading editor-safety gap is filesystem containment. The Node headless environment exposes list, read and write capabilities and persists capture artifacts, but path admission is based on a lexical string prefix. Current proof cannot establish that every effect remains under the configured repository or artifact root.
 
 ## Plan ledger
 
-**Goal:** close provider-source identity, admission, fallback and parity gaps without merging them into renderer or gameplay ownership.
+**Goal:** close root identity, path containment, symlink, artifact-name and write-result gaps without moving filesystem policy into gameplay or renderer domains.
 
-- [x] Record the browser-only external import path.
-- [x] Record the headless/test-only fallback path.
-- [x] Record missing provider contract/version/service validation.
-- [x] Record incomplete snapshot lineage and misleading external counts.
-- [x] Record missing cross-source parity and visible-frame proof.
+- [x] Record sibling-prefix reachability.
+- [x] Record symlink and canonical-parent gaps.
+- [x] Record workspace command reachability.
+- [x] Record capture-label and paired-artifact gaps.
+- [x] Record missing adversarial proof.
 - [ ] Implement in dependency order.
 
-## Identity gaps
+## Root and identity gaps
 
 ```txt
-provider source ID
-provider generation
-environment/source profile
-structured owner/repo/commit/module identity
-expected contract version
-provider fingerprint
-render-plan fingerprint
+workspace root ID
+workspace root generation
+canonical repository root
+canonical artifact root
+capability-policy revision
+root transition result
+stale-operation rejection
 ```
 
-## Admission gaps
+## Path admission gaps
 
 ```txt
-typed load command and result
-factory export schema
-provider version compatibility
-required/provided service manifest
-candidate snapshot validation
-representative render-plan validation
-atomic provider installation
-stale provider result rejection
+relative-path-only request schema
+absolute-path rejection
+path-segment containment result
+sibling-prefix rejection
+existing-target realpath check
+nearest existing parent check for new targets
+post-canonicalization containment check
+platform case and separator policy
+Unicode normalization policy
 ```
 
-## Fallback gaps
+## Symlink gaps
 
 ```txt
-browser fallback policy
-explicit fallback-selected result
-fallback reason and source lineage
-terminal external-required result
-no-silent-substitution invariant
-fallback compatibility profile
+lstat segment inspection
+external symlink rejection
+in-root symlink policy
+junction/reparse-point policy
+new target below symlinked parent
+root replacement and link-race policy
 ```
 
-## Snapshot and diagnostics gaps
+## Capability and result gaps
 
 ```txt
-game snapshot omits meadow/provider snapshot
-provider mode and commit absent
-external count does not distinguish loaded from deferred
-no provider result journal
-no plan digest
-no first visible provider-frame acknowledgement
+typed workspace command and result
+observation-only versus write policy
+read/list/write-specific admission
+expected file state or conflict policy
+atomic write staging and replacement
+partial failure cleanup
+bounded redacted operation journal
+host-path disclosure policy
+```
+
+## Artifact gaps
+
+```txt
+capture label normalization
+opaque capture ID
+artifact ID/path separation
+artifact-root generation
+paired JSON/SVG commit result
+partial-pair rollback or receipt
+artifact hash and byte count
+provider and render-plan fingerprint lineage
 ```
 
 ## Proof gaps
 
 ```txt
-pinned external module execution
-failed import/export handling
-external version mismatch
-explicit browser fallback
-external/fallback semantic comparison
-determinism per source profile
-browser/headless/test parity
-built-output and Pages source lineage
+in-root operation baseline
+absolute path
+parent traversal
+sibling-prefix collision
+external symlink
+in-root symlink
+new target under symlinked parent
+stale root generation
+hostile capture label
+partial paired write
+Windows drive and junction behavior
+POSIX symlink behavior
+built browser capability exclusion
 ```
 
 ## Preserved gaps
 
 ```txt
+provider-source admission and browser/headless parity
 WebGL context and resource recovery
 single-chain frame scheduling
 executable DSK provider consumption
@@ -89,9 +111,9 @@ camera-bound grass visibility and LOD
 audio user-gesture lifecycle
 atomic save and migration
 independent replay
-editor lifecycle and bounded errors
+browser editor lifecycle and bounded errors
 ```
 
 ## Completion boundary
 
-A commit-pinned URL is not provider admission proof. Completion requires a typed source result, validated provider contract, explicit fallback policy, source-plan fingerprints and a visible frame tied to the admitted provider generation.
+A normalized path string is not workspace containment proof. Completion requires canonical roots, segment containment, authored symlink policy, typed zero-mutation rejection, atomic write results and cross-platform adversarial fixtures.

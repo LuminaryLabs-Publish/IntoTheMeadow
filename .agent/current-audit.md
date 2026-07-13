@@ -1,87 +1,84 @@
-# Current Audit: Browser Editor Capability Admission Authority
+# Current Audit: Render-Surface Viewport Authority
 
-**Updated:** `2026-07-13T05-40-11-04-00`  
+**Updated:** `2026-07-13T10-59-22-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `browser-editor-capability-admission-authority-central-reconciled`  
-**Immediate predecessor:** `web-host-lifecycle-retirement-authority-audited` at `2026-07-13T05-31-58-04-00`
+**Status:** `render-surface-viewport-authority-central-reconciled`  
+**Immediate predecessor:** `browser-editor-capability-admission-authority-central-reconciled` at `2026-07-13T05-40-11-04-00`
 
 ## Summary
 
-The browser runtime has two independent mutation paths over one game state root: the recursive RAF loop and editor capabilities exposed through `window.NexusEditorEnvironment`. The editor bridge calls raw `game.tick()` and `game.reset()` through `GameHost.game`, but does not bind a command ID, expected state revision, scheduler generation, mutation lease, lifecycle phase, or matching visible-frame acknowledgement.
+The WebGL renderer owns viewport behavior as direct mutation rather than as a domain transaction. Every render samples `globalThis.devicePixelRatio`, clamps it to `1..2`, reads `canvas.clientWidth/clientHeight`, falls back to global window dimensions when either value is falsy, and immediately assigns `canvas.width/height`.
 
-The preceding host-lifecycle audit remains directly coupled. `stop()` and fatal handling pause RAF through a boolean but do not dispose or revoke the editor bridge, so editor mutation can remain available after the host is stopped.
+The backing-store mutation occurs before mesh preparation, WebGL viewport, camera projection, both draw passes, renderer snapshot publication, browser readback, canvas capture, or visible acknowledgement succeeds. There is no render-surface identity, host-measurement revision, zero-size deferral, pixel budget, GPU-limit admission, atomic commit, rollback result, or first viewport-frame acknowledgement.
 
 ## Plan ledger
 
-**Goal:** define one typed editor command boundary that separates observation from mutation, admits mutations at scheduler boundaries, and correlates accepted changes with visible rendering.
+**Goal:** define one viewport transaction that validates policy and every participant before a visible surface or public observation changes.
 
 - [x] Compare the complete Publish inventory against central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Detect the repo-local `05-31-58` host-lifecycle audit ahead of central tracking.
-- [x] Select only IntoTheMeadow and preserve that audit as the predecessor.
-- [x] Trace browser boot, host construction, GameHost exposure, bridge registration, RAF, tick/reset, capture, errors, stop/start, and disposal.
+- [x] Confirm all eligible repositories have central and root `.agent` coverage.
+- [x] Select only IntoTheMeadow by the oldest eligible central timestamp.
+- [x] Trace CSS host measurement, DPR, backing size, WebGL viewport, camera aspect, renderer snapshot, browser readback and capture.
 - [x] Identify all active domains.
-- [x] Preserve all 44 declared kit surfaces and offered services.
-- [x] Define the browser editor capability-admission authority and candidate kit family.
-- [x] Add the current timestamped tracker and system audits.
-- [x] Change no runtime source, dependency, script, test, or workflow.
+- [x] Preserve all 44 declared kit surfaces and services.
+- [x] Define the viewport authority and 27 candidate surfaces.
+- [x] Add the timestamped tracker and system audits.
+- [x] Change no runtime source, dependency, script, test or workflow.
 - [x] Push only to `main`; create no branch or pull request.
-- [ ] Implement and execute authority fixtures later.
+- [ ] Implement and execute browser/build/Pages viewport fixtures later.
 
 ## Complete interaction loop
 
 ```txt
 index.html
-  -> src/boot/boot-game.js
-  -> startWebHost()
-  -> load pinned meadow-area-kit
-  -> create game, renderer, plan enhancer
-  -> expose window.GameHost including raw game
-  -> install window.NexusEditorEnvironment
-  -> start recursive requestAnimationFrame loop
+  -> fixed full-screen main and canvas
+  -> boot game and start web host
+  -> create game, enhancer, renderer, GameHost and editor bridge
+  -> request RAF
 
 RAF callback
-  -> game.tick({ time: now / 1000, dt: 1 / 60 })
-  -> get and enhance render plan
-  -> validate render contract
+  -> tick immutable game state
+  -> create time-overlay render plan
+  -> enhance and validate plan
   -> renderer.render(plan)
-  -> replace lastPlan / lastRender
-  -> request successor RAF
 
-editor observation
-  -> lookup capability
-  -> clone arguments
-  -> read state, snapshot, render plan, renderer, viewport, errors, or canvas
-  -> return generic completed/failed result
+renderer viewport path
+  -> sample DPR
+  -> read CSS width and height
+  -> use global window fallback for falsy measurements
+  -> assign canvas backing width and height
+  -> prepare/reuse mesh
+  -> set WebGL viewport
+  -> derive camera aspect
+  -> draw outline and color passes
+  -> replace renderer snapshot without viewport identity
 
-editor mutation
-  -> runtime.tick or runtime.reset
-  -> direct game mutation through raw GameHost.game
-  -> no scheduler lease or expected revision
-  -> generic completed result before a matching frame is proven
-
-stop/fatal
-  -> stopped = true
-  -> RAF returns without scheduling successor
-  -> editor bridge, listeners, GameHost, and mutation capabilities remain published
+public observation
+  -> browser.getViewport reads global layout, DPR and canvas backing dimensions
+  -> renderer.getSnapshot reads the last successful renderer metadata
+  -> renderer.capture encodes current canvas pixels and attaches that metadata
+  -> no shared viewport/frame revision binds them
 ```
 
 ## Domains in use
 
 ```txt
-browser shell, canvas, loading, fatal projection, global capability exposure
-external provider loading and local fallback generation
-immutable game state, frame count, reset, snapshot, diagnostics
-DSK declaration registry, required/planned state, validation
-meadow area, terrain, path, scatter, trees, grass, wind, atmosphere
-render-plan enhancement, contract normalization, CPU mesh generation
-WebGL context, programs, buffers, submission, resize, snapshot, disposal
-RAF scheduling, host lifecycle, fatal handling, pause/resume
-GameHost observations and raw game exposure
-browser editor capability registration, invocation, mutation, capture, errors, disposal
-Node headless environment, workspace, terminal, scenario, loop, artifact evidence
-static, deterministic, renderer, editor, build, and Pages proof surfaces
-missing editor capability admission, lifecycle generation, and visible-frame authority
+browser document, CSS layout, canvas and loading/fatal projection
+external provider loading and deterministic fallback generation
+immutable game state, frame, reset, snapshots and diagnostics
+DSK declaration registry, composition and validation
+meadow terrain, path, scatter, trees, grass, wind and atmosphere
+render-plan enhancement, contract normalization and CPU mesh generation
+render-surface identity and host CSS measurement
+DPR sampling, quality policy, pixel budget and GPU-limit admission
+canvas backing-store sizing and zero-size lifecycle
+WebGL viewport, camera perspective and draw submission
+RAF scheduling and host lifecycle
+GameHost and browser editor viewport/readback/capture projection
+Node headless runtime, workspace, scenarios, loops and artifacts
+static, deterministic, build and Pages proof
+missing viewport commit, rollback, readback and visible-frame authority
 ```
 
 ## Kit census
@@ -92,8 +89,8 @@ local declared DSK/kits: 43
 total kit surfaces: 44
 required-v0.1 local declarations: 15
 planned local declarations: 28
-implemented editor admission authorities: 0
-planned editor authority kits including parent: 26
+implemented viewport authorities: 0
+planned viewport authority surfaces including parent: 27
 ```
 
 ## Implemented kit families
@@ -114,7 +111,7 @@ world:
   meadow-scatter-dsk
   meadow-atmosphere-dsk
 
- grass:
+grass:
   grass-density-texture-kit
   grass-clump-archetype-kit
   grass-static-batch-kit
@@ -154,131 +151,139 @@ render/deploy:
   static-pages-deploy-dsk
 ```
 
-The complete per-kit service table is preserved in `.agent/trackers/2026-07-13T05-40-11-04-00/project-breakdown.md` and `.agent/kit-registry.json`.
+The complete per-kit service table is preserved in `.agent/trackers/2026-07-13T10-59-22-04-00/project-breakdown.md` and `.agent/kit-registry.json`.
 
 ## Offered service groups
 
 ```txt
 provider/composition:
   deterministic area generation, external/fallback provider adaptation,
-  manifests, DSK registry, boot, state, snapshots, and validation
+  manifests, DSK registry, boot, state, snapshots and validation
 
 world/grass:
   terrain/path models, deterministic scatter, density fields, clump archetypes,
-  placement, instancing, shader wind, LOD, trees, atmosphere, and diagnostics
+  placement, instancing, shader wind, LOD, trees, atmosphere and diagnostics
 
 planned gameplay:
   player, camera, input, interaction, story, objectives, ecology, audio,
-  UI, persistence, diagnostics, and adaptive performance contracts
+  UI, persistence, diagnostics and adaptive performance contracts
 
 render/deploy:
   render-plan ingest, WebGL ownership/submission, post-process descriptors,
-  resize/snapshot/disposal, static build, Pages workflow, and deploy validation
+  resize, snapshot, disposal, static build, Pages workflow and deploy validation
 
-editor/headless host surfaces:
-  public state/render observations, direct tick/reset mutation, canvas capture,
-  browser error observation, terminal/scenario/loop execution, workspace and artifacts
+editor/headless:
+  public state/render/viewport observations, direct tick/reset mutation,
+  canvas capture, browser errors, terminal/scenario/loop execution and artifacts
 ```
 
 ## Source-backed findings
 
 ```txt
-runtime.tick capability: direct gameHost.game.tick call
-runtime.reset capability: direct gameHost.game.reset call
-raw game on GameHost: exposed
-RAF game.tick path: active
-shared command sequencing: absent
-editor environment generation: absent
-capability policy revision: absent
-expected state/render revision: absent
-scheduler mutation lease: absent
-stale/duplicate command result: absent
-mutation-visible-frame acknowledgement: absent
-capture readiness/correlation result: absent
-stop-time editor mutation rejection: absent
-bridge retirement from host stop/fatal: absent
-bounded generation-scoped error journal: absent
+actual host-box authority: absent
+zero-size deferral: absent
+zero-size behavior: global window fallback
+sampled DPR: global per render
+DPR cap: 2
+pixel budget: absent
+GPU dimension admission: absent
+backing-store mutation before frame success: confirmed
+viewport revision: absent
+camera-projection revision: absent
+renderer snapshot viewport fields: absent
+ResizeObserver ownership: absent
+stale/duplicate measurement result: absent
+rollback result: absent
+browser viewport readback revision: absent
+capture viewport/frame correlation: absent
+first viewport frame acknowledgement: absent
 ```
 
 ## Main failure paths
 
 ```txt
-reset between RAF callbacks
-  -> state becomes initial successor
-  -> lastPlan / lastRender remain predecessor
-  -> capture can return predecessor canvas as completed
+zero CSS measurement
+  -> fallback to global window size
+  -> full-window backing allocation instead of deferral
 
-external tick while RAF is active
-  -> editor and RAF both advance frame count
-  -> no ordering receipt explains state history
+large viewport at high DPR
+  -> no pixel-budget or GPU-limit gate
+  -> allocation/draw can fail after canvas mutation
 
-host stop or fatal
-  -> RAF mutation pauses
-  -> editor tick/reset remain callable
+resize followed by mesh or draw failure
+  -> canvas dimensions are successor
+  -> renderer snapshot is predecessor
 
-bridge replacement
-  -> global binding can be overwritten
-  -> predecessor listeners are not automatically retired
+layout change while host stopped
+  -> browser layout becomes successor
+  -> canvas/render state stays predecessor
+  -> public readback has no stale/not-ready classification
+
+capture during transition
+  -> current canvas pixels and dimensions
+  -> last renderer snapshot
+  -> no shared viewport/frame identity
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-browser-editor-capability-admission-authority-domain
+meadow-render-surface-viewport-authority-domain
 ```
 
 ## Required transaction
 
 ```txt
-EditorCapabilityCommand
-  -> bind environment ID and generation
-  -> bind capability registry and policy revisions
-  -> classify observation or mutation
-  -> validate arguments and expected state/render revisions
-  -> reject stale, duplicate, unavailable, busy, or retired commands with zero mutation
-  -> acquire an exclusive scheduler lease for mutation
-  -> execute tick/reset at one admitted simulation boundary
-  -> publish EditorCapabilityResult with before/after revisions
-  -> refresh render evidence when user-visible state changes
-  -> acknowledge the first matching visible frame
-  -> release lease exactly once
-  -> append bounded redacted command/error observations
+ViewportChangeCommand
+  -> bind surface ID and generation
+  -> collect actual host CSS measurement and DPR evidence
+  -> apply quality, GPU-limit and pixel-budget policy
+  -> reject invalid, zero, duplicate, stale or superseded candidates
+  -> prepare detached backing-store, WebGL-viewport and camera candidates
+  -> validate shared dimensions and aspect
+  -> atomically adopt all participants or preserve the predecessor
+  -> publish ViewportCommitResult
+  -> render FrameViewportEnvelope
+  -> publish revisioned readback and capture evidence
+  -> acknowledge FirstViewportFrameAck
 ```
 
 ## Planned coordinating kits
 
 ```txt
-meadow-browser-editor-capability-admission-authority-domain
-editor-environment-id-kit
-editor-environment-generation-kit
-editor-capability-registry-revision-kit
-editor-capability-policy-kit
-editor-command-id-kit
-editor-capability-command-kit
-editor-capability-classification-kit
-editor-observation-admission-kit
-editor-mutation-admission-kit
-editor-argument-validation-kit
-editor-expected-state-revision-kit
-editor-scheduler-generation-kit
-editor-scheduler-lease-kit
-editor-step-boundary-kit
-editor-tick-transaction-kit
-editor-reset-transaction-kit
-editor-state-transition-result-kit
-editor-render-correlation-kit
-editor-visible-frame-ack-kit
-stale-editor-command-rejection-kit
-retired-editor-environment-rejection-kit
-editor-command-journal-kit
-bounded-editor-error-journal-kit
-editor-environment-retirement-kit
-editor-capability-fixture-gate-kit
+meadow-render-surface-viewport-authority-domain
+render-surface-id-kit
+render-surface-generation-kit
+host-css-box-measurement-kit
+viewport-measurement-command-kit
+viewport-measurement-result-kit
+device-pixel-ratio-sample-kit
+device-pixel-ratio-policy-kit
+gpu-limit-admission-kit
+render-pixel-budget-kit
+zero-size-surface-deferral-kit
+viewport-revision-kit
+viewport-candidate-kit
+canvas-backing-store-candidate-kit
+camera-projection-candidate-kit
+webgl-viewport-candidate-kit
+resize-observer-adapter-kit
+dpr-change-adapter-kit
+viewport-atomic-commit-kit
+viewport-rollback-kit
+stale-viewport-rejection-kit
+duplicate-viewport-suppression-kit
+render-frame-viewport-envelope-kit
+viewport-readback-kit
+capture-viewport-correlation-kit
+first-viewport-frame-ack-kit
+viewport-fixture-gate-kit
 ```
 
 ## Retained architecture priorities
 
 ```txt
+browser editor capability admission
 web-host lifecycle retirement
 workspace canonical containment
 provider-source parity
@@ -293,4 +298,4 @@ atomic save/migration and independent replay
 
 ## Validation boundary
 
-Documentation only. No runtime authority, scheduler lease, bridge retirement, frame correlation, bounded error journal, browser fixture, build fixture, or Pages fixture was executed.
+Documentation only. No runtime authority, pixel budget, zero-size policy, viewport transaction, rollback, readback correlation, capture correlation, browser fixture, build fixture or Pages fixture was executed.

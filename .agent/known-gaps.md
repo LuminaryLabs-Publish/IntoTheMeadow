@@ -1,11 +1,12 @@
 # IntoTheMeadow Known Gaps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-13T02-28-51-04-00`
+**Updated:** `2026-07-13T02-39-44-04-00`  
+**Status:** `headless-workspace-path-containment-central-reconciled`
 
 ## Summary
 
-The leading editor-safety gap is filesystem containment. The Node headless environment exposes list, read and write capabilities and persists capture artifacts, but path admission is based on a lexical string prefix. Current proof cannot establish that every effect remains under the configured repository or artifact root.
+The leading editor-safety gap is filesystem containment. The Node headless environment exposes list, read and write capabilities and persists capture artifacts, but path admission is based on a lexical string prefix. Central reconciliation is complete; runtime proof that every effect remains under the configured repository or artifact root is not.
 
 ## Plan ledger
 
@@ -16,6 +17,7 @@ The leading editor-safety gap is filesystem containment. The Node headless envir
 - [x] Record workspace command reachability.
 - [x] Record capture-label and paired-artifact gaps.
 - [x] Record missing adversarial proof.
+- [x] Reconcile repo-local and central documentation.
 - [ ] Implement in dependency order.
 
 ## Root and identity gaps
@@ -44,15 +46,16 @@ platform case and separator policy
 Unicode normalization policy
 ```
 
-## Symlink gaps
+## Symlink and platform gaps
 
 ```txt
 lstat segment inspection
 external symlink rejection
 in-root symlink policy
-junction/reparse-point policy
+junction and reparse-point policy
 new target below symlinked parent
 root replacement and link-race policy
+Windows drive and UNC handling
 ```
 
 ## Capability and result gaps
@@ -78,7 +81,8 @@ artifact-root generation
 paired JSON/SVG commit result
 partial-pair rollback or receipt
 artifact hash and byte count
-provider and render-plan fingerprint lineage
+provider, render-plan and mesh fingerprint lineage
+browser-visible-frame correlation when claimed
 ```
 
 ## Proof gaps
@@ -116,4 +120,4 @@ browser editor lifecycle and bounded errors
 
 ## Completion boundary
 
-A normalized path string is not workspace containment proof. Completion requires canonical roots, segment containment, authored symlink policy, typed zero-mutation rejection, atomic write results and cross-platform adversarial fixtures.
+A normalized path string is not workspace containment proof. Completion requires canonical roots, segment containment, authored link policy, typed zero-mutation rejection, atomic write results and cross-platform adversarial fixtures.

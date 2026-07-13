@@ -2,45 +2,42 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-13T10-59-22-04-00`  
-**Status:** `render-surface-viewport-authority-central-reconciled`
+**Last aligned:** `2026-07-13T16-01-05-04-00`  
+**Status:** `render-plan-mesh-cache-coherence-authority-central-reconciled`
 
 ## Summary
 
-IntoTheMeadow is a DSK-composed browser meadow with deterministic provider data, immutable game state, render-plan enhancement, persistent WebGL presentation, browser editor readback, and a NexusEngine-backed Node headless editor.
+IntoTheMeadow is a DSK-composed browser meadow with deterministic provider data, immutable game state, render-plan enhancement, persistent WebGL presentation, browser editor readback and a NexusEngine-backed Node headless editor.
 
-The current audit isolates render-surface viewport authority. The renderer samples CSS size and global DPR during every render, treats zero-size measurements as a reason to fall back to global window dimensions, mutates the canvas backing store before the frame succeeds, and publishes no viewport-bearing renderer or visible-frame result. Browser viewport readback and canvas capture independently sample layout, backing, renderer and pixel state without one revision.
-
-The browser editor capability and web-host lifecycle audits remain direct dependencies because capture, pause, resume, failure and retirement must consume the same surface generation.
+The current audit isolates render cache coherence. The enhancer caches contracted plans with a source key that omits consumed descriptors and runtime performance policy. The renderer then caches CPU mesh and GPU buffers with a contract topology key that omits additional static mesh inputs. Cache hits and rebuild counters exist, but no complete dependency manifest, typed cache decision, aggregate revision or first matching visible-frame acknowledgement exists.
 
 ## Plan ledger
 
-**Goal:** make every CSS-size or DPR transition a validated, budgeted, atomic viewport commit and prove the first matching visible frame.
+**Goal:** make every render-affecting source or policy change produce an explicit reuse/rebuild decision and prove the accepted plan, mesh and GPU generation in the visible frame.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm nine eligible central-ledger entries and nine root `.agent` states.
-- [x] Find no new, missing, undocumented, or locally-ahead eligible repository.
-- [x] Select only `LuminaryLabs-Publish/IntoTheMeadow` by the oldest documented timestamp.
-- [x] Trace page layout, DPR sampling, canvas backing mutation, WebGL viewport, camera projection, renderer snapshot, viewport readback and capture.
+- [x] Confirm nine eligible central-ledger entries and matching repo-local documentation heads.
+- [x] Select only `LuminaryLabs-Publish/IntoTheMeadow` by the oldest eligible timestamp.
+- [x] Trace source-plan, enhancer, contract, mesh, GPU-buffer and visible-frame cache ownership.
 - [x] Preserve all 44 kit surfaces and offered services.
-- [x] Add the `2026-07-13T10-59-22-04-00` tracker and audit family.
+- [x] Add the `2026-07-13T16-01-05-04-00` tracker and audit family.
 - [x] Refresh required root `.agent` documents and machine state.
 - [x] Push directly to `main`; create no branch or pull request.
-- [ ] Implement viewport authority and executable source/build/Pages fixtures later.
+- [ ] Implement exhaustive dependency fingerprints and executable mutation fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-13T10-59-22-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-13T10-59-22-04-00.md
-.agent/architecture-audit/2026-07-13T10-59-22-04-00-render-surface-viewport-authority-dsk-map.md
-.agent/render-audit/2026-07-13T10-59-22-04-00-viewport-backing-store-visible-frame-gap.md
-.agent/gameplay-audit/2026-07-13T10-59-22-04-00-resize-render-capture-loop.md
-.agent/interaction-audit/2026-07-13T10-59-22-04-00-viewport-change-commit-result-map.md
-.agent/viewport-audit/2026-07-13T10-59-22-04-00-host-measurement-dpr-pixel-budget-contract.md
-.agent/deploy-audit/2026-07-13T10-59-22-04-00-viewport-fixture-gate.md
-.agent/central-sync-audit/2026-07-13T10-59-22-04-00-repo-ledger-viewport-reconciliation.md
+.agent/trackers/2026-07-13T16-01-05-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-13T16-01-05-04-00.md
+.agent/architecture-audit/2026-07-13T16-01-05-04-00-render-cache-coherence-authority-dsk-map.md
+.agent/render-audit/2026-07-13T16-01-05-04-00-source-plan-mesh-cache-visible-frame-gap.md
+.agent/gameplay-audit/2026-07-13T16-01-05-04-00-visual-policy-descriptor-update-loop.md
+.agent/interaction-audit/2026-07-13T16-01-05-04-00-render-revision-cache-decision-map.md
+.agent/cache-coherence-audit/2026-07-13T16-01-05-04-00-enhancer-contract-gpu-dependency-fingerprint.md
+.agent/deploy-audit/2026-07-13T16-01-05-04-00-cache-invalidation-fixture-gate.md
+.agent/central-sync-audit/2026-07-13T16-01-05-04-00-repo-ledger-render-cache-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -51,6 +48,7 @@ The browser editor capability and web-host lifecycle audits remain direct depend
 ## Retained predecessor audits
 
 ```txt
+render-surface viewport authority
 browser editor capability admission
 web-host lifecycle retirement
 headless workspace path containment
@@ -65,25 +63,15 @@ grass visibility and LOD
 ## Complete interaction loop
 
 ```txt
-browser boot
-  -> create fixed full-screen canvas, game, enhancer, renderer, GameHost and editor bridge
-  -> start recursive RAF
-
-RAF
-  -> tick game
-  -> enhance and validate render plan
-  -> renderer samples CSS size and DPR
-  -> renderer mutates backing store
-  -> renderer sets WebGL viewport and camera aspect
-  -> renderer draws and publishes metadata
-
-editor/readback
-  -> independently sample browser dimensions and canvas backing size
-  -> independently read last renderer snapshot
-  -> capture current canvas pixels without a shared viewport/frame identity
-
-layout or DPR transition
-  -> no viewport command, budget, rollback or first-frame acknowledgement
+browser frame
+  -> tick game and obtain raw render plan
+  -> enhancer fingerprints selected source fields
+  -> reuse or rebuild contracted plan
+  -> contract fingerprints selected descriptor fields
+  -> renderer reuses or rebuilds CPU mesh and GPU buffers
+  -> apply dynamic uniforms and draw
+  -> publish independent enhancer and renderer cache counters
+  -> editor may capture pixels without a shared cache/frame revision
 ```
 
 ## Domain and kit census
@@ -94,7 +82,7 @@ local declared DSK/kits: 43
 total kit surfaces: 44
 required-v0.1 local declarations: 15
 planned local declarations: 28
-planned viewport authority surfaces including parent: 27
+planned cache-coherence surfaces including parent: 24
 ```
 
 The complete kit-by-kit service map is in the latest tracker and `.agent/kit-registry.json`.
@@ -102,13 +90,13 @@ The complete kit-by-kit service map is in the latest tracker and `.agent/kit-reg
 ## Required parent domain
 
 ```txt
-meadow-render-surface-viewport-authority-domain
+meadow-render-cache-coherence-authority-domain
 ```
 
 ## Next safe ledge
 
-Add render-surface identity, actual host-box measurement, explicit zero-size handling, effective-DPR and pixel-budget policy, GPU-limit admission, detached backing/WebGL/camera candidates, atomic commit or rollback, viewport-bearing frame/readback/capture evidence, and `FirstViewportFrameAck`.
+Add source and policy revisions, generated dependency manifests, exhaustive enhancement and mesh fingerprints, explicit reuse/rebuild decisions, prepared mesh/GPU candidates, atomic adoption or rollback, revisioned public readback and `FirstCacheRevisionFrameAck`.
 
 ## Claim boundary
 
-This documentation pass does not claim viewport convergence, bounded allocation, rollback, readback parity, capture correctness, browser parity or production readiness.
+This documentation pass does not claim cache invalidation correctness, mesh/GPU atomicity, rollback, visible adoption, browser parity or production readiness.

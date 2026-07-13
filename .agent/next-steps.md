@@ -1,66 +1,109 @@
-# Next steps
+# Next Steps
 
-**Updated:** `2026-07-13T05-31-58-04-00`
+**Updated:** `2026-07-13T05-40-11-04-00`  
+**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
+**Status:** `browser-editor-capability-admission-authority-central-reconciled`
 
 ## Summary
 
-Implement one web-host lifecycle coordinator before adding more browser control surfaces. The first implementation should separate pause/resume from terminal retirement, retain the RAF handle, compose existing renderer and editor-bridge disposal, and revoke public globals by generation.
+Implement editor capability admission together with the immediately preceding web-host lifecycle authority. Mutating editor commands should not remain a second unsequenced gameplay driver, and host stop/fatal should not leave those commands active.
 
 ## Plan ledger
 
-**Goal:** convert the documented lifecycle gap into a small, testable authority without changing gameplay or meadow composition.
+**Goal:** introduce one small authority that classifies capabilities, binds mutations to scheduler/state generations, retires the bridge with the host, and proves the first matching frame.
 
-- [ ] Add `HostSessionId`, `HostGeneration`, `HostLifecyclePhase`, and `HostLifecycleRevision`.
-- [ ] Replace the free `stopped` boolean with a lifecycle state machine.
-- [ ] Retain the active RAF ID and cancel it during pause and retirement.
-- [ ] Return typed `StartHostResult`, `PauseHostResult`, `ResumeHostResult`, and `RetireHostResult` values.
-- [ ] Register renderer, editor bridge, public globals, and future participants in ordered lifecycle ownership.
-- [ ] Compose `editorBridge.dispose()` into terminal retirement.
-- [ ] Compose `renderer.dispose()` into terminal retirement.
-- [ ] Add conditional revocation for `globalThis.NexusEditorEnvironment` and `globalThis.GameHost`.
-- [ ] Reject duplicate starts or explicitly retire the predecessor generation.
-- [ ] Route fatal frame errors through the lifecycle coordinator.
-- [ ] Preserve bounded diagnostics after failure without retaining mutating capabilities.
-- [ ] Add first-resumed-frame and first-retired-state acknowledgements.
-- [ ] Add deterministic tests for stop, resume, retire, fatal, duplicate boot, and stale callbacks.
-- [ ] Add browser instrumentation for RAF count, global listener count, and WebGL disposal receipts.
-- [ ] Run the complete existing test suite before and after implementation.
-- [ ] Run a deployed GitHub Pages lifecycle smoke.
+### Environment and capability identity
 
-## Recommended implementation order
+- [ ] Add `EditorEnvironmentId` and `EditorEnvironmentGeneration`.
+- [ ] Add capability-registry and capability-policy revisions.
+- [ ] Classify each capability as observation, mutation, capture, lifecycle, or unavailable.
+- [ ] Remove raw `game` mutation from the supported public GameHost contract.
+- [ ] Allocate one command ID and duplicate policy per invocation.
 
-1. Introduce lifecycle identities, phases, typed commands, and results in a small host-lifecycle module.
-2. Retain `requestAnimationFrame()` IDs and route scheduling through one owner.
-3. Add a `revokeGameHost()` or generation-bound public capability lease.
-4. Register existing `renderer.dispose()` and `editorBridge.dispose()` as terminal participants.
-5. Make `stop()` an explicit pause alias only if compatibility requires it; add a separate terminal `dispose()` or `retire()` method.
-6. Route `showFatal()` through a typed failure transition and cleanup policy.
-7. Add fixtures before exposing additional editor mutation capabilities.
+### Mutation admission
 
-## Required proof matrix
+- [ ] Add `EditorCapabilityCommand` and `EditorCapabilityResult`.
+- [ ] Require expected state and render revisions for mutation commands.
+- [ ] Validate `dt`, `time`, reset options, and bounded argument payloads.
+- [ ] Acquire one exclusive scheduler lease before tick/reset.
+- [ ] Execute mutation only at an admitted simulation boundary.
+- [ ] Reject stale, duplicate, busy, invalid, unavailable, or retired commands with zero mutation.
+- [ ] Publish state revision before/after and lease disposition.
+
+### Host lifecycle integration
+
+- [ ] Implement the preceding `web-host-lifecycle-retirement-authority-domain`.
+- [ ] Separate pause/resume from terminal retirement.
+- [ ] Retain and cancel the active RAF ID.
+- [ ] Disable mutation capabilities while paused unless explicitly permitted.
+- [ ] Compose `editorBridge.dispose()` and renderer disposal into terminal retirement.
+- [ ] Revoke `GameHost` and `NexusEditorEnvironment` by generation.
+- [ ] Retire predecessor listeners before bridge replacement.
+
+### Render and capture correlation
+
+- [ ] Add state, render-plan, render submission, and canvas-frame revisions.
+- [ ] Mark accepted user-visible editor mutations as requiring a render refresh.
+- [ ] Publish `EditorVisibleFrameAck` for the first matching frame.
+- [ ] Make correlated capture wait, return not-ready, or explicitly identify predecessor pixels.
+- [ ] Include command/state/render/frame identities in capture evidence.
+
+### Error and observation policy
+
+- [ ] Bound error entries and total retained bytes.
+- [ ] Scope errors to environment generation.
+- [ ] Add acknowledgement cursor and overflow result.
+- [ ] Redact or bound message, stack, filename, and payload fields.
+- [ ] Define retention across pause, resume, replacement, and retirement.
+
+### Proof
+
+- [ ] Observation capability performs zero mutation.
+- [ ] Tick commits exactly once under RAF concurrency.
+- [ ] Reset commits exactly once and produces a matching frame.
+- [ ] Duplicate and stale commands are suppressed.
+- [ ] Stop/fatal reject later mutations.
+- [ ] Bridge replacement retires predecessor listeners.
+- [ ] Capture correlation distinguishes predecessor and successor frames.
+- [ ] Error journal respects count and byte limits.
+- [ ] `npm run check`, browser source smoke, production build, built-output smoke, and Pages smoke.
+
+## Required result
 
 ```txt
-start once                       -> one RAF chain, one bridge, one GameHost
-start twice                      -> rejected or predecessor retired exactly once
-pause                            -> zero admitted frames, resources retained
-resume                           -> one RAF chain, first resumed frame acknowledged
-retire                           -> RAF cancelled, listeners detached, globals revoked, WebGL disposed
-retire twice                     -> idempotent terminal result, no duplicate disposal
-fatal before first frame         -> bounded failure, no stale capabilities
-fatal after rendered frame       -> same terminal ownership rules
-stale predecessor callback       -> zero successor mutation
-debug bridge after retirement    -> unavailable or typed retired result
-page navigation / hot reload     -> no orphan listener or renderer generation
+EditorCapabilityResult {
+  commandId
+  environmentId
+  environmentGeneration
+  capabilityId
+  capabilityClass
+  status
+  reason
+  capabilityRegistryRevision
+  policyRevision
+  schedulerGeneration
+  stateRevisionBefore
+  stateRevisionAfter
+  renderRevisionBefore
+  renderRevisionAfter
+  visibleFrameRequired
+  visibleFrameAckId?
+  observationId
+}
 ```
 
-## Non-goals for the first patch
+## Dependency order
 
 ```txt
-first-person movement
-story or objective implementation
-new meadow assets
-renderer visual changes
-workspace-containment implementation
-provider migration
-post-processing expansion
+web-host lifecycle generation and RAF ownership
+  -> editor environment generation
+  -> capability classification and policy
+  -> scheduler mutation lease
+  -> state transition result
+  -> render correlation and visible frame
+  -> capture and bounded observations
 ```
+
+## Preserved dependencies
+
+Workspace containment, provider parity, WebGL recovery, DSK runtime consumption, playable progression, grass visibility, audio lifecycle, save/migration, and replay remain separate bounded work.

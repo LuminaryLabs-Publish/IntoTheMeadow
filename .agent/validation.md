@@ -1,57 +1,72 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-13T00-10-19-04-00`  
-**Scope:** documentation-only provider-source parity audit
+**Updated:** `2026-07-13T02-28-51-04-00`  
+**Scope:** documentation-only headless workspace path-containment audit
 
 ## Summary
 
-The source review confirms a browser-only external provider path and a headless/test-only fallback path. No runtime files were changed and no executable parity claim is made.
+Source review confirms that workspace and capture artifact paths use lexical prefix admission. No runtime files were changed and no hostile filesystem operation was executed.
 
 ## Plan ledger
 
-**Goal:** record exactly what was inspected and what remains unproven.
+**Goal:** record exactly what was inspected, what was changed and what remains unproven.
 
-- [x] Reviewed the full accessible Publish repository inventory.
-- [x] Compared all eligible central-ledger timestamps and documentation heads.
-- [x] Reviewed `game-manifest.js`.
-- [x] Reviewed `web-host.js` provider loading.
-- [x] Reviewed `create-into-the-meadow-game.js` fallback selection.
-- [x] Reviewed `install-dsks.js` readiness semantics.
-- [x] Reviewed `game-snapshot.js`.
-- [x] Reviewed the Node headless environment.
-- [x] Reviewed deterministic and static smoke scripts.
-- [x] Reviewed the pinned ProtoKit factory and version at the exact commit.
-- [x] Validated `.agent/kit-registry.json` syntax before writing.
-- [ ] Execute runtime and deployment fixtures later.
+- [x] Reviewed the current accessible Publish repository inventory.
+- [x] Compared all eligible central-ledger timestamps and root documentation heads.
+- [x] Reviewed `.editor/environment.json`.
+- [x] Reviewed `scripts/nexus-editor.mjs`.
+- [x] Reviewed `scripts/into-the-meadow-environment.mjs`.
+- [x] Reviewed browser editor and WebGL host boundaries.
+- [x] Reviewed environment, command and loop smoke tests.
+- [x] Reviewed package check composition.
+- [x] Preserved the complete kit and service inventory.
+- [x] Validated the new `.agent/kit-registry.json` structure before writing.
+- [ ] Execute runtime and filesystem fixtures later.
 
-## Confirmed
+## Confirmed by source review
 
 ```txt
-browser dynamic import occurs before game creation
-browser import/export failure prevents fallback selection
-headless editor constructs the game without external kits
-deterministic scene smoke constructs the game without external kits
-external provider version is 0.1.0
-fallback source-plan version is local-source-plan-v1
-external DSK loaded state is based on factory truthiness
-overall DSK validation is local-only
-game snapshot omits provider snapshot and source lineage
-no cross-source parity fixture exists in the declared check command
+createEnvironment resolves one configured repository root
+artifactRoot is admitted through safePath(root, configured artifact path)
+safePath accepts when resolved target starts with root string
+workspace.list accepts caller-controlled path and calls readdir
+workspace.read accepts caller-controlled path and calls readFile
+workspace.write accepts caller-controlled path and calls mkdir plus writeFile
+renderer.capture includes caller label in captureId and filenames
+renderer.capture writes JSON and SVG through safePath(artifactRoot, ...)
+CLI exposes direct, interactive and scenario command paths
+current headless smokes do not exercise workspace list/read/write
+current headless smokes use trusted capture labels
 ```
+
+## Source-derived but not executed
+
+```txt
+sibling-prefix target can satisfy startsWith(root) while outside root
+symlink below root can redirect a lexically admitted target
+capture label can influence path construction
+paired JSON/SVG capture can partially commit
+```
+
+These are reachability findings, not claims that an exploit or production incident occurred.
 
 ## Not executed
 
 ```txt
 npm install
 npm run check
+headless editor interactive session
+workspace in-root read/list/write
+absolute-path attempt
+parent-traversal attempt
+sibling-prefix escape attempt
+symlink escape attempt
+hostile capture-label attempt
+atomic-write failure fixture
 browser boot
-external CDN import
-fallback browser boot
-headless editor command loop
-external/fallback render-plan comparison
 WebGL render smoke
-built-output observation
+build output observation
 GitHub Pages smoke
 ```
 
@@ -62,6 +77,7 @@ runtime source changed: no
 gameplay changed: no
 provider behavior changed: no
 renderer changed: no
+headless workspace behavior changed: no
 package or dependency changed: no
 deployment changed: no
 branch created: no
@@ -70,4 +86,4 @@ pull request created: no
 
 ## Claim boundary
 
-This audit does not claim provider incompatibility, production failure or visual divergence. It records that parity is not currently admitted or proven.
+This audit does not claim an actual external file read/write, compromise, containment correctness, atomic-write safety or production readiness. It records that those properties are not currently admitted or proven.

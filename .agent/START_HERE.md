@@ -2,43 +2,45 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-13T05-40-11-04-00`  
-**Status:** `browser-editor-capability-admission-authority-central-reconciled`
+**Last aligned:** `2026-07-13T10-59-22-04-00`  
+**Status:** `render-surface-viewport-authority-central-reconciled`
 
 ## Summary
 
 IntoTheMeadow is a DSK-composed browser meadow with deterministic provider data, immutable game state, render-plan enhancement, persistent WebGL presentation, browser editor readback, and a NexusEngine-backed Node headless editor.
 
-The current audit isolates browser editor capability admission. `window.NexusEditorEnvironment` exposes direct `runtime.tick` and `runtime.reset` mutation while the RAF loop independently ticks the same state root. Mutations have no command identity, expected revision, scheduler lease, environment generation, or matching visible-frame acknowledgement. The immediately preceding web-host lifecycle audit remains active because host stop and fatal handling also leave the bridge globally installed and mutation-capable.
+The current audit isolates render-surface viewport authority. The renderer samples CSS size and global DPR during every render, treats zero-size measurements as a reason to fall back to global window dimensions, mutates the canvas backing store before the frame succeeds, and publishes no viewport-bearing renderer or visible-frame result. Browser viewport readback and canvas capture independently sample layout, backing, renderer and pixel state without one revision.
+
+The browser editor capability and web-host lifecycle audits remain direct dependencies because capture, pause, resume, failure and retirement must consume the same surface generation.
 
 ## Plan ledger
 
-**Goal:** make every editor observation or mutation a typed, generation-bound transaction and prove user-visible mutations with a matching frame.
+**Goal:** make every CSS-size or DPR transition a validated, budgeted, atomic viewport commit and prove the first matching visible frame.
 
 - [x] Compare all ten accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm all nine eligible repositories have central-ledger and root `.agent` coverage.
-- [x] Select only `LuminaryLabs-Publish/IntoTheMeadow` after detecting its repo-local host-lifecycle audit newer than central tracking.
-- [x] Preserve the `2026-07-13T05-31-58-04-00` web-host lifecycle audit as the immediate predecessor.
-- [x] Trace GameHost, editor capabilities, RAF mutation, capture, error observation, stop/start, and disposal.
+- [x] Confirm nine eligible central-ledger entries and nine root `.agent` states.
+- [x] Find no new, missing, undocumented, or locally-ahead eligible repository.
+- [x] Select only `LuminaryLabs-Publish/IntoTheMeadow` by the oldest documented timestamp.
+- [x] Trace page layout, DPR sampling, canvas backing mutation, WebGL viewport, camera projection, renderer snapshot, viewport readback and capture.
 - [x] Preserve all 44 kit surfaces and offered services.
-- [x] Add the `2026-07-13T05-40-11-04-00` tracker and audit family.
+- [x] Add the `2026-07-13T10-59-22-04-00` tracker and audit family.
 - [x] Refresh required root `.agent` documents and machine state.
 - [x] Push directly to `main`; create no branch or pull request.
-- [ ] Implement editor admission, lifecycle, and visible-frame fixtures later.
+- [ ] Implement viewport authority and executable source/build/Pages fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-13T05-40-11-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-13T05-40-11-04-00.md
-.agent/architecture-audit/2026-07-13T05-40-11-04-00-browser-editor-capability-admission-dsk-map.md
-.agent/render-audit/2026-07-13T05-40-11-04-00-editor-mutation-visible-frame-gap.md
-.agent/gameplay-audit/2026-07-13T05-40-11-04-00-direct-tick-reset-mutation-loop.md
-.agent/interaction-audit/2026-07-13T05-40-11-04-00-editor-command-admission-map.md
-.agent/editor-bridge-audit/2026-07-13T05-40-11-04-00-capability-generation-lifecycle-contract.md
-.agent/deploy-audit/2026-07-13T05-40-11-04-00-editor-capability-fixture-gate.md
-.agent/central-sync-audit/2026-07-13T05-40-11-04-00-repo-ledger-editor-capability-reconciliation.md
+.agent/trackers/2026-07-13T10-59-22-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-13T10-59-22-04-00.md
+.agent/architecture-audit/2026-07-13T10-59-22-04-00-render-surface-viewport-authority-dsk-map.md
+.agent/render-audit/2026-07-13T10-59-22-04-00-viewport-backing-store-visible-frame-gap.md
+.agent/gameplay-audit/2026-07-13T10-59-22-04-00-resize-render-capture-loop.md
+.agent/interaction-audit/2026-07-13T10-59-22-04-00-viewport-change-commit-result-map.md
+.agent/viewport-audit/2026-07-13T10-59-22-04-00-host-measurement-dpr-pixel-budget-contract.md
+.agent/deploy-audit/2026-07-13T10-59-22-04-00-viewport-fixture-gate.md
+.agent/central-sync-audit/2026-07-13T10-59-22-04-00-repo-ledger-viewport-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -46,37 +48,42 @@ The current audit isolates browser editor capability admission. `window.NexusEdi
 .agent/kit-registry.json
 ```
 
-The preceding host-lifecycle family remains required:
+## Retained predecessor audits
 
 ```txt
-.agent/trackers/2026-07-13T05-31-58-04-00/project-breakdown.md
-.agent/web-host-lifecycle-audit/2026-07-13T05-31-58-04-00-pause-resume-retire-resource-contract.md
+browser editor capability admission
+web-host lifecycle retirement
+headless workspace path containment
+provider-source parity
+WebGL context/resource recovery
+single-chain frame scheduling
+exploration progression
+DSK runtime consumption
+grass visibility and LOD
 ```
 
 ## Complete interaction loop
 
 ```txt
 browser boot
-  -> load pinned meadow provider
-  -> create game, renderer, and enhancer
-  -> expose raw GameHost
-  -> install browser editor bridge
-  -> start recursive RAF loop
+  -> create fixed full-screen canvas, game, enhancer, renderer, GameHost and editor bridge
+  -> start recursive RAF
 
 RAF
-  -> direct game.tick
+  -> tick game
   -> enhance and validate render plan
-  -> render and update lastPlan / lastRender
+  -> renderer samples CSS size and DPR
+  -> renderer mutates backing store
+  -> renderer sets WebGL viewport and camera aspect
+  -> renderer draws and publishes metadata
 
-editor
-  -> invoke observation or direct tick/reset mutation
-  -> return generic completed/failed wrapper
-  -> no scheduler lease or expected state revision
-  -> no matching visible-frame receipt
+editor/readback
+  -> independently sample browser dimensions and canvas backing size
+  -> independently read last renderer snapshot
+  -> capture current canvas pixels without a shared viewport/frame identity
 
-stop or fatal
-  -> pause RAF through one boolean
-  -> leave editor bridge and mutation capabilities active
+layout or DPR transition
+  -> no viewport command, budget, rollback or first-frame acknowledgement
 ```
 
 ## Domain and kit census
@@ -87,21 +94,21 @@ local declared DSK/kits: 43
 total kit surfaces: 44
 required-v0.1 local declarations: 15
 planned local declarations: 28
-planned browser editor authority including parent: 26
+planned viewport authority surfaces including parent: 27
 ```
 
-The complete kit-by-kit service map is in `.agent/current-audit.md`, the latest tracker, and `.agent/kit-registry.json`.
+The complete kit-by-kit service map is in the latest tracker and `.agent/kit-registry.json`.
 
 ## Required parent domain
 
 ```txt
-meadow-browser-editor-capability-admission-authority-domain
+meadow-render-surface-viewport-authority-domain
 ```
 
 ## Next safe ledge
 
-Classify editor capabilities as observation or mutation, remove raw public mutation as a supported path, bind commands to environment/state/scheduler revisions, acquire an exclusive scheduler lease for tick/reset, publish terminal results, retire the bridge with the host lifecycle, bound error storage, and prove the first matching frame before correlated capture.
+Add render-surface identity, actual host-box measurement, explicit zero-size handling, effective-DPR and pixel-budget policy, GPU-limit admission, detached backing/WebGL/camera candidates, atomic commit or rollback, viewport-bearing frame/readback/capture evidence, and `FirstViewportFrameAck`.
 
-## Retained priorities
+## Claim boundary
 
-Web-host lifecycle retirement, workspace containment, provider-source parity, WebGL recovery, single-chain scheduling, executable DSK consumption, playable exploration, grass visibility, audio lifecycle, save/migration, and replay remain active dependencies.
+This documentation pass does not claim viewport convergence, bounded allocation, rollback, readback parity, capture correctness, browser parity or production readiness.

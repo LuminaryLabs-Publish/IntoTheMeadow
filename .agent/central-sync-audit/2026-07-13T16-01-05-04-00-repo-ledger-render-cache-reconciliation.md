@@ -5,7 +5,7 @@
 
 ## Summary
 
-This repo-local pass supersedes the viewport audit as the current selection while retaining it as an unresolved dependency. Central tracking must record the render-plan and GPU-mesh cache-coherence finding, 44-kit inventory, timestamped audit family and final repo-local documentation head.
+This repo-local pass supersedes the viewport audit as the current selection while retaining it as an unresolved dependency. Central tracking records the render-plan and GPU-mesh cache-coherence finding, 44-kit inventory, timestamped audit family and final repo-local documentation head.
 
 ## Plan ledger
 
@@ -16,24 +16,24 @@ This repo-local pass supersedes the viewport audit as the current selection whil
 - [x] Add the timestamped repo-local cache-coherence audit family.
 - [x] Preserve the full kit and service inventory.
 - [x] Preserve the prior viewport and editor/lifecycle audits.
-- [ ] Record the final repo-local head in the central ledger.
-- [ ] Add the paired central internal change log.
+- [x] Record the final repo-local head in the central ledger.
+- [x] Add the paired central internal change log.
 
-## Central status target
+## Central status
 
 ```txt
 Status: render-plan-mesh-cache-coherence-authority-central-reconciled
 Technical status: render-plan-mesh-cache-coherence-authority-audited
 ```
 
-## Required central changes
+## Central changes
 
 ```txt
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 internal-change-log/2026-07-13T16-01-05-04-00-into-the-meadow-render-cache-coherence-authority.md
 ```
 
-## Findings to preserve centrally
+## Findings preserved centrally
 
 ```txt
 sourceTopologyKey omits consumed source descriptors
@@ -46,4 +46,4 @@ no cache decision, aggregate revision or first matching visible-frame acknowledg
 
 ## Boundary
 
-This file records the synchronization requirement. The central ledger and change log are updated separately after the repo-local root state is finalized.
+The synchronization is documentation-only. Runtime behavior, tests, dependencies, workflows and deployment remain unchanged.

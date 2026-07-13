@@ -2,43 +2,43 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-13T05-31-58-04-00`  
-**Status:** `web-host-lifecycle-retirement-authority-audited`
+**Last aligned:** `2026-07-13T05-40-11-04-00`  
+**Status:** `browser-editor-capability-admission-authority-central-reconciled`
 
 ## Summary
 
 IntoTheMeadow is a DSK-composed browser meadow with deterministic provider data, immutable game state, render-plan enhancement, persistent WebGL presentation, browser editor readback, and a NexusEngine-backed Node headless editor.
 
-The current audit isolates web-host lifecycle ownership. `startWebHost()` returns `stop()` and `start()`, but `stop()` only flips a boolean and fatal handling does the same. Neither path owns RAF cancellation, renderer disposal, editor-bridge disposal, listener detachment, global `GameHost` revocation, duplicate-start retirement, or a typed terminal result.
+The current audit isolates browser editor capability admission. `window.NexusEditorEnvironment` exposes direct `runtime.tick` and `runtime.reset` mutation while the RAF loop independently ticks the same state root. Mutations have no command identity, expected revision, scheduler lease, environment generation, or matching visible-frame acknowledgement. The immediately preceding web-host lifecycle audit remains active because host stop and fatal handling also leave the bridge globally installed and mutation-capable.
 
 ## Plan ledger
 
-**Goal:** separate non-destructive pause/resume from terminal host retirement and make RAF, WebGL, editor listeners, global capabilities, and fatal cleanup one generation-bound transaction.
+**Goal:** make every editor observation or mutation a typed, generation-bound transaction and prove user-visible mutations with a matching frame.
 
-- [x] Compare all ten accessible `LuminaryLabs-Publish` repositories.
-- [x] Exclude `LuminaryLabs-Publish/TheCavalryOfRome`.
-- [x] Confirm nine eligible central ledgers and nine root `.agent` folders.
-- [x] Confirm no new, missing, undocumented, or unsynchronized repository took priority.
-- [x] Select only `LuminaryLabs-Publish/IntoTheMeadow` as the oldest eligible central entry.
-- [x] Identify the browser, render, editor, headless, and deployment loops.
-- [x] Identify all domains, 44 kit surfaces, and offered services.
-- [x] Trace RAF, fatal, renderer, editor-bridge, and global-capability ownership.
-- [x] Add the timestamped tracker and audit family.
+- [x] Compare all ten accessible Publish repositories.
+- [x] Exclude `TheCavalryOfRome`.
+- [x] Confirm all nine eligible repositories have central-ledger and root `.agent` coverage.
+- [x] Select only `LuminaryLabs-Publish/IntoTheMeadow` after detecting its repo-local host-lifecycle audit newer than central tracking.
+- [x] Preserve the `2026-07-13T05-31-58-04-00` web-host lifecycle audit as the immediate predecessor.
+- [x] Trace GameHost, editor capabilities, RAF mutation, capture, error observation, stop/start, and disposal.
+- [x] Preserve all 44 kit surfaces and offered services.
+- [x] Add the `2026-07-13T05-40-11-04-00` tracker and audit family.
 - [x] Refresh required root `.agent` documents and machine state.
 - [x] Push directly to `main`; create no branch or pull request.
-- [ ] Implement lifecycle authority and executable fixtures later.
+- [ ] Implement editor admission, lifecycle, and visible-frame fixtures later.
 
-## Read this first
+## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-13T05-31-58-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-13T05-31-58-04-00.md
-.agent/architecture-audit/2026-07-13T05-31-58-04-00-web-host-lifecycle-retirement-dsk-map.md
-.agent/render-audit/2026-07-13T05-31-58-04-00-stopped-host-live-webgl-visible-state-gap.md
-.agent/gameplay-audit/2026-07-13T05-31-58-04-00-stop-start-fatal-host-loop.md
-.agent/interaction-audit/2026-07-13T05-31-58-04-00-host-lifecycle-command-admission-map.md
-.agent/web-host-lifecycle-audit/2026-07-13T05-31-58-04-00-pause-resume-retire-resource-contract.md
-.agent/deploy-audit/2026-07-13T05-31-58-04-00-web-host-lifecycle-fixture-gate.md
+.agent/trackers/2026-07-13T05-40-11-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-13T05-40-11-04-00.md
+.agent/architecture-audit/2026-07-13T05-40-11-04-00-browser-editor-capability-admission-dsk-map.md
+.agent/render-audit/2026-07-13T05-40-11-04-00-editor-mutation-visible-frame-gap.md
+.agent/gameplay-audit/2026-07-13T05-40-11-04-00-direct-tick-reset-mutation-loop.md
+.agent/interaction-audit/2026-07-13T05-40-11-04-00-editor-command-admission-map.md
+.agent/editor-bridge-audit/2026-07-13T05-40-11-04-00-capability-generation-lifecycle-contract.md
+.agent/deploy-audit/2026-07-13T05-40-11-04-00-editor-capability-fixture-gate.md
+.agent/central-sync-audit/2026-07-13T05-40-11-04-00-repo-ledger-editor-capability-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -46,74 +46,62 @@ The current audit isolates web-host lifecycle ownership. `startWebHost()` return
 .agent/kit-registry.json
 ```
 
-The workspace-containment, provider-source, WebGL recovery, frame-scheduler, exploration/progression, DSK-consumption, and grass-visibility audits remain active bounded dependencies.
+The preceding host-lifecycle family remains required:
+
+```txt
+.agent/trackers/2026-07-13T05-31-58-04-00/project-breakdown.md
+.agent/web-host-lifecycle-audit/2026-07-13T05-31-58-04-00-pause-resume-retire-resource-contract.md
+```
 
 ## Complete interaction loop
 
 ```txt
-index.html
-  -> boot-game.js
-  -> startWebHost()
+browser boot
   -> load pinned meadow provider
-  -> create game, renderer, plan enhancer, GameHost, and editor bridge
-  -> requestAnimationFrame(frame)
+  -> create game, renderer, and enhancer
+  -> expose raw GameHost
+  -> install browser editor bridge
+  -> start recursive RAF loop
 
-frame
-  -> game.tick({ time, dt: 1/60 })
-  -> build and validate render plan
-  -> renderer.render(plan)
-  -> project debug state
-  -> request next frame
+RAF
+  -> direct game.tick
+  -> enhance and validate render plan
+  -> render and update lastPlan / lastRender
 
-stop
-  -> set stopped = true
-  -> queued frame returns when it runs
-  -> resources, listeners, and globals remain installed
+editor
+  -> invoke observation or direct tick/reset mutation
+  -> return generic completed/failed wrapper
+  -> no scheduler lease or expected state revision
+  -> no matching visible-frame receipt
 
-start
-  -> set stopped = false
-  -> schedule another frame
-
-fatal
-  -> set stopped = true
-  -> show error
-  -> resources, listeners, and globals remain installed
+stop or fatal
+  -> pause RAF through one boolean
+  -> leave editor bridge and mutation capabilities active
 ```
 
-## Main gap
-
-```txt
-host session identity and generation: absent
-explicit lifecycle phase: absent
-RAF handle and cancellation receipt: absent
-pause versus terminal-retire contract: absent
-renderer disposal composition: absent
-editor-bridge disposal composition: absent
-global GameHost capability lease/revocation: absent
-duplicate host-start admission: absent
-fatal cleanup transaction: absent
-typed lifecycle result and journal: absent
-first stopped/retired visible-state acknowledgement: absent
-lifecycle fixtures: absent
-```
-
-## Kit census
+## Domain and kit census
 
 ```txt
 external provider kits: 1
 local declared DSK/kits: 43
-total source-backed kit surfaces: 44
+total kit surfaces: 44
 required-v0.1 local declarations: 15
 planned local declarations: 28
-implemented host-lifecycle authority kits: 0
+planned browser editor authority including parent: 26
 ```
+
+The complete kit-by-kit service map is in `.agent/current-audit.md`, the latest tracker, and `.agent/kit-registry.json`.
 
 ## Required parent domain
 
 ```txt
-meadow-web-host-lifecycle-retirement-authority-domain
+meadow-browser-editor-capability-admission-authority-domain
 ```
 
-## Validation boundary
+## Next safe ledge
 
-Documentation only. Runtime, gameplay, provider, renderer, editor, package, dependency, and deployment behavior are unchanged. No browser lifecycle, duplicate-start, fatal-cleanup, GPU-retirement, listener-detachment, or Pages fixture was executed.
+Classify editor capabilities as observation or mutation, remove raw public mutation as a supported path, bind commands to environment/state/scheduler revisions, acquire an exclusive scheduler lease for tick/reset, publish terminal results, retire the bridge with the host lifecycle, bound error storage, and prove the first matching frame before correlated capture.
+
+## Retained priorities
+
+Web-host lifecycle retirement, workspace containment, provider-source parity, WebGL recovery, single-chain scheduling, executable DSK consumption, playable exploration, grass visibility, audio lifecycle, save/migration, and replay remain active dependencies.

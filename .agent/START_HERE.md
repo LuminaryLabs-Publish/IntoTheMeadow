@@ -2,44 +2,43 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-13T02-39-44-04-00`  
-**Status:** `headless-workspace-path-containment-central-reconciled`
+**Last aligned:** `2026-07-13T05-31-58-04-00`  
+**Status:** `web-host-lifecycle-retirement-authority-audited`
 
 ## Summary
 
-IntoTheMeadow is a DSK-composed browser meadow with deterministic provider data, WebGL presentation, browser editor readback and a Node headless editor.
+IntoTheMeadow is a DSK-composed browser meadow with deterministic provider data, immutable game state, render-plan enhancement, persistent WebGL presentation, browser editor readback, and a NexusEngine-backed Node headless editor.
 
-The current audit isolates workspace containment. The Node adapter admits workspace and capture paths with `target.startsWith(root)`, which is a lexical string-prefix check rather than path-segment or canonical filesystem containment. This reconciliation aligns the repo-local audit family, machine registry and central ledger around the missing canonical-root, symlink, atomic-write and typed-result authority.
+The current audit isolates web-host lifecycle ownership. `startWebHost()` returns `stop()` and `start()`, but `stop()` only flips a boolean and fatal handling does the same. Neither path owns RAF cancellation, renderer disposal, editor-bridge disposal, listener detachment, global `GameHost` revocation, duplicate-start retirement, or a typed terminal result.
 
 ## Plan ledger
 
-**Goal:** keep every agent filesystem operation and capture artifact inside one canonical, revisioned workspace boundary and keep all documentation surfaces synchronized.
+**Goal:** separate non-destructive pause/resume from terminal host retirement and make RAF, WebGL, editor listeners, global capabilities, and fatal cleanup one generation-bound transaction.
 
-- [x] Compare all ten accessible Publish repositories.
-- [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm all nine eligible repositories have central-ledger and root `.agent` coverage.
-- [x] Detect IntoTheMeadow repo-local audit state newer than central tracking.
-- [x] Select and modify only `LuminaryLabs-Publish/IntoTheMeadow`.
-- [x] Identify complete browser, render, headless, workspace and capture loops.
-- [x] Preserve all 44 kit surfaces and offered services.
-- [x] Define canonical-root, path, symlink, capability and atomic-write contracts.
-- [x] Publish a new timestamped reconciliation family.
-- [x] Align root routing and machine-readable state.
-- [x] Prepare central ledger and internal change-log synchronization.
+- [x] Compare all ten accessible `LuminaryLabs-Publish` repositories.
+- [x] Exclude `LuminaryLabs-Publish/TheCavalryOfRome`.
+- [x] Confirm nine eligible central ledgers and nine root `.agent` folders.
+- [x] Confirm no new, missing, undocumented, or unsynchronized repository took priority.
+- [x] Select only `LuminaryLabs-Publish/IntoTheMeadow` as the oldest eligible central entry.
+- [x] Identify the browser, render, editor, headless, and deployment loops.
+- [x] Identify all domains, 44 kit surfaces, and offered services.
+- [x] Trace RAF, fatal, renderer, editor-bridge, and global-capability ownership.
+- [x] Add the timestamped tracker and audit family.
+- [x] Refresh required root `.agent` documents and machine state.
 - [x] Push directly to `main`; create no branch or pull request.
-- [ ] Implement and execute adversarial containment fixtures later.
+- [ ] Implement lifecycle authority and executable fixtures later.
 
 ## Read this first
 
 ```txt
-.agent/trackers/2026-07-13T02-39-44-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-13T02-39-44-04-00.md
-.agent/architecture-audit/2026-07-13T02-39-44-04-00-workspace-containment-central-reconciliation-dsk-map.md
-.agent/render-audit/2026-07-13T02-39-44-04-00-workspace-artifact-evidence-central-reconciliation-gap.md
-.agent/interaction-audit/2026-07-13T02-39-44-04-00-workspace-command-admission-central-reconciliation-map.md
-.agent/editor-workspace-audit/2026-07-13T02-39-44-04-00-canonical-root-operation-result-central-reconciliation-contract.md
-.agent/deploy-audit/2026-07-13T02-39-44-04-00-workspace-containment-central-fixture-gate.md
-.agent/central-sync-audit/2026-07-13T02-39-44-04-00-repo-ledger-workspace-containment-reconciliation.md
+.agent/trackers/2026-07-13T05-31-58-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-13T05-31-58-04-00.md
+.agent/architecture-audit/2026-07-13T05-31-58-04-00-web-host-lifecycle-retirement-dsk-map.md
+.agent/render-audit/2026-07-13T05-31-58-04-00-stopped-host-live-webgl-visible-state-gap.md
+.agent/gameplay-audit/2026-07-13T05-31-58-04-00-stop-start-fatal-host-loop.md
+.agent/interaction-audit/2026-07-13T05-31-58-04-00-host-lifecycle-command-admission-map.md
+.agent/web-host-lifecycle-audit/2026-07-13T05-31-58-04-00-pause-resume-retire-resource-contract.md
+.agent/deploy-audit/2026-07-13T05-31-58-04-00-web-host-lifecycle-fixture-gate.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -47,49 +46,55 @@ The current audit isolates workspace containment. The Node adapter admits worksp
 .agent/kit-registry.json
 ```
 
-The earlier `2026-07-13T02-28-51-04-00` workspace audit remains the source-analysis predecessor. Provider-source parity, WebGL recovery, frame scheduling, exploration/progression, DSK runtime consumption and grass visibility remain active bounded dependencies.
+The workspace-containment, provider-source, WebGL recovery, frame-scheduler, exploration/progression, DSK-consumption, and grass-visibility audits remain active bounded dependencies.
 
 ## Complete interaction loop
 
 ```txt
-browser / Pages
-  -> load external meadow provider
-  -> create immutable game state and render plan
-  -> enhance, mesh and render WebGL frames
-  -> expose GameHost and browser editor observations
+index.html
+  -> boot-game.js
+  -> startWebHost()
+  -> load pinned meadow provider
+  -> create game, renderer, plan enhancer, GameHost, and editor bridge
+  -> requestAnimationFrame(frame)
 
-Node editor
-  -> createEnvironment({ root, artifactRoot })
-  -> resolve repository and artifact roots
-  -> register runtime, scene, renderer, camera, browser and workspace capabilities
-  -> terminal, scenario or loop invokes a capability
+frame
+  -> game.tick({ time, dt: 1/60 })
+  -> build and validate render plan
+  -> renderer.render(plan)
+  -> project debug state
+  -> request next frame
 
-workspace operation
-  -> caller supplies path
-  -> safePath resolves candidate
-  -> startsWith(root) decides admission
-  -> list, read, create directory or write host filesystem
+stop
+  -> set stopped = true
+  -> queued frame returns when it runs
+  -> resources, listeners, and globals remain installed
 
-capture operation
-  -> caller supplies label
-  -> label enters JSON/SVG filenames
-  -> safePath admits artifact targets
-  -> JSON and SVG are written sequentially and reported
+start
+  -> set stopped = false
+  -> schedule another frame
+
+fatal
+  -> set stopped = true
+  -> show error
+  -> resources, listeners, and globals remain installed
 ```
 
 ## Main gap
 
 ```txt
-canonical root identity: absent
-path-segment containment: absent
-existing-target realpath check: absent
-new-target canonical-parent check: absent
-symlink and junction policy: absent
-capture-label normalization: absent
-atomic write and paired artifact result: absent
-typed workspace operation result: absent
-stale-root rejection: absent
-adversarial containment fixtures: absent
+host session identity and generation: absent
+explicit lifecycle phase: absent
+RAF handle and cancellation receipt: absent
+pause versus terminal-retire contract: absent
+renderer disposal composition: absent
+editor-bridge disposal composition: absent
+global GameHost capability lease/revocation: absent
+duplicate host-start admission: absent
+fatal cleanup transaction: absent
+typed lifecycle result and journal: absent
+first stopped/retired visible-state acknowledgement: absent
+lifecycle fixtures: absent
 ```
 
 ## Kit census
@@ -97,20 +102,18 @@ adversarial containment fixtures: absent
 ```txt
 external provider kits: 1
 local declared DSK/kits: 43
-total declared kit surfaces: 44
+total source-backed kit surfaces: 44
 required-v0.1 local declarations: 15
 planned local declarations: 28
-implemented workspace-containment authorities: 0
+implemented host-lifecycle authority kits: 0
 ```
-
-The exact kit names and offered services are in the current tracker and `.agent/kit-registry.json`.
 
 ## Required parent domain
 
 ```txt
-meadow-headless-workspace-path-containment-authority-domain
+meadow-web-host-lifecycle-retirement-authority-domain
 ```
 
 ## Validation boundary
 
-Documentation only. Runtime, gameplay, provider, renderer, workspace, package, dependency and deployment behavior are unchanged. No hostile path, symlink, browser, build or Pages fixture was executed.
+Documentation only. Runtime, gameplay, provider, renderer, editor, package, dependency, and deployment behavior are unchanged. No browser lifecycle, duplicate-start, fatal-cleanup, GPU-retirement, listener-detachment, or Pages fixture was executed.

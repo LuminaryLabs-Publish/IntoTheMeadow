@@ -1,94 +1,66 @@
-# IntoTheMeadow Next Steps
+# Next steps
 
-**Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-13T02-39-44-04-00`  
-**Status:** `headless-workspace-path-containment-central-reconciled`
+**Updated:** `2026-07-13T05-31-58-04-00`
 
 ## Summary
 
-Harden the Node headless workspace boundary before expanding remote editor transports or relying on generated capture evidence. Repo-local and central documentation now agree on the authority boundary; runtime implementation and executable proof remain open.
+Implement one web-host lifecycle coordinator before adding more browser control surfaces. The first implementation should separate pause/resume from terminal retirement, retain the RAF handle, compose existing renderer and editor-bridge disposal, and revoke public globals by generation.
 
 ## Plan ledger
 
-**Goal:** establish one canonical, cross-platform workspace-operation transaction with zero-mutation rejection and executable containment proof.
+**Goal:** convert the documented lifecycle gap into a small, testable authority without changing gameplay or meadow composition.
 
-### Root identity and policy
+- [ ] Add `HostSessionId`, `HostGeneration`, `HostLifecyclePhase`, and `HostLifecycleRevision`.
+- [ ] Replace the free `stopped` boolean with a lifecycle state machine.
+- [ ] Retain the active RAF ID and cancel it during pause and retirement.
+- [ ] Return typed `StartHostResult`, `PauseHostResult`, `ResumeHostResult`, and `RetireHostResult` values.
+- [ ] Register renderer, editor bridge, public globals, and future participants in ordered lifecycle ownership.
+- [ ] Compose `editorBridge.dispose()` into terminal retirement.
+- [ ] Compose `renderer.dispose()` into terminal retirement.
+- [ ] Add conditional revocation for `globalThis.NexusEditorEnvironment` and `globalThis.GameHost`.
+- [ ] Reject duplicate starts or explicitly retire the predecessor generation.
+- [ ] Route fatal frame errors through the lifecycle coordinator.
+- [ ] Preserve bounded diagnostics after failure without retaining mutating capabilities.
+- [ ] Add first-resumed-frame and first-retired-state acknowledgements.
+- [ ] Add deterministic tests for stop, resume, retire, fatal, duplicate boot, and stale callbacks.
+- [ ] Add browser instrumentation for RAF count, global listener count, and WebGL disposal receipts.
+- [ ] Run the complete existing test suite before and after implementation.
+- [ ] Run a deployed GitHub Pages lifecycle smoke.
 
-- [ ] Add `WorkspaceRootId`, root generation and capability-policy revision.
-- [ ] Canonicalize repository and artifact roots at environment startup.
-- [ ] Fail startup if either root cannot be canonically admitted.
-- [ ] Separate observation-only, in-root write and explicit external capabilities.
-- [ ] Align `.editor/environment.json` policy with actual mutation capability.
+## Recommended implementation order
 
-### Path admission
+1. Introduce lifecycle identities, phases, typed commands, and results in a small host-lifecycle module.
+2. Retain `requestAnimationFrame()` IDs and route scheduling through one owner.
+3. Add a `revokeGameHost()` or generation-bound public capability lease.
+4. Register existing `renderer.dispose()` and `editorBridge.dispose()` as terminal participants.
+5. Make `stop()` an explicit pause alias only if compatibility requires it; add a separate terminal `dispose()` or `retire()` method.
+6. Route `showFatal()` through a typed failure transition and cleanup policy.
+7. Add fixtures before exposing additional editor mutation capabilities.
 
-- [ ] Require public workspace paths to be relative.
-- [ ] Replace string-prefix checks with path-segment containment using `path.relative`.
-- [ ] Reject absolute, parent-escaping, malformed and platform-ambiguous paths.
-- [ ] Canonicalize existing targets before execution.
-- [ ] Canonicalize the nearest existing parent for new targets.
-- [ ] Re-check containment after canonicalization.
-- [ ] Add explicit symlink, junction and reparse-point policies.
-
-### Capture artifacts
-
-- [ ] Treat capture labels as metadata, not path components.
-- [ ] Normalize and bound labels.
-- [ ] Allocate opaque capture IDs.
-- [ ] Derive filenames only from admitted IDs.
-- [ ] Bind artifacts to provider, render-plan, topology, mesh and metrics fingerprints.
-- [ ] Return hashes, byte counts and root generation.
-- [ ] Add a typed paired JSON/SVG commit result.
-
-### Writes and concurrency
-
-- [ ] Add `WorkspaceOperationCommand` and `WorkspaceOperationResult`.
-- [ ] Stage writes inside the admitted destination parent.
-- [ ] Replace destinations atomically where supported.
-- [ ] Clean temporary files on failure.
-- [ ] Reject stale root or policy generations with zero mutation.
-- [ ] Define conflict and expected-file-revision policy.
-- [ ] Bound and redact operation observations.
-
-### Proof
-
-- [ ] In-root list/read/write fixture.
-- [ ] Absolute-path rejection fixture.
-- [ ] Parent-traversal rejection fixture.
-- [ ] Sibling-prefix collision fixture.
-- [ ] External symlink rejection fixture.
-- [ ] In-root symlink policy fixture.
-- [ ] New-target symlinked-parent fixture.
-- [ ] Stale-root generation fixture.
-- [ ] Capture-label traversal fixture.
-- [ ] Partial paired-artifact write fixture.
-- [ ] Windows drive/junction and POSIX symlink matrix.
-- [ ] Verify built browser output exposes no Node workspace mutation capabilities.
-
-## Required result
+## Required proof matrix
 
 ```txt
-WorkspaceOperationResult {
-  commandId
-  editorSessionId
-  environmentId
-  status
-  reason
-  capability
-  workspaceRootId
-  rootGeneration
-  policyRevision
-  normalizedRelativePath
-  targetKind
-  symlinkDisposition
-  bytesRead?
-  bytesWritten?
-  contentHash?
-  artifactId?
-  observationId
-}
+start once                       -> one RAF chain, one bridge, one GameHost
+start twice                      -> rejected or predecessor retired exactly once
+pause                            -> zero admitted frames, resources retained
+resume                           -> one RAF chain, first resumed frame acknowledged
+retire                           -> RAF cancelled, listeners detached, globals revoked, WebGL disposed
+retire twice                     -> idempotent terminal result, no duplicate disposal
+fatal before first frame         -> bounded failure, no stale capabilities
+fatal after rendered frame       -> same terminal ownership rules
+stale predecessor callback       -> zero successor mutation
+debug bridge after retirement    -> unavailable or typed retired result
+page navigation / hot reload     -> no orphan listener or renderer generation
 ```
 
-## Preserved dependencies
+## Non-goals for the first patch
 
-After workspace containment, retain separate work for provider-source admission/parity, DSK runtime consumption, frame lifecycle, WebGL recovery, playable exploration/progression, persistence and visible-frame provenance. Filesystem policy must not move into meadow gameplay or rendering domains.
+```txt
+first-person movement
+story or objective implementation
+new meadow assets
+renderer visual changes
+workspace-containment implementation
+provider migration
+post-processing expansion
+```

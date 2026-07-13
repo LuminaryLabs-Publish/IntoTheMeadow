@@ -1,209 +1,198 @@
-# IntoTheMeadow Current Audit
+# Current audit: web-host lifecycle retirement authority
 
+**Updated:** `2026-07-13T05-31-58-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Audit timestamp:** `2026-07-13T02-39-44-04-00`  
-**Status:** `headless-workspace-path-containment-central-reconciled`
+**Status:** `web-host-lifecycle-retirement-authority-audited`
 
 ## Summary
 
-The Node headless environment exposes `workspace.list`, `workspace.read` and `workspace.write`, plus renderer capture that writes JSON and SVG artifacts. These paths use `safePath()`, which resolves the candidate and accepts it when the resulting string starts with the root string.
-
-That test does not prove path-segment containment. A sibling with the same root prefix can pass, filesystem links remain unresolved during admission, and capture labels participate in artifact filenames. No canonical-root generation, symlink policy, typed operation result, atomic write or adversarial fixture closes the boundary.
+The browser host owns frame scheduling and constructs the game, renderer, plan enhancer, public `GameHost`, and browser editor bridge. Its public lifecycle surface does not own terminal cleanup. `stop()` and fatal handling mark the loop stopped without disposing participants or revoking public capabilities.
 
 ## Plan ledger
 
-**Goal:** define and centrally reconcile one canonical workspace transaction from editor command through path admission, filesystem effect and evidence publication.
+**Goal:** make host creation, running, pause, resume, failure, stopping, and terminal retirement explicit phases with exactly-once participant cleanup.
 
-- [x] Compare the full current Publish inventory and central ledger.
-- [x] Confirm all nine non-Cavalry repositories have ledger and root `.agent` coverage.
-- [x] Detect IntoTheMeadow repo-local documentation newer than central tracking.
-- [x] Select and modify only IntoTheMeadow.
-- [x] Inspect Node environment root and artifact-root setup.
-- [x] Inspect workspace list/read/write capabilities.
-- [x] Inspect renderer capture label and artifact path construction.
-- [x] Inspect terminal, scenario and loop reachability.
-- [x] Inspect current headless smoke coverage.
-- [x] Preserve the complete 44-kit service inventory.
-- [x] Define canonical-root, symlink, atomic-write and fixture boundaries.
-- [x] Publish a new reconciliation family and machine routing.
-- [x] Prepare central ledger and change-log synchronization.
-- [ ] Implement and execute the authority later.
+- [x] Trace the page boot path.
+- [x] Trace frame scheduling and rescheduling.
+- [x] Trace `stop()`, `start()`, and fatal behavior.
+- [x] Verify renderer and bridge disposal surfaces exist.
+- [x] Verify the host does not invoke those surfaces.
+- [x] Verify `GameHost` has no revoke or generation boundary.
+- [x] Verify current static proof does not execute lifecycle behavior.
+- [x] Define the required DSK and transaction.
+- [ ] Implement and validate the authority later.
 
-## Selection
+## Source-backed interaction loop
 
 ```txt
-accessible Publish repositories: 10
-eligible non-Cavalry repositories: 9
-new eligible repositories: 0
-central-ledger-missing eligible repositories: 0
-root-.agent-missing eligible repositories: 0
-repo-local audit newer than central ledger: 1
+src/boot/boot-game.js
+  -> startWebHost(...)
+  -> catch boot rejection and project a static failure
 
-IntoTheMeadow      central 2026-07-13T00-18-48-04-00
-                   local   2026-07-13T02-28-51-04-00 selected
-PhantomCommand     central 2026-07-13T00-40-00-04-00
-PrehistoricRush    central 2026-07-13T00-58-50-04-00
-HorrorCorridor     central 2026-07-13T01-08-28-04-00
-ZombieOrchard      central 2026-07-13T01-18-20-04-00
-MyCozyIsland       central 2026-07-13T01-40-00-04-00
-TheUnmappedHouse   central 2026-07-13T01-49-49-04-00
-AetherVale         central 2026-07-13T02-15-51-04-00
-TheOpenAbove       central 2026-07-13T02-18-03-04-00
-TheCavalryOfRome   excluded
+src/hosts/web-host.js
+  -> loadExternalKits()
+  -> createIntoTheMeadowGame()
+  -> createMeadowWebglRendererV2()
+  -> createRenderPlanEnhancer()
+  -> exposeGameHost()
+  -> installIntoTheMeadowEditorBridge()
+  -> requestAnimationFrame(frame)
+
+frame(now)
+  -> return when stopped
+  -> game.tick({ time: now / 1000, dt: 1/60 })
+  -> get and enhance render plan
+  -> validate render contract
+  -> renderer.render(plan)
+  -> schedule successor RAF
+
+stop()
+  -> stopped = true
+
+start()
+  -> if stopped, set false and schedule RAF
+
+showFatal(error)
+  -> stopped = true
+  -> project error
 ```
 
-Only `LuminaryLabs-Publish/IntoTheMeadow` is modified in the Publish organization.
+## Source findings
 
-## Complete interaction loop
+### The host exposes pause-like methods without declaring their semantics
+
+`src/hosts/web-host.js` returns `stop()` and `start()`. `stop()` only sets `stopped = true`; it does not identify or cancel the pending RAF. The queued callback can still execute once and return at the guard.
+
+### Terminal resources already expose disposal surfaces
+
+`src/renderers/meadow-webgl-renderer-v2.js` exposes `dispose()`, which deletes attribute buffers and the WebGL program. `src/editor/install-editor-bridge.js` exposes `dispose()`, which detaches `error` and `unhandledrejection` listeners and deletes `NexusEditorEnvironment` when it still owns the global.
+
+The host never calls either method.
+
+### Fatal handling is not terminal cleanup
+
+`showFatal()` stops future frame work and updates the HUD, but leaves the renderer, editor listeners, global bridge, and `GameHost` installed. Editor calls can therefore continue to reach a stopped or failed host generation.
+
+### Public `GameHost` has no revoke path
+
+`src/boot/expose-game-host.js` assigns an immutable object to `globalThis.GameHost` and returns it. There is no lease, generation, ownership test, dispose method, or conditional delete.
+
+### Repeated boot can orphan predecessor participants
+
+A second `startWebHost()` call creates a new renderer and editor bridge, overwrites public globals, and installs new global error listeners. The predecessor host retains its resources and callbacks unless external code retained and manually disposed it. No duplicate-start admission or predecessor retirement result exists.
+
+### Existing proof is structural
+
+`tests/static-smoke.mjs` checks required files and source markers for renderer and editor-bridge construction. The package test chain does not list a web-host stop/start/fatal lifecycle fixture.
+
+## Reachable failure paths
 
 ```txt
-browser / Pages
-  -> load commit-pinned external provider
-  -> create game and immutable state
-  -> generate and enhance meadow render plan
-  -> build CPU mesh data
-  -> render WebGL frames
-  -> expose GameHost and browser editor observations
+explicit stop
+  -> host marked stopped
+  -> WebGL buffers/program remain allocated
+  -> editor listeners remain attached
+  -> GameHost and NexusEditorEnvironment remain callable
 
-Node CLI / interactive stdio / scenario
-  -> createEnvironment({ root, artifactRoot })
-  -> root = resolve(configured root)
-  -> artifactRoot = safePath(root, configured artifact path)
-  -> create NexusEngine headless environment
-  -> register runtime, scene, renderer, camera, browser and workspace capabilities
-  -> terminal or loop invokes action
+fatal render error
+  -> host marked stopped and error shown
+  -> same resources and capabilities remain installed
 
-workspace list/read/write
-  -> receive caller-controlled path
-  -> resolve(root, path)
-  -> accept when target.startsWith(root)
-  -> call readdir, readFile or mkdir + writeFile
+duplicate boot or hot reload
+  -> successor globals overwrite predecessor globals
+  -> predecessor listeners and renderer can remain live
+  -> no generation identifies which host owns later observations
 
-renderer capture
-  -> receive caller-controlled label
-  -> captureId = label + topologyKey
-  -> resolve JSON and SVG paths through safePath(artifactRoot, ...)
-  -> write JSON then SVG
-  -> publish relative artifact paths
+stop then start
+  -> same participants are reused
+  -> no typed pause/resume result proves they remained valid
+  -> no discontinuity or first-resumed-frame acknowledgement exists
 ```
 
-The browser route remains separate. It renders the actual canvas and does not expose the Node workspace provider through `window.NexusEditorEnvironment`.
+These are source-derived lifecycle gaps, not measured production leaks or failures.
 
 ## Domains in use
 
 ```txt
-browser shell, provider loading and fatal projection
-immutable game state, reset, snapshots and diagnostics
-DSK declaration, registry and validation
-meadow area, path, scatter, tree, grass, wind and atmosphere generation
-render-plan composition and contract normalization
-CPU mesh construction and WebGL presentation
-browser GameHost and editor observation
-Node headless runtime and terminal transport
-scenario and loop execution
-workspace-root and artifact-root configuration
-filesystem list, read, directory creation and write
-capture naming, JSON packet and SVG persistence
-static, deterministic and headless smoke tests
-build and GitHub Pages deployment
-repo-local and central audit tracking
+browser document shell and boot failure projection
+external provider loading and module admission
+immutable game state, reset, snapshots, and diagnostics
+DSK registry, validation, and composition
+meadow generation: area, terrain, path, grass, trees, scatter, wind, atmosphere
+render-plan enhancement and validation
+CPU mesh generation and WebGL presentation
+RAF scheduling and fixed-delta game ticking
+public GameHost capability projection
+browser editor capabilities, capture, and error observation
+Node headless runtime, terminal, scenarios, loops, workspace, and artifacts
+static checks, build, GitHub Pages, and internal audit tracking
 ```
 
-Declared but inert:
+## Missing authority
 
 ```txt
-input, player, interaction, objective, story, ecology, audio, UI, save, adaptive performance
+host session ID and generation
+lifecycle phase and revision
+Created/Starting/Running/Paused/Stopping/Stopped/Failed/Retired states
+RAF request identity and cancel receipt
+pause/resume versus retire policy
+participant registry and dependency order
+renderer disposal receipt
+editor-bridge listener-detachment receipt
+global capability lease and revocation
+fatal cleanup policy
+duplicate-start and stale-generation rejection
+typed HostLifecycleResult
+bounded lifecycle observation and journal
+first resumed, stopped, failed, and retired visible acknowledgements
+browser and headless lifecycle fixtures
 ```
 
-Missing:
+## Required parent domain
 
 ```txt
-workspace root ID and generation
-canonical repository and artifact roots
-relative-path-only request contract
-path-segment containment admission
-existing-target realpath verification
-new-target canonical-parent verification
-symlink and junction disposition
-capability policy revision
-capture-label normalization
-opaque artifact identity
-atomic write and paired-artifact result
-typed WorkspaceOperationResult
-stale-root and stale-policy rejection
-bounded redacted observation and journal
-cross-platform adversarial fixtures
-```
-
-## Source-backed findings
-
-### String-prefix admission can accept an external sibling
-
-For root `/work/IntoTheMeadow`, sibling `/work/IntoTheMeadow-output/file` still starts with the root string. A request such as `../IntoTheMeadow-output/file` can therefore pass the current condition while `path.relative(root, target)` shows it is outside the root.
-
-### Symlinks are outside the current decision
-
-`resolve()` is lexical and does not dereference links. After admission, `readdir`, `readFile`, `mkdir` and `writeFile` follow filesystem paths. A link below the root can redirect an operation unless the target or nearest existing parent is canonicalized and checked under an explicit policy.
-
-### Mutation is reachable from editor transports
-
-The environment registers list, read and write capabilities. Direct commands, interactive stdio, scenarios and loop actions can invoke them. The write surface is intentional even though the environment metadata describes a permissive observation mode.
-
-### Capture placement shares the same boundary
-
-`renderer.capture` inserts the caller label into `captureId` and uses that value in JSON and SVG filenames. Labels must be normalized as metadata and mapped to opaque artifact IDs instead of being trusted as path components.
-
-### Capture completion is not atomic
-
-JSON is written before SVG. If the second write fails, one member can remain committed without a typed group result identifying committed, rolled-back or orphaned artifacts.
-
-### Existing proof covers normal flow only
-
-Environment, command and loop smokes use safe labels and do not exercise workspace list/read/write adversarially. No declared check attempts sibling-prefix escape, absolute paths, traversal, links, stale roots or partial paired capture writes.
-
-## Kit and service census
-
-```txt
-external provider kits: 1
-local declared kits: 43
-total kit surfaces: 44
-required-v0.1 declarations: 15
-planned declarations: 28
-planned workspace authority kits: 28
-implemented workspace-containment authorities: 0
-```
-
-The exact kit names and offered services are in `.agent/trackers/2026-07-13T02-39-44-04-00/project-breakdown.md` and `.agent/kit-registry.json`.
-
-## Required authority
-
-```txt
-meadow-headless-workspace-path-containment-authority-domain
+meadow-web-host-lifecycle-retirement-authority-domain
 ```
 
 ## Required transaction
 
 ```txt
-WorkspaceOperationCommand
-  -> bind editor session, environment and expected root generation
-  -> bind capability and policy revision
-  -> canonicalize configured repository or artifact root
-  -> normalize a relative path or capture label
-  -> reject absolute, malformed and parent-escaping requests
-  -> verify path.relative containment
-  -> apply explicit symlink and junction policy
-  -> canonicalize existing target or nearest existing parent
-  -> verify containment again
-  -> execute list/read or atomic in-root write
-  -> publish Accepted, Rejected, Stale, Failed or Cancelled
-  -> record bounded redacted evidence
+StartWebHostCommand
+  -> bind document, runtime, provider, and host generations
+  -> reject duplicate active ownership or retire predecessor explicitly
+  -> create game, renderer, enhancer, GameHost lease, and editor bridge
+  -> wait for required readiness
+  -> enter Running and publish Accepted
 
-Rejected or stale
-  -> zero filesystem mutation
-  -> no directory creation
-  -> no partial capture success
+PauseWebHostCommand
+  -> validate active generation
+  -> cancel or account for the pending RAF
+  -> stop frame admission without disposing retained participants
+  -> publish Paused and a pause receipt
+
+ResumeWebHostCommand
+  -> validate retained participant generations
+  -> reset scheduling time/discontinuity state
+  -> allocate one successor RAF
+  -> enter Running
+  -> acknowledge the first resumed frame
+
+RetireWebHostCommand
+  -> idempotently enter Stopping
+  -> cancel the active RAF
+  -> reject new editor mutations
+  -> dispose editor bridge and detach listeners
+  -> revoke NexusEditorEnvironment and GameHost leases
+  -> dispose WebGL buffers and program exactly once
+  -> retire game and enhancer participants when they gain disposal contracts
+  -> publish Stopped, Degraded, Failed, or Retired
+
+FatalHostResult
+  -> preserve bounded diagnostics
+  -> run the same retirement transaction or an explicitly documented degraded-retention policy
+  -> expose only provider-independent recovery controls
 ```
 
-## Validation
+## Validation boundary
 
-Documentation only. No source, package, dependency, workspace or deployment behavior changed. No hostile path, link or capture label was executed. No containment, compromise, atomic-write safety or deployment-readiness claim is made.
+No runtime source changed. No browser, WebGL, duplicate-start, stop/start, fatal-cleanup, listener-count, capability-revocation, or deployed-origin fixture was executed. No leak, lifecycle correctness, or production-readiness claim is made.

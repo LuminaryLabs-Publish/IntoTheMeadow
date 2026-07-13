@@ -1,108 +1,128 @@
 # IntoTheMeadow Next Steps
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T19-49-41-04-00`
+**Updated:** `2026-07-12T21-40-09-04-00`
 
 ## Summary
 
-Implement frame-clock ownership before the exploration loop consumes dt. The web host should own browser callbacks, the game should accept only admitted fixed steps, and the renderer should consume a correlated render-time projection.
+Implement WebGL context ownership before treating renderer snapshots as visible-frame proof. The canvas must own loss/restoration events, the renderer must version every context-bound resource, and the host must suspend and resume drawing through typed results rather than generic fatal or silent no-op behavior.
 
 ## Plan ledger
 
-**Goal:** prove one deterministic browser frame from monotonic callback admission through bounded simulation and a matching visible frame.
+**Goal:** prove one recoverable renderer lifecycle from initial context admission through loss, resource rebuild and the first visible frame of the successor context generation.
 
-### Scheduler foundation
+### Context identity and event ownership
 
-- [ ] Add runtime clock and scheduler identities.
-- [ ] Retain the active RAF handle and lease.
-- [ ] Make `start()` and `stop()` typed, idempotent commands.
-- [ ] Reject late callbacks from retired generations.
-- [ ] Retire the RAF lease on fatal errors and disposal.
+- [ ] Add renderer ID, canvas ID, context ID and context generation.
+- [ ] Register owned `webglcontextlost` and `webglcontextrestored` listeners.
+- [ ] Define when `preventDefault()` is allowed and required.
+- [ ] Bind events to the active runtime session and renderer generation.
+- [ ] Remove listeners during renderer/runtime retirement.
+- [ ] Reject events from retired canvases or predecessor generations.
 
-### Clock and fixed steps
+### Draw suspension
 
-- [ ] Sample monotonic RAF time once.
-- [ ] Classify first, normal, stalled, regressed and invalid samples.
-- [ ] Add a fixed-step accumulator.
-- [ ] Add maximum accumulated time, steps-per-frame and CPU-time budgets.
-- [ ] Publish deferred or dropped time explicitly.
-- [ ] Reset or preserve the accumulator through an authored pause/resume policy.
+- [ ] Add explicit `Ready`, `Lost`, `Restoring`, `Recovered`, `Terminal` renderer phases.
+- [ ] Stop draw admission immediately after accepted loss.
+- [ ] Stop publishing successful renderer snapshots while lost.
+- [ ] Coordinate suspension with the existing frame-scheduler authority.
+- [ ] Preserve a bounded last-good CPU mesh and render-plan reference.
+- [ ] Publish a typed `ContextLostResult`.
 
-### Game boundary
+### Resource manifest and rebuild
 
-- [ ] Replace arbitrary public `tick({time, dt})` with admitted step commands.
-- [ ] Validate finite, nonnegative and bounded temporal values.
-- [ ] Add expected session, scheduler and simulation revisions.
-- [ ] Quarantine raw `window.GameHost.game` mutation.
-- [ ] Bind `reset()` to a new clock/simulation generation.
+- [ ] Define one manifest for program, shader artifacts, attributes, uniforms and five buffers.
+- [ ] Assign every context-bound handle a resource generation and lease.
+- [ ] Build restoration resources as a detached candidate.
+- [ ] Recompile/link shaders and validate locations.
+- [ ] Recreate all buffers from preserved CPU mesh data.
+- [ ] Restore viewport and baseline GL state.
+- [ ] Validate the full candidate before installation.
+- [ ] Retire partial candidate resources on failure.
+- [ ] Retire predecessor resources exactly once after successful installation.
 
-### Render correlation
+### Recovery and terminal results
 
-- [ ] Derive render time from committed simulation plus interpolation.
-- [ ] Add frame, clock and simulation revisions to renderer snapshots.
-- [ ] Publish `FrameClockCorrelation`.
-- [ ] Publish `FirstClockedFrameAck` only after successful draw.
+- [ ] Publish `ContextRecoveryResult` with predecessor/successor generations.
+- [ ] Keep rendering suspended when candidate rebuild fails.
+- [ ] Define bounded retry or explicit `ReloadRequired`.
+- [ ] Reject stale RAF callbacks and stale resource handles.
+- [ ] Resume through the existing scheduler owner, not a second RAF chain.
+- [ ] Acknowledge the first visible recovered frame.
+
+### Diagnostics and public readback
+
+- [ ] Add context phase and generation to renderer snapshots.
+- [ ] Add lost/restored/rebuild counters and last typed result.
+- [ ] Add resource-manifest fingerprint and current GPU generation.
+- [ ] Add a bounded context lifecycle journal.
+- [ ] Prevent `GameHost` readback from reporting completed visible rendering while lost.
 
 ### Proof
 
-- [ ] Add fake-RAF single-chain fixtures.
-- [ ] Add 30/60/120 Hz parity fixtures.
-- [ ] Add jitter and long-stall fixtures.
-- [ ] Add invalid-time and clock-regression fixtures.
-- [ ] Add pause/resume and fatal-retirement fixtures.
-- [ ] Add source, built-output and Pages browser observations.
+- [ ] Add a synthetic `WEBGL_lose_context` loss/restore fixture where available.
+- [ ] Add loss-before-first-frame and loss-between-passes fixtures.
+- [ ] Add loss-during-topology-rebuild and partial-resource rollback fixtures.
+- [ ] Add repeated loss/restoration generation fixtures.
+- [ ] Add unrecoverable/ReloadRequired fixture.
+- [ ] Add stale callback and stale resource zero-mutation fixtures.
+- [ ] Add first visible restored-frame correlation fixture.
+- [ ] Run source, built-output and GitHub Pages browser observations.
 
-## Required command
+## Required event envelope
 
 ```txt
-FrameCallbackCommand {
-  frameId
+WebGLContextEventEnvelope {
+  eventId
   runtimeSessionId
-  clockGeneration
+  rendererId
+  canvasId
+  contextId
+  expectedContextGeneration
+  eventType
+  observedAt
   schedulerGeneration
-  rafLeaseId
-  callbackSequence
-  rawNow
-  expectedSimulationRevision
+  expectedRenderRevision
 }
 ```
 
 ## Required result
 
 ```txt
-FrameResult {
-  frameId
+ContextRecoveryResult {
+  commandId
   status
   reason
-  clockSampleId
-  clockRevision
-  stepBatchId
-  simulationRevisionBefore
-  simulationRevisionAfter
-  executedSteps
-  droppedSeconds
-  deferredSeconds
-  renderTimeProjectionId
+  rendererId
+  predecessorContextGeneration
+  successorContextGeneration
+  predecessorResourceGeneration
+  successorResourceGeneration
+  resourceManifestFingerprint
+  rebuiltProgram
+  rebuiltBufferCount
+  rollbackCompleted
+  schedulerResumeResult
   renderSnapshotId
-  successorScheduleResult
+  firstVisibleFrameAckId
 }
 ```
 
 ## Architecture order
 
 ```txt
-1. Runtime clock identity and sample admission
-2. Scheduler generation and RAF lease
-3. Fixed-step accumulator and budgets
-4. Game step-command admission
-5. Render-time projection and correlation
-6. Pause/resume/stop/fatal retirement
-7. Visible-frame acknowledgement
-8. Exploration and progression time consumption
-9. Audio, persistence and replay timing
-10. Source/build/Pages proof
+1. Renderer/canvas/context identity
+2. Owned loss/restoration listeners
+3. Draw suspension and snapshot truthfulness
+4. Resource manifest and generation leases
+5. Detached program/buffer rebuild
+6. Candidate validation, atomic install and rollback
+7. Scheduler-coordinated resume
+8. Context diagnostics and bounded journal
+9. First visible recovered-frame acknowledgement
+10. Source/build/Pages fixtures
 ```
 
-## Reconciliation state
+## Preserved dependencies
 
-The repo-local `19-41-13` technical audit and the `19-49-41` root/central reconciliation are complete. All implementation and executable proof items remain open.
+The frame-scheduler authority remains upstream for callback ownership and resume. Grass visibility, exploration progression, editor-bridge lifecycle, audio, save, replay and WebGL recovery remain separate domains and must not silently absorb one another.

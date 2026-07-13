@@ -1,40 +1,44 @@
 # IntoTheMeadow Validation
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Updated:** `2026-07-12T19-49-41-04-00`
+**Updated:** `2026-07-12T21-40-09-04-00`
 
 ## Summary
 
-This documentation-only reconciliation verifies that the browser loop advances once per RAF callback with a fixed `1/60` dt, renders from absolute RAF time, retains no cancellable RAF lease and exposes raw game mutation. It aligns the missing scheduler and step-admission proof boundary across repo-local and central tracking without claiming implementation.
+This documentation-only audit verifies that the renderer acquires one WebGL context, creates one shader program, captures locations, creates context-bound buffers and publishes snapshots without owning context loss/restoration. It defines the missing recovery proof boundary without claiming implementation.
 
 ## Plan ledger
 
-**Goal:** separate source-verified timing facts from unimplemented scheduler guarantees.
+**Goal:** separate source-verified context-lifecycle facts from unimplemented recovery guarantees.
 
 - [x] Compare Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only IntoTheMeadow because repo-local audit state was newer than central tracking.
+- [x] Select only IntoTheMeadow as the oldest eligible central entry.
 - [x] Verify root `.agent` and central coverage.
-- [x] Inspect host, state, renderer, GameHost and package checks.
+- [x] Inspect boot, host, precision wrapper, renderer and existing smoke tests.
 - [x] Preserve all 44 kits and offered services.
-- [x] Add the timestamped central-reconciliation audit family.
+- [x] Add the timestamped WebGL context audit family.
 - [x] Change documentation only.
-- [ ] Execute timing fixtures after implementation.
+- [ ] Execute recovery fixtures after implementation.
 
 ## Proven from source
 
 ```txt
-frame callback receives RAF now
-game tick is called once per callback
-dt passed by host is always 1/60
-time passed by host is now/1000
-state stores Number(dt) and Number(time) without finite/range policy
-renderer uses render-plan time for shader wind
-renderer snapshot omits temporal correlation
-stop does not cancel a RAF handle
-start requests a RAF callback
-raw GameHost.game is exposed
-renderer has a dispose method but host stop does not invoke it
+one canvas is mounted by index.html
+boot passes that canvas to startWebHost
+renderer wrapper proxies getContext and shaderSource
+base renderer acquires webgl2 then webgl fallback once during construction
+shader program is compiled and linked during construction
+attribute and uniform locations are captured from that program
+five buffers are created when mesh topology is first bound or rebuilt
+topology rebuild deletes all predecessor buffers before creating candidates
+render issues outline and color drawArrays calls
+renderer snapshot is replaced after draw calls
+render does not check gl.isContextLost
+renderer and host register no webglcontextlost listener
+renderer and host register no webglcontextrestored listener
+renderer exposes dispose but no suspend/recover/rebuild operation
+host stop does not call renderer.dispose
 ```
 
 ## Proven documentation state
@@ -47,7 +51,7 @@ known-gaps current: yes
 validation current: yes
 kit-registry current after final update: yes
 tracker and turn ledger present: yes
-architecture/render/gameplay/interaction/frame-scheduler/deploy audits present: yes
+architecture/render/gameplay/interaction/webgl-context/deploy audits present: yes
 central ledger and internal change log required: yes
 ```
 
@@ -64,32 +68,33 @@ browser boot, editor marker, completed render and screenshot artifact
 ## Existing checks cannot establish
 
 ```txt
-refresh-rate-independent simulation
-monotonic callback admission
-one live RAF chain
-stop/start race safety
-bounded long-stall catch-up
-invalid temporal input rejection
-pause/resume generation behavior
-render/simulation clock correlation
-visible-frame acknowledgement
-Pages timing parity
+loss-event ownership
+preventDefault and restoration policy
+draw suspension while context is lost
+program/location/buffer rebuild
+candidate rollback
+repeated-loss generation fencing
+stale callback/resource rejection
+unrecoverable context handling
+snapshot/visible-frame truthfulness
+first visible recovered frame
+Pages context recovery parity
 ```
 
 ## Required deterministic fixtures
 
 ```txt
-clock sample classification
-30/60/120 Hz parity
-jitter parity
-long-stall budget
-stop/start single-chain
-late callback rejection
-negative/NaN/Infinity rejection
-pause/resume
-fatal retirement
-render correlation
-visible frame acknowledgement
+loss before first frame
+loss after first frame
+loss between outline and color passes
+loss during topology rebuild
+program rebuild failure
+buffer rebuild failure
+partial-resource rollback
+repeated loss/restoration
+stale event/callback/resource rejection
+unrecoverable context result
+first visible restored-frame acknowledgement
 ```
 
 ## Execution status
@@ -105,11 +110,11 @@ branch created: no
 pull request created: no
 target branch: main
 npm run check executed: no
-browser frame-clock smoke executed: no
-Pages frame-clock smoke executed: no
-timing fixtures available: no
+browser context-recovery smoke executed: no
+Pages context-recovery smoke executed: no
+context fixtures available: no
 ```
 
 ## Claim boundary
 
-No claim is made for deterministic elapsed-time simulation, single-chain scheduling, bounded catch-up, pause/resume correctness, render-clock parity or production readiness.
+No claim is made for WebGL context recovery, shader/buffer rebuild correctness, exact-once resource retirement, stale-generation rejection, visible-frame parity or production readiness.

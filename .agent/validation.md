@@ -1,73 +1,69 @@
 # Validation
 
-**Updated:** `2026-07-13T22-40-52-04-00`  
+**Updated:** `2026-07-14T04-00-15-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Audit type:** documentation and source analysis only
 
 ## Summary
 
-Source review confirms that `editor:browser` admits a local route without proving spawned-server ownership, captures screenshot and DOM evidence from separate Chromium page instances, validates screenshot content only by file size and writes fixed-name artifacts without attempt isolation or terminal cleanup receipts.
+Source review confirms that the local DSK registry validates descriptor shape and required identifiers, while every local descriptor has empty dependencies and one generic provided token. Installation returns descriptors and loaded/deferred external status without resolving or probing executable services.
 
 ## Plan ledger
 
 **Goal:** state exactly what was inspected, changed and left unproven.
 
 - [x] Confirm the default branch is `main`.
-- [x] Compare ten Publish repositories with central tracking.
+- [x] Compare 11 Publish repositories with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm nine eligible root `.agent` states and matching heads.
+- [x] Confirm ten eligible root `.agent` states and synchronized heads.
 - [x] Select IntoTheMeadow by oldest eligible timestamp.
-- [x] Read the browser observation runner.
-- [x] Read the page shell, boot module, web host and editor bridge.
-- [x] Read package scripts and static smoke coverage.
-- [x] Confirm two separate Chromium invocations.
-- [x] Confirm HTTP success does not prove child-server ownership.
-- [x] Confirm fixed artifact names and incomplete report provenance.
-- [x] Confirm server retirement is not awaited.
-- [x] Confirm `editor:browser` is outside `npm run check`.
+- [x] Read DSK registry declarations and service labels.
+- [x] Read local descriptor generation and validation.
+- [x] Read installation and external provider status handling.
+- [x] Read game creation, game state and web-host frame flow.
+- [x] Read the DSK registry smoke.
 - [x] Preserve the complete 44-kit service inventory.
 - [x] Add a timestamped tracker and audit family.
 - [x] Refresh required root `.agent` state.
 - [x] Change documentation only.
 - [x] Create no branch or pull request.
-- [ ] Execute browser evidence fixtures later.
+- [ ] Execute capability-admission fixtures later.
 
 ## Confirmed by source review
 
 ```txt
-browser candidates are discovered through command -v
-server uses python3 -m http.server on PORT or 4173
-waitForServer accepts any successful response
-screenshot and DOM use separate spawnSync Chromium calls
-both use a fixed 9000 ms virtual-time budget
-DOM readiness uses title, boot text, editor protocol and gpu: markers
-screenshot readiness uses process status, existence and byte length
-artifacts use fixed paths in one reusable directory
-report lacks source, provider, browser version, frame and artifact hashes
-finally sends SIGTERM without awaiting exit
-editor bridge exposes same-page renderer.capture
-npm run check does not execute editor:browser
-static smoke validates script presence and package wiring only
+43 local descriptors are generated from one SERVICES table
+15 descriptors are marked active-v0.1 and 28 are marked planned
+every local descriptor returns requires: []
+every local descriptor returns one game:<domain> provides token
+five service labels appear in layers but are not service registry tokens
+validation checks ID suffix, minimum subdomain count, duplicates and required IDs
+installDsks does not resolve dependencies, versions, ownership or cycles
+external kits are recorded as loaded or deferred
+installDsks returns descriptors and snapshots, not executable service handles
+createIntoTheMeadowGame directly creates the meadow provider and game state
+advanceGameState increments frame and records time/dt only
+DSK smoke checks registry validation, count and five architecture layers
 ```
 
 ## Source-derived but not executed
 
 ```txt
-an unrelated server on port 4173 can satisfy route readiness
-screenshot and DOM can describe different page and renderer generations
-stale predecessor artifacts can remain after a failed successor
-byte-size validation can accept visually invalid content
-late server exit can create port and process-lifecycle races
-same-page editor capture can provide stronger correlation than current external capture
+a planned descriptor can appear beside active descriptors without runtime rejection
+a missing required service cannot be detected because requirements are undeclared
+duplicate concrete service ownership cannot be detected
+cyclic composition cannot be detected
+a structurally valid registry can overstate executable gameplay capability
+visible diagnostics can report valid counts without one accepted capability graph
 ```
 
-These are reachable ownership and evidence findings, not claims of a production incident.
+These are reachable architecture and proof findings, not claims of a production incident.
 
 ## Documentation changed
 
 ```txt
 new timestamped project breakdown and turn ledger
-new architecture, render, gameplay, interaction, browser-observation, deploy and central-sync audits
+new architecture, render, gameplay, interaction, DSK-admission, deploy and central-sync audits
 START_HERE, current audit, next steps, known gaps, validation and kit registry refreshed
 central repository ledger and internal change log synchronized separately
 ```
@@ -77,15 +73,14 @@ central repository ledger and internal change log synchronized separately
 ```txt
 npm install
 npm run check
-npm run editor:browser
-real browser launch
-occupied-port or unrelated-server fixture
-provider or WebGL failure fixture
-blank-frame or stale-artifact fixture
-process retirement fixture
+DSK dependency fixtures
+service implementation probes
+preparation failure or rollback fixtures
+browser capability readback
+first capability revision frame fixture
 production build
-built-output observation
-GitHub Pages observation
+built-output smoke
+GitHub Pages smoke
 ```
 
 ## Change boundary
@@ -95,8 +90,8 @@ runtime JavaScript changed: no
 CSS changed: no
 gameplay changed: no
 renderer changed: no
-editor bridge changed: no
-browser runner changed: no
+DSK declarations changed: no
+installer changed: no
 package or dependency changed: no
 test or workflow changed: no
 deployment changed: no
@@ -106,4 +101,4 @@ pull request created: no
 
 ## Claim boundary
 
-This audit does not claim server ownership, same-page artifact coherence, semantic screenshot validity, artifact freshness, terminal process retirement, source/build/Pages parity or production readiness.
+This audit does not claim executable service ownership, dependency resolution, version compatibility, cycle rejection, atomic installation, rollback, capability readback, visible-frame convergence or production readiness.

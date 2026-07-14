@@ -1,112 +1,93 @@
 # Known Gaps
 
-**Updated:** `2026-07-13T22-40-52-04-00`  
+**Updated:** `2026-07-14T04-00-15-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `browser-observation-evidence-authority-audited`
+**Status:** `dsk-capability-dependency-admission-authority-audited`
 
 ## Summary
 
-The current bounded gap is browser-observation evidence coherence. Server, browser page, game state, renderer frame, DOM, screenshot, report and cleanup have no shared attempt or terminal result.
+The current bounded gap is capability truth. The repository has a complete descriptor catalog, but descriptor presence does not yet prove that a service exists, its dependencies are satisfied, its implementation is active or its lifecycle was admitted.
 
 ## Plan ledger
 
-**Goal:** record every missing identity, admission rule, artifact relation and retirement proof needed for trustworthy real-browser evidence.
+**Goal:** record every missing identity, graph rule, executable-service boundary and proof needed for trustworthy DSK composition.
 
-- [x] Record server ownership gaps.
-- [x] Record browser/page/frame correlation gaps.
-- [x] Record artifact freshness and provenance gaps.
-- [x] Record process retirement and proof-chain gaps.
-- [x] Preserve all predecessor audits.
+- [x] Record manifest and service-token gaps.
+- [x] Record dependency and ownership gaps.
+- [x] Record preparation, adoption and rollback gaps.
+- [x] Record gameplay and visible-frame correlation gaps.
+- [x] Preserve predecessor audits.
 - [ ] Implement and prove the authority later.
 
-## Identity gaps
+## Manifest gaps
 
 ```txt
-ObservationAttemptId: absent
-ObservationPolicyRevision: absent
-RepositoryRevision evidence: absent
-ProviderManifestFingerprint: absent
-BrowserBinaryFingerprint: absent
-ServerGeneration: absent
-BrowserSessionGeneration: absent
-BrowserPageGeneration: absent
-RendererFrameId: absent
-ArtifactManifestId: absent
+DskManifestVersion: absent
+DskCompositionRevision: absent
+CapabilityManifestId: absent
+service implementation module identity: absent
+service API revision: absent
+provider compatibility range: absent
+planned-versus-active admission policy: absent
 ```
 
-## Server gaps
+## Dependency gaps
 
 ```txt
-port reservation: absent
-spawned-child bind receipt: absent
-server ownership verification: absent
-served repository fingerprint: absent
-unrelated-server rejection: absent
-server exit acknowledgement: absent
-termination timeout and escalation: absent
+concrete service provides tokens: absent
+requires tokens: empty for every local descriptor
+optional dependency policy: absent
+unique service ownership validation: absent
+multi-provider policy: absent
+dependency version compatibility: absent
+topological install order: absent
+cycle detection: absent
 ```
 
-## Browser and frame gaps
+## Installation gaps
 
 ```txt
-one shared browser session: absent
-one shared page generation: absent
-editor bridge readiness result: absent
-browser error drain result: absent
-admitted renderer frame: absent
-game/render/mesh/GPU revision relation: absent
-same-page observation barrier: absent
+prepare receipt: absent
+executable service handle: absent
+per-kit initialization probe: absent
+atomic adoption barrier: absent
+rollback receipt: absent
+disposal ownership: absent
+stale composition rejection: absent
+partial/degraded composition result: absent
 ```
 
-## Artifact gaps
+## Runtime gaps
 
 ```txt
-per-attempt directory: absent
-predecessor artifact quarantine: absent
-atomic manifest promotion: absent
-DOM hash: absent
-canvas image hash: absent
-screenshot hash: absent
-image dimensions and format receipt: absent
-blank-frame and entropy checks: absent
-same-frame artifact relation: absent
-latest-completed pointer semantics: absent
+active and planned descriptors share one structural install path
+required external provider can be represented as deferred
+most declared services are not invoked through kit APIs
+GameState stores descriptor snapshots rather than capability receipts
+GameHost exposes no accepted capability manifest
+commands do not declare required capabilities
+renderer frames carry no DSK composition revision
 ```
 
-## Report gaps
+## Validation gaps
 
 ```txt
-repository commit: absent
-working-tree or build fingerprint: absent
-provider commit: absent
-browser version and hash: absent
-server PID and ownership: absent
-attempt start/end timestamps: absent
-renderer snapshot: absent
-artifact hashes: absent
-retirement receipts: absent
-typed degraded/partial status: absent
-```
-
-## Proof-chain gaps
-
-```txt
-editor:browser is outside npm run check
-static smoke checks presence rather than execution
-occupied-port fixture: absent
-unrelated-server fixture: absent
-provider-failure fixture: absent
-WebGL-failure fixture: absent
-blank-frame fixture: absent
-stale-artifact fixture: absent
-retirement-timeout fixture: absent
-built-output parity fixture: absent
-GitHub Pages parity fixture: absent
+missing dependency fixture: absent
+duplicate provider fixture: absent
+cycle fixture: absent
+version mismatch fixture: absent
+planned-kit admission fixture: absent
+external deferred/failure fixture: absent
+prepare failure and rollback fixture: absent
+capability readback fixture: absent
+first capability frame fixture: absent
+built-output and Pages parity fixtures: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+browser observation evidence coherence
 render-plan and mesh cache coherence
 render-surface viewport authority
 browser editor capability admission
@@ -115,7 +96,6 @@ workspace containment and atomic artifacts
 provider-source parity
 WebGL context/resource recovery
 single-chain frame scheduling
-DSK provider consumption
 playable progression
 camera-bound grass visibility and LOD
 audio user-gesture lifecycle
@@ -125,4 +105,4 @@ independent replay
 
 ## Completion boundary
 
-A screenshot file, DOM marker and JSON report are not coherent evidence unless they cite one admitted server, one browser page, one renderer frame, one immutable artifact manifest and terminal cleanup receipts.
+A descriptor count, five-layer shape and `validation.passed` flag are not executable capability evidence unless every active service has an implementation, dependency graph, ownership receipt, successful probe, accepted composition revision and matching runtime readback.

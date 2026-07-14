@@ -1,80 +1,79 @@
-# Current Audit: Runtime Reset Session Replay Authority
+# Current Audit: Browser Startup Readiness and First Frame Authority
 
-**Updated:** `2026-07-14T09-58-25-04-00`  
+**Updated:** `2026-07-14T15-38-28-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `runtime-reset-session-replay-authority-audited`  
-**Immediate predecessor:** `dsk-capability-dependency-admission-authority-central-reconciled`
+**Status:** `browser-startup-readiness-first-frame-authority-audited`  
+**Immediate predecessor:** `runtime-reset-session-replay-authority-central-reconciled`
 
 ## Summary
 
-`runtime.reset` is available in both browser and headless editor environments, but it is not one shared reset transaction. The game recreates frame-zero state using the same `arrival-meadow:session-0` identity and retains the meadow provider and cached base plan.
+`startWebHost()` publishes the browser host and editor bridge, hides loading, schedules RAF, and resolves before one render contract has passed. A render-contract or renderer failure inside RAF is converted to UI state by `showFatal()` after the startup promise has resolved.
 
-Browser reset leaves RAF, last plan, last render, enhancer and renderer evidence alive. Headless reset additionally resets time and invalidates the enhancer, but retains `lastCapture`. No typed reset result or first successor-frame acknowledgement proves which participant generation is current.
+The failure path does not revoke `GameHost`, dispose `NexusEditorEnvironment`, remove its error listeners, retire renderer/enhancer ownership, or publish a typed failed startup result. Public editor mutation and capture capabilities can also run before first-frame readiness.
 
 ## Plan ledger
 
-**Goal:** bind reset intent, session identity, participant lifecycle, replay evidence and first-frame settlement into one authority.
+**Goal:** bind provider admission, candidate construction, first-frame proof, public publication, failure rollback, and readiness into one browser startup authority.
 
 - [x] Compare the full Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Select only IntoTheMeadow by the oldest eligible timestamp.
-- [x] Inspect game state/reset, web host, GameHost, browser editor bridge, headless environment and tests.
+- [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
+- [x] Inspect the document boot, host, global publication, editor bridge, RAF and fatal paths.
 - [x] Preserve all 44 kit surfaces and offered services.
 - [x] Add the timestamped audit family.
 - [x] Change documentation only and push to `main`.
-- [ ] Implement the runtime authority and failure fixtures later.
+- [ ] Implement the runtime authority and browser fixtures later.
 
 ## Interaction loop
 
 ```txt
-browser reset
-  -> direct game.reset
-  -> same session identity
-  -> retained plan/render/scheduler evidence
+construct provider, game, renderer and enhancer
+  -> publish GameHost
+  -> publish NexusEditorEnvironment and listeners
+  -> hide loading
+  -> schedule RAF
+  -> tick, enhance, validate and render
 
-headless reset
-  -> time = 0
-  -> enhancer.invalidate
-  -> direct game.reset
-  -> same session identity
-  -> retained previous capture baseline
+frame failure
+  -> stop future loop work
+  -> show fatal UI
+  -> retain public globals and candidate ownership
 ```
 
 ## Main findings
 
 ```txt
-unique SessionGeneration: absent
-ResetCommandId and expected revision: absent
-browser/headless participant parity: absent
-RAF and manual-tick reset barrier: absent
-browser lastPlan/lastRender invalidation: absent
-headless lastCapture reset policy: absent
-atomic adoption or rollback: absent
-replay journal and fingerprints: absent
-FirstResetSessionFrameAck: absent
+BootAttemptId: absent
+private candidate participant phase: absent
+provider fingerprint and startup manifest: absent
+loading-to-first-frame correlation: absent
+pre-ready editor mutation gate: absent
+atomic public host adoption: absent
+typed BrowserStartupResult: absent
+typed BrowserStartupFailureResult: absent
+failed candidate rollback receipts: absent
+stale or superseded boot rejection: absent
+FirstVisibleMeadowFrameAck: absent
 ```
 
 ## Required parent domain
 
-```txt
-meadow-runtime-reset-session-replay-authority-domain
-```
+`meadow-browser-startup-readiness-first-frame-authority-domain`
 
 ## Required transaction
 
 ```txt
-RuntimeResetCommand
-  -> bind predecessor session and expected revisions
-  -> suspend frame and manual-tick leases
-  -> prepare successor state and participant reset candidates
-  -> assign a unique SessionGeneration
-  -> reject duplicate, stale or superseded work
-  -> atomically adopt all participants or preserve predecessor
-  -> publish RuntimeResetResult and replay journal entry
-  -> resume one accepted scheduler generation
-  -> publish FirstResetSessionFrameAck
+BrowserStartupCommand
+  -> allocate boot attempt identity
+  -> admit and fingerprint provider
+  -> prepare game, renderer, enhancer and editor candidates privately
+  -> validate one exact candidate frame
+  -> atomically publish globals and Ready state
+  -> publish BrowserStartupResult and FirstVisibleMeadowFrameAck
+  -> reject stale attempts
+  -> on failure retire every candidate and publish rollback receipts
 ```
 
 ## Boundary
 
-Documentation only. No runtime, renderer, editor, test, build or deployment code changed.
+Documentation only. No runtime, renderer, editor, test, build, workflow, or deployment code changed.

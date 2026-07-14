@@ -2,43 +2,42 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-14T04-00-15-04-00`  
-**Status:** `dsk-capability-dependency-admission-authority-audited`
+**Last aligned:** `2026-07-14T09-58-25-04-00`  
+**Status:** `runtime-reset-session-replay-authority-audited`
 
 ## Summary
 
-IntoTheMeadow declares 43 local DSK/kit descriptors and one external provider kit. The current audit isolates the difference between a structurally valid descriptor registry and an executable capability graph.
+IntoTheMeadow exposes reset through browser and headless editor environments, but reset does not create a unique successor session or settle all state, scheduler, render and observation participants together.
 
-Every local descriptor currently reports five named service categories, one generic `provides` token and an empty `requires` list. Installation validates descriptor shape and required IDs, but it does not resolve service ownership, dependencies, versions, cycles, executable providers, lifecycle receipts or runtime probes. A structurally valid DSK snapshot can therefore coexist with gameplay capabilities that are still planned or not connected to runtime execution.
+The browser path resets game state only while retaining last render evidence and active RAF ownership. The headless path also resets local time and invalidates the enhancer, but retains the previous capture baseline. Both recreate `arrival-meadow:session-0`, so predecessor and successor work cannot be reliably distinguished.
 
 ## Plan ledger
 
-**Goal:** make one admitted DSK composition prove which capabilities are executable, who owns every service, what each kit requires and which exact composition revision produced the running game and visible frame.
+**Goal:** make reset one atomic, replay-verifiable session transition with participant receipts and a first matching successor frame.
 
 - [x] Compare all 11 accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm ten eligible central ledgers and root `.agent` states.
+- [x] Confirm ten eligible ledgers and root `.agent` states.
 - [x] Confirm no eligible repository is new, missing, undocumented or runtime-ahead.
-- [x] Select only `LuminaryLabs-Publish/IntoTheMeadow` by the oldest eligible central timestamp.
-- [x] Inspect the DSK registry, descriptors, installation path, game composition and DSK smoke test.
+- [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
+- [x] Inspect browser and headless reset paths.
 - [x] Preserve all 44 declared kit surfaces and offered services.
-- [x] Add the `2026-07-14T04-00-15-04-00` audit family.
-- [x] Refresh required root `.agent` state.
+- [x] Add the `2026-07-14T09-58-25-04-00` audit family.
 - [x] Push only to `main`; create no branch or pull request.
-- [ ] Implement executable capability admission and failure fixtures later.
+- [ ] Implement reset/replay authority and fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-14T04-00-15-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-14T04-00-15-04-00.md
-.agent/architecture-audit/2026-07-14T04-00-15-04-00-dsk-capability-dependency-admission-map.md
-.agent/render-audit/2026-07-14T04-00-15-04-00-capability-state-visible-frame-gap.md
-.agent/gameplay-audit/2026-07-14T04-00-15-04-00-declared-capability-runtime-loop.md
-.agent/interaction-audit/2026-07-14T04-00-15-04-00-capability-command-service-result-map.md
-.agent/dsk-admission-audit/2026-07-14T04-00-15-04-00-requires-provides-service-ownership-contract.md
-.agent/deploy-audit/2026-07-14T04-00-15-04-00-dsk-capability-fixture-gate.md
-.agent/central-sync-audit/2026-07-14T04-00-15-04-00-repo-ledger-dsk-capability-reconciliation.md
+.agent/trackers/2026-07-14T09-58-25-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-14T09-58-25-04-00.md
+.agent/architecture-audit/2026-07-14T09-58-25-04-00-runtime-reset-session-replay-dsk-map.md
+.agent/render-audit/2026-07-14T09-58-25-04-00-reset-state-render-evidence-coherence-gap.md
+.agent/gameplay-audit/2026-07-14T09-58-25-04-00-reset-session-replay-loop.md
+.agent/interaction-audit/2026-07-14T09-58-25-04-00-runtime-reset-command-result-map.md
+.agent/reset-replay-audit/2026-07-14T09-58-25-04-00-session-generation-participant-reset-contract.md
+.agent/deploy-audit/2026-07-14T09-58-25-04-00-reset-replay-fixture-gate.md
+.agent/central-sync-audit/2026-07-14T09-58-25-04-00-repo-ledger-reset-replay-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -46,37 +45,18 @@ Every local descriptor currently reports five named service categories, one gene
 .agent/kit-registry.json
 ```
 
-## Retained predecessor audits
-
-```txt
-browser observation evidence
-render-plan and mesh cache coherence
-render-surface viewport authority
-browser editor capability admission
-web-host lifecycle retirement
-headless workspace path containment
-provider-source parity
-WebGL context/resource recovery
-single-chain frame scheduling
-exploration progression
-DSK runtime consumption
-grass visibility and LOD
-```
-
 ## Complete interaction loop
 
 ```txt
-browser boot
-  -> load external meadow-area provider
-  -> create 43 local DSK descriptors
-  -> validate IDs, suffixes, layer count and required presence
-  -> mark external provider loaded or deferred
-  -> create meadow provider instance directly
-  -> create immutable game state with DSK snapshot
-  -> tick only frame/time state
-  -> enhance render plan
-  -> render WebGL frame
-  -> expose counts and snapshots without one capability-composition revision
+browser RAF and editor commands advance one mutable game instance
+  -> runtime.reset recreates frame-zero state
+  -> session identity remains arrival-meadow:session-0
+  -> browser render evidence and scheduler remain live
+
+headless editor
+  -> runtime.reset resets time and enhancer
+  -> same session identity is recreated
+  -> prior capture baseline remains available to compare
 ```
 
 ## Domain and kit census
@@ -87,7 +67,7 @@ local declared DSK/kits: 43
 total declared kit surfaces: 44
 active-v0.1 local descriptors: 15
 planned local descriptors: 28
-planned capability-admission surfaces: 22
+planned reset/replay authority surfaces: 21
 ```
 
 The complete kit-by-kit service map is in the latest tracker and `.agent/kit-registry.json`.
@@ -95,13 +75,13 @@ The complete kit-by-kit service map is in the latest tracker and `.agent/kit-reg
 ## Required parent domain
 
 ```txt
-meadow-dsk-capability-dependency-admission-authority-domain
+meadow-runtime-reset-session-replay-authority-domain
 ```
 
 ## Next safe ledge
 
-Replace descriptor-count admission with a versioned capability manifest. Expand each kit into concrete service tokens, declare dependencies, resolve one acyclic ownership graph, prepare executable providers, probe active services and atomically publish one immutable `DskCompositionResult` before gameplay or rendering reports readiness.
+Introduce `RuntimeResetCommand`, a unique `SessionGeneration`, an explicit reset participant registry, scheduler suspension, atomic adoption/rollback, replay journaling and `FirstResetSessionFrameAck` shared by browser and headless environments.
 
 ## Claim boundary
 
-This documentation pass does not claim executable service ownership, dependency resolution, cycle detection, atomic installation, planned-kit rejection, capability probes, first-capability-frame proof or production readiness.
+This pass does not claim reset atomicity, unique session identity, browser/headless parity, stale work rejection, replay equivalence, first reset-frame convergence or production readiness.

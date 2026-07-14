@@ -1,77 +1,80 @@
-# Current Audit: Browser Observation Evidence Authority
+# Current Audit: DSK Capability Dependency Admission
 
-**Updated:** `2026-07-13T22-40-52-04-00`  
+**Updated:** `2026-07-14T04-00-15-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `browser-observation-evidence-authority-audited`  
-**Immediate predecessor:** `render-plan-mesh-cache-coherence-authority-central-reconciled`
+**Status:** `dsk-capability-dependency-admission-authority-audited`  
+**Immediate predecessor:** `browser-observation-evidence-authority-central-reconciled`
 
 ## Summary
 
-The real-browser command captures a screenshot and DOM dump from separate Chromium page instances, then combines them into one report. Server readiness, renderer readiness, artifact identity and cleanup are not governed by one observation attempt.
+The repository exposes a broad 44-surface kit catalog, but current installation proves descriptor shape rather than executable capability composition. All local descriptors report empty dependencies, one generic domain token and five service labels. The installer does not resolve, prepare, probe or atomically adopt the advertised services.
 
 ## Plan ledger
 
-**Goal:** bind one repository revision, server, browser page, renderer frame and immutable artifact manifest.
+**Goal:** bind each declared kit to concrete executable services, explicit dependencies, one ownership graph and one accepted composition revision.
 
 - [x] Compare the full Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm all eligible heads match their central records.
-- [x] Select only IntoTheMeadow by oldest eligible timestamp.
-- [x] Trace browser discovery, server launch, route polling, screenshot, DOM, report and cleanup.
-- [x] Preserve all 44 declared kit surfaces and services.
-- [x] Document five observation adapters and 24 planned authority surfaces.
+- [x] Confirm ten eligible ledgers, root `.agent` states and synchronized heads.
+- [x] Select only IntoTheMeadow by the oldest eligible timestamp.
+- [x] Inspect `src/dsks/index.js`, `src/boot/install-dsks.js`, game creation and DSK tests.
+- [x] Preserve all 44 declared kit surfaces and service labels.
+- [x] Document 22 planned admission surfaces.
 - [x] Add the timestamped audit family.
 - [x] Change documentation only and push to `main`.
-- [ ] Implement and execute same-page evidence later.
+- [ ] Implement executable composition and failure fixtures later.
 
 ## Interaction loop
 
 ```txt
-editor:browser
-  -> locate Chromium
-  -> start loopback server on PORT or 4173
-  -> accept any successful route response
-  -> Chromium A writes screenshot
-  -> Chromium B writes DOM and readiness markers
-  -> fixed-name artifacts become one report
-  -> request server termination
+load external provider
+  -> create descriptor-only local catalog
+  -> validate identifier and layer shape
+  -> return loaded/deferred external status
+  -> create actual meadow and state outside kit service APIs
+  -> store descriptor snapshots in game state
+  -> tick frame/time
+  -> render without one capability revision
 ```
 
 ## Main findings
 
 ```txt
-server ownership is not proven
-screenshot and DOM do not share a page
-renderer readiness is inferred from text
-screenshot validation is byte-size only
-artifact filenames are reused
-report provenance and hashes are incomplete
-server retirement is not acknowledged
-editor:browser is outside npm run check
-same-page editor canvas capture exists but is unused
+all local requires arrays are empty
+provides contains one generic game:<domain> token per descriptor
+five offered service labels are not registered as service tokens
+active and planned descriptors share the same install path
+missing external providers can be represented as deferred without failing install
+validation checks IDs, suffixes, service-count shape and required presence
+installation performs no dependency resolution or cycle detection
+installation produces no executable provider or lifecycle receipt
+DSK smoke proves count and five layers, not service behavior
+actual meadow creation and game state mutation bypass most declared services
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-browser-observation-evidence-authority-domain
+meadow-dsk-capability-dependency-admission-authority-domain
 ```
 
 ## Required transaction
 
 ```txt
-BrowserObservationCommand
-  -> bind repository, provider and policy revisions
-  -> allocate attempt, server, browser and page generations
-  -> prove server ownership
-  -> launch one page and admit one renderer frame
-  -> capture DOM, editor state, canvas and screenshot from that page
-  -> hash and validate artifacts
-  -> atomically promote one manifest
-  -> await page, browser and server retirement
-  -> publish BrowserObservationResult
+DskCompositionCommand
+  -> bind repository, registry and provider revisions
+  -> normalize active and planned manifests
+  -> expand concrete provides and requires tokens
+  -> validate unique ownership, versions and compatibility
+  -> resolve an acyclic dependency graph
+  -> prepare executable service providers
+  -> probe every required active capability
+  -> reject planned, missing, deferred, duplicate or conflicting work
+  -> atomically adopt all participants or preserve predecessors
+  -> publish DskCompositionResult and CapabilityManifest
+  -> publish FirstCapabilityRevisionFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No browser, server, artifact, build or Pages fixture was executed.
+Documentation only. No DSK declaration, installer, game behavior, renderer, test, build or deployment code changed.

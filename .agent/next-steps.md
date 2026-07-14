@@ -1,77 +1,69 @@
 # Next Steps
 
-**Updated:** `2026-07-14T09-58-25-04-00`  
+**Updated:** `2026-07-14T15-38-28-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `runtime-reset-session-replay-authority-audited`
+**Status:** `browser-startup-readiness-first-frame-authority-audited`
 
 ## Summary
 
-Make browser and headless reset use the same command, session-generation and participant contract. Reset must stop stale work, settle state/render/editor participants atomically, and publish replayable evidence before successor readiness.
+Move browser construction behind a private candidate phase. Publish globals, loading completion, mutable editor commands, and authoritative capture only after one validated frame is submitted for the accepted boot attempt.
 
 ## Plan ledger
 
-**Goal:** create the smallest reliable reset path from admitted intent to one uniquely identified successor session and first matching frame.
+**Goal:** create the smallest reliable browser startup path from admitted boot intent to one visible Ready frame or complete failed-candidate retirement.
 
-### Command and identity
+### Identity and admission
 
-- [ ] Add `RuntimeResetCommand` with command ID, environment ID, predecessor session and expected state revision.
-- [ ] Add monotonically unique `SessionGeneration` and state revision.
-- [ ] Return prior immutable results for duplicate command IDs.
-- [ ] Reject stale and superseded reset attempts before mutation.
+- [ ] Add `BrowserStartupCommand` with `BootAttemptId`, document generation, expected predecessor state, and policy revision.
+- [ ] Fingerprint the product source, provider URL/revision, provider export, DSK install, and renderer configuration.
+- [ ] Reject duplicate, stale, cancelled, and superseded attempts.
 
-### Participant manifest
+### Private candidates
 
-- [ ] Register state, provider, base plan, enhancer, renderer, schedulers, editor observations, captures and error ledgers.
-- [ ] Give each participant an explicit reset, retain, clear or rebuild policy.
-- [ ] Use one policy in browser and headless environments.
-- [ ] Record preparation, adoption, carry-forward and retirement receipts.
+- [ ] Create game, renderer, enhancer, editor bridge, listeners, and RAF lease without publishing globals.
+- [ ] Keep loading visible and mutation/capture capabilities unavailable during construction.
+- [ ] Record preparation receipts for every candidate participant.
 
-### Atomic transition
+### First-frame admission
 
-- [ ] Suspend RAF and manual editor ticks during reset.
-- [ ] Prepare successor participants without publishing partial readiness.
-- [ ] Atomically adopt all required participants.
-- [ ] Preserve the predecessor and dispose candidates on failure.
-- [ ] Publish `RuntimeResetResult` and rollback evidence.
+- [ ] Validate DSK and source render-plan contracts.
+- [ ] Execute one authority-owned initial tick.
+- [ ] Enhance, fingerprint, submit, and acknowledge one candidate frame.
+- [ ] Require matching startup, state, plan, renderer, and visible-frame revisions.
 
-### Replay and presentation
+### Atomic adoption and rollback
 
-- [ ] Journal accepted reset and tick commands with state/render fingerprints.
-- [ ] Clear or explicitly carry the headless capture baseline.
-- [ ] Clear or mark browser `lastPlan` and `lastRender` as predecessor-only.
-- [ ] Expose reset/session revisions through GameHost and editor snapshots.
-- [ ] Publish `FirstResetSessionFrameAck`.
+- [ ] Atomically publish `GameHost`, `NexusEditorEnvironment`, Ready state, and accepted RAF generation.
+- [ ] Publish `BrowserStartupResult` and `FirstVisibleMeadowFrameAck`.
+- [ ] On failure, remove listeners, dispose bridge/renderer/enhancer, revoke globals, and publish participant retirement receipts.
+- [ ] Return one idempotent `BrowserStartupFailureResult` for failure, cancellation, or supersession.
 
 ### Fixtures
 
-- [ ] Add unique-session and duplicate-command fixtures.
-- [ ] Add stale-revision and superseded-attempt fixtures.
-- [ ] Add reset-during-RAF and reset-versus-manual-tick fixtures.
-- [ ] Add participant failure and rollback fixtures.
-- [ ] Add browser/headless parity and capture-baseline fixtures.
-- [ ] Run source, built-output and Pages parity smokes.
+- [ ] Add provider import/export failure fixtures.
+- [ ] Add DSK, render-plan, and renderer first-frame failure fixtures.
+- [ ] Add early tick/reset/capture rejection fixtures.
+- [ ] Add cancellation, retry, and stale completion fixtures.
+- [ ] Add listener, global, renderer-resource, and RAF retirement fixtures.
+- [ ] Run source, built-output, and Pages parity smokes.
 
 ## Required result
 
 ```txt
-RuntimeResetResult {
-  commandId
-  environmentId
-  predecessorSessionGeneration
-  successorSessionGeneration
-  predecessorStateRevision
-  successorStateRevision
+BrowserStartupResult {
+  bootAttemptId
+  startupRevision
+  providerFingerprint
+  gameRevision
+  renderPlanFingerprint
+  rendererGeneration
+  firstVisibleFrameId
   status
-  reason
   participantReceipts
-  carriedLedgers
-  clearedLedgers
   rollbackReceipt
-  replayJournalEntry
-  firstFrameAck
 }
 ```
 
 ## Preserved dependencies
 
-DSK capability admission, browser observation evidence, render cache coherence, viewport authority, editor capability admission, host retirement, workspace containment, provider parity, WebGL recovery, frame scheduling, progression, grass visibility, audio lifecycle and save/migration remain separate bounded work.
+Reset/replay, DSK capability admission, browser observation evidence, render cache coherence, viewport authority, editor capability lifecycle, host retirement, workspace containment, provider-source parity, WebGL recovery, frame scheduling, progression, grass visibility, audio lifecycle, and save/migration remain separate bounded work.

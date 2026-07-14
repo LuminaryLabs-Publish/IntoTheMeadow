@@ -2,42 +2,40 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-14T09-58-25-04-00`  
-**Status:** `runtime-reset-session-replay-authority-audited`
+**Last aligned:** `2026-07-14T15-38-28-04-00`  
+**Status:** `browser-startup-readiness-first-frame-authority-audited`
 
 ## Summary
 
-IntoTheMeadow exposes reset through browser and headless editor environments, but reset does not create a unique successor session or settle all state, scheduler, render and observation participants together.
-
-The browser path resets game state only while retaining last render evidence and active RAF ownership. The headless path also resets local time and invalidates the enhancer, but retains the previous capture baseline. Both recreate `arrival-meadow:session-0`, so predecessor and successor work cannot be reliably distinguished.
+The browser host publishes `GameHost`, `NexusEditorEnvironment`, editor listeners, and loading completion before one validated meadow frame exists. A first-frame failure occurs after `startWebHost()` has resolved and leaves partially adopted public and renderer ownership without a typed startup failure or rollback receipt.
 
 ## Plan ledger
 
-**Goal:** make reset one atomic, replay-verifiable session transition with participant receipts and a first matching successor frame.
+**Goal:** make browser construction, first-frame validation, public capability publication, readiness, and failure rollback one atomic boot transaction.
 
 - [x] Compare all 11 accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm ten eligible ledgers and root `.agent` states.
-- [x] Confirm no eligible repository is new, missing, undocumented or runtime-ahead.
+- [x] Confirm all eligible heads match their recorded documentation heads.
 - [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Inspect browser and headless reset paths.
+- [x] Inspect browser startup, host publication, editor bridge, render and failure paths.
 - [x] Preserve all 44 declared kit surfaces and offered services.
-- [x] Add the `2026-07-14T09-58-25-04-00` audit family.
+- [x] Add the `2026-07-14T15-38-28-04-00` audit family.
 - [x] Push only to `main`; create no branch or pull request.
-- [ ] Implement reset/replay authority and fixtures later.
+- [ ] Implement startup admission and executable fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-14T09-58-25-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-14T09-58-25-04-00.md
-.agent/architecture-audit/2026-07-14T09-58-25-04-00-runtime-reset-session-replay-dsk-map.md
-.agent/render-audit/2026-07-14T09-58-25-04-00-reset-state-render-evidence-coherence-gap.md
-.agent/gameplay-audit/2026-07-14T09-58-25-04-00-reset-session-replay-loop.md
-.agent/interaction-audit/2026-07-14T09-58-25-04-00-runtime-reset-command-result-map.md
-.agent/reset-replay-audit/2026-07-14T09-58-25-04-00-session-generation-participant-reset-contract.md
-.agent/deploy-audit/2026-07-14T09-58-25-04-00-reset-replay-fixture-gate.md
-.agent/central-sync-audit/2026-07-14T09-58-25-04-00-repo-ledger-reset-replay-reconciliation.md
+.agent/trackers/2026-07-14T15-38-28-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-14T15-38-28-04-00.md
+.agent/architecture-audit/2026-07-14T15-38-28-04-00-browser-startup-readiness-first-frame-dsk-map.md
+.agent/render-audit/2026-07-14T15-38-28-04-00-pre-ready-public-frame-gap.md
+.agent/gameplay-audit/2026-07-14T15-38-28-04-00-boot-to-first-frame-loop.md
+.agent/interaction-audit/2026-07-14T15-38-28-04-00-startup-command-result-map.md
+.agent/startup-audit/2026-07-14T15-38-28-04-00-candidate-adoption-failure-rollback-contract.md
+.agent/deploy-audit/2026-07-14T15-38-28-04-00-browser-startup-fixture-gate.md
+.agent/central-sync-audit/2026-07-14T15-38-28-04-00-repo-ledger-startup-readiness-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -48,15 +46,19 @@ The browser path resets game state only while retaining last render evidence and
 ## Complete interaction loop
 
 ```txt
-browser RAF and editor commands advance one mutable game instance
-  -> runtime.reset recreates frame-zero state
-  -> session identity remains arrival-meadow:session-0
-  -> browser render evidence and scheduler remain live
+provider import
+  -> game, renderer and enhancer construction
+  -> GameHost publication
+  -> editor bridge publication and listeners
+  -> loading hidden
+  -> first RAF tick
+  -> plan validation
+  -> renderer submission
 
-headless editor
-  -> runtime.reset resets time and enhancer
-  -> same session identity is recreated
-  -> prior capture baseline remains available to compare
+first-frame failure
+  -> showFatal stops future frames
+  -> host promise has already resolved
+  -> public globals and participant ownership remain
 ```
 
 ## Domain and kit census
@@ -67,21 +69,19 @@ local declared DSK/kits: 43
 total declared kit surfaces: 44
 active-v0.1 local descriptors: 15
 planned local descriptors: 28
-planned reset/replay authority surfaces: 21
+planned startup authority surfaces: 18
 ```
 
 The complete kit-by-kit service map is in the latest tracker and `.agent/kit-registry.json`.
 
 ## Required parent domain
 
-```txt
-meadow-runtime-reset-session-replay-authority-domain
-```
+`meadow-browser-startup-readiness-first-frame-authority-domain`
 
 ## Next safe ledge
 
-Introduce `RuntimeResetCommand`, a unique `SessionGeneration`, an explicit reset participant registry, scheduler suspension, atomic adoption/rollback, replay journaling and `FirstResetSessionFrameAck` shared by browser and headless environments.
+Add `BrowserStartupCommand`, private candidate participants, `BootAttemptId`, first-frame validation, atomic public adoption, typed Ready/Failed results, complete rollback, stale-attempt rejection, and `FirstVisibleMeadowFrameAck`.
 
 ## Claim boundary
 
-This pass does not claim reset atomicity, unique session identity, browser/headless parity, stale work rejection, replay equivalence, first reset-frame convergence or production readiness.
+This pass does not claim accurate loading readiness, atomic startup, first-frame convergence, failed-candidate retirement, source/build/Pages parity, or production readiness.

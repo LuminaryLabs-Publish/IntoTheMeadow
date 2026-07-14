@@ -4,33 +4,35 @@
 
 ## Summary
 
-This repo-local audit supersedes render-cache coherence as the current selection while retaining it as an unresolved dependency. Central tracking must record the browser-observation evidence finding, the preserved 44-kit inventory, five observation adapters and the new timestamped audit family.
+The repo-local browser-observation evidence audit is now centrally recorded with the selection evidence, preserved 44-kit inventory, five observation adapters, source-backed findings, authority boundary, file list and validation limits.
 
 ## Plan ledger
 
-**Goal:** preserve one central record of selection, source-backed findings, authority boundary, files and validation limits.
+**Goal:** preserve one central record of selection, findings, authority, files and claim boundaries.
 
 - [x] Complete the repo-local audit family.
 - [x] Refresh required root `.agent` state.
 - [x] Preserve predecessor audits and kit inventory.
-- [ ] Record the final repo-local head in the central ledger.
-- [ ] Add the paired central internal change log.
+- [x] Record the repo-local documentation head in the central ledger.
+- [x] Add the paired central internal change log.
+- [x] Push only to `main`.
+- [x] Create no branch or pull request.
 
-## Central status target
+## Central status
 
 ```txt
 Status: browser-observation-evidence-authority-central-reconciled
 Technical status: browser-observation-evidence-authority-audited
 ```
 
-## Required central changes
+## Central changes
 
 ```txt
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 internal-change-log/2026-07-13T22-40-52-04-00-into-the-meadow-browser-observation-evidence.md
 ```
 
-## Findings to preserve
+## Findings preserved
 
 ```txt
 server readiness does not prove the spawned process owns the port
@@ -46,4 +48,4 @@ same-page editor canvas capture exists but is not used
 
 ## Boundary
 
-Central synchronization follows after the final repo-local documentation head is known.
+The synchronization is documentation-only. Runtime behavior, tests, dependencies, workflows and deployment remain unchanged.

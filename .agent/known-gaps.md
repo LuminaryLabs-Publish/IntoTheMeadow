@@ -1,91 +1,92 @@
 # Known Gaps
 
-**Updated:** `2026-07-14T09-58-25-04-00`  
+**Updated:** `2026-07-14T15-38-28-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `runtime-reset-session-replay-authority-audited`
+**Status:** `browser-startup-readiness-first-frame-authority-audited`
 
 ## Summary
 
-The current bounded gap is reset identity and participant coherence. Browser and headless reset paths recreate state but do not produce one unique successor session, shared participant policy, atomic result or first successor-frame proof.
+The current bounded gap is browser startup truth. Construction completion is treated as readiness before one frame validates, while first-frame failure cannot revoke already published public capabilities or produce complete rollback evidence.
 
 ## Plan ledger
 
-**Goal:** record every missing identity, lifecycle rule and proof required for deterministic reset and replay.
+**Goal:** record every missing identity, lifecycle rule, adoption barrier, and proof required for trustworthy browser startup.
 
-- [x] Record command and session gaps.
-- [x] Record scheduler and participant gaps.
-- [x] Record render and observation gaps.
-- [x] Record replay and validation gaps.
-- [x] Preserve predecessor audits.
+- [x] Record boot identity and provider-admission gaps.
+- [x] Record public publication and loading-state gaps.
+- [x] Record frame, failure, rollback, and stale-attempt gaps.
+- [x] Record validation gaps and preserve predecessor audits.
 - [ ] Implement and prove the authority later.
 
 ## Identity gaps
 
 ```txt
-RuntimeResetCommand schema: absent
-ResetCommandId: absent
-ExpectedStateRevision: absent
-SessionGeneration: absent
-predecessor/successor relationship: absent
-reset cause and policy identity: absent
+BrowserStartupCommand schema: absent
+BootAttemptId: absent
+DocumentGeneration: absent
+StartupPolicyRevision: absent
+provider fingerprint: absent
+candidate participant manifest: absent
+accepted StartupRevision: absent
 ```
 
-## Participant gaps
+## Publication gaps
 
 ```txt
-canonical reset participant manifest: absent
-browser/headless participant parity: absent
-provider reset or retain receipt: absent
-base render-plan reset or carry receipt: absent
-enhancer invalidation policy: divergent
-renderer cache reset policy: absent
-error-ledger carry/clear policy: absent
-capture-baseline carry/clear policy: absent
+private GameHost candidate: absent
+private editor bridge candidate: absent
+atomic public-global adoption: absent
+loading-to-frame correlation: absent
+pre-ready mutation policy: absent
+pre-ready capture policy: absent
+Ready state and reason: absent
 ```
 
-## Scheduler gaps
+## Frame gaps
 
 ```txt
-RAF suspension during reset: absent
-manual editor tick suspension: absent
-stale tick rejection: absent
-superseded reset completion rejection: absent
-accepted scheduler generation: absent
+initial tick revision: absent
+render-plan fingerprint: absent
+renderer resource generation: absent
+submitted first-frame ID: absent
+visible first-frame ID: absent
+FirstVisibleMeadowFrameAck: absent
 ```
 
-## Evidence gaps
+## Failure and retirement gaps
 
 ```txt
-browser lastPlan invalidation: absent
-browser lastRender invalidation: absent
-headless lastCapture reset policy: absent
-participant preparation receipts: absent
-atomic adoption barrier: absent
-rollback receipt: absent
-RuntimeResetResult: absent
-replay journal: absent
-state/render fingerprints: absent
-FirstResetSessionFrameAck: absent
+typed BrowserStartupFailureResult: absent
+failed stage identity: absent
+idempotent failure handling: absent
+stale or superseded completion rejection: absent
+editor listener retirement receipt: absent
+renderer resource retirement receipt: absent
+enhancer invalidation receipt: absent
+public-global revocation receipt: absent
+candidate RAF retirement receipt: absent
+complete rollback receipt: absent
 ```
 
 ## Validation gaps
 
 ```txt
-unique successor session fixture: absent
-duplicate reset command fixture: absent
-stale expected revision fixture: absent
-reset during RAF fixture: absent
-reset versus manual tick fixture: absent
-participant failure/rollback fixture: absent
-browser/headless parity fixture: absent
-capture baseline fixture: absent
-first reset-session frame fixture: absent
+provider import/export failure fixture: absent
+DSK validation failure fixture: absent
+first plan-validation failure fixture: absent
+first renderer-submission failure fixture: absent
+early tick/reset/capture fixture: absent
+loading readiness fixture: absent
+cancel/retry/supersession fixture: absent
+listener/global/GPU retirement fixture: absent
+first visible frame fixture: absent
 source/build/Pages parity fixture: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+runtime reset and replay authority
 DSK executable capability composition
 browser observation provenance
 render-plan and mesh-cache coherence
@@ -104,4 +105,4 @@ atomic save and migration
 
 ## Completion boundary
 
-Reset is not proven until one admitted command creates a unique successor session, settles every declared participant atomically, rejects stale work, records replay evidence and produces a matching first successor frame.
+Startup is not proven until one admitted boot attempt privately prepares every participant, validates one exact frame, atomically publishes Ready capabilities, and completely retires every failed or superseded candidate.

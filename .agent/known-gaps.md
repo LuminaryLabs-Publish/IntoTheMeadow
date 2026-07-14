@@ -1,108 +1,107 @@
 # Known Gaps
 
-**Updated:** `2026-07-14T04-00-15-04-00`  
+**Updated:** `2026-07-14T09-58-25-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `dsk-capability-dependency-admission-authority-audited`
+**Status:** `runtime-reset-session-replay-authority-audited`
 
 ## Summary
 
-The current bounded gap is capability truth. The repository has a complete descriptor catalog, but descriptor presence does not yet prove that a service exists, its dependencies are satisfied, its implementation is active or its lifecycle was admitted.
+The current bounded gap is reset identity and participant coherence. Browser and headless reset paths recreate state but do not produce one unique successor session, shared participant policy, atomic result or first successor-frame proof.
 
 ## Plan ledger
 
-**Goal:** record every missing identity, graph rule, executable-service boundary and proof needed for trustworthy DSK composition.
+**Goal:** record every missing identity, lifecycle rule and proof required for deterministic reset and replay.
 
-- [x] Record manifest and service-token gaps.
-- [x] Record dependency and ownership gaps.
-- [x] Record preparation, adoption and rollback gaps.
-- [x] Record gameplay and visible-frame correlation gaps.
+- [x] Record command and session gaps.
+- [x] Record scheduler and participant gaps.
+- [x] Record render and observation gaps.
+- [x] Record replay and validation gaps.
 - [x] Preserve predecessor audits.
 - [ ] Implement and prove the authority later.
 
-## Manifest gaps
+## Identity gaps
 
 ```txt
-DskManifestVersion: absent
-DskCompositionRevision: absent
-CapabilityManifestId: absent
-service implementation module identity: absent
-service API revision: absent
-provider compatibility range: absent
-planned-versus-active admission policy: absent
+RuntimeResetCommand schema: absent
+ResetCommandId: absent
+ExpectedStateRevision: absent
+SessionGeneration: absent
+predecessor/successor relationship: absent
+reset cause and policy identity: absent
 ```
 
-## Dependency gaps
+## Participant gaps
 
 ```txt
-concrete service provides tokens: absent
-requires tokens: empty for every local descriptor
-optional dependency policy: absent
-unique service ownership validation: absent
-multi-provider policy: absent
-dependency version compatibility: absent
-topological install order: absent
-cycle detection: absent
+canonical reset participant manifest: absent
+browser/headless participant parity: absent
+provider reset or retain receipt: absent
+base render-plan reset or carry receipt: absent
+enhancer invalidation policy: divergent
+renderer cache reset policy: absent
+error-ledger carry/clear policy: absent
+capture-baseline carry/clear policy: absent
 ```
 
-## Installation gaps
+## Scheduler gaps
 
 ```txt
-prepare receipt: absent
-executable service handle: absent
-per-kit initialization probe: absent
+RAF suspension during reset: absent
+manual editor tick suspension: absent
+stale tick rejection: absent
+superseded reset completion rejection: absent
+accepted scheduler generation: absent
+```
+
+## Evidence gaps
+
+```txt
+browser lastPlan invalidation: absent
+browser lastRender invalidation: absent
+headless lastCapture reset policy: absent
+participant preparation receipts: absent
 atomic adoption barrier: absent
 rollback receipt: absent
-disposal ownership: absent
-stale composition rejection: absent
-partial/degraded composition result: absent
-```
-
-## Runtime gaps
-
-```txt
-active and planned descriptors share one structural install path
-required external provider can be represented as deferred
-most declared services are not invoked through kit APIs
-GameState stores descriptor snapshots rather than capability receipts
-GameHost exposes no accepted capability manifest
-commands do not declare required capabilities
-renderer frames carry no DSK composition revision
+RuntimeResetResult: absent
+replay journal: absent
+state/render fingerprints: absent
+FirstResetSessionFrameAck: absent
 ```
 
 ## Validation gaps
 
 ```txt
-missing dependency fixture: absent
-duplicate provider fixture: absent
-cycle fixture: absent
-version mismatch fixture: absent
-planned-kit admission fixture: absent
-external deferred/failure fixture: absent
-prepare failure and rollback fixture: absent
-capability readback fixture: absent
-first capability frame fixture: absent
-built-output and Pages parity fixtures: absent
+unique successor session fixture: absent
+duplicate reset command fixture: absent
+stale expected revision fixture: absent
+reset during RAF fixture: absent
+reset versus manual tick fixture: absent
+participant failure/rollback fixture: absent
+browser/headless parity fixture: absent
+capture baseline fixture: absent
+first reset-session frame fixture: absent
+source/build/Pages parity fixture: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
-browser observation evidence coherence
-render-plan and mesh cache coherence
-render-surface viewport authority
-browser editor capability admission
-web-host lifecycle retirement
+DSK executable capability composition
+browser observation provenance
+render-plan and mesh-cache coherence
+viewport authority
+editor capability admission
+web-host retirement
 workspace containment and atomic artifacts
 provider-source parity
-WebGL context/resource recovery
+WebGL context recovery
 single-chain frame scheduling
 playable progression
-camera-bound grass visibility and LOD
+grass visibility and LOD
 audio user-gesture lifecycle
 atomic save and migration
-independent replay
 ```
 
 ## Completion boundary
 
-A descriptor count, five-layer shape and `validation.passed` flag are not executable capability evidence unless every active service has an implementation, dependency graph, ownership receipt, successful probe, accepted composition revision and matching runtime readback.
+Reset is not proven until one admitted command creates a unique successor session, settles every declared participant atomically, rejects stale work, records replay evidence and produces a matching first successor frame.

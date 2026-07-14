@@ -1,96 +1,77 @@
 # Next Steps
 
-**Updated:** `2026-07-14T04-00-15-04-00`  
+**Updated:** `2026-07-14T09-58-25-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `dsk-capability-dependency-admission-authority-audited`
+**Status:** `runtime-reset-session-replay-authority-audited`
 
 ## Summary
 
-Move from descriptor inventory to executable capability composition. Keep manifests and diagnostics, but require every active kit to declare concrete service tokens, dependencies, ownership, lifecycle and proof.
+Make browser and headless reset use the same command, session-generation and participant contract. Reset must stop stale work, settle state/render/editor participants atomically, and publish replayable evidence before successor readiness.
 
 ## Plan ledger
 
-**Goal:** create the smallest reliable path from the checked-in DSK catalog to one immutable, executable and observable capability graph.
+**Goal:** create the smallest reliable reset path from admitted intent to one uniquely identified successor session and first matching frame.
 
-### Manifest truth
+### Command and identity
 
-- [ ] Add a versioned `DskCapabilityManifest` for every local and external kit.
-- [ ] Distinguish `active`, `planned`, `experimental`, `deferred` and `unavailable` as admission states.
-- [ ] Expand the five service labels into concrete `provides` tokens.
-- [ ] Add explicit `requires`, optional dependencies and version ranges.
-- [ ] Identify the source module or adapter implementing each provided service.
+- [ ] Add `RuntimeResetCommand` with command ID, environment ID, predecessor session and expected state revision.
+- [ ] Add monotonically unique `SessionGeneration` and state revision.
+- [ ] Return prior immutable results for duplicate command IDs.
+- [ ] Reject stale and superseded reset attempts before mutation.
 
-### Graph admission
+### Participant manifest
 
-- [ ] Validate unique service ownership unless an explicit multi-provider policy exists.
-- [ ] Reject duplicate tokens, missing requirements and incompatible versions.
-- [ ] Detect dependency cycles before initialization.
-- [ ] Topologically order preparation and adoption.
-- [ ] Prevent planned descriptors from satisfying active runtime requirements.
-- [ ] Treat a deferred required external provider as an admission failure or explicit degraded mode.
+- [ ] Register state, provider, base plan, enhancer, renderer, schedulers, editor observations, captures and error ledgers.
+- [ ] Give each participant an explicit reset, retain, clear or rebuild policy.
+- [ ] Use one policy in browser and headless environments.
+- [ ] Record preparation, adoption, carry-forward and retirement receipts.
 
-### Executable services
+### Atomic transition
 
-- [ ] Give each active kit a `prepare`, `install`, `snapshot`, `reset` and `dispose` contract where relevant.
-- [ ] Return immutable service handles rather than descriptor labels.
-- [ ] Probe every required service before publishing readiness.
-- [ ] Record per-kit preparation and adoption receipts.
-- [ ] Roll back all prepared candidates if any participant fails.
+- [ ] Suspend RAF and manual editor ticks during reset.
+- [ ] Prepare successor participants without publishing partial readiness.
+- [ ] Atomically adopt all required participants.
+- [ ] Preserve the predecessor and dispose candidates on failure.
+- [ ] Publish `RuntimeResetResult` and rollback evidence.
 
-### Game and render correlation
+### Replay and presentation
 
-- [ ] Bind `GameState.dsk` to one accepted `DskCompositionRevision`.
-- [ ] Expose a capability manifest through `GameHost` and the editor bridge.
-- [ ] Include capability revision and degraded-state flags in diagnostics.
-- [ ] Reject gameplay commands whose required capability is unavailable.
-- [ ] Publish `FirstCapabilityRevisionFrameAck` after the renderer displays the accepted revision.
+- [ ] Journal accepted reset and tick commands with state/render fingerprints.
+- [ ] Clear or explicitly carry the headless capture baseline.
+- [ ] Clear or mark browser `lastPlan` and `lastRender` as predecessor-only.
+- [ ] Expose reset/session revisions through GameHost and editor snapshots.
+- [ ] Publish `FirstResetSessionFrameAck`.
 
 ### Fixtures
 
-- [ ] Add missing-requirement and duplicate-provider fixtures.
-- [ ] Add dependency-cycle and incompatible-version fixtures.
-- [ ] Add planned-kit-cannot-satisfy-active-requirement fixture.
-- [ ] Add external-provider deferred/failure fixtures.
-- [ ] Add preparation failure and rollback fixtures.
-- [ ] Add capability readback and first-visible-frame fixtures.
-- [ ] Run the same proof against source, built output and GitHub Pages.
+- [ ] Add unique-session and duplicate-command fixtures.
+- [ ] Add stale-revision and superseded-attempt fixtures.
+- [ ] Add reset-during-RAF and reset-versus-manual-tick fixtures.
+- [ ] Add participant failure and rollback fixtures.
+- [ ] Add browser/headless parity and capture-baseline fixtures.
+- [ ] Run source, built-output and Pages parity smokes.
 
 ## Required result
 
 ```txt
-DskCompositionResult {
+RuntimeResetResult {
   commandId
-  compositionRevision
-  registryRevision
-  providerRevision
+  environmentId
+  predecessorSessionGeneration
+  successorSessionGeneration
+  predecessorStateRevision
+  successorStateRevision
   status
   reason
-  activeKitIds
-  plannedKitIds
-  serviceOwners
-  dependencyOrder
-  preparationReceipts
-  adoptionReceipts
-  rejectedCapabilities
-  warnings
-  errors
+  participantReceipts
+  carriedLedgers
+  clearedLedgers
+  rollbackReceipt
+  replayJournalEntry
+  firstFrameAck
 }
-```
-
-## Dependency order
-
-```txt
-versioned manifests
-  -> concrete provides/requires tokens
-  -> ownership and compatibility validation
-  -> acyclic graph resolution
-  -> executable service preparation
-  -> atomic adoption or rollback
-  -> immutable capability readback
-  -> gameplay admission
-  -> visible-frame acknowledgement
 ```
 
 ## Preserved dependencies
 
-Browser observation, render cache coherence, viewport authority, editor capability admission, host retirement, workspace containment, provider parity, WebGL recovery, frame scheduling, playable progression, grass visibility, audio lifecycle, save/migration and replay remain separate bounded work.
+DSK capability admission, browser observation evidence, render cache coherence, viewport authority, editor capability admission, host retirement, workspace containment, provider parity, WebGL recovery, frame scheduling, progression, grass visibility, audio lifecycle and save/migration remain separate bounded work.

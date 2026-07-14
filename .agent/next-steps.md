@@ -1,123 +1,107 @@
 # Next Steps
 
-**Updated:** `2026-07-13T16-01-05-04-00`  
+**Updated:** `2026-07-13T22-40-52-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `render-plan-mesh-cache-coherence-authority-central-reconciled`
+**Status:** `browser-observation-evidence-authority-audited`
 
 ## Summary
 
-Implement cache coherence as a bounded coordinating domain. Keep plan enhancement, mesh construction, GPU upload and browser capture as adapters, but require them to consume one admitted render revision and return explicit participant receipts.
+Replace the two-process screenshot/DOM workflow with one controlled browser page and one terminal observation result. Keep Chromium, HTTP serving and filesystem operations as adapters.
 
 ## Plan ledger
 
-**Goal:** introduce the smallest complete path from source and policy revisions to correct cache reuse, atomic rebuild adoption and first matching visible frame.
+**Goal:** create the smallest reliable path from repository revision to one coherent browser artifact manifest.
 
-### Identity and manifests
+### Source and attempt identity
 
-- [ ] Add `SourceRenderPlanRevision`, `RenderPolicyRevision`, `ContractRevision`, `MeshRevision` and `GpuBufferGeneration`.
-- [ ] Generate a dependency manifest for the enhancer, contract builder and mesh builder.
-- [ ] Classify each dependency as dynamic-uniform, contract-only or mesh-affecting.
-- [ ] Reject consumer reads that are absent from the declared manifest in tests.
+- [ ] Add `ObservationAttemptId` and `ObservationPolicyRevision`.
+- [ ] Record repository commit and working-tree or build fingerprint.
+- [ ] Record the external provider URL and immutable commit.
+- [ ] Fingerprint the browser executable, version and launch arguments.
 
-### Fingerprints
+### Server ownership
 
-- [ ] Replace partial `sourceTopologyKey` admission with `EnhancementDependencyFingerprint`.
-- [ ] Add `ContractDescriptorFingerprint` for the complete contracted graph.
-- [ ] Add `MeshDependencyFingerprint` for every value read by `buildMeadowMeshData()`.
-- [ ] Add `DynamicUniformFingerprint` for time, camera, light, sky and wind state that does not require static mesh replacement.
-- [ ] Version fingerprint schemas and builders.
+- [ ] Reserve an available loopback port instead of assuming 4173.
+- [ ] Require a successful bind receipt from the spawned server.
+- [ ] Verify the expected document and module graph are served.
+- [ ] Reject responses from a predecessor or unrelated server.
+- [ ] Await server exit and record a retirement receipt.
 
-### Admission and decisions
+### One browser page
 
-- [ ] Add `RenderRevisionCommand` and `RenderCacheDecisionResult`.
-- [ ] Validate expected source, policy, contract, mesh and GPU predecessor revisions.
-- [ ] Return explicit `ReuseAll`, `UpdateDynamicUniforms`, `RebuildContract`, `RebuildMesh`, `RebuildContractAndMesh`, rejection and rollback decisions.
-- [ ] Reject stale, duplicate, incomplete and superseded work with zero mutation.
+- [ ] Launch one controllable browser session and page.
+- [ ] Wait for `NexusEditorEnvironment` protocol admission.
+- [ ] Require zero browser errors and unhandled rejections.
+- [ ] Wait for an admitted renderer frame rather than a text marker.
+- [ ] Record game, plan, mesh, GPU and frame revisions when available.
 
-### Participant preparation
+### Correlated capture
 
-- [ ] Prepare contracted render-plan candidates without replacing the active cache.
-- [ ] Prepare CPU mesh candidates without deleting active GPU buffers.
-- [ ] Prepare all GPU attribute buffers before retiring predecessors.
-- [ ] Validate mesh array lengths, vertex counts, descriptors and buffer allocations under one revision.
+- [ ] Invoke `renderer.capture` through the editor bridge.
+- [ ] Capture DOM, editor snapshot, canvas image and screenshot from the same page.
+- [ ] Bind every artifact to one page generation and renderer frame.
+- [ ] Record media type, dimensions, bytes and cryptographic hash.
+- [ ] Add blank-frame, entropy and expected-region checks.
 
-### Commit and recovery
+### Artifact settlement
 
-- [ ] Atomically adopt contracted plan, CPU mesh and GPU buffers.
-- [ ] Publish participant preparation and adoption receipts.
-- [ ] Preserve active plan, mesh and buffers on candidate failure.
-- [ ] Dispose predecessor buffers only after successful adoption.
-- [ ] Publish explicit rollback or surface-loss results.
+- [ ] Write to an isolated per-attempt temporary directory.
+- [ ] Quarantine failed and partial attempts.
+- [ ] Atomically promote a complete immutable manifest.
+- [ ] Keep a latest-completed pointer separate from failed attempts.
+- [ ] Never let stale fixed-name files satisfy a successor run.
 
-### Readback and visible proof
+### Results and proof
 
-- [ ] Add source, policy, contract, mesh and GPU revisions to enhancer and renderer snapshots.
-- [ ] Add `GameHost.getRenderCacheState()`.
-- [ ] Make editor capture cite the cache decision and visible frame.
-- [ ] Publish `FirstCacheRevisionFrameAck`.
-- [ ] Return `not-ready`, predecessor or acknowledged-successor status for captures during transitions.
-
-### Proof
-
-- [ ] Mutate wildflower color and accent only.
-- [ ] Mutate rock and distant-tree palette only.
-- [ ] Mutate atmosphere hill geometry and color.
-- [ ] Mutate path rut and pebble counts.
-- [ ] Mutate focal-tree trunk, root, leaf, material and outline values.
-- [ ] Mutate runtime performance quality and density policy.
-- [ ] Mutate grass and terrain material palettes.
-- [ ] Prove time-only and supported uniform-only cache hits.
-- [ ] Inject contract, mesh and GPU-buffer failures.
-- [ ] Prove predecessor preservation and atomic adoption.
-- [ ] Prove source, contract, mesh, renderer, capture and visible-frame parity.
-- [ ] Run `npm run check`, source browser smoke, production build, built-output smoke and Pages smoke.
+- [ ] Add `BrowserObservationCommand` and `BrowserObservationResult`.
+- [ ] Return Completed, Degraded, Unavailable, Rejected, TimedOut, Failed, Partial or RetirementFailed.
+- [ ] Add occupied-port and unrelated-server fixtures.
+- [ ] Add provider, WebGL, browser-error, timeout and blank-frame fixtures.
+- [ ] Add stale-artifact and retirement-timeout fixtures.
+- [ ] Run source, built-output and GitHub Pages parity observations.
+- [ ] Add the executable browser gate to an explicit proof script or workflow.
 
 ## Required result
 
 ```txt
-RenderCacheDecisionResult {
+BrowserObservationResult {
   commandId
-  hostGeneration
+  attemptId
   status
-  decision
   reason
-  sourceRevision
-  policyRevision
-  predecessorContractRevision
-  contractRevision
-  predecessorMeshRevision
-  meshRevision
-  predecessorGpuGeneration
-  gpuGeneration
-  enhancementFingerprint
-  contractFingerprint
-  meshFingerprint
-  dynamicUniformFingerprint
-  enhancerReceipt
-  contractReceipt
-  meshReceipt
-  gpuReceipt
-  adoptionReceipt
-  rollbackReceipt?
-  frameRequired
-  firstFrameAckId?
+  repositoryRevision
+  providerFingerprint
+  browserFingerprint
+  serverGeneration
+  browserSessionGeneration
+  pageGeneration
+  rendererFrameId
+  artifactManifestId
+  artifactHashes
+  serverReceipt
+  browserReceipt
+  frameReceipt
+  retirementReceipt
+  warnings
+  errors
 }
 ```
 
 ## Dependency order
 
 ```txt
-host lifecycle generation
-  -> source and policy revisions
-  -> generated dependency manifests
-  -> exhaustive fingerprints
-  -> typed cache decision
-  -> detached contract, mesh and GPU candidates
-  -> atomic adoption or rollback
-  -> revisioned renderer/readback/capture
-  -> first visible cache-revision acknowledgement
+repository and provider identity
+  -> observation attempt
+  -> port reservation and server ownership
+  -> browser and page admission
+  -> renderer-frame readiness
+  -> same-page artifact capture
+  -> hashing and semantic validation
+  -> atomic manifest promotion
+  -> terminal retirement
+  -> source/build/Pages parity
 ```
 
 ## Preserved dependencies
 
-Viewport authority, browser editor admission, host retirement, workspace containment, provider parity, WebGL recovery, frame scheduling, DSK runtime consumption, playable progression, grass visibility, audio lifecycle, save/migration and replay remain separate bounded work.
+Render cache coherence, viewport authority, editor capability admission, host retirement, workspace containment, provider parity, WebGL recovery, frame scheduling, DSK consumption, playable progression, grass visibility, audio lifecycle, save/migration and replay remain separate bounded work.

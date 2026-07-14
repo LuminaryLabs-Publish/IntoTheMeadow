@@ -1,80 +1,80 @@
-# Current Audit: DSK Capability Dependency Admission
+# Current Audit: Runtime Reset Session Replay Authority
 
-**Updated:** `2026-07-14T04-00-15-04-00`  
+**Updated:** `2026-07-14T09-58-25-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `dsk-capability-dependency-admission-authority-audited`  
-**Immediate predecessor:** `browser-observation-evidence-authority-central-reconciled`
+**Status:** `runtime-reset-session-replay-authority-audited`  
+**Immediate predecessor:** `dsk-capability-dependency-admission-authority-central-reconciled`
 
 ## Summary
 
-The repository exposes a broad 44-surface kit catalog, but current installation proves descriptor shape rather than executable capability composition. All local descriptors report empty dependencies, one generic domain token and five service labels. The installer does not resolve, prepare, probe or atomically adopt the advertised services.
+`runtime.reset` is available in both browser and headless editor environments, but it is not one shared reset transaction. The game recreates frame-zero state using the same `arrival-meadow:session-0` identity and retains the meadow provider and cached base plan.
+
+Browser reset leaves RAF, last plan, last render, enhancer and renderer evidence alive. Headless reset additionally resets time and invalidates the enhancer, but retains `lastCapture`. No typed reset result or first successor-frame acknowledgement proves which participant generation is current.
 
 ## Plan ledger
 
-**Goal:** bind each declared kit to concrete executable services, explicit dependencies, one ownership graph and one accepted composition revision.
+**Goal:** bind reset intent, session identity, participant lifecycle, replay evidence and first-frame settlement into one authority.
 
 - [x] Compare the full Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm ten eligible ledgers, root `.agent` states and synchronized heads.
 - [x] Select only IntoTheMeadow by the oldest eligible timestamp.
-- [x] Inspect `src/dsks/index.js`, `src/boot/install-dsks.js`, game creation and DSK tests.
-- [x] Preserve all 44 declared kit surfaces and service labels.
-- [x] Document 22 planned admission surfaces.
+- [x] Inspect game state/reset, web host, GameHost, browser editor bridge, headless environment and tests.
+- [x] Preserve all 44 kit surfaces and offered services.
 - [x] Add the timestamped audit family.
 - [x] Change documentation only and push to `main`.
-- [ ] Implement executable composition and failure fixtures later.
+- [ ] Implement the runtime authority and failure fixtures later.
 
 ## Interaction loop
 
 ```txt
-load external provider
-  -> create descriptor-only local catalog
-  -> validate identifier and layer shape
-  -> return loaded/deferred external status
-  -> create actual meadow and state outside kit service APIs
-  -> store descriptor snapshots in game state
-  -> tick frame/time
-  -> render without one capability revision
+browser reset
+  -> direct game.reset
+  -> same session identity
+  -> retained plan/render/scheduler evidence
+
+headless reset
+  -> time = 0
+  -> enhancer.invalidate
+  -> direct game.reset
+  -> same session identity
+  -> retained previous capture baseline
 ```
 
 ## Main findings
 
 ```txt
-all local requires arrays are empty
-provides contains one generic game:<domain> token per descriptor
-five offered service labels are not registered as service tokens
-active and planned descriptors share the same install path
-missing external providers can be represented as deferred without failing install
-validation checks IDs, suffixes, service-count shape and required presence
-installation performs no dependency resolution or cycle detection
-installation produces no executable provider or lifecycle receipt
-DSK smoke proves count and five layers, not service behavior
-actual meadow creation and game state mutation bypass most declared services
+unique SessionGeneration: absent
+ResetCommandId and expected revision: absent
+browser/headless participant parity: absent
+RAF and manual-tick reset barrier: absent
+browser lastPlan/lastRender invalidation: absent
+headless lastCapture reset policy: absent
+atomic adoption or rollback: absent
+replay journal and fingerprints: absent
+FirstResetSessionFrameAck: absent
 ```
 
 ## Required parent domain
 
 ```txt
-meadow-dsk-capability-dependency-admission-authority-domain
+meadow-runtime-reset-session-replay-authority-domain
 ```
 
 ## Required transaction
 
 ```txt
-DskCompositionCommand
-  -> bind repository, registry and provider revisions
-  -> normalize active and planned manifests
-  -> expand concrete provides and requires tokens
-  -> validate unique ownership, versions and compatibility
-  -> resolve an acyclic dependency graph
-  -> prepare executable service providers
-  -> probe every required active capability
-  -> reject planned, missing, deferred, duplicate or conflicting work
-  -> atomically adopt all participants or preserve predecessors
-  -> publish DskCompositionResult and CapabilityManifest
-  -> publish FirstCapabilityRevisionFrameAck
+RuntimeResetCommand
+  -> bind predecessor session and expected revisions
+  -> suspend frame and manual-tick leases
+  -> prepare successor state and participant reset candidates
+  -> assign a unique SessionGeneration
+  -> reject duplicate, stale or superseded work
+  -> atomically adopt all participants or preserve predecessor
+  -> publish RuntimeResetResult and replay journal entry
+  -> resume one accepted scheduler generation
+  -> publish FirstResetSessionFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No DSK declaration, installer, game behavior, renderer, test, build or deployment code changed.
+Documentation only. No runtime, renderer, editor, test, build or deployment code changed.

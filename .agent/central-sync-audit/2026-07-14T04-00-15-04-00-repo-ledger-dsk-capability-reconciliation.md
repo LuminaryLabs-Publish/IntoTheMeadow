@@ -6,33 +6,35 @@
 
 ## Summary
 
-This repo-local audit supersedes browser-observation evidence as the current selection while retaining all predecessor audits. Central tracking must record the descriptor-versus-executable-capability finding, the preserved 44-kit inventory and the new timestamped audit family.
+The repo-local DSK capability dependency audit is centrally recorded with the selection evidence, preserved 44-kit inventory, source-backed findings, authority boundary, file list and validation limits.
 
 ## Plan ledger
 
-**Goal:** preserve one central record of selection, source-backed findings, authority boundary, files and validation limits.
+**Goal:** preserve one central record of selection, findings, authority, files and claim boundaries.
 
 - [x] Complete the repo-local audit family.
 - [x] Refresh required root `.agent` state.
 - [x] Preserve predecessor audits and kit inventory.
-- [ ] Record the final repo-local documentation head in the central ledger.
-- [ ] Add the paired central internal change log.
+- [x] Record the repo-local documentation head in the central ledger.
+- [x] Add the paired central internal change log.
+- [x] Push only to `main`.
+- [x] Create no branch or pull request.
 
-## Central status target
+## Central status
 
 ```txt
 Status: dsk-capability-dependency-admission-authority-central-reconciled
 Technical status: dsk-capability-dependency-admission-authority-audited
 ```
 
-## Required central changes
+## Central changes
 
 ```txt
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 internal-change-log/2026-07-14T04-00-15-04-00-into-the-meadow-dsk-capability-dependency-admission.md
 ```
 
-## Findings to preserve
+## Findings preserved
 
 ```txt
 all local DSK requires arrays are empty
@@ -46,4 +48,4 @@ runtime and rendered frames expose no accepted capability-composition revision
 
 ## Boundary
 
-Central synchronization follows after the final repo-local documentation head is known.
+The synchronization is documentation-only. Runtime behavior, tests, dependencies, workflows and deployment remain unchanged.

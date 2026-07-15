@@ -1,91 +1,90 @@
 # Known Gaps
 
-**Updated:** `2026-07-14T15-38-28-04-00`  
+**Updated:** `2026-07-14T20-40-50-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `browser-startup-readiness-first-frame-authority-audited`
+**Status:** `post-process-descriptor-execution-authority-audited`
 
 ## Summary
 
-The current bounded gap is browser startup truth. Construction completion is treated as readiness before one frame validates, while first-frame failure cannot revoke already published public capabilities or produce complete rollback evidence.
+The bounded gap is truthful presentation adoption. A six-pass post-process graph is declared, but the active renderer executes an unversioned inline profile and publishes no graph-admission, pass-execution, resource, fallback, or visible-frame receipts.
 
 ## Plan ledger
 
-**Goal:** record every missing identity, lifecycle rule, adoption barrier, and proof required for trustworthy browser startup.
+**Goal:** record every missing identity, admission rule, execution receipt, rollback guarantee, and proof required for trustworthy post-processing.
 
-- [x] Record boot identity and provider-admission gaps.
-- [x] Record public publication and loading-state gaps.
-- [x] Record frame, failure, rollback, and stale-attempt gaps.
-- [x] Record validation gaps and preserve predecessor audits.
+- [x] Record graph and capability gaps.
+- [x] Record resource and pass-execution gaps.
+- [x] Record fallback and diagnostics gaps.
+- [x] Record validation and deployment gaps.
 - [ ] Implement and prove the authority later.
 
 ## Identity gaps
 
 ```txt
-BrowserStartupCommand schema: absent
-BootAttemptId: absent
-DocumentGeneration: absent
-StartupPolicyRevision: absent
-provider fingerprint: absent
-candidate participant manifest: absent
-accepted StartupRevision: absent
+PostProcessFrameCommand schema: absent
+RenderAttemptId: absent
+declared graph fingerprint: absent
+renderer capability fingerprint: absent
+post-process policy revision: absent
+admitted profile ID: absent
+resource generation ID: absent
 ```
 
-## Publication gaps
+## Admission gaps
 
 ```txt
-private GameHost candidate: absent
-private editor bridge candidate: absent
-atomic public-global adoption: absent
-loading-to-frame correlation: absent
-pre-ready mutation policy: absent
-pre-ready capture policy: absent
-Ready state and reason: absent
+mandatory versus optional pass policy: absent
+full profile admission: absent
+reduced profile admission: absent
+inline fallback admission: absent
+unsupported-pass rejection: absent
+ordered input/output validation: absent
 ```
 
-## Frame gaps
+## Execution gaps
 
 ```txt
-initial tick revision: absent
-render-plan fingerprint: absent
-renderer resource generation: absent
-submitted first-frame ID: absent
-visible first-frame ID: absent
-FirstVisibleMeadowFrameAck: absent
+render-target preparation receipts: absent
+scene-color target identity: absent
+depth/normal target identity: absent
+ping-pong target identities: absent
+per-pass execution receipts: absent
+final composite output identity: absent
+pass substitution reasons: absent
+skipped-pass reasons: absent
 ```
 
-## Failure and retirement gaps
+## Frame and rollback gaps
 
 ```txt
-typed BrowserStartupFailureResult: absent
-failed stage identity: absent
-idempotent failure handling: absent
-stale or superseded completion rejection: absent
-editor listener retirement receipt: absent
-renderer resource retirement receipt: absent
-enhancer invalidation receipt: absent
-public-global revocation receipt: absent
-candidate RAF retirement receipt: absent
-complete rollback receipt: absent
+PostProcessFrameResult: absent
+submitted post-process frame ID: absent
+visible post-process frame ID: absent
+FirstVisiblePostProcessFrameAck: absent
+failed resource retirement receipt: absent
+predecessor output preservation receipt: absent
+stale resource/pass result rejection: absent
+context-loss profile recovery receipt: absent
 ```
 
 ## Validation gaps
 
 ```txt
-provider import/export failure fixture: absent
-DSK validation failure fixture: absent
-first plan-validation failure fixture: absent
-first renderer-submission failure fixture: absent
-early tick/reset/capture fixture: absent
-loading readiness fixture: absent
-cancel/retry/supersession fixture: absent
-listener/global/GPU retirement fixture: absent
-first visible frame fixture: absent
+graph mutation fixtures: absent
+renderer capability fixtures: absent
+full/reduced/fallback fixtures: absent
+unsupported mandatory pass fixture: absent
+allocation and pass failure fixtures: absent
+resize and DPR generation fixtures: absent
+context-loss and recovery fixtures: absent
+image capture tied to graph/profile: absent
 source/build/Pages parity fixture: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+browser startup readiness
 runtime reset and replay authority
 DSK executable capability composition
 browser observation provenance
@@ -105,4 +104,4 @@ atomic save and migration
 
 ## Completion boundary
 
-Startup is not proven until one admitted boot attempt privately prepares every participant, validates one exact frame, atomically publishes Ready capabilities, and completely retires every failed or superseded candidate.
+Post-processing is not proven until every declared pass is executed, explicitly substituted, intentionally skipped by an admitted policy, or rejected, and the resulting profile is bound to one accepted visible frame.

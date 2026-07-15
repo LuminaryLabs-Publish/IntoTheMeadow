@@ -1,69 +1,70 @@
 # Next Steps
 
-**Updated:** `2026-07-14T15-38-28-04-00`  
+**Updated:** `2026-07-14T20-40-50-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `browser-startup-readiness-first-frame-authority-audited`
+**Status:** `post-process-descriptor-execution-authority-audited`
 
 ## Summary
 
-Move browser construction behind a private candidate phase. Publish globals, loading completion, mutable editor commands, and authoritative capture only after one validated frame is submitted for the accepted boot attempt.
+Make post-processing an admitted renderer profile rather than an unverified descriptor attachment. Every declared pass must be executed, explicitly substituted, intentionally skipped by policy, or rejected.
 
 ## Plan ledger
 
-**Goal:** create the smallest reliable browser startup path from admitted boot intent to one visible Ready frame or complete failed-candidate retirement.
+**Goal:** create the smallest reliable path from one declared pass graph to one receipted GPU output and matching visible frame.
 
 ### Identity and admission
 
-- [ ] Add `BrowserStartupCommand` with `BootAttemptId`, document generation, expected predecessor state, and policy revision.
-- [ ] Fingerprint the product source, provider URL/revision, provider export, DSK install, and renderer configuration.
-- [ ] Reject duplicate, stale, cancelled, and superseded attempts.
+- [ ] Add `PostProcessFrameCommand` with render-attempt, plan, renderer, viewport, and policy revisions.
+- [ ] Fingerprint the declared graph and renderer capability manifest.
+- [ ] Validate pass IDs, order, mandatory status, inputs, outputs, and settings.
+- [ ] Admit `full`, `reduced`, `inline-fallback`, or `rejected` profile.
 
-### Private candidates
+### Resource planning
 
-- [ ] Create game, renderer, enhancer, editor bridge, listeners, and RAF lease without publishing globals.
-- [ ] Keep loading visible and mutation/capture capabilities unavailable during construction.
-- [ ] Record preparation receipts for every candidate participant.
+- [ ] Allocate versioned scene-color, depth, normal, and ping-pong targets only for the accepted profile.
+- [ ] Publish resource preparation receipts with formats, sizes, generations, and owners.
+- [ ] Rebuild on viewport, DPR, context, format, or profile revision changes.
 
-### First-frame admission
+### Pass execution
 
-- [ ] Validate DSK and source render-plan contracts.
-- [ ] Execute one authority-owned initial tick.
-- [ ] Enhance, fingerprint, submit, and acknowledge one candidate frame.
-- [ ] Require matching startup, state, plan, renderer, and visible-frame revisions.
+- [ ] Dispatch accepted passes in declared order.
+- [ ] Make inline cel/fog and geometry outline an explicit versioned fallback mapping when used.
+- [ ] Publish one `PassExecutionReceipt` for every declared pass.
+- [ ] Record substitutions, skips, failures, and output identities.
 
-### Atomic adoption and rollback
+### Adoption and rollback
 
-- [ ] Atomically publish `GameHost`, `NexusEditorEnvironment`, Ready state, and accepted RAF generation.
-- [ ] Publish `BrowserStartupResult` and `FirstVisibleMeadowFrameAck`.
-- [ ] On failure, remove listeners, dispose bridge/renderer/enhancer, revoke globals, and publish participant retirement receipts.
-- [ ] Return one idempotent `BrowserStartupFailureResult` for failure, cancellation, or supersession.
+- [ ] Publish `PostProcessFrameResult` only after the accepted output is submitted.
+- [ ] Publish `FirstVisiblePostProcessFrameAck` for the matching graph/profile/frame.
+- [ ] Preserve the accepted predecessor output on allocation, shader, pass, or composite failure.
+- [ ] Retire failed and superseded resource generations idempotently.
 
 ### Fixtures
 
-- [ ] Add provider import/export failure fixtures.
-- [ ] Add DSK, render-plan, and renderer first-frame failure fixtures.
-- [ ] Add early tick/reset/capture rejection fixtures.
-- [ ] Add cancellation, retry, and stale completion fixtures.
-- [ ] Add listener, global, renderer-resource, and RAF retirement fixtures.
-- [ ] Run source, built-output, and Pages parity smokes.
+- [ ] Add graph-validation and capability-admission fixtures.
+- [ ] Add full, reduced, inline-fallback, unsupported-pass, and failure fixtures.
+- [ ] Add resize, DPR, context-loss, and stale-generation fixtures.
+- [ ] Capture source, built-output, and Pages frames with matching result identity.
 
 ## Required result
 
 ```txt
-BrowserStartupResult {
-  bootAttemptId
-  startupRevision
-  providerFingerprint
-  gameRevision
-  renderPlanFingerprint
-  rendererGeneration
-  firstVisibleFrameId
+PostProcessFrameResult {
+  renderAttemptId
+  declaredGraphFingerprint
+  admittedProfileId
+  rendererCapabilityFingerprint
+  resourceGeneration
+  passReceipts
+  substitutions
+  skippedPasses
+  outputTargetId
+  submittedFrameId
+  visibleFrameId
   status
-  participantReceipts
-  rollbackReceipt
 }
 ```
 
 ## Preserved dependencies
 
-Reset/replay, DSK capability admission, browser observation evidence, render cache coherence, viewport authority, editor capability lifecycle, host retirement, workspace containment, provider-source parity, WebGL recovery, frame scheduling, progression, grass visibility, audio lifecycle, and save/migration remain separate bounded work.
+Startup readiness, reset/replay, DSK capability admission, browser observation, cache coherence, viewport authority, editor lifecycle, host retirement, provider parity, WebGL recovery, scheduling, progression, grass visibility, audio lifecycle, and save/migration remain separate bounded work.

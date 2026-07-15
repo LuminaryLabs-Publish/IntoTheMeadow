@@ -1,74 +1,78 @@
 # Next Steps
 
-**Updated:** `2026-07-15T01-39-38-04-00`  
+**Updated:** `2026-07-15T06-01-26-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `editor-mutation-visible-frame-settlement-authority-audited`
+**Status:** `shader-precision-capability-admission-authority-audited`
 
 ## Summary
 
-Make editor mutation a settled command rather than a direct call into the live game. A command must either remain explicitly headless or produce one matching browser frame before capture, comparison, or the next mutation is admitted.
+Replace the unconditional global mediump rewrite with a small provider-owned admission path. Preserve the authored source when supported, apply only explicit stage-specific fallbacks, and expose the effective program policy through renderer diagnostics and fixtures.
 
 ## Plan ledger
 
-**Goal:** create the smallest reliable path from one editor command to one state revision, one render result, and one matching observable frame.
+**Goal:** create the smallest reliable path from authored shader requirements to one admitted device-compatible program and one matching visible frame.
 
-### Identity and capability parity
+### Source and requirement identity
 
-- [ ] Add immutable `EditorCommandId`, `HostGeneration`, `RuntimeRevision`, `RenderAttemptId`, and `FrameRevision`.
-- [ ] Publish versioned browser and Node capability manifests.
-- [ ] Define one argument and result schema for `runtime.tick`, `runtime.reset`, `renderer.capture`, and `renderer.compare`.
-- [ ] Reject unsupported capability semantics instead of sharing one protocol label with divergent behavior.
+- [ ] Add immutable vertex and fragment source revisions and hashes.
+- [ ] Add per-stage required, preferred and minimum precision descriptors.
+- [ ] Add world-range, time-range, wind and depth tolerances for the current shader.
+- [ ] Include precision-policy revision in renderer and program identity.
 
-### Scheduler and mutation admission
+### Device capability and policy
 
-- [ ] Add a browser RAF lease that can be suspended, stepped, resumed, retired, and receipted.
-- [ ] Admit exactly one mutation against an expected runtime revision.
-- [ ] Prevent the autonomous RAF from adding a second tick before the editor command is visibly settled.
-- [ ] Reject duplicate, stale, predecessor, superseded, and concurrent editor commands.
+- [ ] Query provider precision capability with `getShaderPrecisionFormat` for each stage and precision class.
+- [ ] Preserve full range and precision observations in a capability snapshot.
+- [ ] Resolve required and preferred precision independently for vertex and fragment stages.
+- [ ] Reject mandatory unsupported requirements instead of silently rewriting them.
+- [ ] Define an explicit fallback order and downgrade warning receipt.
 
-### Render and capture settlement
+### Transform, compile and adoption
 
-- [ ] Rebuild and validate the render plan after every visible mutation.
-- [ ] Render the accepted state revision before returning a visible command result.
-- [ ] Bind `renderer.capture` to an acknowledged `FrameRevision`.
-- [ ] Reject captures whose canvas, renderer snapshot, render plan, and state revisions do not match.
-- [ ] Publish `FirstVisibleEditorMutationFrameAck`.
+- [ ] Preserve original source when no transform is required.
+- [ ] Replace the broad declaration-removal regex with a parsed, stage-aware policy.
+- [ ] Fingerprint original and effective source.
+- [ ] Compile and link detached candidates before replacing the active program.
+- [ ] Include effective source and capability revisions in the program cache key.
+- [ ] Preserve the predecessor program if transformation, compile or link fails.
 
-### Reset convergence
+### Diagnostics and frames
 
-- [ ] Reset game state, editor time, enhancer cache, renderer-dependent state, and capture lineage together.
-- [ ] Define whether reset is headless or visible.
-- [ ] Preserve the predecessor frame until the reset candidate renders successfully.
-- [ ] Retire stale post-reset captures and comparisons.
+- [ ] Add effective vertex and fragment precision to renderer snapshots.
+- [ ] Add transform, compile, link and fallback receipts to diagnostics.
+- [ ] Bind each visible frame and capture to the adopted program revision.
+- [ ] Publish `FirstPrecisionAdmittedFrameAck`.
 
 ### Fixtures
 
-- [ ] Add browser tick-once, reset, capture-after-tick, capture-after-reset, and RAF-race fixtures.
-- [ ] Add browser/Node capability and result-schema parity fixtures.
-- [ ] Add stale-frame, duplicate-command, failed-render, and resume-policy fixtures.
-- [ ] Capture source, built-output, and Pages frames tied to the same command and frame IDs.
+- [ ] Add declaration parser and transform-policy unit tests.
+- [ ] Add mocked capability-matrix tests.
+- [ ] Add real WebGL1 and WebGL2 compile fixtures.
+- [ ] Add mandatory-highp rejection and accepted-mediump fallback fixtures.
+- [ ] Add large-coordinate, long-time wind, fog-depth and outline stability fixtures.
+- [ ] Compare source, built output and Pages captures under the same program revision.
 
 ## Required result
 
 ```txt
-EditorMutationResult {
-  editorCommandId
-  capabilityManifestRevision
-  hostGeneration
-  mutationKind
-  previousRuntimeRevision
-  acceptedRuntimeRevision
-  renderAttemptId
-  renderPlanRevision
-  rendererRevision
-  submittedFrameRevision
-  visibleFrameRevision
-  captureId
+ShaderProgramAdmissionResult {
+  rendererGeneration
+  programId
+  originalSourceRevisions
+  effectiveSourceHashes
+  capabilityRevision
+  precisionPolicyRevision
+  effectiveVertexPrecision
+  effectiveFragmentPrecision
+  compileResults
+  linkResult
+  adoptedProgramRevision
   status
-  receipts
+  reason
+  warnings
 }
 ```
 
 ## Preserved dependencies
 
-Post-process execution, startup readiness, reset/replay, DSK capability admission, observation provenance, cache coherence, viewport authority, editor lifecycle, host retirement, workspace containment, provider parity, WebGL recovery, scheduling, progression, grass visibility, audio lifecycle, and save/migration remain separate bounded work.
+Editor mutation settlement, post-process execution, startup readiness, reset/replay, DSK capability admission, observation provenance, cache coherence, viewport authority, editor lifecycle, host retirement, workspace containment, provider parity, WebGL recovery, scheduling, progression, grass visibility, audio lifecycle and save/migration remain separate bounded work.

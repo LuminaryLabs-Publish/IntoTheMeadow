@@ -1,83 +1,86 @@
-# Current Audit: Audio Event Projection Authority
+# Current Audit: Accessible Semantic Projection Authority
 
-**Updated:** `2026-07-15T10-40-17-04-00`  
+**Updated:** `2026-07-15T15-41-21-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `audio-event-projection-authority-audited`  
-**Immediate predecessor:** `shader-precision-capability-admission-authority-central-reconciled`
+**Status:** `accessible-semantic-projection-authority-audited`  
+**Immediate predecessor:** `audio-event-projection-authority-central-reconciled`
 
 ## Summary
 
-`meadow-audio-dsk` advertises ambient-bed, spatial-cue, audio-state, audio-event and validation services, but it is not part of the active-v0.1 DSK set. The active web host creates only game, renderer, render enhancer and editor surfaces, while game ticks publish frame/time changes without semantic audio events.
+The active browser route continuously updates a WebGL canvas while the accessible document remains effectively static. Authored story, objective and interaction labels are not projected into semantic DOM, and the planned UI/input/interaction/story/objective DSKs are not active-v0.1.
 
-The result is a truthful architecture gap: visual frames and semantic content exist, but no browser audio capability, user-gesture unlock, context generation, cue projection, lifecycle settlement, retirement receipt or audible-frame acknowledgement is present.
+The result is a bounded projection gap: a visible frame can succeed without a matching accessible state, operable command surface, focus result, announcement result or convergence acknowledgement.
 
 ## Plan ledger
 
-**Goal:** bind accepted semantic state, browser capability, audio resources and audible evidence into one lifecycle-safe projection contract.
+**Goal:** bind accepted game state, semantic browser output, keyboard commands, focus, announcements and visible-frame evidence into one accessibility projection contract.
 
 - [x] Compare Publish inventory and central tracking.
 - [x] Exclude TheCavalryOfRome.
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Read DSK declarations, host, game state and semantic content.
+- [x] Read the document, host, DSK registry, service map, state and semantic content.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped audio audit family.
+- [x] Add the timestamped accessibility audit family.
 - [x] Change documentation only and target `main`.
 - [ ] Implement authority and fixtures later.
 
 ## Main findings
 
 ```txt
-meadow-audio-dsk declared: yes
-meadow-audio-dsk active-v0.1: no
-audio services advertised: 5
-semantic audio event ledger: absent
-AudioContext generation: absent
-accepted gesture unlock: absent
-ambience owner: absent
-listener/source projection: absent
-mute/volume policy: absent
-cue deduplication: absent
-voice budget: absent
-pause/visibility/route settlement: absent
-resource retirement receipts: absent
-FirstAudibleCueAck: absent
-FirstAudioVisualConvergenceAck: absent
+canvas role=img: present
+canvas alternative bound to state: no
+semantic game region state: absent
+focusable gameplay commands: absent
+keyboard command descriptions: absent
+focus owner/restoration: absent
+story announcement projection: absent
+objective status projection: absent
+interaction affordance projection: absent
+live-region policy: absent
+reduced-motion policy: absent
+contrast/text-scale policy: absent
+AccessibilityProjectionResult: absent
+FirstAccessibleFrameAck: absent
+FirstVisualAccessibleConvergenceAck: absent
 ```
 
 ## Current proof gap
 
 ```txt
-static DSK validation proves executable audio: no
-browser capability fixture: absent
-accepted unlock fixture: absent
-semantic cue fixture: absent
-ambience fixture: absent
-spatial cue fixture: absent
-pause/visibility/route fixture: absent
-source/build/Pages parity fixture: absent
+static labels prove accessible gameplay: no
+keyboard-only fixture: absent
+accessibility-tree snapshot fixture: absent
+screen-reader semantics fixture: absent
+focus order and restore fixture: absent
+announcement deduplication fixture: absent
+reduced-motion fixture: absent
+forced-colors fixture: absent
+200% text/reflow fixture: absent
+source/build/Pages accessibility parity: absent
 ```
 
 ## Required parent domain
 
-`meadow-audio-event-projection-authority-domain`
+`meadow-accessible-semantic-projection-authority-domain`
 
 ## Required transaction
 
 ```txt
-AudioProjectionAdmissionCommand
-  -> bind document, host, session, state and audio-policy revisions
-  -> observe capability and accepted user-gesture unlock
-  -> convert accepted semantic results into stable audio events
-  -> resolve immutable cue descriptors
-  -> deduplicate and enforce bus/voice policy
-  -> project ambience, UI and spatial sources
-  -> settle pause, visibility, route and fatal lifecycle states
-  -> stop, disconnect and retire resources exactly once
-  -> publish AudioProjectionResult
-  -> acknowledge FirstAudibleCueAck
-  -> acknowledge FirstAudioVisualConvergenceAck
+AccessibilityProjectionCommand
+  -> bind document, host, session, state and visible-frame revisions
+  -> derive immutable accessible read model
+  -> project structured story, objective and interaction semantics
+  -> publish allowlisted keyboard commands
+  -> settle focus order and restoration
+  -> publish deduplicated announcements
+  -> update canvas alternative description
+  -> apply accessibility preferences
+  -> reject stale or retired work
+  -> publish AccessibilityProjectionResult
+  -> acknowledge FirstAccessibleFrameAck
+  -> acknowledge FirstVisualAccessibleConvergenceAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, content, renderer, editor, audio, test, workflow or deployment code changed.
+Documentation only. No runtime, HTML, CSS, content, renderer, editor, accessibility, test, workflow or deployment code changed.

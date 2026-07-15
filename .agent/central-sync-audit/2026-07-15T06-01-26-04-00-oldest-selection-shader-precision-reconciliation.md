@@ -5,7 +5,7 @@
 
 ## Summary
 
-IntoTheMeadow was selected because all ten eligible Publish repositories were tracked, had root `.agent` state and matched their documented heads, while IntoTheMeadow held the oldest central timestamp. Central tracking must record the shader precision capability-admission finding, the preserved 44-kit inventory and the new timestamped audit family.
+IntoTheMeadow was selected because all ten eligible Publish repositories were tracked, had root `.agent` state and matched their documented heads, while IntoTheMeadow held the oldest central timestamp. Central tracking now records the shader precision capability-admission finding, the preserved 44-kit inventory and the new timestamped audit family.
 
 ## Plan ledger
 
@@ -16,11 +16,11 @@ IntoTheMeadow was selected because all ten eligible Publish repositories were tr
 - [x] Select only IntoTheMeadow.
 - [x] Add the repo-local audit family.
 - [x] Preserve the complete kit and service inventory.
-- [ ] Update `repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md`.
-- [ ] Add the paired internal change-log entry.
-- [ ] Record the finalized repo-local documentation head centrally.
+- [x] Update `repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md`.
+- [x] Add the paired internal change-log entry.
+- [x] Reconcile centrally on `main` at `a40d24362ca0e5b93897bb4ee4c3b07b37968c6a`.
 
-## Central status target
+## Central status
 
 ```txt
 Status: shader-precision-capability-admission-authority-central-reconciled
@@ -34,7 +34,7 @@ repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 internal-change-log/2026-07-15T06-01-26-04-00-into-the-meadow-shader-precision-capability-admission.md
 ```
 
-## Findings to preserve
+## Findings preserved
 
 ```txt
 compatibility wrapper removes lowp, mediump and highp float declarations
@@ -48,4 +48,4 @@ tests do not compile or compare precision policies
 
 ## Boundary
 
-This file stages central reconciliation. Runtime source, shaders, renderer behavior, tests, workflows and deployment remain unchanged.
+The synchronization is documentation-only. Runtime source, shaders, renderer behavior, tests, workflows and deployment remain unchanged.

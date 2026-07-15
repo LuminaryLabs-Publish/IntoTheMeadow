@@ -2,43 +2,43 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-15T01-39-38-04-00`  
-**Status:** `editor-mutation-visible-frame-settlement-authority-audited`
+**Last aligned:** `2026-07-15T06-01-26-04-00`  
+**Status:** `shader-precision-capability-admission-authority-audited`
 
 ## Summary
 
-The browser editor bridge exposes `runtime.tick` and `runtime.reset` as direct mutations of the live game while the web host retains its own recursive RAF tick-and-render loop. These editor commands return `completed` before a matching render plan, renderer snapshot, canvas image, or visible-frame acknowledgement exists.
+The browser compatibility renderer intercepts every WebGL shader source, removes explicit `lowp`, `mediump` and `highp` float declarations, and prepends `precision mediump float;` to vertex and fragment stages. The base vertex source is therefore changed to an explicit mediump policy, and any future highp request would be silently replaced.
 
-`renderer.capture` reads the current canvas and renderer snapshot without binding either to the state revision produced by the preceding editor command. A tick or reset can therefore settle in game state while capture still observes the predecessor frame; the next RAF then advances the game again before rendering.
+No device precision query, stage requirement, fallback result, original/effective source fingerprint, downgrade warning, renderer snapshot field or cross-device precision fixture proves that the transformed program preserves the authored render contract.
 
 ## Plan ledger
 
-**Goal:** make every editor mutation produce one versioned state result and one matching visible frame before capture, comparison, or subsequent mutation proceeds.
+**Goal:** make shader compatibility an explicit capability-admission result instead of an invisible source rewrite.
 
 - [x] Compare all 11 accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Confirm ten eligible central ledgers and ten root `.agent` states.
-- [x] Confirm no eligible repository is new, missing, undocumented, root-agent-missing, or runtime-ahead.
+- [x] Confirm no eligible repository is new, missing, undocumented, root-agent-missing or runtime-ahead.
 - [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Inspect browser editor capabilities, the RAF host, game tick/reset, Node editor semantics, scenarios, and browser observation proof.
+- [x] Inspect the compatibility wrapper, base shaders, compile/link path, renderer snapshot and proof surfaces.
 - [x] Preserve all 44 declared kit surfaces and offered services.
-- [x] Add the `2026-07-15T01-39-38-04-00` audit family.
+- [x] Add the `2026-07-15T06-01-26-04-00` audit family.
 - [x] Change documentation only and target `main`.
 - [x] Create no branch or pull request.
-- [ ] Implement command/frame settlement and executable parity fixtures later.
+- [ ] Implement shader precision admission and executable device fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-15T01-39-38-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-15T01-39-38-04-00.md
-.agent/architecture-audit/2026-07-15T01-39-38-04-00-editor-mutation-frame-settlement-dsk-map.md
-.agent/render-audit/2026-07-15T01-39-38-04-00-editor-mutation-stale-canvas-gap.md
-.agent/gameplay-audit/2026-07-15T01-39-38-04-00-editor-tick-reset-double-step-loop.md
-.agent/interaction-audit/2026-07-15T01-39-38-04-00-editor-command-frame-result-map.md
-.agent/editor-runtime-audit/2026-07-15T01-39-38-04-00-browser-node-command-settlement-contract.md
-.agent/deploy-audit/2026-07-15T01-39-38-04-00-editor-mutation-browser-fixture-gate.md
-.agent/central-sync-audit/2026-07-15T01-39-38-04-00-oldest-selection-editor-frame-reconciliation.md
+.agent/trackers/2026-07-15T06-01-26-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-15T06-01-26-04-00.md
+.agent/architecture-audit/2026-07-15T06-01-26-04-00-shader-precision-capability-admission-dsk-map.md
+.agent/render-audit/2026-07-15T06-01-26-04-00-global-mediump-source-rewrite-gap.md
+.agent/gameplay-audit/2026-07-15T06-01-26-04-00-vertex-wind-world-precision-risk-loop.md
+.agent/interaction-audit/2026-07-15T06-01-26-04-00-shader-program-admission-result-map.md
+.agent/shader-precision-audit/2026-07-15T06-01-26-04-00-stage-requirement-capability-transform-contract.md
+.agent/deploy-audit/2026-07-15T06-01-26-04-00-cross-device-shader-precision-fixture-gate.md
+.agent/central-sync-audit/2026-07-15T06-01-26-04-00-oldest-selection-shader-precision-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -49,28 +49,30 @@ The browser editor bridge exposes `runtime.tick` and `runtime.reset` as direct m
 ## Complete interaction loop
 
 ```txt
-web host RAF
-  -> game.tick
-  -> build and enhance render plan
-  -> renderer.render
-  -> publish lastPlan and lastRender
+boot
+  -> import provider
+  -> create game, enhancer and precision-safe renderer
+  -> publish host/editor surfaces
+  -> start RAF
 
-editor runtime.tick or runtime.reset
-  -> mutate the same live game directly
-  -> return completed immediately
-  -> do not suspend RAF
-  -> do not rebuild lastPlan
-  -> do not render
-  -> do not publish a state/frame binding
+program creation
+  -> proxy canvas returns proxy WebGL context
+  -> shader type is recorded
+  -> all explicit float precision declarations are removed
+  -> mediump float is prepended
+  -> transformed shader compiles and links
+  -> no typed precision decision is published
 
-editor renderer.capture
-  -> serialize the current canvas
-  -> attach the current renderer snapshot
-  -> may capture the predecessor frame
+frame
+  -> game tick
+  -> render-plan enhancement and validation
+  -> WebGL draw
+  -> renderer snapshot omits source and precision identity
 
-next RAF
-  -> tick the game again
-  -> render a later state
+proof
+  -> mesh smoke does not create WebGL
+  -> browser observation sees one completed frame
+  -> no capability matrix or precision differential is executed
 ```
 
 ## Domain and kit census
@@ -81,19 +83,19 @@ local declared DSK/kits: 43
 total declared kit surfaces: 44
 active-v0.1 local descriptors: 15
 planned local descriptors: 28
-planned editor settlement surfaces: 20
+planned shader-precision authority surfaces: 18
 ```
 
 The complete kit-by-kit service map is in the latest tracker and `.agent/kit-registry.json`.
 
 ## Required parent domain
 
-`meadow-editor-mutation-visible-frame-settlement-authority-domain`
+`meadow-shader-precision-capability-admission-authority-domain`
 
 ## Next safe ledge
 
-Add immutable editor command IDs, runtime and frame revisions, a browser RAF lease, mutation admission, synchronous or awaited frame settlement, capture binding, browser/Node capability parity, stale-frame rejection, rollback, `EditorMutationResult`, and `FirstVisibleEditorMutationFrameAck`.
+Add per-stage precision requirements, provider-owned capability queries, explicit fallback ordering, original/effective source fingerprints, detached compile/link results, precision-aware program keys, renderer snapshot fields, downgrade receipts and cross-device visual fixtures.
 
 ## Claim boundary
 
-This pass does not claim editor command atomicity, browser/Node semantic parity, capture freshness, reset convergence, double-step prevention, visible-frame convergence, build parity, Pages parity, or production readiness.
+This pass does not claim shader precision correctness, highp preservation, cross-device visual parity, source/build/Pages parity or production readiness.

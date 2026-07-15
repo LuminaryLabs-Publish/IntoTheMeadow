@@ -1,89 +1,91 @@
 # Known Gaps
 
-**Updated:** `2026-07-15T01-39-38-04-00`  
+**Updated:** `2026-07-15T06-01-26-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `editor-mutation-visible-frame-settlement-authority-audited`
+**Status:** `shader-precision-capability-admission-authority-audited`
 
 ## Summary
 
-The bounded gap is editor command-to-frame truth. Browser editor mutations complete before the autonomous host has produced a matching render plan, renderer result, canvas image, or visible-frame acknowledgement.
+The bounded gap is truthful shader precision admission. Effective source and precision are mutated inside a WebGL proxy but are absent from renderer contracts, cache identity, diagnostics, frame evidence and deployment proof.
 
 ## Plan ledger
 
-**Goal:** record every missing identity, admission rule, scheduler guarantee, frame binding, parity rule, rollback guarantee, and fixture required for trustworthy editor mutation.
+**Goal:** record every identity, capability, policy, transform, adoption and fixture gap required for reliable shader compatibility.
 
-- [x] Record command and revision gaps.
-- [x] Record RAF and mutation-admission gaps.
-- [x] Record render, capture, reset, and parity gaps.
-- [x] Record validation and deployment gaps.
-- [ ] Implement and prove the authority later.
+- [x] Record source and program identity gaps.
+- [x] Record capability and requirement gaps.
+- [x] Record transform and fallback gaps.
+- [x] Record diagnostics, frame and validation gaps.
+- [ ] Implement and prove later.
 
 ## Identity gaps
 
 ```txt
-EditorCommandId: absent
-HostGeneration: absent
-RuntimeRevision: absent
-RenderAttemptId bound to editor mutation: absent
-RenderPlanRevision bound to editor mutation: absent
-RendererRevision bound to editor mutation: absent
-FrameRevision bound to editor mutation: absent
-browser/Node capability manifest revision: absent
+ShaderSourceRevision: absent
+OriginalVertexSourceHash: absent
+OriginalFragmentSourceHash: absent
+EffectiveVertexSourceHash: absent
+EffectiveFragmentSourceHash: absent
+ShaderProgramRevision: absent
+PrecisionPolicyRevision: absent
+DevicePrecisionCapabilityRevision: absent
 ```
 
-## Admission and scheduler gaps
+## Capability and requirement gaps
 
 ```txt
-editor mutation admission result: absent
-expected-state compare-and-set: absent
-browser RAF lease: absent
-RAF suspension during visible editor mutation: absent
-single-step ownership receipt: absent
-duplicate command rejection: absent
-concurrent command serialization: absent
-stale predecessor command rejection: absent
+vertex precision capability observation: absent
+fragment precision capability observation: absent
+per-stage required precision: absent
+per-stage preferred precision: absent
+per-stage minimum precision: absent
+world-coordinate precision budget: absent
+wind/time precision budget: absent
+fog/depth precision budget: absent
 ```
 
-## Render and capture gaps
+## Transform and fallback gaps
 
 ```txt
-post-mutation render-plan rebuild: absent
-post-mutation renderer submission: absent
-EditorMutationResult: absent
-FirstVisibleEditorMutationFrameAck: absent
-capture-to-command binding: absent
-canvas/state/renderer revision equality check: absent
-stale canvas rejection: absent
-failed-render predecessor preservation receipt: absent
+stage-aware declaration parsing: absent
+preserve-original-source decision: absent
+explicit fallback permission: absent
+fallback order: absent
+mandatory-highp rejection: absent
+downgrade warning receipt: absent
+ShaderTransformResult: absent
+failed-transform predecessor preservation: absent
 ```
 
-## Reset and parity gaps
+## Compile, cache and frame gaps
 
 ```txt
-browser reset time ownership: absent
-browser reset enhancer invalidation: absent
-browser reset render settlement: absent
-browser and Node runtime.tick argument parity: absent
-browser and Node runtime.reset result parity: absent
-browser renderer.compare capability: absent
-protocol-level capability compatibility decision: absent
+ShaderCompileAttemptId: absent
+ShaderCompileResult: absent
+ShaderProgramLinkResult: absent
+program cache key includes effective source: no
+renderer snapshot effective precision: absent
+capture program revision binding: absent
+FirstPrecisionAdmittedFrameAck: absent
 ```
 
 ## Validation gaps
 
 ```txt
-browser tick-once fixture: absent
-RAF double-step fixture: absent
-capture-after-tick freshness fixture: absent
-capture-after-reset freshness fixture: absent
-browser/Node capability parity fixture: absent
-failed-render rollback fixture: absent
-source/build/Pages command-frame parity fixture: absent
+precision parser fixture: absent
+capability matrix fixture: absent
+real WebGL1 shader compile fixture: absent
+real WebGL2 shader compile fixture: absent
+large-coordinate vertex fixture: absent
+long-time wind fixture: absent
+precision visual differential fixture: absent
+source/build/Pages precision parity fixture: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+editor command and visible-frame settlement
 post-process execution
 browser startup readiness
 runtime reset and replay authority
@@ -105,4 +107,4 @@ atomic save and migration
 
 ## Completion boundary
 
-Editor mutation is not proven until one accepted command produces exactly one accepted runtime revision and, when classified visible, one matching acknowledged frame that capture and comparison can cite.
+Shader compatibility is not proven until each adopted program cites original and effective source identities, observed device capability, accepted stage policies, compile/link results and a matching visible frame.

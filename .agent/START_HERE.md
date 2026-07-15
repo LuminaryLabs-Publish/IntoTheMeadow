@@ -2,43 +2,42 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-15T06-01-26-04-00`  
-**Status:** `shader-precision-capability-admission-authority-audited`
+**Last aligned:** `2026-07-15T10-40-17-04-00`  
+**Status:** `audio-event-projection-authority-audited`
 
 ## Summary
 
-The browser compatibility renderer intercepts every WebGL shader source, removes explicit `lowp`, `mediump` and `highp` float declarations, and prepends `precision mediump float;` to vertex and fragment stages. The base vertex source is therefore changed to an explicit mediump policy, and any future highp request would be silently replaced.
+`meadow-audio-dsk` is declared with ambient-bed, spatial-cue, audio-state, audio-event and validation services, but it remains planned rather than active-v0.1. The active browser path creates the game, WebGL renderer, render-plan enhancer and editor bridge, then renders visual frames without constructing a browser audio graph or publishing an audible result.
 
-No device precision query, stage requirement, fallback result, original/effective source fingerprint, downgrade warning, renderer snapshot field or cross-device precision fixture proves that the transformed program preserves the authored render contract.
+Story, objective and interaction content already carries stable semantic triggers, but the game tick only advances frame and time. No semantic audio event ledger, user-gesture unlock, `AudioContext` generation, ambience owner, listener/source projection, preference policy, lifecycle settlement, resource retirement or audible-frame acknowledgement exists.
 
 ## Plan ledger
 
-**Goal:** make shader compatibility an explicit capability-admission result instead of an invisible source rewrite.
+**Goal:** make audio a bounded projection of accepted semantic state with explicit browser lifecycle and evidence.
 
 - [x] Compare all 11 accessible Publish repositories.
 - [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm ten eligible central ledgers and ten root `.agent` states.
-- [x] Confirm no eligible repository is new, missing, undocumented, root-agent-missing or runtime-ahead.
+- [x] Confirm ten eligible ledgers, root `.agent` states and synchronized heads.
 - [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Inspect the compatibility wrapper, base shaders, compile/link path, renderer snapshot and proof surfaces.
-- [x] Preserve all 44 declared kit surfaces and offered services.
-- [x] Add the `2026-07-15T06-01-26-04-00` audit family.
+- [x] Identify the interaction loop, domains, kits and offered services.
+- [x] Preserve all 44 declared kit surfaces.
+- [x] Add the `2026-07-15T10-40-17-04-00` audit family.
 - [x] Change documentation only and target `main`.
 - [x] Create no branch or pull request.
-- [ ] Implement shader precision admission and executable device fixtures later.
+- [ ] Implement audio event projection and executable browser fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-15T06-01-26-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-15T06-01-26-04-00.md
-.agent/architecture-audit/2026-07-15T06-01-26-04-00-shader-precision-capability-admission-dsk-map.md
-.agent/render-audit/2026-07-15T06-01-26-04-00-global-mediump-source-rewrite-gap.md
-.agent/gameplay-audit/2026-07-15T06-01-26-04-00-vertex-wind-world-precision-risk-loop.md
-.agent/interaction-audit/2026-07-15T06-01-26-04-00-shader-program-admission-result-map.md
-.agent/shader-precision-audit/2026-07-15T06-01-26-04-00-stage-requirement-capability-transform-contract.md
-.agent/deploy-audit/2026-07-15T06-01-26-04-00-cross-device-shader-precision-fixture-gate.md
-.agent/central-sync-audit/2026-07-15T06-01-26-04-00-oldest-selection-shader-precision-reconciliation.md
+.agent/trackers/2026-07-15T10-40-17-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-15T10-40-17-04-00.md
+.agent/architecture-audit/2026-07-15T10-40-17-04-00-audio-event-projection-dsk-map.md
+.agent/render-audit/2026-07-15T10-40-17-04-00-silent-audiovisual-frame-gap.md
+.agent/gameplay-audit/2026-07-15T10-40-17-04-00-semantic-state-to-audible-result-loop.md
+.agent/interaction-audit/2026-07-15T10-40-17-04-00-audio-projection-command-result-map.md
+.agent/audio-audit/2026-07-15T10-40-17-04-00-browser-audio-event-lifecycle-contract.md
+.agent/deploy-audit/2026-07-15T10-40-17-04-00-browser-audio-fixture-gate.md
+.agent/central-sync-audit/2026-07-15T10-40-17-04-00-oldest-selection-audio-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -50,29 +49,17 @@ No device precision query, stage requirement, fallback result, original/effectiv
 
 ```txt
 boot
-  -> import provider
-  -> create game, enhancer and precision-safe renderer
-  -> publish host/editor surfaces
+  -> load pinned meadow provider
+  -> install local DSK descriptors
+  -> create game, renderer, enhancer and editor bridge
   -> start RAF
 
-program creation
-  -> proxy canvas returns proxy WebGL context
-  -> shader type is recorded
-  -> all explicit float precision declarations are removed
-  -> mediump float is prepended
-  -> transformed shader compiles and links
-  -> no typed precision decision is published
-
 frame
-  -> game tick
-  -> render-plan enhancement and validation
-  -> WebGL draw
-  -> renderer snapshot omits source and precision identity
-
-proof
-  -> mesh smoke does not create WebGL
-  -> browser observation sees one completed frame
-  -> no capability matrix or precision differential is executed
+  -> game tick increments frame/time only
+  -> render plan is enhanced and validated
+  -> WebGL projects the meadow
+  -> semantic story/objective/interaction content remains unexecuted
+  -> no semantic audio event or browser audio update occurs
 ```
 
 ## Domain and kit census
@@ -83,19 +70,19 @@ local declared DSK/kits: 43
 total declared kit surfaces: 44
 active-v0.1 local descriptors: 15
 planned local descriptors: 28
-planned shader-precision authority surfaces: 18
+planned audio authority surfaces: 20
 ```
 
 The complete kit-by-kit service map is in the latest tracker and `.agent/kit-registry.json`.
 
 ## Required parent domain
 
-`meadow-shader-precision-capability-admission-authority-domain`
+`meadow-audio-event-projection-authority-domain`
 
 ## Next safe ledge
 
-Add per-stage precision requirements, provider-owned capability queries, explicit fallback ordering, original/effective source fingerprints, detached compile/link results, precision-aware program keys, renderer snapshot fields, downgrade receipts and cross-device visual fixtures.
+Add semantic event identity, browser capability and gesture admission, one owned audio-context generation, cue descriptors, ambience and spatial projection, preferences, deduplication, voice budgets, lifecycle settlement, retirement receipts and source/build/Pages browser fixtures.
 
 ## Claim boundary
 
-This pass does not claim shader precision correctness, highp preservation, cross-device visual parity, source/build/Pages parity or production readiness.
+This pass does not claim audible gameplay, cue correctness, spatial correctness, lifecycle safety, deployment parity or production readiness.

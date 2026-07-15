@@ -4,7 +4,7 @@
 
 ## Summary
 
-IntoTheMeadow was selected because all ten eligible Publish repositories were centrally tracked, had root `.agent` state, and were synchronized, while IntoTheMeadow held the oldest central timestamp. Central tracking must record the editor mutation and visible-frame settlement finding, preserved 44-kit inventory, timestamped output family, and final repo-local documentation head.
+IntoTheMeadow was selected because all ten eligible Publish repositories were centrally tracked, had root `.agent` state, and were synchronized, while IntoTheMeadow held the oldest central timestamp. Central tracking now records the editor mutation and visible-frame settlement finding, preserved 44-kit inventory, timestamped output family, and repo-local documentation state.
 
 ## Plan ledger
 
@@ -17,24 +17,25 @@ IntoTheMeadow was selected because all ten eligible Publish repositories were ce
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
 - [x] Add the timestamped repo-local audit family.
 - [x] Preserve the complete kit and service inventory.
-- [ ] Record the final repo-local head in the central ledger.
-- [ ] Add the paired central internal change log.
+- [x] Record the repo-local documentation commit in the central ledger.
+- [x] Add the paired central internal change log.
+- [x] Reconcile centrally on `main` at `551ad672028f749494857001c5dbeffaee16e8c8`.
 
-## Central status target
+## Central status
 
 ```txt
 Status: editor-mutation-visible-frame-settlement-authority-central-reconciled
 Technical status: editor-mutation-visible-frame-settlement-authority-audited
 ```
 
-## Required central changes
+## Central changes
 
 ```txt
 repo-ledger/LuminaryLabs-Publish/IntoTheMeadow.md
 internal-change-log/2026-07-15T01-39-38-04-00-into-the-meadow-editor-mutation-frame-settlement.md
 ```
 
-## Findings to preserve centrally
+## Findings preserved centrally
 
 ```txt
 browser runtime.tick and runtime.reset mutate the live game directly
@@ -47,4 +48,4 @@ browser and Node editor semantics diverge under one protocol family
 
 ## Boundary
 
-This file stages the central reconciliation. The central ledger and internal change log are updated after the repo-local documentation commit is finalized.
+The synchronization is documentation-only. Runtime behavior, renderer behavior, editor capabilities, tests, dependencies, workflows, and deployment remain unchanged.

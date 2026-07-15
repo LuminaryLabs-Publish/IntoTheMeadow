@@ -1,78 +1,81 @@
 # Next Steps
 
-**Updated:** `2026-07-15T10-40-17-04-00`  
+**Updated:** `2026-07-15T15-41-21-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `audio-event-projection-authority-audited`
+**Status:** `accessible-semantic-projection-authority-audited`
 
 ## Summary
 
-Activate audio only after accepted gameplay semantics and browser lifecycle ownership are explicit. Start with event identity and unlock admission, then add ambience, cue projection, preferences, lifecycle settlement and executable parity fixtures.
+Activate semantic accessibility only after gameplay state and command admission have stable revisions. Start with one immutable read model, then add structured DOM, keyboard commands, focus ownership, announcements, preferences and executable parity fixtures.
 
 ## Plan ledger
 
-**Goal:** create the smallest reliable path from accepted semantic state to one lifecycle-safe audible result and matching visible-frame acknowledgement.
+**Goal:** create the smallest reliable path from accepted meadow state to one matching accessible browser frame.
 
-### Semantic results
+### State and semantic events
 
-- [ ] Add a stable semantic event ledger to game state.
-- [ ] Emit scene-start, path-progress, inspect and objective-complete results exactly once.
-- [ ] Bind every event to session and state revisions.
-- [ ] Preserve the same event stream for UI, diagnostics, replay and audio.
+- [ ] Add `StateRevision`, `SemanticUiEventId` and `AccessibleStateRevision`.
+- [ ] Derive one immutable read model from accepted state.
+- [ ] Publish scene, objective, story, interaction and lifecycle fields.
+- [ ] Deduplicate repeated RAF snapshots and event replays.
 
-### Browser capability and unlock
+### Structured DOM
 
-- [ ] Add browser audio capability observation.
-- [ ] Admit audio unlock only from an accepted user gesture.
-- [ ] Own one `AudioContextGeneration` at a time.
-- [ ] Publish unlock success, failure and unsupported results.
+- [ ] Add one named game region.
+- [ ] Add current-objective and story/status regions.
+- [ ] Add an available-interactions list.
+- [ ] Add a command-help surface.
+- [ ] Derive the canvas alternative description from accepted state.
 
-### Cue and ambience projection
+### Commands and focus
 
-- [ ] Add immutable cue descriptors for UI, story, world and ambience categories.
-- [ ] Add one meadow ambience owner with versioned loop adoption.
-- [ ] Add listener pose and spatial-source descriptors.
-- [ ] Deduplicate repeated snapshots and event replays.
-- [ ] Add pooling, priority and voice budgets.
+- [ ] Publish allowlisted keyboard commands from the action map.
+- [ ] Route all controls through normal gameplay admission.
+- [ ] Own one focus order and focus generation.
+- [ ] Restore focus after overlays, route changes and host replacement.
+- [ ] Reject stale focus requests.
 
-### Preferences and lifecycle
+### Announcements and preferences
 
-- [ ] Add master/category mute and volume revisions.
-- [ ] Define pause, hidden-document and resume policy.
-- [ ] Reject cues from stale, retired or muted sessions.
-- [ ] Stop and disconnect resources on route exit, fatal stop and host replacement.
-- [ ] Publish retirement receipts.
+- [ ] Add polite story/status and assertive fatal live regions.
+- [ ] Deduplicate announcements by semantic event and state revision.
+- [ ] Observe reduced-motion and forced-colors preferences.
+- [ ] Add text scaling, reflow and focus-indicator policy.
+- [ ] Publish preference-change results.
 
-### Diagnostics and evidence
+### Evidence
 
-- [ ] Add audio capability, context, bus, source and event snapshots.
-- [ ] Publish `AudioProjectionResult` for every admitted event batch.
-- [ ] Publish `FirstAudibleCueAck` and `FirstAudioVisualConvergenceAck`.
-- [ ] Bind captures to state, visible-frame and audio result revisions.
+- [ ] Publish `AccessibilityProjectionResult`.
+- [ ] Publish `FocusSettlementResult` and `AnnouncementProjectionResult`.
+- [ ] Publish `FirstAccessibleFrameAck`.
+- [ ] Publish `FirstVisualAccessibleConvergenceAck`.
+- [ ] Bind accessibility-tree snapshots to commit and state/frame revisions.
 
 ### Fixtures
 
-- [ ] Add unsupported and locked-browser fixtures.
-- [ ] Add successful and failed unlock fixtures.
-- [ ] Add ambience start, cue-once and deduplication fixtures.
-- [ ] Add mute, pause, visibility, resume and route-retirement fixtures.
+- [ ] Add keyboard-only navigation and command fixtures.
+- [ ] Add semantic-region and accessible-name fixtures.
+- [ ] Add story/objective/interaction announcement fixtures.
+- [ ] Add focus order and restoration fixtures.
+- [ ] Add reduced-motion, forced-colors and 200% text fixtures.
 - [ ] Add source, built-output and GitHub Pages parity fixtures.
 
 ## Required result
 
 ```txt
-AudioProjectionResult {
+AccessibilityProjectionResult {
   hostGeneration
   sessionRevision
   stateRevision
-  audioPolicyRevision
-  audioContextGeneration
+  visibleFrameRevision
+  accessibleStateRevision
   semanticEventIds
-  admittedCueIds
-  rejectedCueIds
-  listenerPoseRevision
-  activeSourceRevisions
-  lifecycleState
-  resourceReceipts
+  projectedRegionIds
+  commandIds
+  focusRevision
+  announcementRevision
+  accessibilityPolicyRevision
+  canvasAlternativeRevision
   status
   reason
 }
@@ -80,4 +83,4 @@ AudioProjectionResult {
 
 ## Preserved dependencies
 
-Shader precision admission, editor mutation settlement, post-process execution, startup readiness, reset/replay, DSK capability admission, observation provenance, cache coherence, viewport authority, editor lifecycle, host retirement, provider parity, WebGL recovery, scheduling, progression, grass visibility and save/migration remain separate bounded work.
+Audio projection, shader precision, editor mutation settlement, post-process execution, startup readiness, reset/replay, DSK capability admission, browser observation, cache coherence, viewport authority, editor lifecycle, host retirement, provider parity, WebGL recovery, frame scheduling, progression, grass visibility and save/migration remain separate bounded work.

@@ -1,80 +1,78 @@
-# Current Audit: Editor Mutation and Visible-Frame Settlement Authority
+# Current Audit: Shader Precision Capability Admission Authority
 
-**Updated:** `2026-07-15T01-39-38-04-00`  
+**Updated:** `2026-07-15T06-01-26-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `editor-mutation-visible-frame-settlement-authority-audited`  
-**Immediate predecessor:** `post-process-descriptor-execution-authority-central-reconciled`
+**Status:** `shader-precision-capability-admission-authority-audited`  
+**Immediate predecessor:** `editor-mutation-visible-frame-settlement-authority-central-reconciled`
 
 ## Summary
 
-The browser editor environment mutates the same game instance owned by the autonomous RAF host. `runtime.tick` calls `game.tick` once and `runtime.reset` calls `game.reset`, but neither command pauses the RAF lease, refreshes `lastPlan`, renders, or waits for a matching canvas frame.
+`meadow-webgl-renderer-v2-compatible.js` proxies the WebGL context and rewrites every graphics shader source. It removes explicit `lowp`, `mediump` and `highp` float declarations, then prepends one `precision mediump float;` declaration before compilation.
 
-The command result reports `completed` immediately. A following `renderer.capture` can therefore pair new game state with an old canvas and old renderer snapshot. The next RAF can then tick again before rendering, so one editor step can become two simulation advances before the first visible acknowledgement.
+The base vertex source contains no explicit precision declaration, while the base fragment source already requests mediump. The transform therefore changes stage semantics unequally and would silently replace a future highp request. No typed result records device support, authored requirements, fallback permission, source identity or the effective policy used by the visible frame.
 
 ## Plan ledger
 
-**Goal:** bind each editor mutation, simulation revision, render plan, renderer result, capture, and visible frame into one accepted transaction.
+**Goal:** bind authored shader intent, observed device capability, accepted source transformation, compile/link settlement and visible-frame evidence.
 
-- [x] Compare the full Publish inventory with central tracking.
-- [x] Exclude `TheCavalryOfRome`.
-- [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Read browser bridge, web host, game aggregate, Node environment, scenarios, and browser observation script.
+- [x] Compare the Publish inventory and central tracking.
+- [x] Exclude TheCavalryOfRome.
+- [x] Select only IntoTheMeadow by oldest synchronized timestamp.
+- [x] Read compatibility wrapper, base renderer, shader sources, snapshot and proof scripts.
 - [x] Preserve all 44 kit surfaces and services.
 - [x] Add the timestamped audit family.
 - [x] Change documentation only and target `main`.
-- [ ] Implement authority and executable fixtures later.
+- [ ] Implement the authority and fixtures later.
 
 ## Main findings
 
 ```txt
-browser runtime.tick mutates live game directly: yes
-browser runtime.reset mutates live game directly: yes
-RAF suspended during editor mutation: no
-lastPlan refreshed by editor mutation: no
-renderer invoked by editor mutation: no
-command result carries state revision: no
-command result carries render/frame revision: no
-capture binds to mutation result: no
-stale canvas rejection: no
-first matching visible-frame acknowledgement: no
+explicit precision declarations removed: yes
+mediump injected into vertex stage: yes
+mediump injected into fragment stage: yes
+future highp declaration preserved: no
+device precision capability queried: no
+per-stage precision requirements: absent
+accepted fallback result: absent
+original/effective source hashes: absent
+compile attempt identity: absent
+renderer snapshot effective precision: absent
+first precision-admitted frame acknowledgement: absent
 ```
 
-## Browser and Node semantic drift
+## Current proof gap
 
 ```txt
-browser runtime.tick arguments: dt, time
-node runtime.tick arguments: dt, ticks
-browser reset invalidates enhancer: no
-node reset invalidates enhancer: yes
-browser reset owns editor time: no
-node reset sets editor time to zero: yes
-browser renderer.compare capability: absent
-node renderer.compare capability: present
-shared protocol label: nexus-headless-editor-environment/v1
-versioned parity manifest: absent
+renderer-v2 smoke creates WebGL: no
+renderer-v2 smoke compiles shaders: no
+browser observation queries precision: no
+browser observation reports effective source: no
+cross-device capability matrix: absent
+visual precision differential: absent
+source/build/Pages policy parity: absent
 ```
 
 ## Required parent domain
 
-`meadow-editor-mutation-visible-frame-settlement-authority-domain`
+`meadow-shader-precision-capability-admission-authority-domain`
 
 ## Required transaction
 
 ```txt
-EditorMutationCommand
-  -> bind EditorCommandId, HostGeneration, RuntimeRevision and expected FrameRevision
-  -> acquire or suspend the browser RAF lease
-  -> classify tick, reset or other state mutation
-  -> settle exactly one game-state revision
-  -> rebuild and validate one render plan
-  -> render one matching renderer revision
-  -> publish EditorMutationResult
-  -> acknowledge FirstVisibleEditorMutationFrameAck
-  -> permit capture or comparison only against the acknowledged frame
-  -> reject stale, duplicate, retired and mixed-surface work
-  -> resume the admitted RAF policy
+ShaderProgramAdmissionCommand
+  -> bind renderer, program and source revisions
+  -> classify vertex and fragment requirements independently
+  -> observe device precision capability
+  -> resolve accepted precision and fallback policy
+  -> transform source only through that policy
+  -> fingerprint original and effective sources
+  -> compile and link detached candidates
+  -> publish transform, compile, link and admission results
+  -> atomically adopt one program revision
+  -> publish effective precision in renderer diagnostics
+  -> acknowledge FirstPrecisionAdmittedFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, renderer, editor bridge, scenario, test, build, workflow, or deployment code changed.
+Documentation only. No shader, wrapper, renderer, gameplay, editor, test, workflow or deployment code changed.

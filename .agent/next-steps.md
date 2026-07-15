@@ -1,78 +1,83 @@
 # Next Steps
 
-**Updated:** `2026-07-15T06-01-26-04-00`  
+**Updated:** `2026-07-15T10-40-17-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `shader-precision-capability-admission-authority-audited`
+**Status:** `audio-event-projection-authority-audited`
 
 ## Summary
 
-Replace the unconditional global mediump rewrite with a small provider-owned admission path. Preserve the authored source when supported, apply only explicit stage-specific fallbacks, and expose the effective program policy through renderer diagnostics and fixtures.
+Activate audio only after accepted gameplay semantics and browser lifecycle ownership are explicit. Start with event identity and unlock admission, then add ambience, cue projection, preferences, lifecycle settlement and executable parity fixtures.
 
 ## Plan ledger
 
-**Goal:** create the smallest reliable path from authored shader requirements to one admitted device-compatible program and one matching visible frame.
+**Goal:** create the smallest reliable path from accepted semantic state to one lifecycle-safe audible result and matching visible-frame acknowledgement.
 
-### Source and requirement identity
+### Semantic results
 
-- [ ] Add immutable vertex and fragment source revisions and hashes.
-- [ ] Add per-stage required, preferred and minimum precision descriptors.
-- [ ] Add world-range, time-range, wind and depth tolerances for the current shader.
-- [ ] Include precision-policy revision in renderer and program identity.
+- [ ] Add a stable semantic event ledger to game state.
+- [ ] Emit scene-start, path-progress, inspect and objective-complete results exactly once.
+- [ ] Bind every event to session and state revisions.
+- [ ] Preserve the same event stream for UI, diagnostics, replay and audio.
 
-### Device capability and policy
+### Browser capability and unlock
 
-- [ ] Query provider precision capability with `getShaderPrecisionFormat` for each stage and precision class.
-- [ ] Preserve full range and precision observations in a capability snapshot.
-- [ ] Resolve required and preferred precision independently for vertex and fragment stages.
-- [ ] Reject mandatory unsupported requirements instead of silently rewriting them.
-- [ ] Define an explicit fallback order and downgrade warning receipt.
+- [ ] Add browser audio capability observation.
+- [ ] Admit audio unlock only from an accepted user gesture.
+- [ ] Own one `AudioContextGeneration` at a time.
+- [ ] Publish unlock success, failure and unsupported results.
 
-### Transform, compile and adoption
+### Cue and ambience projection
 
-- [ ] Preserve original source when no transform is required.
-- [ ] Replace the broad declaration-removal regex with a parsed, stage-aware policy.
-- [ ] Fingerprint original and effective source.
-- [ ] Compile and link detached candidates before replacing the active program.
-- [ ] Include effective source and capability revisions in the program cache key.
-- [ ] Preserve the predecessor program if transformation, compile or link fails.
+- [ ] Add immutable cue descriptors for UI, story, world and ambience categories.
+- [ ] Add one meadow ambience owner with versioned loop adoption.
+- [ ] Add listener pose and spatial-source descriptors.
+- [ ] Deduplicate repeated snapshots and event replays.
+- [ ] Add pooling, priority and voice budgets.
 
-### Diagnostics and frames
+### Preferences and lifecycle
 
-- [ ] Add effective vertex and fragment precision to renderer snapshots.
-- [ ] Add transform, compile, link and fallback receipts to diagnostics.
-- [ ] Bind each visible frame and capture to the adopted program revision.
-- [ ] Publish `FirstPrecisionAdmittedFrameAck`.
+- [ ] Add master/category mute and volume revisions.
+- [ ] Define pause, hidden-document and resume policy.
+- [ ] Reject cues from stale, retired or muted sessions.
+- [ ] Stop and disconnect resources on route exit, fatal stop and host replacement.
+- [ ] Publish retirement receipts.
+
+### Diagnostics and evidence
+
+- [ ] Add audio capability, context, bus, source and event snapshots.
+- [ ] Publish `AudioProjectionResult` for every admitted event batch.
+- [ ] Publish `FirstAudibleCueAck` and `FirstAudioVisualConvergenceAck`.
+- [ ] Bind captures to state, visible-frame and audio result revisions.
 
 ### Fixtures
 
-- [ ] Add declaration parser and transform-policy unit tests.
-- [ ] Add mocked capability-matrix tests.
-- [ ] Add real WebGL1 and WebGL2 compile fixtures.
-- [ ] Add mandatory-highp rejection and accepted-mediump fallback fixtures.
-- [ ] Add large-coordinate, long-time wind, fog-depth and outline stability fixtures.
-- [ ] Compare source, built output and Pages captures under the same program revision.
+- [ ] Add unsupported and locked-browser fixtures.
+- [ ] Add successful and failed unlock fixtures.
+- [ ] Add ambience start, cue-once and deduplication fixtures.
+- [ ] Add mute, pause, visibility, resume and route-retirement fixtures.
+- [ ] Add source, built-output and GitHub Pages parity fixtures.
 
 ## Required result
 
 ```txt
-ShaderProgramAdmissionResult {
-  rendererGeneration
-  programId
-  originalSourceRevisions
-  effectiveSourceHashes
-  capabilityRevision
-  precisionPolicyRevision
-  effectiveVertexPrecision
-  effectiveFragmentPrecision
-  compileResults
-  linkResult
-  adoptedProgramRevision
+AudioProjectionResult {
+  hostGeneration
+  sessionRevision
+  stateRevision
+  audioPolicyRevision
+  audioContextGeneration
+  semanticEventIds
+  admittedCueIds
+  rejectedCueIds
+  listenerPoseRevision
+  activeSourceRevisions
+  lifecycleState
+  resourceReceipts
   status
   reason
-  warnings
 }
 ```
 
 ## Preserved dependencies
 
-Editor mutation settlement, post-process execution, startup readiness, reset/replay, DSK capability admission, observation provenance, cache coherence, viewport authority, editor lifecycle, host retirement, workspace containment, provider parity, WebGL recovery, scheduling, progression, grass visibility, audio lifecycle and save/migration remain separate bounded work.
+Shader precision admission, editor mutation settlement, post-process execution, startup readiness, reset/replay, DSK capability admission, observation provenance, cache coherence, viewport authority, editor lifecycle, host retirement, provider parity, WebGL recovery, scheduling, progression, grass visibility and save/migration remain separate bounded work.

@@ -1,74 +1,80 @@
-# Current Audit: Post-Process Descriptor Execution Authority
+# Current Audit: Editor Mutation and Visible-Frame Settlement Authority
 
-**Updated:** `2026-07-14T20-40-50-04-00`  
+**Updated:** `2026-07-15T01-39-38-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `post-process-descriptor-execution-authority-audited`  
-**Immediate predecessor:** `browser-startup-readiness-first-frame-authority-central-reconciled`
+**Status:** `editor-mutation-visible-frame-settlement-authority-audited`  
+**Immediate predecessor:** `post-process-descriptor-execution-authority-central-reconciled`
 
 ## Summary
 
-The renderer contract carries an enabled six-pass post-process graph, but the active WebGL renderer never reads `effects.postProcess`. It renders directly to the default framebuffer with one geometry-outline draw and one inline cel/fog draw.
+The browser editor environment mutates the same game instance owned by the autonomous RAF host. `runtime.tick` calls `game.tick` once and `runtime.reset` calls `game.reset`, but neither command pauses the RAF lease, refreshes `lastPlan`, renders, or waits for a matching canvas frame.
 
-No authority identifies whether each declared pass was executed, substituted, skipped, or rejected. No render-target generation, admitted fallback profile, pass receipt, composite result, or matching visible-frame acknowledgement exists.
+The command result reports `completed` immediately. A following `renderer.capture` can therefore pair new game state with an old canvas and old renderer snapshot. The next RAF can then tick again before rendering, so one editor step can become two simulation advances before the first visible acknowledgement.
 
 ## Plan ledger
 
-**Goal:** reconcile declared presentation intent with exact renderer work and visible output.
+**Goal:** bind each editor mutation, simulation revision, render plan, renderer result, capture, and visible frame into one accepted transaction.
 
 - [x] Compare the full Publish inventory with central tracking.
 - [x] Exclude `TheCavalryOfRome`.
 - [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Inspect the enhancer, post-process stack, render contract, validation, and WebGL renderer.
-- [x] Preserve all 44 kit surfaces and offered services.
+- [x] Read browser bridge, web host, game aggregate, Node environment, scenarios, and browser observation script.
+- [x] Preserve all 44 kit surfaces and services.
 - [x] Add the timestamped audit family.
-- [x] Change documentation only and push to `main`.
-- [ ] Implement the authority and executable browser fixtures later.
-
-## Interaction loop
-
-```txt
-source render plan
-  -> enhancer creates post-process graph
-  -> contract stores graph
-  -> geometry validation passes
-  -> renderer ignores graph
-  -> inline cel/fog and geometry outline draw
-  -> generic renderer snapshot publishes
-```
+- [x] Change documentation only and target `main`.
+- [ ] Implement authority and executable fixtures later.
 
 ## Main findings
 
 ```txt
-declared pass graph: present
-renderer capability manifest: absent
-pass graph admission result: absent
-offscreen render-target execution: absent
-ordered pass dispatch receipts: absent
-explicit inline fallback profile: absent
-substitution and skip reasons: absent
-PostProcessFrameResult: absent
-FirstVisiblePostProcessFrameAck: absent
+browser runtime.tick mutates live game directly: yes
+browser runtime.reset mutates live game directly: yes
+RAF suspended during editor mutation: no
+lastPlan refreshed by editor mutation: no
+renderer invoked by editor mutation: no
+command result carries state revision: no
+command result carries render/frame revision: no
+capture binds to mutation result: no
+stale canvas rejection: no
+first matching visible-frame acknowledgement: no
+```
+
+## Browser and Node semantic drift
+
+```txt
+browser runtime.tick arguments: dt, time
+node runtime.tick arguments: dt, ticks
+browser reset invalidates enhancer: no
+node reset invalidates enhancer: yes
+browser reset owns editor time: no
+node reset sets editor time to zero: yes
+browser renderer.compare capability: absent
+node renderer.compare capability: present
+shared protocol label: nexus-headless-editor-environment/v1
+versioned parity manifest: absent
 ```
 
 ## Required parent domain
 
-`meadow-post-process-descriptor-execution-authority-domain`
+`meadow-editor-mutation-visible-frame-settlement-authority-domain`
 
 ## Required transaction
 
 ```txt
-PostProcessFrameCommand
-  -> bind plan, renderer, viewport and policy revisions
-  -> validate graph and renderer capabilities
-  -> admit full, reduced, inline-fallback or rejected profile
-  -> allocate versioned resources
-  -> execute or explicitly substitute every pass
-  -> publish pass and resource receipts
-  -> publish PostProcessFrameResult
-  -> acknowledge FirstVisiblePostProcessFrameAck
-  -> preserve predecessor output on failure
+EditorMutationCommand
+  -> bind EditorCommandId, HostGeneration, RuntimeRevision and expected FrameRevision
+  -> acquire or suspend the browser RAF lease
+  -> classify tick, reset or other state mutation
+  -> settle exactly one game-state revision
+  -> rebuild and validate one render plan
+  -> render one matching renderer revision
+  -> publish EditorMutationResult
+  -> acknowledge FirstVisibleEditorMutationFrameAck
+  -> permit capture or comparison only against the acknowledged frame
+  -> reject stale, duplicate, retired and mixed-surface work
+  -> resume the admitted RAF policy
 ```
 
 ## Boundary
 
-Documentation only. No runtime, renderer, test, build, workflow, or deployment code changed.
+Documentation only. No runtime, renderer, editor bridge, scenario, test, build, workflow, or deployment code changed.

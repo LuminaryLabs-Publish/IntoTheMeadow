@@ -1,86 +1,83 @@
-# Current Audit: Accessible Semantic Projection Authority
+# Current Audit: Runtime Renderer Identity and Proof Authority
 
-**Updated:** `2026-07-15T15-41-21-04-00`  
+**Updated:** `2026-07-15T20-38-13-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `accessible-semantic-projection-authority-audited`  
-**Immediate predecessor:** `audio-event-projection-authority-central-reconciled`
+**Status:** `runtime-renderer-identity-manifest-proof-authority-audited`  
+**Immediate predecessor:** `accessible-semantic-projection-authority-central-reconciled`
 
 ## Summary
 
-The active browser route continuously updates a WebGL canvas while the accessible document remains effectively static. Authored story, objective and interaction labels are not projected into semantic DOM, and the planned UI/input/interaction/story/objective DSKs are not active-v0.1.
+The declared renderer and the executed browser renderer are not the same module. Both game manifests identify `./src/renderers/meadow-webgl-renderer-v2.js`, while `src/hosts/web-host.js` imports `meadow-webgl-renderer-v2-compatible.js`, whose WebGL proxy rewrites shader float precision before compilation.
 
-The result is a bounded projection gap: a visible frame can succeed without a matching accessible state, operable command surface, focus result, announcement result or convergence acknowledgement.
+The required renderer DSK is also under-described. `meadow-webgl-renderer-v2-kit` is present in the local and required registries, but it is missing from both `DOMAIN_LABELS` and `SERVICES`, causing the descriptor to expose generic fallback services rather than the renderer's actual context, shader, buffer, draw, resize, snapshot and disposal capabilities.
 
 ## Plan ledger
 
-**Goal:** bind accepted game state, semantic browser output, keyboard commands, focus, announcements and visible-frame evidence into one accessibility projection contract.
+**Goal:** bind manifest identity, DSK capabilities, executable module selection and renderer proof to one accepted revision.
 
 - [x] Compare Publish inventory and central tracking.
 - [x] Exclude TheCavalryOfRome.
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Read the document, host, DSK registry, service map, state and semantic content.
+- [x] Read both manifests, the web host, compatibility wrapper, DSK registry, DSK descriptor and renderer tests.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped accessibility audit family.
+- [x] Add the timestamped renderer-identity audit family.
 - [x] Change documentation only and target `main`.
-- [ ] Implement authority and fixtures later.
+- [ ] Implement the authority and browser fixtures later.
 
 ## Main findings
 
 ```txt
-canvas role=img: present
-canvas alternative bound to state: no
-semantic game region state: absent
-focusable gameplay commands: absent
-keyboard command descriptions: absent
-focus owner/restoration: absent
-story announcement projection: absent
-objective status projection: absent
-interaction affordance projection: absent
-live-region policy: absent
-reduced-motion policy: absent
-contrast/text-scale policy: absent
-AccessibilityProjectionResult: absent
-FirstAccessibleFrameAck: absent
-FirstVisualAccessibleConvergenceAck: absent
+game.manifest.json localRenderer.module: ./src/renderers/meadow-webgl-renderer-v2.js
+GAME_MANIFEST localRenderer.module:       ./src/renderers/meadow-webgl-renderer-v2.js
+web-host executable import:               meadow-webgl-renderer-v2-compatible.js
+compatibility behavior:                   shader float precision normalization
+manifest wrapper identity:                absent
+manifest shader precision policy:         absent
+renderer revision identity:               absent
+```
+
+```txt
+meadow-webgl-renderer-v2-kit in local registry: yes
+meadow-webgl-renderer-v2-kit required v0.1:      yes
+explicit DOMAIN_LABELS entry:                  no
+explicit SERVICES entry:                       no
+descriptor fallback services:                  model/state/events/validation/snapshot
+actual renderer capability contract:           not represented by DSK descriptor
 ```
 
 ## Current proof gap
 
 ```txt
-static labels prove accessible gameplay: no
-keyboard-only fixture: absent
-accessibility-tree snapshot fixture: absent
-screen-reader semantics fixture: absent
-focus order and restore fixture: absent
-announcement deduplication fixture: absent
-reduced-motion fixture: absent
-forced-colors fixture: absent
-200% text/reflow fixture: absent
-source/build/Pages accessibility parity: absent
+static smoke exact import assertion: absent
+manifest to host module convergence check: absent
+browser renderer instantiation fixture: absent
+shader compile fixture through wrapper: absent
+base versus wrapper equivalence result: absent
+headless proof of browser renderer identity: absent
+built artifact module identity receipt: absent
+Pages renderer identity receipt: absent
+FirstRendererIdentityFrameAck: absent
 ```
 
 ## Required parent domain
 
-`meadow-accessible-semantic-projection-authority-domain`
+`meadow-runtime-renderer-identity-manifest-proof-authority-domain`
 
 ## Required transaction
 
 ```txt
-AccessibilityProjectionCommand
-  -> bind document, host, session, state and visible-frame revisions
-  -> derive immutable accessible read model
-  -> project structured story, objective and interaction semantics
-  -> publish allowlisted keyboard commands
-  -> settle focus order and restoration
-  -> publish deduplicated announcements
-  -> update canvas alternative description
-  -> apply accessibility preferences
-  -> reject stale or retired work
-  -> publish AccessibilityProjectionResult
-  -> acknowledge FirstAccessibleFrameAck
-  -> acknowledge FirstVisualAccessibleConvergenceAck
+RendererIdentityAdmissionCommand
+  -> bind manifest, DSK registry, host, module and build revisions
+  -> resolve one immutable RendererIdentityDescriptor
+  -> include base module, wrapper chain and shader/context policies
+  -> validate the DSK capability contract against implementation
+  -> reject missing, stale or divergent renderer identities
+  -> instantiate only the accepted executable module
+  -> publish RendererIdentityAdmissionResult
+  -> render one frame through the accepted generation
+  -> acknowledge FirstRendererIdentityFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, HTML, CSS, content, renderer, editor, accessibility, test, workflow or deployment code changed.
+Documentation only. No runtime, shader, renderer, manifest, DSK descriptor, test, workflow, build or deployment code changed.

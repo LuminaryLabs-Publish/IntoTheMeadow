@@ -2,41 +2,39 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-16T01-38-56-04-00`  
-**Status:** `static-module-graph-release-revision-cache-coherence-authority-audited`
+**Last aligned:** `2026-07-16T05-58-36-04-00`  
+**Status:** `authored-content-graph-referential-integrity-authority-audited`
 
 ## Summary
 
-IntoTheMeadow's public ES-module graph uses `0.3.0-headless-editor` query tags on the entry and selected host modules, `0.2.1-shader-precision` on the compatible renderer's base import, and unversioned relative URLs for the remaining local graph.
-
-The manifest reports build `0.3.0-headless-editor-runtime`, but no immutable release graph, per-module digest set, cache policy, mixed-generation rejection or first release-bound frame acknowledgement proves that one browser frame came from one coherent deployment.
+IntoTheMeadow currently imports scene, objective, interaction-target and story-beat records that agree through independently authored string IDs. Startup validates DSK descriptor shape and the render plan, but no content-graph result proves those IDs are unique, resolved, supported and reachable before gameplay state or a visible frame is published.
 
 ## Plan ledger
 
-**Goal:** make one immutable release identity authoritative from `index.html` through all local modules, compatibility wrappers, external providers, artifacts and deployed Pages.
+**Goal:** make authored content an immutable validated generation before progression, editor mutation or gameplay presentation can depend on it.
 
-- [x] Compare the full 11-repository Publish organization.
+- [x] Compare the complete 11-repository Publish inventory.
 - [x] Exclude TheCavalryOfRome.
 - [x] Confirm ten eligible ledgers and root `.agent` states.
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Preserve all 44 kit surfaces and offered services.
-- [x] Add the `2026-07-16T01-38-56-04-00` release/cache audit family.
-- [x] Change documentation only and target `main`.
+- [x] Preserve all 44 kit surfaces and service declarations.
+- [x] Add the `2026-07-16T05-58-36-04-00` content-graph audit family.
+- [x] Change documentation only on `main`.
 - [x] Create no branch or pull request.
-- [ ] Implement release-graph admission and browser/deploy fixtures later.
+- [ ] Implement graph admission and executable fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-16T01-38-56-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-16T01-38-56-04-00.md
-.agent/architecture-audit/2026-07-16T01-38-56-04-00-static-module-release-cache-dsk-map.md
-.agent/render-audit/2026-07-16T01-38-56-04-00-mixed-release-visible-frame-gap.md
-.agent/gameplay-audit/2026-07-16T01-38-56-04-00-release-graph-gameplay-readiness-loop.md
-.agent/interaction-audit/2026-07-16T01-38-56-04-00-release-graph-command-result-map.md
-.agent/release-cache-audit/2026-07-16T01-38-56-04-00-module-graph-version-cache-contract.md
-.agent/deploy-audit/2026-07-16T01-38-56-04-00-release-cache-browser-fixture-gate.md
-.agent/central-sync-audit/2026-07-16T01-38-56-04-00-oldest-selection-release-cache-reconciliation.md
+.agent/trackers/2026-07-16T05-58-36-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-16T05-58-36-04-00.md
+.agent/architecture-audit/2026-07-16T05-58-36-04-00-authored-content-graph-dsk-map.md
+.agent/render-audit/2026-07-16T05-58-36-04-00-content-graph-visible-frame-gap.md
+.agent/gameplay-audit/2026-07-16T05-58-36-04-00-authored-content-deadlock-loop.md
+.agent/interaction-audit/2026-07-16T05-58-36-04-00-content-graph-command-result-map.md
+.agent/content-graph-audit/2026-07-16T05-58-36-04-00-story-objective-target-reference-contract.md
+.agent/deploy-audit/2026-07-16T05-58-36-04-00-content-graph-fixture-gate.md
+.agent/central-sync-audit/2026-07-16T05-58-36-04-00-oldest-selection-content-graph-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -44,19 +42,17 @@ The manifest reports build `0.3.0-headless-editor-runtime`, but no immutable rel
 .agent/kit-registry.json
 ```
 
-## Complete interaction loop
+## Interaction loop
 
 ```txt
-index.html
-  -> boot-game.js?v=0.3.0-headless-editor
-  -> web-host.js?v=0.3.0-headless-editor
-  -> mixed versioned and unversioned transitive imports
-  -> compatible renderer?v=0.3.0-headless-editor
-  -> base renderer?v=0.2.1-shader-precision
-  -> immutable external meadow provider
-  -> game, DSK, renderer and editor initialization
-  -> recursive RAF
-  -> visible WebGL frame
+browser boot
+  -> load external meadow provider
+  -> import authored scene, target, objective and story modules
+  -> install DSK descriptors
+  -> create initial state from hardcoded content IDs
+  -> tick time-only runtime
+  -> validate and render meadow plan
+  -> publish visible frame without content-graph admission
 ```
 
 ## Domain and kit census
@@ -67,19 +63,19 @@ local declared DSK/kits: 43
 total declared kit surfaces: 44
 active-v0.1 local descriptors: 15
 planned local descriptors: 28
-planned release/cache authority surfaces: 19
+planned content-graph authority surfaces: 20
 ```
 
-The complete kit-by-kit service map is in the latest tracker and `.agent/kit-registry.json`.
+The latest tracker and machine registry contain the full kit-by-kit service inventory.
 
 ## Required parent domain
 
-`meadow-static-module-graph-release-cache-coherence-authority-domain`
+`meadow-authored-content-graph-referential-integrity-authority-domain`
 
 ## Next safe ledge
 
-Generate one immutable release graph listing resolved module URLs, content digests, compatibility relationships, external provider revisions, artifact digest and cache policy. Require source, artifact and Pages execution to publish a matching `ReleaseGraphAdmissionResult` and `FirstReleaseBoundFrameAck`.
+Generate a typed content graph from the checked-in scene, target, objective, story and initial-state records. Reject duplicate, malformed, unknown or unreachable edges before game-state creation, then bind the accepted `ContentGraphDigest` to editor publication, diagnostics, saves and `FirstContentBoundGameplayFrameAck`.
 
 ## Claim boundary
 
-No stale-cache incident, mixed-version runtime failure, cache-policy correctness, artifact parity, Pages parity or production readiness is claimed.
+The current checked-in IDs were not found to conflict. No runtime content validation, editor mutation gate, test fixture, artifact parity or Pages parity was implemented or proven.

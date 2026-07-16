@@ -1,75 +1,77 @@
-# Current Audit: Static Module Graph Release and Cache Coherence
+# Current Audit: Authored Content Graph Referential Integrity
 
-**Updated:** `2026-07-16T01-38-56-04-00`  
+**Updated:** `2026-07-16T05-58-36-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `static-module-graph-release-revision-cache-coherence-authority-audited`  
-**Immediate predecessor:** `runtime-renderer-identity-manifest-proof-authority-central-reconciled`
+**Status:** `authored-content-graph-referential-integrity-authority-audited`  
+**Immediate predecessor:** `static-module-graph-release-revision-cache-coherence-authority-central-reconciled`
 
 ## Summary
 
-The static browser graph does not publish one authoritative release identity. Local modules combine current query labels, an older renderer compatibility label and unversioned relative URLs, while the manifest publishes a logical build string without an executable module graph or content digests.
+The authored scene, objective, interaction-target, story-beat and initial-state modules currently agree through string IDs, but that agreement is not validated as one graph. Existing startup diagnostics validate DSK descriptor structure and render-plan validity, then only count authored records.
 
 ## Plan ledger
 
-**Goal:** bind the full module graph, cache policy, deployment artifact and first visible frame to one accepted release generation.
+**Goal:** bind all authored content references to one accepted generation before game-state creation, editor publication or visible gameplay proof.
 
 - [x] Compare Publish inventory and central tracking.
-- [x] Exclude TheCavalryOfRome.
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Read entry, boot, host, renderer wrapper, manifest and package surfaces.
+- [x] Read all relevant content, state, DSK, diagnostics and host surfaces.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped release/cache audit family.
-- [x] Change documentation only and target `main`.
+- [x] Add the timestamped content-graph audit family.
+- [x] Change documentation only on `main`.
 - [ ] Implement the authority and fixtures later.
 
 ## Main finding
 
 ```txt
-manifest version: 0.3.0
-manifest build: 0.3.0-headless-editor-runtime
-entry and selected host query: 0.3.0-headless-editor
-base renderer query: 0.2.1-shader-precision
-other local imports: unversioned
-external provider: immutable commit pinned
-release graph descriptor: absent
-per-module digests: absent
-mixed-generation result: absent
-FirstReleaseBoundFrameAck: absent
+initial state scene: arrival-meadow
+initial objective: walk-the-path
+initial story beat: arrival
+objective targets: arrival-path, focal-tree
+objective actions: path-progress, inspect
+story triggers: scene-start, path-progress:0.25, inspect:focal-tree
+interaction targets: arrival-path, focal-tree
 ```
 
-## Current proof gap
+These records currently align, but there is no:
 
 ```txt
-complete transitive graph manifest: absent
-resolved module URL snapshot: absent
-content digest set: absent
-cache/revalidation policy receipt: absent
-partial successor rejection: absent
-predecessor preservation result: absent
-artifact graph digest: absent
-Pages graph digest: absent
-browser reload/upgrade fixture: absent
-rollback fixture: absent
+ContentGeneration
+ContentGraphDescriptor
+ContentGraphDigest
+typed scene/target/objective/story/action registries
+trigger parser and capability registry
+duplicate-ID rejection
+unknown-reference rejection
+required-node reachability analysis
+editor mutation admission
+ContentGraphAdmissionResult
+FirstContentBoundGameplayFrameAck
 ```
+
+## Current validation gap
+
+`validateLocalDsks()` checks descriptor IDs and service counts. `getDiagnostics()` combines DSK and render-plan failures, then reports content counts. Neither surface validates content node schema, reference edges or reachability.
 
 ## Required parent domain
 
-`meadow-static-module-graph-release-cache-coherence-authority-domain`
+`meadow-authored-content-graph-referential-integrity-authority-domain`
 
 ## Required transaction
 
 ```txt
-ReleaseGraphAdmissionCommand
-  -> bind manifest, entry, module, provider, artifact and deployment revisions
-  -> resolve one immutable ReleaseGraphDescriptor
-  -> validate every module URL and digest
-  -> classify compatibility modules within the accepted graph
-  -> reject mixed or stale generations
-  -> publish ReleaseGraphAdmissionResult
-  -> create game and renderer from the accepted ReleaseGeneration
-  -> acknowledge FirstReleaseBoundFrameAck
+ContentGraphAdmissionCommand
+  -> bind manifest, source and editor generations
+  -> parse typed content nodes and triggers
+  -> enforce unique IDs
+  -> resolve every required reference
+  -> analyze required reachability
+  -> compute ContentGraphDigest
+  -> publish ContentGraphAdmissionResult
+  -> create initial game state from the accepted generation
+  -> acknowledge FirstContentBoundGameplayFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, HTML, query-string, manifest, package, test, workflow, cache or deployment behavior changed.
+Documentation only. No authored content, runtime, renderer, editor, package, test, workflow or deployment behavior changed.

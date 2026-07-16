@@ -1,96 +1,84 @@
 # Known Gaps
 
-**Updated:** `2026-07-15T20-38-13-04-00`  
+**Updated:** `2026-07-16T01-38-56-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `runtime-renderer-identity-manifest-proof-authority-audited`
+**Status:** `static-module-graph-release-revision-cache-coherence-authority-audited`
 
 ## Summary
 
-The bounded gap is renderer identity convergence. The manifests, required DSK descriptor, browser executable module and proof surfaces do not name or validate one shared renderer implementation and policy revision.
+The bounded gap is release-graph coherence. The browser can execute a mixed set of query-versioned and unversioned local modules without publishing which complete release, artifact or Pages deployment produced the frame.
 
 ## Plan ledger
 
-**Goal:** record every identity, service-contract, admission, lifecycle and proof gap required for one authoritative renderer selection.
+**Goal:** record every identity, cache, admission, upgrade, retirement and proof gap required for coherent static-module publication.
 
-- [x] Record manifest and executable-module divergence.
-- [x] Record renderer DSK service-contract fallback.
-- [x] Record admission and lifecycle gaps.
-- [x] Record browser, build and deploy proof gaps.
+- [x] Record all current revision labels.
+- [x] Record missing module graph and digest authority.
+- [x] Record mixed-generation and upgrade gaps.
+- [x] Record browser, artifact and Pages proof gaps.
 - [ ] Implement and prove later.
 
 ## Identity gaps
 
 ```txt
-RendererIdentity: absent
-RendererRevision: absent
-RendererGeneration: absent
-canonical renderer descriptor: absent
-base module identity: declared
-compatibility wrapper identity: executable but undeclared
-wrapper chain: absent
-shader precision policy in manifest: absent
-WebGL context proxy policy in manifest: absent
-manifest/runtime convergence result: absent
+ReleaseId: absent
+ReleaseGeneration: absent
+ReleaseGraphDescriptor: absent
+ReleaseGraphDigest: absent
+complete transitive module list: absent
+per-module content digest: absent
+compatibility-parent identity: absent
+artifact digest: absent
+deployment revision binding: absent
 ```
 
-## DSK service-contract gaps
+## Cache and admission gaps
 
 ```txt
-explicit renderer DSK label: absent
-explicit renderer DSK service list: absent
-actual context service contract: absent
-actual shader service contract: absent
-actual buffer/draw service contract: absent
-actual resize/snapshot/disposal service contract: absent
-implementation-to-descriptor validation: absent
-service contract revision: absent
-```
-
-## Admission and lifecycle gaps
-
-```txt
-RendererIdentityAdmissionCommand: absent
-RendererIdentityAdmissionResult: absent
-unexpected-wrapper rejection: absent
-stale renderer revision rejection: absent
-single renderer owner rule: absent
-wrapper/base retirement receipt: absent
-renderer generation bound to context generation: absent
-late renderer work rejection: absent
+explicit HTML cache policy: absent
+explicit mutable module cache policy: absent
+immutable local asset URL policy: absent
+mixed-generation rejection: absent
+partial successor rejection: absent
+stale module rejection: absent
+predecessor preservation result: absent
+atomic upgrade result: absent
+rollback result: absent
+retired release late-work rejection: absent
 ```
 
 ## Proof gaps
 
 ```txt
-exact static import assertion: absent
-manifest-to-host convergence fixture: absent
-browser renderer construction fixture: absent
-shader compile through wrapper fixture: absent
-base/wrapper equivalence fixture: absent
-headless-to-browser renderer identity parity: absent
-built-output identity receipt: absent
-Pages identity receipt: absent
-FirstRendererIdentityFrameAck: absent
+clean-cache graph fixture: absent
+warm-cache graph fixture: absent
+old/new mixed-cache fixture: absent
+partial deploy fixture: absent
+rollback fixture: absent
+source/artifact graph parity: absent
+artifact/Pages graph parity: absent
+FirstReleaseBoundFrameAck: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+runtime renderer identity
 accessible semantic projection
 audio event projection
 shader capability admission
-editor command and visible-frame settlement
+editor command settlement
 post-process execution
 browser startup readiness
-runtime reset and replay authority
-DSK executable dependency admission
+runtime reset and replay
+DSK dependency admission
 browser observation provenance
 render-plan and mesh-cache coherence
 viewport authority
 editor capability lifecycle
 web-host retirement
-workspace containment and atomic artifacts
-external provider-source parity
+workspace containment
+external provider parity
 WebGL context recovery
 single-chain frame scheduling
 playable progression
@@ -100,4 +88,4 @@ atomic save and migration
 
 ## Completion boundary
 
-Renderer identity is not proven until one accepted descriptor is cited by both manifests, the DSK registry, the DSK service contract, the browser host, renderer tests, headless/browser evidence, built output and deployed Pages, followed by a matching first-frame acknowledgement.
+Release coherence is not proven until one graph descriptor is cited by the public entry, all transitive modules, external providers, runtime admission result, deployment artifact and Pages response, followed by a matching first visible frame acknowledgement.

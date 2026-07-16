@@ -1,77 +1,76 @@
-# Current Audit: Authored Content Graph Referential Integrity
+# Current Audit: Browser Failure Classification and Bounded Diagnostic Projection
 
-**Updated:** `2026-07-16T05-58-36-04-00`  
+**Updated:** `2026-07-16T15-38-27-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `authored-content-graph-referential-integrity-authority-audited`  
-**Immediate predecessor:** `static-module-graph-release-revision-cache-coherence-authority-central-reconciled`
+**Status:** `browser-failure-classification-bounded-diagnostic-projection-authority-audited`  
+**Immediate predecessor:** `authored-content-graph-referential-integrity-authority-central-reconciled`
 
 ## Summary
 
-The authored scene, objective, interaction-target, story-beat and initial-state modules currently agree through string IDs, but that agreement is not validated as one graph. Existing startup diagnostics validate DSK descriptor structure and render-plan validity, then only count authored records.
+Boot rejection, runtime frame failure and editor/global browser failure evidence are not admitted through one authority. Raw stack, message, filename and location details can reach visible or public diagnostic surfaces, and the editor error array has no explicit capacity, retention or deduplication policy.
 
-## Plan ledger
+## Intent
 
-**Goal:** bind all authored content references to one accepted generation before game-state creation, editor publication or visible gameplay proof.
+Publish one stable, safe and actionable failure result while preserving bounded internal evidence for debugging.
+
+## Checklist
 
 - [x] Compare Publish inventory and central tracking.
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Read all relevant content, state, DSK, diagnostics and host surfaces.
+- [x] Inspect boot, host, GameHost, editor bridge, diagnostics and smoke surfaces.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped content-graph audit family.
+- [x] Add the timestamped browser-failure audit family.
 - [x] Change documentation only on `main`.
-- [ ] Implement the authority and fixtures later.
+- [ ] Implement and prove the authority later.
 
 ## Main finding
 
 ```txt
-initial state scene: arrival-meadow
-initial objective: walk-the-path
-initial story beat: arrival
-objective targets: arrival-path, focal-tree
-objective actions: path-progress, inspect
-story triggers: scene-start, path-progress:0.25, inspect:focal-tree
-interaction targets: arrival-path, focal-tree
-```
+boot raw stack/message HUD projection: present
+runtime fatal raw stack/message HUD projection: present
+browser filename/line/column capture: present
+capability raw action/message capture: present
+public complete error-array projection: present
+explicit error-buffer capacity: absent
 
-These records currently align, but there is no:
-
-```txt
-ContentGeneration
-ContentGraphDescriptor
-ContentGraphDigest
-typed scene/target/objective/story/action registries
-trigger parser and capability registry
-duplicate-ID rejection
-unknown-reference rejection
-required-node reachability analysis
-editor mutation admission
-ContentGraphAdmissionResult
-FirstContentBoundGameplayFrameAck
+stable public code: absent
+severity and host health state: absent
+retryability and terminality: absent
+error/correlation identity: absent
+internal/public diagnostic split: absent
+redaction policy: absent
+deduplication and eviction policy: absent
+recovery command/result: absent
+FirstSafeFailureFrameAck: absent
 ```
 
 ## Current validation gap
 
-`validateLocalDsks()` checks descriptor IDs and service counts. `getDiagnostics()` combines DSK and render-plan failures, then reports content counts. Neither surface validates content node schema, reference edges or reachability.
+Existing smoke suites exercise static composition, DSK registration, render plans, deterministic scene output and editor capabilities. They do not inject browser/provider/render failures or prove error classification, redaction, bounded retention, recovery and source/build/Pages parity.
 
 ## Required parent domain
 
-`meadow-authored-content-graph-referential-integrity-authority-domain`
+`meadow-browser-failure-classification-bounded-diagnostic-projection-authority-domain`
 
 ## Required transaction
 
 ```txt
-ContentGraphAdmissionCommand
-  -> bind manifest, source and editor generations
-  -> parse typed content nodes and triggers
-  -> enforce unique IDs
-  -> resolve every required reference
-  -> analyze required reachability
-  -> compute ContentGraphDigest
-  -> publish ContentGraphAdmissionResult
-  -> create initial game state from the accepted generation
-  -> acknowledge FirstContentBoundGameplayFrameAck
+BrowserFailureAdmissionCommand
+  -> classify source, operation, code, severity and retryability
+  -> allocate ErrorId and CorrelationId
+  -> retain one bounded internal record
+  -> publish one redacted public envelope
+  -> deduplicate repeats and settle host health
+  -> publish BrowserFailureAdmissionResult
+  -> project safe HUD/editor diagnostics
+  -> acknowledge FirstSafeFailureFrameAck
+
+FailureRecoveryCommand
+  -> validate expected generations and retry policy
+  -> replace affected resources or reject explicitly
+  -> publish FailureRecoveryResult
 ```
 
 ## Boundary
 
-Documentation only. No authored content, runtime, renderer, editor, package, test, workflow or deployment behavior changed.
+Documentation only. No runtime, renderer, editor, package, test, workflow or deployment behavior changed.

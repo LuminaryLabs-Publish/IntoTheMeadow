@@ -1,74 +1,76 @@
 # Next Steps
 
-**Updated:** `2026-07-16T05-58-36-04-00`  
+**Updated:** `2026-07-16T15-38-27-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `authored-content-graph-referential-integrity-authority-audited`
+**Status:** `browser-failure-classification-bounded-diagnostic-projection-authority-audited`
 
 ## Summary
 
-Create one generated content graph before enabling exploration progression. Keep authored scene, target, objective and story modules separate, but admit them together through typed registries, reference checks, reachability analysis and a stable graph digest.
+Converge boot, frame/render, browser-global and editor capability failures through one typed authority. Keep raw evidence bounded and internal; publish stable redacted envelopes with health, retry and correlation semantics.
 
-## Plan ledger
+## Intent
 
-**Goal:** create the smallest reliable path from authored modules to one accepted gameplay-capable content generation.
+Create the smallest reliable path from an observed failure to one accepted public result, one bounded internal record and an explicit recovery decision.
 
-### Schema and identity
+## Checklist
 
-- [ ] Define `ContentGeneration`, `ContentGraphDescriptor` and `ContentGraphDigest`.
-- [ ] Define typed schemas for scene, target, objective, story beat, action, trigger and initial-state nodes.
-- [ ] Create independent typed ID registries.
-- [ ] Reject missing, empty and duplicate IDs.
+### Classification and identity
 
-### Reference resolution
+- [ ] Define `ErrorId`, `CorrelationId`, stable public codes and source/operation registries.
+- [ ] Define severity, health-state, retryability and terminality policies.
+- [ ] Classify provider, composition, render-plan, renderer, browser and editor failures.
+- [ ] Reject command/result evidence from retired runtime, renderer or editor generations.
 
-- [ ] Resolve initial scene, objective and story references.
-- [ ] Resolve objective target and action references.
-- [ ] Parse story trigger expressions.
-- [ ] Resolve trigger actions and optional target IDs.
-- [ ] Validate completion predicates against target and action types.
+### Internal evidence
 
-### Reachability and adoption
+- [ ] Define an internal diagnostic record separate from public output.
+- [ ] Set explicit buffer capacity, eviction and fatal-record retention rules.
+- [ ] Collapse exact duplicate storms while preserving counts and first/last timestamps.
+- [ ] Bound snapshot payload size.
 
-- [ ] Compute required progression reachability from initial state.
-- [ ] Distinguish required from optional unreachable content.
-- [ ] Publish `ContentGraphAdmissionResult` before game-state creation.
-- [ ] Bind gameplay, diagnostics, save eligibility and rendering to the accepted generation.
-- [ ] Reject late work from retired content generations.
+### Public projection
 
-### Editor mutation
+- [ ] Define a redacted public failure envelope.
+- [ ] Replace raw boot and fatal HUD text with accepted safe messages.
+- [ ] Replace raw editor capability error arrays with stable public results.
+- [ ] Publish consistent health state through GameHost and editor diagnostics.
+- [ ] Prevent stack, absolute path, provider URL and raw argument leakage.
 
-- [ ] Convert editor changes into detached `ContentMutationCommand` candidates.
-- [ ] Revalidate the complete successor graph.
-- [ ] Preserve the predecessor on failure.
-- [ ] Publish stable accepted, rejected, stale and duplicate results.
+### Recovery
+
+- [ ] Define `FailureRecoveryCommand` and `FailureRecoveryResult`.
+- [ ] Distinguish retry, reload, provider replacement and terminal outcomes.
+- [ ] Require expected runtime/renderer/editor revisions.
+- [ ] Preserve predecessor evidence when recovery fails.
 
 ### Evidence
 
-- [ ] Add duplicate-ID and unknown-reference fixtures.
-- [ ] Add malformed-trigger and unreachable-content fixtures.
-- [ ] Add editor mutation predecessor-preservation fixtures.
-- [ ] Compare source, artifact and Pages graph digests.
-- [ ] Publish `FirstContentBoundGameplayFrameAck`.
+- [ ] Add boot/provider/render/browser/editor failure-injection fixtures.
+- [ ] Add redaction and path-leakage fixtures.
+- [ ] Add duplicate-storm, capacity and eviction fixtures.
+- [ ] Add stale-generation and recovery fixtures.
+- [ ] Compare source, artifact and Pages public envelopes.
+- [ ] Publish `FirstSafeFailureFrameAck`.
 
 ## Required result
 
 ```txt
-ContentGraphAdmissionResult {
-  contentGeneration
-  contentGraphDigest
-  manifestRevision
-  sceneIds
-  targetIds
-  objectiveIds
-  storyBeatIds
-  actionIds
-  resolvedEdgeCount
-  unreachableNodeIds
+BrowserFailureAdmissionResult {
+  errorId
+  correlationId
+  publicCode
+  source
+  operation
+  severity
+  healthState
+  retryability
+  duplicateOf
+  internalRecordRevision
+  publicEnvelope
   status
-  reason
 }
 ```
 
 ## Preserved dependencies
 
-Release/cache coherence, renderer identity, accessibility, audio, shader admission, editor command settlement, post-processing, startup readiness, reset/replay, DSK admission, observation provenance, cache coherence, viewport, WebGL recovery, frame scheduling, progression, grass visibility and persistence remain separate bounded work.
+Content-graph integrity, release/cache coherence, renderer identity, accessibility, audio, shader admission, editor mutation settlement, post-processing, startup readiness, reset/replay, DSK admission, observation provenance, cache coherence, viewport, WebGL recovery, frame scheduling, progression, grass visibility and persistence remain separate bounded work.

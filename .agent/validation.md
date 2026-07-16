@@ -1,12 +1,12 @@
 # Validation
 
-**Updated:** `2026-07-15T15-41-21-04-00`  
+**Updated:** `2026-07-15T20-38-13-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Audit type:** documentation and source analysis only
 
 ## Summary
 
-Source review confirms that the active document is canvas-first with static labels, the debug HUD is normally hidden, semantic content remains outside the DOM and the UI/input/interaction/story/objective DSKs are planned rather than active-v0.1.
+Source review confirms that both manifest surfaces declare the base WebGL renderer module, the browser host executes a compatibility wrapper instead, the wrapper changes shader-source submission, the required renderer DSK falls back to generic services, and existing tests do not prove those identities converge.
 
 ## Plan ledger
 
@@ -16,48 +16,46 @@ Source review confirms that the active document is canvas-first with static labe
 - [x] Compare all 11 Publish repositories and exclude Cavalry.
 - [x] Confirm ten eligible ledgers, root `.agent` states and synchronized heads.
 - [x] Select IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Read the document shell, web host, DSK registry, service map, state and semantic content.
+- [x] Read both manifests, web host, renderer wrapper, DSK registry, DSK descriptors and renderer-related tests.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped accessibility audit family and refresh root `.agent` state.
+- [x] Add the timestamped renderer-identity audit family and refresh root `.agent` state.
 - [x] Change documentation only.
 - [x] Create no branch or pull request.
-- [ ] Execute browser accessibility fixtures later.
+- [ ] Execute renderer identity and browser shader fixtures later.
 
 ## Confirmed by source review
 
 ```txt
-canvas uses role=img
-canvas has one static aria-label
-main has one static game label
-HUD is hidden unless debug mode is enabled
-status and loading elements have no explicit live-region role
-normal frames update WebGL and optional debug metrics only
-story beats contain three authored text entries
-objectives contain two labels
-interaction targets contain two labels
-meadow-ui-dsk advertises five UI services
-meadow-ui-dsk is absent from REQUIRED_V01_DSK_IDS
-meadow-input/interactions/story/objective DSKs are also absent from REQUIRED_V01_DSK_IDS
-game ticks update frame and lastTick only
+game.manifest.json declares meadow-webgl-renderer-v2.js
+GAME_MANIFEST declares meadow-webgl-renderer-v2.js
+web-host.js imports meadow-webgl-renderer-v2-compatible.js
+compatible renderer wraps webgl/webgl2 contexts
+compatible renderer normalizes graphics shader float precision
+meadow-webgl-renderer-v2-kit is local and required-v0.1
+DOMAIN_LABELS omits meadow-webgl-renderer-v2-kit
+SERVICES omits meadow-webgl-renderer-v2-kit
+descriptor therefore uses generic fallback services
+static smoke checks the renderer factory name but not exact module identity
+renderer-v2 smoke validates plan and mesh data without constructing WebGL renderer
+headless environment uses mesh observation rather than the browser renderer
 ```
 
 ## Source-derived but not executed
 
 ```txt
-visible frames can advance while accessible document state remains unchanged
-repeated RAF frames have no announcement deduplication contract
-no browser focus owner can settle route or overlay transitions
-no semantic command surface can prove keyboard operability
-no state/frame receipt can prove visual and accessible convergence
+manifest consumers can select a different renderer path from the browser host
+tests can pass without proving compatibility-wrapper execution
+DSK service introspection can under-report actual renderer behavior
+build or deployment can drift without a renderer identity receipt
 ```
 
-These are architecture and proof findings, not claims of a reproduced assistive-technology defect.
+These are architecture and proof findings, not claims of a reproduced browser or shader defect.
 
 ## Documentation changed
 
 ```txt
 new timestamped project breakdown and turn ledger
-new architecture, render, gameplay, interaction, accessibility, deploy and central-sync audits
+new architecture, render, interaction, renderer-identity, deploy and central-sync audits
 START_HERE, current audit, next steps, known gaps, validation and kit registry refreshed
 central ledger and internal change log synchronized separately
 ```
@@ -68,30 +66,24 @@ central ledger and internal change log synchronized separately
 npm install
 npm run check
 npm run editor:browser
-browser accessibility-tree inspection
-keyboard-only gameplay fixture
-screen-reader semantics fixture
-focus order or restoration trace
-live-region announcement fixture
-reduced-motion fixture
-forced-colors fixture
-200% text and reflow fixture
+controlled browser renderer construction
+WebGL shader compilation through compatibility wrapper
+base versus wrapper equivalence fixture
+headless/browser renderer identity parity
 production build
-built-output accessibility smoke
-GitHub Pages accessibility smoke
+built-output renderer identity smoke
+GitHub Pages renderer identity smoke
 ```
 
 ## Change boundary
 
 ```txt
 runtime JavaScript changed: no
-HTML changed: no
-CSS changed: no
-content changed: no
-shader or renderer changed: no
-gameplay changed: no
-editor bridge changed: no
-accessibility behavior changed: no
+manifest changed: no
+DSK registry or descriptor changed: no
+shader source changed: no
+renderer behavior changed: no
+editor behavior changed: no
 package or dependency changed: no
 test or workflow changed: no
 deployment changed: no
@@ -101,4 +93,4 @@ pull request created: no
 
 ## Claim boundary
 
-This audit does not claim accessible gameplay, keyboard operability, screen-reader correctness, focus correctness, reduced-motion compliance, contrast compliance, text reflow, passing tests, source/build/Pages parity or production readiness.
+This audit does not claim a shader failure, renderer incompatibility, manifest consumer failure, service-contract correctness, passing tests, source/build/Pages parity or production readiness.

@@ -1,12 +1,12 @@
 # Validation
 
-**Updated:** `2026-07-16T01-38-56-04-00`  
+**Updated:** `2026-07-16T05-58-36-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Audit type:** documentation and source analysis only
 
 ## Summary
 
-Source review confirms a mixed local revision strategy: `0.3.0-headless-editor` on the public entry and selected host modules, `0.2.1-shader-precision` on the base renderer edge, and unversioned URLs elsewhere. The manifest build does not publish the complete executable graph or its content digests.
+Source review confirms that authored scene, target, objective, story and initial-state modules share string identifiers without one graph validator. The checked-in records currently align, but diagnostics only report content counts and do not prove uniqueness, references, trigger support or reachability.
 
 ## Plan ledger
 
@@ -16,42 +16,42 @@ Source review confirms a mixed local revision strategy: `0.3.0-headless-editor` 
 - [x] Compare all 11 Publish repositories and exclude Cavalry.
 - [x] Confirm ten eligible ledgers and root `.agent` states.
 - [x] Select IntoTheMeadow by oldest synchronized timestamp.
-- [x] Read index, boot, host, compatible renderer, manifest, package and prior audit registry.
+- [x] Read manifest, meadow config, story beats, objectives, interaction targets, initial state, DSK install, diagnostics and host loop.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped release/cache audit family and refresh root `.agent` state.
-- [x] Change documentation only.
-- [x] Create no branch or pull request.
-- [ ] Execute browser and deployment fixtures later.
+- [x] Add the timestamped content-graph audit family and refresh root `.agent` state.
+- [x] Change documentation only and create no branch or pull request.
+- [ ] Execute content mutation and deployment fixtures later.
 
 ## Confirmed by source review
 
 ```txt
-index entry uses ?v=0.3.0-headless-editor
-boot imports web host with ?v=0.3.0-headless-editor
-web host mixes unversioned imports with selected ?v=0.3.0-headless-editor imports
-compatible renderer imports base renderer with ?v=0.2.1-shader-precision
-GAME_MANIFEST.version is 0.3.0
-GAME_MANIFEST.build is 0.3.0-headless-editor-runtime
-external meadow provider is commit-pinned
-no release graph manifest or module digest set is exposed
+scene ID: arrival-meadow
+interaction target IDs: arrival-path, focal-tree
+objective IDs: walk-the-path, inspect-tree
+story beat IDs: arrival, path-discovery, focal-tree
+initial objective ID: walk-the-path
+initial story beat ID: arrival
+objective and story action vocabulary: path-progress, inspect
+DSK validation checks descriptor ID suffixes and service counts
+runtime diagnostics count content records but do not validate references
 ```
 
 ## Source-derived but not executed
 
 ```txt
-a browser can resolve modules without a product-level graph admission result
-tests can pass without proving one complete deployed module generation
-the older renderer label may be valid but is not explicitly admitted into the current release
-artifact or Pages output can drift without a graph digest receipt
+a stale string edge can survive startup validation
+an invalid graph can coexist with a valid render plan
+future progression can deadlock on an unresolved required edge
+editor mutation can require predecessor preservation and stale-generation rejection
 ```
 
-These are architecture and proof findings, not claims of a reproduced cache failure.
+These are architecture and proof findings, not claims of a reproduced content failure.
 
 ## Documentation changed
 
 ```txt
 new timestamped project breakdown and turn ledger
-new architecture, render, gameplay, interaction, release-cache, deploy and central-sync audits
+new architecture, render, gameplay, interaction, content-graph, deploy and central-sync audits
 START_HERE, current audit, next steps, known gaps, validation and kit registry refreshed
 central ledger and internal change log synchronized separately
 ```
@@ -61,27 +61,27 @@ central ledger and internal change log synchronized separately
 ```txt
 npm install
 npm run check
-browser module request tracing
-HTTP cache-header inspection
-warm-cache reload fixture
-mixed predecessor/successor fixture
-partial deployment fixture
-rollback fixture
+content schema fixture
+duplicate-ID fixture
+unknown-reference fixture
+malformed-trigger fixture
+reachability fixture
+editor mutation fixture
 production build
-artifact graph digest comparison
-GitHub Pages graph parity smoke
+artifact content graph comparison
+GitHub Pages content graph smoke
 ```
 
 ## Change boundary
 
 ```txt
 runtime JavaScript changed: no
-HTML changed: no
+authored content changed: no
 manifest changed: no
-query strings changed: no
+renderer or shader changed: no
+editor behavior changed: no
 package or dependency changed: no
 test or workflow changed: no
-cache headers changed: no
 deployment changed: no
 branch created: no
 pull request created: no
@@ -89,4 +89,4 @@ pull request created: no
 
 ## Claim boundary
 
-This audit does not claim a stale-cache incident, mixed-version runtime failure, cache correctness, passing tests, source/artifact parity, Pages parity or production readiness.
+This audit does not claim invalid checked-in content, runtime graph validation, editor mutation safety, passing tests, artifact parity, Pages parity or production readiness.

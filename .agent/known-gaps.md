@@ -1,100 +1,96 @@
 # Known Gaps
 
-**Updated:** `2026-07-15T15-41-21-04-00`  
+**Updated:** `2026-07-15T20-38-13-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `accessible-semantic-projection-authority-audited`
+**Status:** `runtime-renderer-identity-manifest-proof-authority-audited`
 
 ## Summary
 
-The bounded gap is accessible semantic projection. The browser produces changing visual frames, while story, objective, interaction and command semantics remain static content or planned DSK services with no state-bound DOM, focus, announcement or accessibility evidence path.
+The bounded gap is renderer identity convergence. The manifests, required DSK descriptor, browser executable module and proof surfaces do not name or validate one shared renderer implementation and policy revision.
 
 ## Plan ledger
 
-**Goal:** record every semantic, command, focus, preference and proof gap required for a reliable accessible meadow experience.
+**Goal:** record every identity, service-contract, admission, lifecycle and proof gap required for one authoritative renderer selection.
 
-- [x] Record document and semantic-read-model gaps.
-- [x] Record command and focus gaps.
-- [x] Record announcement and preference gaps.
-- [x] Record frame and validation gaps.
+- [x] Record manifest and executable-module divergence.
+- [x] Record renderer DSK service-contract fallback.
+- [x] Record admission and lifecycle gaps.
+- [x] Record browser, build and deploy proof gaps.
 - [ ] Implement and prove later.
 
-## Semantic projection gaps
+## Identity gaps
 
 ```txt
-AccessibleStateRevision: absent
-AccessibleMeadowReadModel: absent
-semantic game region: absent
-current-objective region: absent
-story/status region: absent
-available-interactions list: absent
-command-help surface: absent
-state-bound canvas alternative: absent
+RendererIdentity: absent
+RendererRevision: absent
+RendererGeneration: absent
+canonical renderer descriptor: absent
+base module identity: declared
+compatibility wrapper identity: executable but undeclared
+wrapper chain: absent
+shader precision policy in manifest: absent
+WebGL context proxy policy in manifest: absent
+manifest/runtime convergence result: absent
 ```
 
-## Command and focus gaps
+## DSK service-contract gaps
 
 ```txt
-focusable gameplay commands: absent
-keyboard command descriptions: absent
-shared command identity: absent
-focus owner generation: absent
-focus order: absent
-focus containment: absent
-focus restoration target: absent
-stale focus rejection: absent
-FocusSettlementResult: absent
+explicit renderer DSK label: absent
+explicit renderer DSK service list: absent
+actual context service contract: absent
+actual shader service contract: absent
+actual buffer/draw service contract: absent
+actual resize/snapshot/disposal service contract: absent
+implementation-to-descriptor validation: absent
+service contract revision: absent
 ```
 
-## Announcement and preference gaps
+## Admission and lifecycle gaps
 
 ```txt
-semantic UI event ledger: absent
-polite live region: absent
-assertive failure live region: absent
-announcement deduplication: absent
-AnnouncementProjectionResult: absent
-reduced-motion observation: absent
-motion policy revision: absent
-forced-colors observation: absent
-contrast policy: absent
-text scaling and reflow policy: absent
-focus indicator policy: absent
+RendererIdentityAdmissionCommand: absent
+RendererIdentityAdmissionResult: absent
+unexpected-wrapper rejection: absent
+stale renderer revision rejection: absent
+single renderer owner rule: absent
+wrapper/base retirement receipt: absent
+renderer generation bound to context generation: absent
+late renderer work rejection: absent
 ```
 
-## Frame and validation gaps
+## Proof gaps
 
 ```txt
-AccessibilityProjectionResult: absent
-FirstAccessibleFrameAck: absent
-FirstVisualAccessibleConvergenceAck: absent
-accessibility-tree snapshot: absent
-keyboard-only fixture: absent
-screen-reader semantics fixture: absent
-focus restore fixture: absent
-announcement fixture: absent
-reduced-motion fixture: absent
-forced-colors fixture: absent
-200% text fixture: absent
-source/build/Pages parity fixture: absent
+exact static import assertion: absent
+manifest-to-host convergence fixture: absent
+browser renderer construction fixture: absent
+shader compile through wrapper fixture: absent
+base/wrapper equivalence fixture: absent
+headless-to-browser renderer identity parity: absent
+built-output identity receipt: absent
+Pages identity receipt: absent
+FirstRendererIdentityFrameAck: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+accessible semantic projection
 audio event projection
-shader precision admission
+shader capability admission
 editor command and visible-frame settlement
 post-process execution
 browser startup readiness
 runtime reset and replay authority
-DSK executable capability composition
+DSK executable dependency admission
 browser observation provenance
 render-plan and mesh-cache coherence
 viewport authority
 editor capability lifecycle
 web-host retirement
 workspace containment and atomic artifacts
-provider-source parity
+external provider-source parity
 WebGL context recovery
 single-chain frame scheduling
 playable progression
@@ -104,4 +100,4 @@ atomic save and migration
 
 ## Completion boundary
 
-Accessibility is not proven until one accepted game state produces structured semantic output, operable admitted commands, settled focus and announcements, an updated canvas alternative and matching visible/accessibility revision acknowledgements in source, built output and deployed Pages.
+Renderer identity is not proven until one accepted descriptor is cited by both manifests, the DSK registry, the DSK service contract, the browser host, renderer tests, headless/browser evidence, built output and deployed Pages, followed by a matching first-frame acknowledgement.

@@ -2,41 +2,41 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-15T20-38-13-04-00`  
-**Status:** `runtime-renderer-identity-manifest-proof-authority-audited`
+**Last aligned:** `2026-07-16T01-38-56-04-00`  
+**Status:** `static-module-graph-release-revision-cache-coherence-authority-audited`
 
 ## Summary
 
-IntoTheMeadow declares `./src/renderers/meadow-webgl-renderer-v2.js` as its local renderer in both manifest surfaces, but the browser host executes `meadow-webgl-renderer-v2-compatible.js`. The compatibility module materially changes shader submission by normalizing float precision through proxied WebGL contexts.
+IntoTheMeadow's public ES-module graph uses `0.3.0-headless-editor` query tags on the entry and selected host modules, `0.2.1-shader-precision` on the compatible renderer's base import, and unversioned relative URLs for the remaining local graph.
 
-The required `meadow-webgl-renderer-v2-kit` also lacks an explicit label and service list in `src/dsks/index.js`, so its public DSK descriptor falls back to generic `model`, `state`, `events`, `validation` and `snapshot` services. Current static and renderer smokes do not prove manifest, DSK descriptor and executable renderer identity convergence.
+The manifest reports build `0.3.0-headless-editor-runtime`, but no immutable release graph, per-module digest set, cache policy, mixed-generation rejection or first release-bound frame acknowledgement proves that one browser frame came from one coherent deployment.
 
 ## Plan ledger
 
-**Goal:** make one immutable renderer identity authoritative across manifests, DSK services, browser execution, tests, headless evidence, built output and deployed Pages.
+**Goal:** make one immutable release identity authoritative from `index.html` through all local modules, compatibility wrappers, external providers, artifacts and deployed Pages.
 
-- [x] Compare all 11 accessible Publish repositories.
-- [x] Exclude `TheCavalryOfRome`.
-- [x] Confirm ten eligible ledgers, root `.agent` states and synchronized heads.
-- [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Identify the interaction loop, domains, kits and offered services.
-- [x] Preserve all 44 declared kit surfaces.
-- [x] Add the `2026-07-15T20-38-13-04-00` audit family.
+- [x] Compare the full 11-repository Publish organization.
+- [x] Exclude TheCavalryOfRome.
+- [x] Confirm ten eligible ledgers and root `.agent` states.
+- [x] Select only IntoTheMeadow by oldest synchronized timestamp.
+- [x] Preserve all 44 kit surfaces and offered services.
+- [x] Add the `2026-07-16T01-38-56-04-00` release/cache audit family.
 - [x] Change documentation only and target `main`.
 - [x] Create no branch or pull request.
-- [ ] Implement renderer identity admission and executable browser fixtures later.
+- [ ] Implement release-graph admission and browser/deploy fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-15T20-38-13-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-15T20-38-13-04-00.md
-.agent/architecture-audit/2026-07-15T20-38-13-04-00-runtime-renderer-identity-dsk-map.md
-.agent/render-audit/2026-07-15T20-38-13-04-00-manifest-executable-renderer-divergence.md
-.agent/interaction-audit/2026-07-15T20-38-13-04-00-renderer-selection-command-result-map.md
-.agent/renderer-identity-audit/2026-07-15T20-38-13-04-00-manifest-module-service-proof-contract.md
-.agent/deploy-audit/2026-07-15T20-38-13-04-00-renderer-identity-browser-fixture-gate.md
-.agent/central-sync-audit/2026-07-15T20-38-13-04-00-oldest-selection-renderer-identity-reconciliation.md
+.agent/trackers/2026-07-16T01-38-56-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-16T01-38-56-04-00.md
+.agent/architecture-audit/2026-07-16T01-38-56-04-00-static-module-release-cache-dsk-map.md
+.agent/render-audit/2026-07-16T01-38-56-04-00-mixed-release-visible-frame-gap.md
+.agent/gameplay-audit/2026-07-16T01-38-56-04-00-release-graph-gameplay-readiness-loop.md
+.agent/interaction-audit/2026-07-16T01-38-56-04-00-release-graph-command-result-map.md
+.agent/release-cache-audit/2026-07-16T01-38-56-04-00-module-graph-version-cache-contract.md
+.agent/deploy-audit/2026-07-16T01-38-56-04-00-release-cache-browser-fixture-gate.md
+.agent/central-sync-audit/2026-07-16T01-38-56-04-00-oldest-selection-release-cache-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -47,27 +47,16 @@ The required `meadow-webgl-renderer-v2-kit` also lacks an explicit label and ser
 ## Complete interaction loop
 
 ```txt
-document boot
-  -> import web host
-  -> read GAME_MANIFEST for the external meadow provider
-  -> create game and local DSK descriptors
-  -> import the compatible renderer directly from web-host.js
-  -> wrap WebGL contexts and normalize shader float precision
-  -> create editor bridge and start RAF
-
-frame
-  -> tick game with fixed host delta
-  -> build and enhance render plan
-  -> validate the render contract
-  -> submit the plan through the compatible renderer
-  -> publish GameHost snapshots
-
-proof surfaces
-  -> manifests declare the base renderer module
-  -> DSK registry requires meadow-webgl-renderer-v2-kit
-  -> DSK descriptor exposes generic fallback services
-  -> static smoke checks only the renderer factory name
-  -> renderer smoke validates mesh data without instantiating either renderer module
+index.html
+  -> boot-game.js?v=0.3.0-headless-editor
+  -> web-host.js?v=0.3.0-headless-editor
+  -> mixed versioned and unversioned transitive imports
+  -> compatible renderer?v=0.3.0-headless-editor
+  -> base renderer?v=0.2.1-shader-precision
+  -> immutable external meadow provider
+  -> game, DSK, renderer and editor initialization
+  -> recursive RAF
+  -> visible WebGL frame
 ```
 
 ## Domain and kit census
@@ -78,19 +67,19 @@ local declared DSK/kits: 43
 total declared kit surfaces: 44
 active-v0.1 local descriptors: 15
 planned local descriptors: 28
-planned renderer-identity authority surfaces: 19
+planned release/cache authority surfaces: 19
 ```
 
 The complete kit-by-kit service map is in the latest tracker and `.agent/kit-registry.json`.
 
 ## Required parent domain
 
-`meadow-runtime-renderer-identity-manifest-proof-authority-domain`
+`meadow-static-module-graph-release-cache-coherence-authority-domain`
 
 ## Next safe ledge
 
-Resolve one accepted renderer descriptor containing module URL, revision, wrapper chain, shader-precision policy, context policy and service contract. Require the browser host, manifests, DSK descriptor, tests, headless evidence, build and Pages artifact to cite that descriptor and publish a matching first-frame acknowledgement.
+Generate one immutable release graph listing resolved module URLs, content digests, compatibility relationships, external provider revisions, artifact digest and cache policy. Require source, artifact and Pages execution to publish a matching `ReleaseGraphAdmissionResult` and `FirstReleaseBoundFrameAck`.
 
 ## Claim boundary
 
-This pass does not claim a reproduced shader failure, browser incompatibility, manifest consumer failure, renderer parity, passing tests, build parity, Pages parity or production readiness.
+No stale-cache incident, mixed-version runtime failure, cache-policy correctness, artifact parity, Pages parity or production readiness is claimed.

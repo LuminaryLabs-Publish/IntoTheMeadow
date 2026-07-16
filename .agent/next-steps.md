@@ -1,62 +1,69 @@
 # Next Steps
 
-**Updated:** `2026-07-16T01-38-56-04-00`  
+**Updated:** `2026-07-16T05-58-36-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `static-module-graph-release-revision-cache-coherence-authority-audited`
+**Status:** `authored-content-graph-referential-integrity-authority-audited`
 
 ## Summary
 
-Replace ad hoc URL query labels with one generated release graph. Keep immutable external-provider pinning, but bind every local module and compatibility wrapper to the same release generation and proof chain.
+Create one generated content graph before enabling exploration progression. Keep authored scene, target, objective and story modules separate, but admit them together through typed registries, reference checks, reachability analysis and a stable graph digest.
 
 ## Plan ledger
 
-**Goal:** create the smallest reliable path from source revision to one coherent browser and Pages frame.
+**Goal:** create the smallest reliable path from authored modules to one accepted gameplay-capable content generation.
 
-### Release identity
+### Schema and identity
 
-- [ ] Add `ReleaseId`, `ReleaseGeneration` and `ReleaseGraphDigest`.
-- [ ] Generate one immutable `ReleaseGraphDescriptor`.
-- [ ] Include the manifest build, HTML entry and all transitive local modules.
-- [ ] Record compatibility-parent relationships for wrapper/base renderer modules.
-- [ ] Preserve immutable external-provider commit identity.
+- [ ] Define `ContentGeneration`, `ContentGraphDescriptor` and `ContentGraphDigest`.
+- [ ] Define typed schemas for scene, target, objective, story beat, action, trigger and initial-state nodes.
+- [ ] Create independent typed ID registries.
+- [ ] Reject missing, empty and duplicate IDs.
 
-### Module graph and cache policy
+### Reference resolution
 
-- [ ] Record each resolved module URL and content digest.
-- [ ] Define HTML, mutable-entry and immutable-asset cache semantics.
-- [ ] Replace hand-maintained query labels with generated release URLs or graph validation.
-- [ ] Reject partial or mixed successor graphs.
-- [ ] Preserve the coherent predecessor when successor admission fails.
+- [ ] Resolve initial scene, objective and story references.
+- [ ] Resolve objective target and action references.
+- [ ] Parse story trigger expressions.
+- [ ] Resolve trigger actions and optional target IDs.
+- [ ] Validate completion predicates against target and action types.
 
-### Runtime admission
+### Reachability and adoption
 
-- [ ] Publish `ReleaseGraphAdmissionResult` before game startup.
-- [ ] Bind GameHost, editor bridge, renderer and diagnostics to the accepted generation.
-- [ ] Reject late work from retired release generations.
-- [ ] Publish `ReleaseUpgradeResult` for reload, upgrade and rollback.
+- [ ] Compute required progression reachability from initial state.
+- [ ] Distinguish required from optional unreachable content.
+- [ ] Publish `ContentGraphAdmissionResult` before game-state creation.
+- [ ] Bind gameplay, diagnostics, save eligibility and rendering to the accepted generation.
+- [ ] Reject late work from retired content generations.
+
+### Editor mutation
+
+- [ ] Convert editor changes into detached `ContentMutationCommand` candidates.
+- [ ] Revalidate the complete successor graph.
+- [ ] Preserve the predecessor on failure.
+- [ ] Publish stable accepted, rejected, stale and duplicate results.
 
 ### Evidence
 
-- [ ] Add clean-cache and warm-cache browser fixtures.
-- [ ] Add predecessor/successor mixed-cache fixtures.
-- [ ] Add partial deploy and rollback fixtures.
+- [ ] Add duplicate-ID and unknown-reference fixtures.
+- [ ] Add malformed-trigger and unreachable-content fixtures.
+- [ ] Add editor mutation predecessor-preservation fixtures.
 - [ ] Compare source, artifact and Pages graph digests.
-- [ ] Publish `FirstReleaseBoundFrameAck`.
+- [ ] Publish `FirstContentBoundGameplayFrameAck`.
 
 ## Required result
 
 ```txt
-ReleaseGraphAdmissionResult {
-  releaseId
-  releaseGeneration
-  manifestVersion
-  buildRevision
-  entryUrl
-  moduleGraphDigest
-  externalProviderRevisions
-  cachePolicyRevision
-  artifactDigest
-  deploymentRevision
+ContentGraphAdmissionResult {
+  contentGeneration
+  contentGraphDigest
+  manifestRevision
+  sceneIds
+  targetIds
+  objectiveIds
+  storyBeatIds
+  actionIds
+  resolvedEdgeCount
+  unreachableNodeIds
   status
   reason
 }
@@ -64,4 +71,4 @@ ReleaseGraphAdmissionResult {
 
 ## Preserved dependencies
 
-Renderer identity, accessibility, audio, editor settlement, post-processing, startup readiness, reset/replay, DSK admission, observation provenance, render-cache coherence, viewport, WebGL recovery, frame scheduling, progression, grass visibility and persistence remain separate bounded work.
+Release/cache coherence, renderer identity, accessibility, audio, shader admission, editor command settlement, post-processing, startup readiness, reset/replay, DSK admission, observation provenance, cache coherence, viewport, WebGL recovery, frame scheduling, progression, grass visibility and persistence remain separate bounded work.

@@ -1,79 +1,98 @@
 # Known Gaps
 
-**Updated:** `2026-07-16T05-58-36-04-00`  
+**Updated:** `2026-07-16T15-38-27-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `authored-content-graph-referential-integrity-authority-audited`
+**Status:** `browser-failure-classification-bounded-diagnostic-projection-authority-audited`
 
 ## Summary
 
-The bounded gap is authored-content graph integrity. Scene, target, objective, story, action, trigger and initial-state identities are authored independently and are not admitted as one unique, resolved and reachable generation.
+The bounded gap is browser failure classification, retention and safe projection. Boot, runtime and editor failure evidence is split across direct DOM mutation and an unbounded public error array.
 
-## Plan ledger
+## Intent
 
-**Goal:** record every schema, identity, reference, reachability, mutation and proof gap required for safe authored-content adoption.
+Record every missing identity, classification, storage, redaction, recovery and proof boundary required for safe failure handling.
 
-- [x] Record current node and edge types.
-- [x] Record missing identity and schema authority.
-- [x] Record missing reference and reachability checks.
-- [x] Record missing editor and deployment proof.
+## Checklist
+
+- [x] Record all current failure sources and public projections.
+- [x] Record missing taxonomy, health and retry semantics.
+- [x] Record missing bounded retention and deduplication.
+- [x] Record missing redaction, recovery and deployment proof.
 - [ ] Implement and prove later.
 
-## Identity and schema gaps
+## Classification gaps
 
 ```txt
-ContentGeneration: absent
-ContentGraphDescriptor: absent
-ContentGraphDigest: absent
-typed scene registry: absent
-typed target registry: absent
-typed objective registry: absent
-typed story-beat registry: absent
-typed action registry: absent
-trigger schema/parser: absent
-duplicate-ID rejection: absent
+ErrorId: absent
+CorrelationId: absent
+stable public failure codes: absent
+failure source registry: absent
+operation taxonomy: absent
+severity policy: absent
+host health state: absent
+retryability policy: absent
+terminality policy: absent
 ```
 
-## Reference gaps
+## Diagnostic storage gaps
 
 ```txt
-initial scene reference validation: absent
-initial objective reference validation: absent
-initial story-beat reference validation: absent
-objective target reference validation: absent
-objective action reference validation: absent
-story scene reference validation: absent
-story trigger capability validation: absent
-trigger target reference validation: absent
-completion predicate compatibility: absent
+internal/public record split: absent
+explicit buffer capacity: absent
+eviction policy: absent
+duplicate grouping: absent
+occurrence counters: absent
+fatal-record retention rule: absent
+bounded snapshot size: absent
+record retirement result: absent
 ```
 
-## Reachability and lifecycle gaps
+## Projection and redaction gaps
 
 ```txt
-required-node reachability analysis: absent
-optional unreachable classification: absent
-impossible required-cycle rejection: absent
-content generation adoption result: absent
-stale content generation rejection: absent
-editor mutation candidate validation: absent
+raw boot stack/message HUD projection: present
+raw runtime fatal stack/message HUD projection: present
+raw browser filename/location projection: present
+raw capability action/message projection: present
+public error-envelope schema: absent
+stack/path/provider URL redaction: absent
+raw argument redaction: absent
+consistent GameHost/editor health projection: absent
+safe user action guidance: absent
+FirstSafeFailureFrameAck: absent
+```
+
+## Recovery gaps
+
+```txt
+fault generation: absent
+recovery command: absent
+recovery strategy registry: absent
+expected-generation admission: absent
+retry/reload/replace/terminal classification: absent
 predecessor preservation result: absent
-content generation retirement result: absent
+recovered-frame acknowledgement: absent
 ```
 
 ## Proof gaps
 
 ```txt
-invalid-content source fixtures: absent
-editor mutation fixtures: absent
-content graph digest stability fixture: absent
-source/artifact graph parity: absent
-artifact/Pages graph parity: absent
-FirstContentBoundGameplayFrameAck: absent
+provider import failure fixture: absent
+render-plan rejection fixture: absent
+renderer exception fixture: absent
+browser error/rejection fixture: absent
+editor capability failure fixture: absent
+redaction leakage fixture: absent
+duplicate storm fixture: absent
+capacity/eviction fixture: absent
+recovery fixture: absent
+source/artifact/Pages envelope parity: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+authored content graph integrity
 static module release/cache coherence
 runtime renderer identity
 accessible semantic projection
@@ -100,4 +119,4 @@ atomic save and migration
 
 ## Completion boundary
 
-Content integrity is not proven until source, editor candidate, built artifact and deployed Pages all publish the same accepted graph digest, every required edge resolves, required progression is reachable and the first gameplay-capable frame acknowledges that generation.
+Failure handling is not proven until source, artifact and Pages classify the same injected failures, public surfaces contain only accepted redacted envelopes, internal storage remains bounded under storms, recovery rejects stale generations and the visible failure state acknowledges `FirstSafeFailureFrameAck`.

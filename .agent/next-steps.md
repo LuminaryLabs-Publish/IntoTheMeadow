@@ -1,81 +1,65 @@
 # Next Steps
 
-**Updated:** `2026-07-15T15-41-21-04-00`  
+**Updated:** `2026-07-15T20-38-13-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `accessible-semantic-projection-authority-audited`
+**Status:** `runtime-renderer-identity-manifest-proof-authority-audited`
 
 ## Summary
 
-Activate semantic accessibility only after gameplay state and command admission have stable revisions. Start with one immutable read model, then add structured DOM, keyboard commands, focus ownership, announcements, preferences and executable parity fixtures.
+Make renderer selection data-driven before adding more wrappers or renderer variants. One descriptor should identify the base module, compatibility chain, shader policy, context policy, DSK services, executable revision and proof target.
 
 ## Plan ledger
 
-**Goal:** create the smallest reliable path from accepted meadow state to one matching accessible browser frame.
+**Goal:** create the smallest reliable path from declared renderer identity to one matching browser frame and deploy artifact.
 
-### State and semantic events
+### Canonical renderer descriptor
 
-- [ ] Add `StateRevision`, `SemanticUiEventId` and `AccessibleStateRevision`.
-- [ ] Derive one immutable read model from accepted state.
-- [ ] Publish scene, objective, story, interaction and lifecycle fields.
-- [ ] Deduplicate repeated RAF snapshots and event replays.
+- [ ] Add `RendererIdentity`, `RendererRevision` and `RendererGeneration`.
+- [ ] Define one immutable descriptor for the base module and compatibility wrapper chain.
+- [ ] Record shader precision normalization and WebGL context proxy policy.
+- [ ] Record required capabilities, disposal behavior and supported context types.
+- [ ] Remove duplicate hand-maintained renderer module declarations.
 
-### Structured DOM
+### Manifest and DSK convergence
 
-- [ ] Add one named game region.
-- [ ] Add current-objective and story/status regions.
-- [ ] Add an available-interactions list.
-- [ ] Add a command-help surface.
-- [ ] Derive the canvas alternative description from accepted state.
+- [ ] Make `game.manifest.json` and `GAME_MANIFEST` derive from one source.
+- [ ] Make `web-host.js` resolve the accepted renderer descriptor instead of importing a hidden alternative directly.
+- [ ] Add an explicit `DOMAIN_LABELS` entry for `meadow-webgl-renderer-v2-kit`.
+- [ ] Add explicit renderer services to `SERVICES`.
+- [ ] Validate declared services against the selected implementation.
 
-### Commands and focus
+### Admission and lifecycle
 
-- [ ] Publish allowlisted keyboard commands from the action map.
-- [ ] Route all controls through normal gameplay admission.
-- [ ] Own one focus order and focus generation.
-- [ ] Restore focus after overlays, route changes and host replacement.
-- [ ] Reject stale focus requests.
-
-### Announcements and preferences
-
-- [ ] Add polite story/status and assertive fatal live regions.
-- [ ] Deduplicate announcements by semantic event and state revision.
-- [ ] Observe reduced-motion and forced-colors preferences.
-- [ ] Add text scaling, reflow and focus-indicator policy.
-- [ ] Publish preference-change results.
+- [ ] Publish `RendererIdentityAdmissionResult` before context creation.
+- [ ] Reject missing modules, unexpected wrappers and stale revisions.
+- [ ] Bind context generation and GPU resources to the accepted renderer generation.
+- [ ] Publish exact retirement and disposal receipts for the selected module chain.
+- [ ] Prevent base and wrapper modules from becoming parallel owners.
 
 ### Evidence
 
-- [ ] Publish `AccessibilityProjectionResult`.
-- [ ] Publish `FocusSettlementResult` and `AnnouncementProjectionResult`.
-- [ ] Publish `FirstAccessibleFrameAck`.
-- [ ] Publish `FirstVisualAccessibleConvergenceAck`.
-- [ ] Bind accessibility-tree snapshots to commit and state/frame revisions.
-
-### Fixtures
-
-- [ ] Add keyboard-only navigation and command fixtures.
-- [ ] Add semantic-region and accessible-name fixtures.
-- [ ] Add story/objective/interaction announcement fixtures.
-- [ ] Add focus order and restoration fixtures.
-- [ ] Add reduced-motion, forced-colors and 200% text fixtures.
-- [ ] Add source, built-output and GitHub Pages parity fixtures.
+- [ ] Assert exact manifest-to-host module convergence in static smoke.
+- [ ] Instantiate the accepted renderer in a controlled browser fixture.
+- [ ] Compile representative shaders through the accepted wrapper.
+- [ ] Compare base and wrapper behavior under supported precision profiles.
+- [ ] Bind headless, source, built-output and Pages evidence to the same renderer identity.
+- [ ] Publish `FirstRendererIdentityFrameAck`.
 
 ## Required result
 
 ```txt
-AccessibilityProjectionResult {
-  hostGeneration
-  sessionRevision
-  stateRevision
-  visibleFrameRevision
-  accessibleStateRevision
-  semanticEventIds
-  projectedRegionIds
-  commandIds
-  focusRevision
-  announcementRevision
-  accessibilityPolicyRevision
-  canvasAlternativeRevision
+RendererIdentityAdmissionResult {
+  manifestRevision
+  dskRegistryRevision
+  rendererIdentity
+  rendererRevision
+  executableModule
+  baseModule
+  wrapperChain
+  shaderPrecisionPolicy
+  contextPolicy
+  serviceContractRevision
+  rendererGeneration
   status
   reason
 }
@@ -83,4 +67,4 @@ AccessibilityProjectionResult {
 
 ## Preserved dependencies
 
-Audio projection, shader precision, editor mutation settlement, post-process execution, startup readiness, reset/replay, DSK capability admission, browser observation, cache coherence, viewport authority, editor lifecycle, host retirement, provider parity, WebGL recovery, frame scheduling, progression, grass visibility and save/migration remain separate bounded work.
+Accessibility projection, audio projection, editor mutation settlement, post-process execution, startup readiness, reset/replay, DSK dependency admission, observation provenance, cache coherence, viewport authority, host retirement, external provider parity, WebGL recovery, frame scheduling, progression, grass visibility and persistence remain separate bounded work.

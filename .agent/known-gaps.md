@@ -1,68 +1,80 @@
 # Known Gaps
 
-**Updated:** `2026-07-16T01-38-56-04-00`  
+**Updated:** `2026-07-16T05-58-36-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `static-module-graph-release-revision-cache-coherence-authority-audited`
+**Status:** `authored-content-graph-referential-integrity-authority-audited`
 
 ## Summary
 
-The bounded gap is release-graph coherence. The browser can execute a mixed set of query-versioned and unversioned local modules without publishing which complete release, artifact or Pages deployment produced the frame.
+The bounded gap is authored-content graph integrity. Scene, target, objective, story, action, trigger and initial-state identities are authored independently and are not admitted as one unique, resolved and reachable generation.
 
 ## Plan ledger
 
-**Goal:** record every identity, cache, admission, upgrade, retirement and proof gap required for coherent static-module publication.
+**Goal:** record every schema, identity, reference, reachability, mutation and proof gap required for safe authored-content adoption.
 
-- [x] Record all current revision labels.
-- [x] Record missing module graph and digest authority.
-- [x] Record mixed-generation and upgrade gaps.
-- [x] Record browser, artifact and Pages proof gaps.
+- [x] Record current node and edge types.
+- [x] Record missing identity and schema authority.
+- [x] Record missing reference and reachability checks.
+- [x] Record missing editor and deployment proof.
 - [ ] Implement and prove later.
 
-## Identity gaps
+## Identity and schema gaps
 
 ```txt
-ReleaseId: absent
-ReleaseGeneration: absent
-ReleaseGraphDescriptor: absent
-ReleaseGraphDigest: absent
-complete transitive module list: absent
-per-module content digest: absent
-compatibility-parent identity: absent
-artifact digest: absent
-deployment revision binding: absent
+ContentGeneration: absent
+ContentGraphDescriptor: absent
+ContentGraphDigest: absent
+typed scene registry: absent
+typed target registry: absent
+typed objective registry: absent
+typed story-beat registry: absent
+typed action registry: absent
+trigger schema/parser: absent
+duplicate-ID rejection: absent
 ```
 
-## Cache and admission gaps
+## Reference gaps
 
 ```txt
-explicit HTML cache policy: absent
-explicit mutable module cache policy: absent
-immutable local asset URL policy: absent
-mixed-generation rejection: absent
-partial successor rejection: absent
-stale module rejection: absent
+initial scene reference validation: absent
+initial objective reference validation: absent
+initial story-beat reference validation: absent
+objective target reference validation: absent
+objective action reference validation: absent
+story scene reference validation: absent
+story trigger capability validation: absent
+trigger target reference validation: absent
+completion predicate compatibility: absent
+```
+
+## Reachability and lifecycle gaps
+
+```txt
+required-node reachability analysis: absent
+optional unreachable classification: absent
+impossible required-cycle rejection: absent
+content generation adoption result: absent
+stale content generation rejection: absent
+editor mutation candidate validation: absent
 predecessor preservation result: absent
-atomic upgrade result: absent
-rollback result: absent
-retired release late-work rejection: absent
+content generation retirement result: absent
 ```
 
 ## Proof gaps
 
 ```txt
-clean-cache graph fixture: absent
-warm-cache graph fixture: absent
-old/new mixed-cache fixture: absent
-partial deploy fixture: absent
-rollback fixture: absent
+invalid-content source fixtures: absent
+editor mutation fixtures: absent
+content graph digest stability fixture: absent
 source/artifact graph parity: absent
 artifact/Pages graph parity: absent
-FirstReleaseBoundFrameAck: absent
+FirstContentBoundGameplayFrameAck: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+static module release/cache coherence
 runtime renderer identity
 accessible semantic projection
 audio event projection
@@ -88,4 +100,4 @@ atomic save and migration
 
 ## Completion boundary
 
-Release coherence is not proven until one graph descriptor is cited by the public entry, all transitive modules, external providers, runtime admission result, deployment artifact and Pages response, followed by a matching first visible frame acknowledgement.
+Content integrity is not proven until source, editor candidate, built artifact and deployed Pages all publish the same accepted graph digest, every required edge resolves, required progression is reachable and the first gameplay-capable frame acknowledges that generation.

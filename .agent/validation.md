@@ -1,55 +1,58 @@
 # Validation
 
-**Updated:** `2026-07-16T15-38-27-04-00`  
+**Updated:** `2026-07-16T21-01-07-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Audit type:** documentation and source analysis only
 
 ## Summary
 
-Source review confirms three divergent failure paths: raw boot rejection projection, raw runtime-fatal projection and unbounded editor/global browser error collection. No typed, bounded and redacted authority currently settles those paths.
+Source review confirms that performance profiles are static, `auto` has no feedback loop, the host samples no frame cost, the enhancer cache excludes quality generation, and terrain/DPR policies are not settled through one quality result.
 
 ## Checklist
 
 - [x] Confirm default branch `main`.
 - [x] Compare all 11 Publish repositories and exclude Cavalry.
 - [x] Confirm ten eligible ledgers and root `.agent` states.
-- [x] Confirm all eligible heads matched their documented heads.
 - [x] Select IntoTheMeadow by oldest synchronized timestamp.
-- [x] Read boot, web host, GameHost exposure, editor bridge, diagnostics, package scripts and editor smoke.
+- [x] Read host, performance policy, enhancer, cache and renderer surfaces.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped failure-diagnostics audit family and refresh root `.agent` state.
+- [x] Add the timestamped adaptive-quality audit family and refresh root `.agent` state.
 - [x] Change documentation only and create no branch or pull request.
-- [ ] Execute failure-injection, redaction, retention, recovery and deployment fixtures later.
+- [ ] Execute adaptive quality and deployment fixtures later.
 
 ## Confirmed by source review
 
 ```txt
-boot catch writes raw stack/message text to #status
-runtime showFatal writes raw stack/message text to #status
-window error capture stores message, filename, line and column
-unhandled rejection capture stores raw reason message
-capability failure capture stores raw action and message
-browser.getErrors and editor snapshot expose the accumulated array
-error array has no explicit capacity or eviction policy
-host restart has no typed fault/recovery result
+QUALITY_PROFILES contains low, medium, high, ultra and auto
+auto contains fixed values
+unspecified quality defaults to high
+host constructs enhancer without performance options
+host passes no runtime performance decision
+host records no measured frame duration
+runtime.performance is consumed only during enhancer rebuild
+source topology key controls enhancer rebuild
+terrain resolution is overwritten to 96 x 124
+renderer clamps DPR to 1..2 independently
+renderer snapshot exposes no frame timing or quality generation
 ```
 
 ## Source-derived but not executed
 
 ```txt
-public failure output can expose implementation detail
-repeated browser failures can grow the editor error snapshot without a defined bound
-manual restart can occur without proving the fault is recoverable
-source/build/Pages can diverge without stable public error codes and fixtures
+quality-only changes can reuse a predecessor enhanced plan
+fixed auto cannot respond to sustained overload or headroom
+terrain and DPR can disagree with selected profile intent
+rapid threshold-driven transitions would need hysteresis and cooldown
+source/build/Pages can diverge without quality-generation fixtures
 ```
 
-These are architecture and proof findings, not claims of a reproduced disclosure, memory failure or failed recovery.
+These are architecture and proof findings, not claims of a reproduced performance failure.
 
 ## Documentation changed
 
 ```txt
 new timestamped project breakdown and turn ledger
-new architecture, render, gameplay, interaction, diagnostics, deploy and central-sync audits
+new architecture, render, gameplay, interaction, performance, deploy and central-sync audits
 START_HERE, current audit, next steps, known gaps, validation and kit registry refreshed
 central ledger and internal change log synchronized separately
 ```
@@ -59,17 +62,15 @@ central ledger and internal change log synchronized separately
 ```txt
 npm install
 npm run check
-provider import failure fixture
-render-plan failure fixture
-renderer exception fixture
-browser error/rejection fixture
-editor capability failure fixture
-redaction/path leakage fixture
-duplicate storm fixture
-buffer capacity/eviction fixture
-recovery fixture
+browser frame-time capture
+capability classification fixture
+auto downgrade/upgrade fixture
+hysteresis/cooldown fixture
+quality-only cache invalidation fixture
+terrain resolution fixture
+pixel-ratio fixture
 production artifact smoke
-GitHub Pages failure projection smoke
+GitHub Pages adaptive-quality smoke
 ```
 
 ## Change boundary
@@ -89,4 +90,4 @@ pull request created: no
 
 ## Claim boundary
 
-This audit does not claim a concrete diagnostic leak, bounded error storage, safe redaction, correct health classification, recovery safety, passing tests, artifact parity, Pages parity or production readiness.
+This audit does not claim adaptive quality, improved frame rate, correct cache replacement, stable transitions, artifact parity, Pages parity or production readiness.

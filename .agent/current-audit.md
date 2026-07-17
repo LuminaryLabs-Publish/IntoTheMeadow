@@ -1,76 +1,71 @@
-# Current Audit: Browser Failure Classification and Bounded Diagnostic Projection
+# Current Audit: Adaptive Quality Feedback and Projection
 
-**Updated:** `2026-07-16T15-38-27-04-00`  
+**Updated:** `2026-07-16T21-01-07-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `browser-failure-classification-bounded-diagnostic-projection-authority-audited`  
-**Immediate predecessor:** `authored-content-graph-referential-integrity-authority-central-reconciled`
+**Status:** `adaptive-quality-feedback-projection-authority-audited`  
+**Immediate predecessor:** `browser-failure-classification-bounded-diagnostic-projection-authority-central-reconciled`
 
 ## Summary
 
-Boot rejection, runtime frame failure and editor/global browser failure evidence are not admitted through one authority. Raw stack, message, filename and location details can reach visible or public diagnostic surfaces, and the editor error array has no explicit capacity, retention or deduplication policy.
+The performance layer has static profiles but no adaptive control loop. `auto` is fixed, the browser host observes no performance signal, quality identity is not part of enhancer cache admission, and the visible frame cannot prove which quality generation it presents.
 
 ## Intent
 
-Publish one stable, safe and actionable failure result while preserving bounded internal evidence for debugging.
+Converge observation, profile admission, budget projection, cache replacement and frame acknowledgement through one quality authority.
 
 ## Checklist
 
 - [x] Compare Publish inventory and central tracking.
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Inspect boot, host, GameHost, editor bridge, diagnostics and smoke surfaces.
+- [x] Inspect host, performance DSK, enhancer, cache and renderer.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped browser-failure audit family.
+- [x] Add the timestamped adaptive-quality audit family.
 - [x] Change documentation only on `main`.
 - [ ] Implement and prove the authority later.
 
 ## Main finding
 
 ```txt
-boot raw stack/message HUD projection: present
-runtime fatal raw stack/message HUD projection: present
-browser filename/line/column capture: present
-capability raw action/message capture: present
-public complete error-array projection: present
-explicit error-buffer capacity: absent
-
-stable public code: absent
-severity and host health state: absent
-retryability and terminality: absent
-error/correlation identity: absent
-internal/public diagnostic split: absent
-redaction policy: absent
-deduplication and eviction policy: absent
-recovery command/result: absent
-FirstSafeFailureFrameAck: absent
+static low/medium/high/ultra profiles: present
+static auto profile: present
+default quality: high
+capability observation: absent
+frame/render timing observation: absent
+target-frame budget: absent
+hysteresis/cooldown: absent
+quality generation: absent
+quality-only enhancer invalidation: absent
+profile-bound terrain resolution: absent
+profile-bound DPR: absent
+quality transition result: absent
+FirstQualityBoundFrameAck: absent
 ```
 
-## Current validation gap
+## Source basis
 
-Existing smoke suites exercise static composition, DSK registration, render plans, deterministic scene output and editor capabilities. They do not inject browser/provider/render failures or prove error classification, redaction, bounded retention, recovery and source/build/Pages parity.
+- `src/dsks/meadow-performance-dsk/index.js` treats `auto` as a fixed profile and defaults to `high`.
+- `src/hosts/web-host.js` passes no runtime performance decision and collects no frame-cost signal.
+- `src/game/enhance-render-plan.js` caches by source topology and hardcodes terrain segments.
+- `src/renderers/meadow-webgl-renderer-v2.js` owns a fixed DPR clamp and emits no timing or quality receipt.
 
 ## Required parent domain
 
-`meadow-browser-failure-classification-bounded-diagnostic-projection-authority-domain`
+`meadow-adaptive-quality-feedback-projection-authority-domain`
 
 ## Required transaction
 
 ```txt
-BrowserFailureAdmissionCommand
-  -> classify source, operation, code, severity and retryability
-  -> allocate ErrorId and CorrelationId
-  -> retain one bounded internal record
-  -> publish one redacted public envelope
-  -> deduplicate repeats and settle host health
-  -> publish BrowserFailureAdmissionResult
-  -> project safe HUD/editor diagnostics
-  -> acknowledge FirstSafeFailureFrameAck
+PerformanceObservationCommand
+  -> PerformanceObservationResult
 
-FailureRecoveryCommand
-  -> validate expected generations and retry policy
-  -> replace affected resources or reject explicitly
-  -> publish FailureRecoveryResult
+QualityAdmissionCommand
+  -> QualityAdmissionResult
+
+QualityProjectionCommand
+  -> QualityProjectionResult
+  -> FirstQualityBoundFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, renderer, editor, package, test, workflow or deployment behavior changed.
+Documentation only. No runtime, renderer, package, test, workflow or deployment behavior changed.

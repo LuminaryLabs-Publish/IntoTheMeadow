@@ -1,76 +1,69 @@
 # Next Steps
 
-**Updated:** `2026-07-16T15-38-27-04-00`  
+**Updated:** `2026-07-16T21-01-07-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `browser-failure-classification-bounded-diagnostic-projection-authority-audited`
+**Status:** `adaptive-quality-feedback-projection-authority-audited`
 
 ## Summary
 
-Converge boot, frame/render, browser-global and editor capability failures through one typed authority. Keep raw evidence bounded and internal; publish stable redacted envelopes with health, retry and correlation semantics.
+Turn `auto` into an actual policy mode. Add bounded performance observation, one accepted quality decision, concrete budget projection, cache-generation identity and matching-frame proof.
 
 ## Intent
 
-Create the smallest reliable path from an observed failure to one accepted public result, one bounded internal record and an explicit recovery decision.
+Create the smallest reliable path from measured browser/render pressure to one settled quality generation without destabilizing simulation or repeatedly rebuilding presentation state.
 
 ## Checklist
 
-### Classification and identity
+### Observation
 
-- [ ] Define `ErrorId`, `CorrelationId`, stable public codes and source/operation registries.
-- [ ] Define severity, health-state, retryability and terminality policies.
-- [ ] Classify provider, composition, render-plan, renderer, browser and editor failures.
-- [ ] Reject command/result evidence from retired runtime, renderer or editor generations.
+- [ ] Define bounded frame-time and render-cost sample windows.
+- [ ] Record viewport pixels, DPR and capability class.
+- [ ] Exclude hidden/frozen/background intervals from normal adaptation.
+- [ ] Publish `PerformanceObservationResult`.
 
-### Internal evidence
+### Admission
 
-- [ ] Define an internal diagnostic record separate from public output.
-- [ ] Set explicit buffer capacity, eviction and fatal-record retention rules.
-- [ ] Collapse exact duplicate storms while preserving counts and first/last timestamps.
-- [ ] Bound snapshot payload size.
+- [ ] Treat `auto` as policy mode rather than a fixed profile.
+- [ ] Define target frame time and minimum/maximum profiles.
+- [ ] Add separate upgrade and downgrade thresholds.
+- [ ] Add hysteresis, cooldown and minimum-residency policy.
+- [ ] Publish `QualityAdmissionResult` with quality generation and reason.
 
-### Public projection
+### Projection
 
-- [ ] Define a redacted public failure envelope.
-- [ ] Replace raw boot and fatal HUD text with accepted safe messages.
-- [ ] Replace raw editor capability error arrays with stable public results.
-- [ ] Publish consistent health state through GameHost and editor diagnostics.
-- [ ] Prevent stack, absolute path, provider URL and raw argument leakage.
-
-### Recovery
-
-- [ ] Define `FailureRecoveryCommand` and `FailureRecoveryResult`.
-- [ ] Distinguish retry, reload, provider replacement and terminal outcomes.
-- [ ] Require expected runtime/renderer/editor revisions.
-- [ ] Preserve predecessor evidence when recovery fails.
+- [ ] Resolve concrete grass, flower, tree, terrain, DPR, outline and post-process budgets.
+- [ ] Add quality generation to enhancer and renderer dependency keys.
+- [ ] Replace fixed `96 x 124` terrain segments with admitted profile policy.
+- [ ] Replace renderer-local DPR policy with an admitted pixel-ratio budget.
+- [ ] Preserve the predecessor plan and buffers until replacement validation succeeds.
 
 ### Evidence
 
-- [ ] Add boot/provider/render/browser/editor failure-injection fixtures.
-- [ ] Add redaction and path-leakage fixtures.
-- [ ] Add duplicate-storm, capacity and eviction fixtures.
-- [ ] Add stale-generation and recovery fixtures.
-- [ ] Compare source, artifact and Pages public envelopes.
-- [ ] Publish `FirstSafeFailureFrameAck`.
+- [ ] Add overload, spike, headroom, hysteresis and cooldown fixtures.
+- [ ] Add manual-profile and hidden-document fixtures.
+- [ ] Add quality-only cache invalidation fixtures.
+- [ ] Add terrain, DPR and budget projection fixtures.
+- [ ] Compare source, built artifact and Pages behavior.
+- [ ] Publish `FirstQualityBoundFrameAck`.
 
 ## Required result
 
 ```txt
-BrowserFailureAdmissionResult {
-  errorId
-  correlationId
-  publicCode
-  source
-  operation
-  severity
-  healthState
-  retryability
-  duplicateOf
-  internalRecordRevision
-  publicEnvelope
+QualityAdmissionResult {
+  qualityGeneration
+  mode
+  previousProfile
+  selectedProfile
+  reason
+  targetFrameMs
+  budgetDigest
+  hysteresisState
+  cooldownUntilFrame
+  predecessorGeneration
   status
 }
 ```
 
 ## Preserved dependencies
 
-Content-graph integrity, release/cache coherence, renderer identity, accessibility, audio, shader admission, editor mutation settlement, post-processing, startup readiness, reset/replay, DSK admission, observation provenance, cache coherence, viewport, WebGL recovery, frame scheduling, progression, grass visibility and persistence remain separate bounded work.
+Failure diagnostics, content-graph integrity, release/cache coherence, renderer identity, accessibility, audio, shader admission, editor settlement, post-processing, startup readiness, reset/replay, DSK admission, observation provenance, viewport, WebGL recovery, frame scheduling, progression, grass visibility and persistence remain separate bounded work.

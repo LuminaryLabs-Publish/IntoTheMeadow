@@ -1,73 +1,88 @@
 # Next Steps
 
-**Updated:** `2026-07-17T03-44-31-04-00`  
+**Updated:** `2026-07-17T08-45-46-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `webgl-capture-readback-frame-correlation-authority-audited`
+**Status:** `save-capability-admission-durable-commit-migration-authority-audited`
 
 ## Summary
 
-Replace uncorrelated canvas, synthetic and command-line evidence with one typed capture transaction that binds exact pixels to one renderer frame and browser session.
+Implement the smallest truthful persistence path: an admitted adapter, versioned bounded payload, atomic verified slot commit, ordered migration, exact restore settlement and first restored frame acknowledgement.
 
 ## Intent
 
-Create the smallest reliable path from capture request to immutable artifact without treating synthetic observations or mixed browser sessions as live-frame proof.
+Prevent planned DSK metadata or diagnostic snapshots from being mistaken for durable save support.
 
 ## Checklist
 
-### Admission
+### Capability admission
 
-- [ ] Allocate `CaptureId` and `CaptureGeneration`.
-- [ ] Bind runtime, browser session, renderer, viewport, DPR, plan and format revisions.
-- [ ] Reject hidden, disposed, zero-area, context-lost and stale surfaces.
-- [ ] Publish `CaptureAdmissionResult`.
+- [ ] Add an implementation manifest for `meadow-save-dsk`.
+- [ ] Require an available adapter, save schema, migration registry and validation service.
+- [ ] Publish `SaveCapabilityResult` with available, unavailable, degraded or failed status.
+- [ ] Expose save commands only when capability admission succeeds.
 
-### Frame and readback
+### Save model
 
-- [ ] Add a monotonic renderer `FrameId` and frame metadata receipt.
-- [ ] Render or select one exact frame for the capture.
-- [ ] Use a capture-safe render target or explicitly retained drawable generation.
-- [ ] Settle GPU/readback completion before encoding.
-- [ ] Publish `CaptureFrameCommitResult` and `CaptureReadbackResult`.
+- [ ] Define a versioned `MeadowSaveEnvelope`.
+- [ ] Project durable gameplay state only.
+- [ ] Exclude render plans, diagnostics, WebGL state, browser errors and transient clocks.
+- [ ] Bind product, build compatibility, slot, state revision and digests.
+- [ ] Publish `SavePrepareResult`.
 
-### Provenance
+### Durable commit
 
-- [ ] Bind pixels to renderer snapshot, plan ID, topology key, viewport and DPR.
-- [ ] Record dimensions, color space, MIME type and pixel digest.
-- [ ] Classify live WebGL, browser screenshot, synthetic SVG and metadata-only evidence.
-- [ ] Run screenshot and DOM checks in one browser session or retain separate results.
-- [ ] Commit immutable `CaptureArtifactResult`.
+- [ ] Add a slot registry and active slot lease.
+- [ ] Write a temporary generation before replacing the accepted slot.
+- [ ] Read back and verify payload and metadata digests.
+- [ ] Classify security, quota, serialization, write, verification and replace failures.
+- [ ] Publish `DurableSaveCommitResult` exactly once.
+
+### Migration and restore
+
+- [ ] Classify current, migratable, unsupported, corrupt and foreign saves.
+- [ ] Add ordered idempotent migrations.
+- [ ] Publish `SaveMigrationResult` and validate the target schema.
+- [ ] Apply restored state once under a new runtime/session revision.
+- [ ] Rebuild or invalidate state-dependent render data when required.
+- [ ] Publish `RestoreApplyResult` and `FirstRestoredStateFrameAck`.
 
 ### Evidence
 
-- [ ] Add a real-browser `NexusEditorEnvironment.renderer.capture` fixture.
-- [ ] Add blank/stale pixel rejection fixtures.
-- [ ] Add resize, DPR, hidden-document and context-loss fixtures.
-- [ ] Add pixel/snapshot mismatch and mixed-session rejection fixtures.
-- [ ] Compare source, built artifact and Pages behavior.
-- [ ] Publish `FirstCaptureBoundFrameAck`.
+- [ ] Add save/reload/restore browser fixtures.
+- [ ] Add overwrite, multi-slot, corruption, unsupported-version and migration fixtures.
+- [ ] Add interrupted-write, quota/security and stale-command fixtures.
+- [ ] Compare source, artifact and Pages persistence behavior.
 
 ## Required result
 
 ```txt
-CaptureArtifactResult {
-  captureId
-  captureGeneration
-  sourceKind
-  browserSessionId
-  rendererGeneration
-  frameId
-  planId
-  topologyKey
-  viewportRevision
-  width
-  height
-  devicePixelRatio
-  pixelDigest
-  artifactDigest
+DurableSaveCommitResult {
+  saveId
+  slotId
+  saveRevision
+  schemaVersion
+  runtimeGeneration
+  stateRevision
+  payloadDigest
+  metadataDigest
+  adapterId
+  status
+}
+```
+
+```txt
+RestoreApplyResult {
+  saveId
+  slotId
+  sourceSchemaVersion
+  targetSchemaVersion
+  migrationRevision
+  restoredSessionId
+  restoredStateRevision
   status
 }
 ```
 
 ## Preserved dependencies
 
-Adaptive quality, failure diagnostics, content integrity, release/cache coherence, accessibility, audio, shader admission, editor settlement, startup readiness, reset/replay, DSK admission, viewport ownership, WebGL recovery, frame scheduling, progression, grass visibility and persistence remain separate bounded work.
+Capture correlation, adaptive quality, failure diagnostics, content integrity, release/cache coherence, accessibility, audio, shader admission, editor settlement, startup readiness, reset/replay, DSK admission, viewport ownership, WebGL recovery, frame scheduling, progression and grass visibility remain separate bounded work.

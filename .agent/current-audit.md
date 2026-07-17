@@ -1,71 +1,73 @@
-# Current Audit: Adaptive Quality Feedback and Projection
+# Current Audit: WebGL Capture Readback and Frame Correlation
 
-**Updated:** `2026-07-16T21-01-07-04-00`  
+**Updated:** `2026-07-17T03-44-31-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `adaptive-quality-feedback-projection-authority-audited`  
-**Immediate predecessor:** `browser-failure-classification-bounded-diagnostic-projection-authority-central-reconciled`
+**Status:** `webgl-capture-readback-frame-correlation-authority-audited`  
+**Immediate predecessor:** `adaptive-quality-feedback-projection-authority-central-reconciled`
 
 ## Summary
 
-The performance layer has static profiles but no adaptive control loop. `auto` is fixed, the browser host observes no performance signal, quality identity is not part of enhancer cache admission, and the visible frame cannot prove which quality generation it presents.
+The live browser capture reads `canvas.toDataURL` without an accepted frame or readback generation. The attached renderer snapshot is not correlated to the pixels, Node capture is synthetic, and Chromium screenshot/DOM proof is assembled from separate browser sessions.
 
 ## Intent
 
-Converge observation, profile admission, budget projection, cache replacement and frame acknowledgement through one quality authority.
+Converge capture admission, exact-frame rendering, drawable-buffer lifetime, pixel readback, encoding, provenance and artifact commitment through one authority.
 
 ## Checklist
 
 - [x] Compare Publish inventory and central tracking.
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Inspect host, performance DSK, enhancer, cache and renderer.
+- [x] Inspect live, Node and Chromium capture paths.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped adaptive-quality audit family.
+- [x] Add the timestamped capture-correlation audit family.
 - [x] Change documentation only on `main`.
 - [ ] Implement and prove the authority later.
 
 ## Main finding
 
 ```txt
-static low/medium/high/ultra profiles: present
-static auto profile: present
-default quality: high
-capability observation: absent
-frame/render timing observation: absent
-target-frame budget: absent
-hysteresis/cooldown: absent
-quality generation: absent
-quality-only enhancer invalidation: absent
-profile-bound terrain resolution: absent
-profile-bound DPR: absent
-quality transition result: absent
-FirstQualityBoundFrameAck: absent
+live WebGL canvas capture: present
+explicit capture identity: absent
+matching render-frame identity: absent
+capture-safe drawable lifetime: absent
+GPU/readback settlement: absent
+viewport/DPR binding: absent
+pixel and artifact digests: absent
+renderer snapshot correlation: absent
+synthetic/live evidence classification: absent
+single-session screenshot/DOM proof: absent
+FirstCaptureBoundFrameAck: absent
 ```
 
 ## Source basis
 
-- `src/dsks/meadow-performance-dsk/index.js` treats `auto` as a fixed profile and defaults to `high`.
-- `src/hosts/web-host.js` passes no runtime performance decision and collects no frame-cost signal.
-- `src/game/enhance-render-plan.js` caches by source topology and hardcodes terrain segments.
-- `src/renderers/meadow-webgl-renderer-v2.js` owns a fixed DPR clamp and emits no timing or quality receipt.
+- `src/renderers/meadow-webgl-renderer-v2.js` renders to the default framebuffer without a capture-safe target or frame receipt.
+- `src/editor/install-editor-bridge.js` calls `canvas.toDataURL` and attaches the latest renderer snapshot without correlation.
+- `scripts/into-the-meadow-environment.mjs` creates descriptor-derived JSON/SVG evidence rather than live WebGL pixels.
+- `scripts/run-browser-observation.mjs` launches independent screenshot and DOM browser processes.
+- `tests/headless-editor-environment-smoke.mjs` validates Node artifact shape, not browser pixel correctness.
 
 ## Required parent domain
 
-`meadow-adaptive-quality-feedback-projection-authority-domain`
+`meadow-webgl-capture-readback-frame-correlation-authority-domain`
 
 ## Required transaction
 
 ```txt
-PerformanceObservationCommand
-  -> PerformanceObservationResult
+CaptureAdmissionCommand
+  -> CaptureAdmissionResult
 
-QualityAdmissionCommand
-  -> QualityAdmissionResult
+CaptureFrameCommitCommand
+  -> CaptureFrameCommitResult
 
-QualityProjectionCommand
-  -> QualityProjectionResult
-  -> FirstQualityBoundFrameAck
+CaptureReadbackCommand
+  -> CaptureReadbackResult
+
+CaptureArtifactCommitCommand
+  -> CaptureArtifactResult
+  -> FirstCaptureBoundFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, renderer, package, test, workflow or deployment behavior changed.
+Documentation only. No runtime, renderer, capture, test, workflow or deployment behavior changed.

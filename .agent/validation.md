@@ -1,58 +1,59 @@
 # Validation
 
-**Updated:** `2026-07-17T08-45-46-04-00`  
+**Updated:** `2026-07-17T19-38-37-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Audit type:** documentation and source analysis only
 
 ## Summary
 
-Source review confirms that persistence is declared as a planned DSK but no runtime save, slot, adapter, durability, migration, restore or visible-frame settlement exists.
+Source review confirms that IntoTheMeadow has a complete declaration inventory but no executable dependency-closure or activation-settlement layer.
 
 ## Checklist
 
 - [x] Confirm default branch `main`.
 - [x] Compare all 11 Publish repositories and exclude Cavalry.
-- [x] Confirm ten eligible ledgers and root `.agent` states.
-- [x] Confirm all eligible heads match documented heads.
-- [x] Select IntoTheMeadow by oldest synchronized timestamp.
-- [x] Read DSK registration, state, snapshot, host and editor capability source.
-- [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped persistence audit family and refresh root `.agent` state.
+- [x] Confirm ten eligible central ledgers and root `.agent` states.
+- [x] Confirm IntoTheMeadow matched its documented head before selection.
+- [x] Select IntoTheMeadow by the oldest synchronized timestamp.
+- [x] Read DSK registration, descriptor construction, validation, installation, state and host/editor projection source.
+- [x] Preserve all 44 declared kit surfaces and services.
+- [x] Add the timestamped DSK activation audit family and refresh root `.agent` state.
 - [x] Change documentation only and create no branch or pull request.
-- [ ] Execute persistence and deployment fixtures later.
+- [ ] Execute dependency, activation and deployment fixtures later.
 
 ## Confirmed by source review
 
 ```txt
-meadow-save-dsk exists as a planned descriptor
-save services are declarations only
-all local descriptors appear in the DSK snapshot
-game state is created and advanced in memory
-reset recreates initial state
-game snapshot is diagnostic rather than a durable save envelope
-GameHost has no typed persistence capability
-browser editor bridge has no save/load/list/delete/migrate action
-no storage adapter, commit or migration implementation is present
+43 local descriptors exist
+15 are active-v0.1
+28 are planned
+one external meadow-area-kit is loaded or deferred
+all local requires arrays are empty
+all local provides arrays are generic single tokens
+validation checks shape, duplicates and required presence only
+installDsks returns every local descriptor together
+initial game state stores the DSK snapshot
+host/editor surfaces expose no admitted executable capability manifest
 ```
 
 ## Source-derived but not executed
 
 ```txt
-reload creates initial state because no restore path exists
-planned descriptor metadata can be mistaken for capability without status admission
-diagnostic snapshots are unsuitable as durable save truth
-atomicity, durability and migration cannot be claimed
-restore-to-visible-frame convergence cannot be claimed
-source/build/Pages behavior can diverge without browser fixtures
+missing or circular dependencies cannot currently be diagnosed
+planned descriptors can be confused with available capability by careless consumers
+activation order is not proven deterministic
+implementation and provider revision compatibility is not proven
+partial activation and stale result settlement are not proven
+visible frames are not correlated with an activation generation
 ```
 
-These are architecture and proof findings, not claims of a reproduced data-loss incident.
+These are architecture and proof findings, not claims of a reproduced startup or rendering failure.
 
 ## Documentation changed
 
 ```txt
 new timestamped project breakdown and turn ledger
-new architecture, render, gameplay, interaction, save-system, deploy and central-sync audits
+new architecture, render, gameplay, interaction, DSK-activation, deploy and central-sync audits
 START_HERE, current audit, next steps, known gaps, validation and kit registry refreshed
 central ledger and internal change log synchronized separately
 ```
@@ -62,23 +63,24 @@ central ledger and internal change log synchronized separately
 ```txt
 npm install
 npm run check
-browser persistence adapter
-save/reload/restore fixture
-atomic overwrite and interrupted-write fixtures
-corrupt/foreign/unsupported save fixtures
-migration fixtures
-quota and security failure fixtures
+missing-provider fixture
+planned-only dependency fixture
+cycle and version-mismatch fixtures
+deterministic activation-order fixture
+partial failure and stale-generation fixtures
+browser capability-manifest fixture
+activation-bound frame fixture
 production artifact smoke
-GitHub Pages persistence smoke
+GitHub Pages smoke
 ```
 
 ## Change boundary
 
 ```txt
 runtime JavaScript changed: no
-authored content changed: no
+DSK descriptors changed: no
+provider loading changed: no
 game state behavior changed: no
-storage or migration changed: no
 renderer or shader changed: no
 editor behavior changed: no
 package or dependency changed: no
@@ -90,4 +92,4 @@ pull request created: no
 
 ## Claim boundary
 
-This audit does not claim a reproduced data-loss failure, executable save capability, atomic durability, migration correctness, restore correctness, artifact parity, Pages parity or production readiness.
+This audit does not claim dependency correctness, deterministic activation, executable capability completeness, frame convergence, artifact parity, Pages parity or production readiness.

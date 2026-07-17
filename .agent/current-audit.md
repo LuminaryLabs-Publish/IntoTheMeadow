@@ -1,73 +1,66 @@
-# Current Audit: WebGL Capture Readback and Frame Correlation
+# Current Audit: Save Capability Admission, Durable Commit and Migration
 
-**Updated:** `2026-07-17T03-44-31-04-00`  
+**Updated:** `2026-07-17T08-45-46-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `webgl-capture-readback-frame-correlation-authority-audited`  
-**Immediate predecessor:** `adaptive-quality-feedback-projection-authority-central-reconciled`
+**Status:** `save-capability-admission-durable-commit-migration-authority-audited`  
+**Immediate predecessor:** `webgl-capture-readback-frame-correlation-authority-central-reconciled`
 
 ## Summary
 
-The live browser capture reads `canvas.toDataURL` without an accepted frame or readback generation. The attached renderer snapshot is not correlated to the pixels, Node capture is synthetic, and Chromium screenshot/DOM proof is assembled from separate browser sessions.
+`meadow-save-dsk` is declared with save-model, slots, adapter, migration and validation services, but it remains planned. Runtime state is in memory, reset returns defaults, and neither `GameHost` nor the editor bridge exposes executable persistence commands.
 
 ## Intent
 
-Converge capture admission, exact-frame rendering, drawable-buffer lifetime, pixel readback, encoding, provenance and artifact commitment through one authority.
+Converge capability truth, versioned state projection, slot ownership, atomic durable commit, failure classification, migration, restore application and the first matching visible frame.
 
 ## Checklist
 
 - [x] Compare Publish inventory and central tracking.
 - [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Inspect live, Node and Chromium capture paths.
+- [x] Inspect DSK registration, state, snapshots, host and editor capabilities.
 - [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped capture-correlation audit family.
+- [x] Add the timestamped persistence audit family.
 - [x] Change documentation only on `main`.
-- [ ] Implement and prove the authority later.
+- [ ] Implement and prove persistence later.
 
 ## Main finding
 
 ```txt
-live WebGL canvas capture: present
-explicit capture identity: absent
-matching render-frame identity: absent
-capture-safe drawable lifetime: absent
-GPU/readback settlement: absent
-viewport/DPR binding: absent
-pixel and artifact digests: absent
-renderer snapshot correlation: absent
-synthetic/live evidence classification: absent
-single-session screenshot/DOM proof: absent
-FirstCaptureBoundFrameAck: absent
+planned persistence descriptor: present
+executable save capability: absent
+versioned durable save envelope: absent
+slot registry and lease: absent
+persistence adapter: absent
+atomic commit and verification: absent
+migration registry: absent
+restore admission/application: absent
+FirstRestoredStateFrameAck: absent
 ```
 
 ## Source basis
 
-- `src/renderers/meadow-webgl-renderer-v2.js` renders to the default framebuffer without a capture-safe target or frame receipt.
-- `src/editor/install-editor-bridge.js` calls `canvas.toDataURL` and attaches the latest renderer snapshot without correlation.
-- `scripts/into-the-meadow-environment.mjs` creates descriptor-derived JSON/SVG evidence rather than live WebGL pixels.
-- `scripts/run-browser-observation.mjs` launches independent screenshot and DOM browser processes.
-- `tests/headless-editor-environment-smoke.mjs` validates Node artifact shape, not browser pixel correctness.
+- `src/dsks/index.js` declares `meadow-save-dsk` as planned with five persistence services.
+- `src/boot/install-dsks.js` includes all local descriptors in the DSK snapshot but installs no persistence provider.
+- `src/game/game-state.js` creates, ticks and resets only in-memory state.
+- `src/game/game-snapshot.js` produces a diagnostic snapshot, not a versioned durable save envelope.
+- `src/boot/expose-game-host.js` exposes reads but no save/load surface.
+- `src/editor/install-editor-bridge.js` exposes status, tick, reset and capture but no persistence commands.
 
 ## Required parent domain
 
-`meadow-webgl-capture-readback-frame-correlation-authority-domain`
+`meadow-save-capability-admission-durable-commit-migration-authority-domain`
 
 ## Required transaction
 
 ```txt
-CaptureAdmissionCommand
-  -> CaptureAdmissionResult
-
-CaptureFrameCommitCommand
-  -> CaptureFrameCommitResult
-
-CaptureReadbackCommand
-  -> CaptureReadbackResult
-
-CaptureArtifactCommitCommand
-  -> CaptureArtifactResult
-  -> FirstCaptureBoundFrameAck
+SaveCapabilityAdmissionCommand -> SaveCapabilityResult
+SavePrepareCommand -> SavePrepareResult
+DurableSaveCommitCommand -> DurableSaveCommitResult
+RestoreAdmissionCommand -> RestoreAdmissionResult
+SaveMigrationCommand -> SaveMigrationResult
+RestoreApplyCommand -> RestoreApplyResult -> FirstRestoredStateFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, renderer, capture, test, workflow or deployment behavior changed.
+Documentation only. No runtime, storage, gameplay, renderer, test, workflow or deployment behavior changed.

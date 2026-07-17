@@ -1,66 +1,68 @@
-# Current Audit: Save Capability Admission, Durable Commit and Migration
+# Current Audit: DSK Dependency Closure and Activation Truth
 
-**Updated:** `2026-07-17T08-45-46-04-00`  
+**Updated:** `2026-07-17T19-38-37-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `save-capability-admission-durable-commit-migration-authority-audited`  
-**Immediate predecessor:** `webgl-capture-readback-frame-correlation-authority-central-reconciled`
+**Status:** `dsk-dependency-closure-activation-truth-authority-audited`  
+**Immediate predecessor:** `save-capability-admission-durable-commit-migration-authority-central-reconciled`
 
 ## Summary
 
-`meadow-save-dsk` is declared with save-model, slots, adapter, migration and validation services, but it remains planned. Runtime state is in memory, reset returns defaults, and neither `GameHost` nor the editor bridge exposes executable persistence commands.
+IntoTheMeadow declares 43 local DSK/kit descriptors and one external provider. Fifteen local descriptors are marked active and 28 planned, but every local `requires` list is empty and `installDsks()` returns all local descriptors in one installation snapshot. No dependency closure, executable implementation binding, activation order, activation result or runtime capability manifest exists.
 
 ## Intent
 
-Converge capability truth, versioned state projection, slot ownership, atomic durable commit, failure classification, migration, restore application and the first matching visible frame.
+Separate declaration truth from executable runtime truth and prove which dependency-complete capability generation produced the active host/editor surface and visible frame.
 
 ## Checklist
 
 - [x] Compare Publish inventory and central tracking.
-- [x] Select only IntoTheMeadow by oldest synchronized timestamp.
-- [x] Inspect DSK registration, state, snapshots, host and editor capabilities.
-- [x] Preserve all 44 kit surfaces and services.
-- [x] Add the timestamped persistence audit family.
+- [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
+- [x] Inspect DSK registry, descriptor construction, validation and installation snapshot behavior.
+- [x] Preserve all 44 declared kit surfaces and offered services.
+- [x] Add the timestamped DSK activation audit family.
 - [x] Change documentation only on `main`.
-- [ ] Implement and prove persistence later.
+- [ ] Implement and prove dependency closure and activation later.
 
 ## Main finding
 
 ```txt
-planned persistence descriptor: present
-executable save capability: absent
-versioned durable save envelope: absent
-slot registry and lease: absent
-persistence adapter: absent
-atomic commit and verification: absent
-migration registry: absent
-restore admission/application: absent
-FirstRestoredStateFrameAck: absent
+local descriptors: 43
+active-v0.1: 15
+planned: 28
+external descriptors: 1
+non-empty local requires arrays: 0
+dependency graph: absent
+cycle detection: absent
+topological order: absent
+implementation binding: absent
+planned-capability exclusion: absent
+DskActivationResult: absent
+RuntimeCapabilityManifest: absent
+FirstActivationBoundFrameAck: absent
 ```
 
 ## Source basis
 
-- `src/dsks/index.js` declares `meadow-save-dsk` as planned with five persistence services.
-- `src/boot/install-dsks.js` includes all local descriptors in the DSK snapshot but installs no persistence provider.
-- `src/game/game-state.js` creates, ticks and resets only in-memory state.
-- `src/game/game-snapshot.js` produces a diagnostic snapshot, not a versioned durable save envelope.
-- `src/boot/expose-game-host.js` exposes reads but no save/load surface.
-- `src/editor/install-editor-bridge.js` exposes status, tick, reset and capture but no persistence commands.
+- `src/content/dsk-registry.js` separates all local IDs from the 15 required-v0.1 IDs.
+- `src/dsks/index.js` assigns status from that list, generic `provides`, empty `requires`, and shape-only validation.
+- `src/boot/install-dsks.js` returns all local descriptors and only loaded/deferred external status.
+- Initial game state stores the resulting snapshot.
+- `GameHost` and `NexusEditorEnvironment` do not expose an admitted executable capability manifest.
 
 ## Required parent domain
 
-`meadow-save-capability-admission-durable-commit-migration-authority-domain`
+`meadow-dsk-dependency-closure-activation-truth-authority-domain`
 
 ## Required transaction
 
 ```txt
-SaveCapabilityAdmissionCommand -> SaveCapabilityResult
-SavePrepareCommand -> SavePrepareResult
-DurableSaveCommitCommand -> DurableSaveCommitResult
-RestoreAdmissionCommand -> RestoreAdmissionResult
-SaveMigrationCommand -> SaveMigrationResult
-RestoreApplyCommand -> RestoreApplyResult -> FirstRestoredStateFrameAck
+DskManifestAdmissionCommand -> DskManifestAdmissionResult
+DependencyClosureCommand -> DependencyClosureResult
+DskActivationCommand -> DskActivationResult
+RuntimeCapabilityProjectionCommand -> RuntimeCapabilityManifest
+ActivationFrameCommitCommand -> FirstActivationBoundFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, storage, gameplay, renderer, test, workflow or deployment behavior changed.
+Documentation only. No runtime, DSK, provider, rendering, gameplay, test, workflow or deployment behavior changed.

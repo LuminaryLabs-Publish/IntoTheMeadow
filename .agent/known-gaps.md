@@ -1,97 +1,98 @@
 # Known Gaps
 
-**Updated:** `2026-07-16T15-38-27-04-00`  
+**Updated:** `2026-07-16T21-01-07-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `browser-failure-classification-bounded-diagnostic-projection-authority-audited`
+**Status:** `adaptive-quality-feedback-projection-authority-audited`
 
 ## Summary
 
-The bounded gap is browser failure classification, retention and safe projection. Boot, runtime and editor failure evidence is split across direct DOM mutation and an unbounded public error array.
+The bounded gap is adaptive quality ownership. Static profiles exist, but no accepted feedback loop binds measured cost, profile selection, concrete budgets, cache replacement and the visible frame.
 
 ## Intent
 
-Record every missing identity, classification, storage, redaction, recovery and proof boundary required for safe failure handling.
+Record every missing observation, admission, transition, projection and proof boundary required for stable automatic quality.
 
 ## Checklist
 
-- [x] Record all current failure sources and public projections.
-- [x] Record missing taxonomy, health and retry semantics.
-- [x] Record missing bounded retention and deduplication.
-- [x] Record missing redaction, recovery and deployment proof.
+- [x] Record current profile and host behavior.
+- [x] Record cache, terrain and DPR divergence.
+- [x] Record missing transition and frame acknowledgement.
+- [x] Preserve prior unresolved audit families.
 - [ ] Implement and prove later.
 
-## Classification gaps
+## Observation gaps
 
 ```txt
-ErrorId: absent
-CorrelationId: absent
-stable public failure codes: absent
-failure source registry: absent
-operation taxonomy: absent
-severity policy: absent
-host health state: absent
-retryability policy: absent
-terminality policy: absent
+capability classification: absent
+CPU frame-time sampling: absent
+render-time sampling: absent
+dropped-frame ratio: absent
+bounded observation window: absent
+background-interval classification: absent
+PerformanceObservationResult: absent
 ```
 
-## Diagnostic storage gaps
+## Admission gaps
 
 ```txt
-internal/public record split: absent
-explicit buffer capacity: absent
-eviction policy: absent
-duplicate grouping: absent
-occurrence counters: absent
-fatal-record retention rule: absent
-bounded snapshot size: absent
-record retirement result: absent
+auto as policy mode: absent
+target frame budget: absent
+minimum/maximum profile policy: absent
+separate upgrade/downgrade thresholds: absent
+hysteresis: absent
+cooldown: absent
+minimum residency: absent
+quality generation: absent
+QualityAdmissionResult: absent
 ```
 
-## Projection and redaction gaps
+## Projection gaps
 
 ```txt
-raw boot stack/message HUD projection: present
-raw runtime fatal stack/message HUD projection: present
-raw browser filename/location projection: present
-raw capability action/message projection: present
-public error-envelope schema: absent
-stack/path/provider URL redaction: absent
-raw argument redaction: absent
-consistent GameHost/editor health projection: absent
-safe user action guidance: absent
-FirstSafeFailureFrameAck: absent
+quality-bound grass budget: partial
+quality-bound flower budget: partial
+quality-bound tree-line budget: partial
+quality-bound terrain resolution: absent
+quality-bound pixel ratio: absent
+quality-bound post-process eligibility: absent
+quality-generation cache identity: absent
+predecessor-preserving replacement: absent
+QualityProjectionResult: absent
+FirstQualityBoundFrameAck: absent
 ```
 
-## Recovery gaps
+## Current divergence
 
 ```txt
-fault generation: absent
-recovery command: absent
-recovery strategy registry: absent
-expected-generation admission: absent
-retry/reload/replace/terminal classification: absent
-predecessor preservation result: absent
-recovered-frame acknowledgement: absent
+auto profile: fixed values
+host runtime performance input: absent
+enhancer cache key: source topology only
+terrain segments: fixed 96 x 124
+renderer DPR: independently clamped 1..2
+renderer timing metrics: absent
+renderer quality receipt: absent
 ```
 
 ## Proof gaps
 
 ```txt
-provider import failure fixture: absent
-render-plan rejection fixture: absent
-renderer exception fixture: absent
-browser error/rejection fixture: absent
-editor capability failure fixture: absent
-redaction leakage fixture: absent
-duplicate storm fixture: absent
-capacity/eviction fixture: absent
-recovery fixture: absent
-source/artifact/Pages envelope parity: absent
+sustained overload downgrade fixture: absent
+single-spike rejection fixture: absent
+sustained headroom upgrade fixture: absent
+hysteresis fixture: absent
+cooldown fixture: absent
+manual profile fixture: absent
+hidden/background fixture: absent
+quality-only cache invalidation fixture: absent
+terrain/DPR projection fixture: absent
+predecessor preservation fixture: absent
+source/artifact/Pages parity: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+browser failure classification and bounded diagnostics
 authored content graph integrity
 static module release/cache coherence
 runtime renderer identity
@@ -119,4 +120,4 @@ atomic save and migration
 
 ## Completion boundary
 
-Failure handling is not proven until source, artifact and Pages classify the same injected failures, public surfaces contain only accepted redacted envelopes, internal storage remains bounded under storms, recovery rejects stale generations and the visible failure state acknowledges `FirstSafeFailureFrameAck`.
+Adaptive quality is not proven until bounded observations produce stable admitted transitions, every affected consumer identifies the same quality generation, predecessor presentation survives failed replacement, and source, artifact and Pages publish a matching `FirstQualityBoundFrameAck`.

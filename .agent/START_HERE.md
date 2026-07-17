@@ -2,40 +2,40 @@
 
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Branch:** `main`  
-**Last aligned:** `2026-07-17T08-45-46-04-00`  
-**Status:** `save-capability-admission-durable-commit-migration-authority-audited`
+**Last aligned:** `2026-07-17T19-38-37-04-00`  
+**Status:** `dsk-dependency-closure-activation-truth-authority-audited`
 
 ## Summary
 
-IntoTheMeadow declares a planned `meadow-save-dsk`, but the runtime exposes no executable save, load, slot, durability, migration or restore capability. Game state remains in memory and a new boot recreates the initial state.
+IntoTheMeadow declares 43 local DSK/kit descriptors and one external provider. The current registry distinguishes 15 active-v0.1 descriptors from 28 planned descriptors, but it does not express dependency edges or settle executable activation. All local descriptors are returned together in the installation snapshot.
 
 ## Intent
 
-Make persistence capability truthful and transactional from implementation admission through versioned projection, atomic durable commit, migration, restore and the first matching visible frame.
+Make declaration, dependency closure, implementation binding, runtime activation and visible-frame proof separate and explicit.
 
 ## Checklist
 
 - [x] Compare the complete Publish inventory.
 - [x] Exclude TheCavalryOfRome.
 - [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Preserve all 44 kit surfaces and service declarations.
-- [x] Add the `2026-07-17T08-45-46-04-00` persistence audit family.
+- [x] Preserve all 44 declared kit surfaces and service declarations.
+- [x] Add the `2026-07-17T19-38-37-04-00` DSK activation audit family.
 - [x] Change documentation only on `main`.
 - [x] Create no branch or pull request.
-- [ ] Implement durable persistence and executable fixtures later.
+- [ ] Implement dependency closure and activation fixtures later.
 
 ## Read this pass first
 
 ```txt
-.agent/trackers/2026-07-17T08-45-46-04-00/project-breakdown.md
-.agent/turn-ledger/2026-07-17T08-45-46-04-00.md
-.agent/architecture-audit/2026-07-17T08-45-46-04-00-save-capability-durable-commit-dsk-map.md
-.agent/render-audit/2026-07-17T08-45-46-04-00-restored-state-visible-frame-gap.md
-.agent/gameplay-audit/2026-07-17T08-45-46-04-00-session-save-restore-loop.md
-.agent/interaction-audit/2026-07-17T08-45-46-04-00-save-command-result-map.md
-.agent/save-system-audit/2026-07-17T08-45-46-04-00-durable-slot-migration-contract.md
-.agent/deploy-audit/2026-07-17T08-45-46-04-00-persistence-source-browser-pages-fixture-gate.md
-.agent/central-sync-audit/2026-07-17T08-45-46-04-00-oldest-selection-persistence-reconciliation.md
+.agent/trackers/2026-07-17T19-38-37-04-00/project-breakdown.md
+.agent/turn-ledger/2026-07-17T19-38-37-04-00.md
+.agent/architecture-audit/2026-07-17T19-38-37-04-00-dsk-dependency-activation-dsk-map.md
+.agent/render-audit/2026-07-17T19-38-37-04-00-declared-versus-active-render-capability-gap.md
+.agent/gameplay-audit/2026-07-17T19-38-37-04-00-boot-activation-runtime-loop.md
+.agent/interaction-audit/2026-07-17T19-38-37-04-00-dsk-admission-command-result-map.md
+.agent/dsk-activation-audit/2026-07-17T19-38-37-04-00-dependency-closure-activation-contract.md
+.agent/deploy-audit/2026-07-17T19-38-37-04-00-dsk-activation-source-browser-pages-gate.md
+.agent/central-sync-audit/2026-07-17T19-38-37-04-00-oldest-selection-dsk-activation-reconciliation.md
 .agent/current-audit.md
 .agent/next-steps.md
 .agent/known-gaps.md
@@ -46,10 +46,10 @@ Make persistence capability truthful and transactional from implementation admis
 ## Interaction loop
 
 ```txt
-boot -> create initial in-memory state
-runtime -> tick/read/reset only
-reload -> discard state and create defaults
-missing -> save admission, atomic commit, migration, restore and frame acknowledgement
+boot -> load provider -> construct and validate declarations
+     -> return active and planned descriptors together
+     -> snapshot into state -> expose host/editor -> render
+missing -> dependency closure, implementation binding, activation settlement and frame acknowledgement
 ```
 
 ## Domain and kit census
@@ -60,17 +60,17 @@ local declared DSK/kits: 43
 total declared kit surfaces: 44
 active-v0.1 local descriptors: 15
 planned local descriptors: 28
-planned persistence-authority surfaces: 20
+planned DSK-activation authority surfaces: 20
 ```
 
 ## Required parent domain
 
-`meadow-save-capability-admission-durable-commit-migration-authority-domain`
+`meadow-dsk-dependency-closure-activation-truth-authority-domain`
 
 ## Next safe ledge
 
-Advertise save support only after a real adapter and schema pass admission. Project bounded gameplay state, atomically commit and verify a slot, migrate on restore, apply state exactly once and publish `FirstRestoredStateFrameAck` for the matching state and frame.
+Populate real provides/requires contracts for active descriptors, resolve the graph deterministically, reject planned-only or incompatible dependencies, publish `DskActivationResult`, project `RuntimeCapabilityManifest`, and bind the accepted activation generation to `FirstActivationBoundFrameAck`.
 
 ## Claim boundary
 
-No persistence implementation or fixture was added. No data-loss, durability, migration, restore, artifact parity or Pages parity claim is made.
+No runtime activation implementation or fixture was added. No capability completeness, dependency correctness, artifact parity, Pages parity or production readiness claim is made.

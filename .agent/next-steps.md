@@ -1,88 +1,76 @@
 # Next Steps
 
-**Updated:** `2026-07-17T08-45-46-04-00`  
+**Updated:** `2026-07-17T19-38-37-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `save-capability-admission-durable-commit-migration-authority-audited`
+**Status:** `dsk-dependency-closure-activation-truth-authority-audited`
 
 ## Summary
 
-Implement the smallest truthful persistence path: an admitted adapter, versioned bounded payload, atomic verified slot commit, ordered migration, exact restore settlement and first restored frame acknowledgement.
+Replace declaration-only composition with one deterministic dependency and activation path that publishes only admitted executable capabilities.
 
 ## Intent
 
-Prevent planned DSK metadata or diagnostic snapshots from being mistaken for durable save support.
+Prevent planned descriptors, unresolved dependencies or deferred providers from being mistaken for active runtime capability.
 
 ## Checklist
 
-### Capability admission
+### Descriptor schema
 
-- [ ] Add an implementation manifest for `meadow-save-dsk`.
-- [ ] Require an available adapter, save schema, migration registry and validation service.
-- [ ] Publish `SaveCapabilityResult` with available, unavailable, degraded or failed status.
-- [ ] Expose save commands only when capability admission succeeds.
+- [ ] Add explicit descriptor version, implementation ID and implementation revision.
+- [ ] Replace generic capability tokens with stable `provides[]` contracts.
+- [ ] Populate real `requires[]` edges for active DSKs and kits.
+- [ ] Preserve `planned` as declaration metadata, never availability.
 
-### Save model
+### Dependency closure
 
-- [ ] Define a versioned `MeadowSaveEnvelope`.
-- [ ] Project durable gameplay state only.
-- [ ] Exclude render plans, diagnostics, WebGL state, browser errors and transient clocks.
-- [ ] Bind product, build compatibility, slot, state revision and digests.
-- [ ] Publish `SavePrepareResult`.
+- [ ] Build the dependency graph before side effects begin.
+- [ ] Detect missing providers, cycles and incompatible revisions.
+- [ ] Resolve the external meadow provider under an explicit version policy.
+- [ ] Produce deterministic topological activation order.
+- [ ] Publish `DependencyClosureResult`.
 
-### Durable commit
+### Activation settlement
 
-- [ ] Add a slot registry and active slot lease.
-- [ ] Write a temporary generation before replacing the accepted slot.
-- [ ] Read back and verify payload and metadata digests.
-- [ ] Classify security, quota, serialization, write, verification and replace failures.
-- [ ] Publish `DurableSaveCommitResult` exactly once.
+- [ ] Bind activation to one runtime and provider generation.
+- [ ] Verify implementation bindings before activation.
+- [ ] Settle each capability exactly once.
+- [ ] Propagate failed dependencies without silently exposing dependents.
+- [ ] Reject stale results from retired generations.
+- [ ] Publish `DskActivationResult`.
 
-### Migration and restore
+### Capability truth
 
-- [ ] Classify current, migratable, unsupported, corrupt and foreign saves.
-- [ ] Add ordered idempotent migrations.
-- [ ] Publish `SaveMigrationResult` and validate the target schema.
-- [ ] Apply restored state once under a new runtime/session revision.
-- [ ] Rebuild or invalidate state-dependent render data when required.
-- [ ] Publish `RestoreApplyResult` and `FirstRestoredStateFrameAck`.
+- [ ] Publish `RuntimeCapabilityManifest` containing admitted executable capabilities only.
+- [ ] Publish planned declarations in a separate inventory.
+- [ ] Derive `GameHost` and editor capability lists from the runtime manifest.
+- [ ] Bind render evidence to the accepted activation generation.
+- [ ] Publish `FirstActivationBoundFrameAck`.
 
 ### Evidence
 
-- [ ] Add save/reload/restore browser fixtures.
-- [ ] Add overwrite, multi-slot, corruption, unsupported-version and migration fixtures.
-- [ ] Add interrupted-write, quota/security and stale-command fixtures.
-- [ ] Compare source, artifact and Pages persistence behavior.
+- [ ] Add missing-provider, deferred-provider and planned-only fixtures.
+- [ ] Add cycle, version-mismatch and deterministic-order fixtures.
+- [ ] Add partial-failure and stale-generation fixtures.
+- [ ] Add browser host/editor capability-manifest parity fixtures.
+- [ ] Compare source, artifact and Pages activation digests.
 
 ## Required result
 
 ```txt
-DurableSaveCommitResult {
-  saveId
-  slotId
-  saveRevision
-  schemaVersion
+DskActivationResult {
+  activationId
   runtimeGeneration
-  stateRevision
-  payloadDigest
-  metadataDigest
-  adapterId
-  status
-}
-```
-
-```txt
-RestoreApplyResult {
-  saveId
-  slotId
-  sourceSchemaVersion
-  targetSchemaVersion
-  migrationRevision
-  restoredSessionId
-  restoredStateRevision
+  providerRevision
+  manifestRevision
+  orderedCapabilityIds[]
+  admittedCapabilityIds[]
+  excludedDeclarationIds[]
+  degradedCapabilityIds[]
+  failedCapabilityIds[]
   status
 }
 ```
 
 ## Preserved dependencies
 
-Capture correlation, adaptive quality, failure diagnostics, content integrity, release/cache coherence, accessibility, audio, shader admission, editor settlement, startup readiness, reset/replay, DSK admission, viewport ownership, WebGL recovery, frame scheduling, progression and grass visibility remain separate bounded work.
+Persistence, capture correlation, adaptive quality, diagnostics, content integrity, release/cache coherence, accessibility, audio, shaders, editor settlement, startup readiness, reset/replay, viewport ownership, WebGL recovery, frame scheduling, progression and grass visibility remain separate bounded work.

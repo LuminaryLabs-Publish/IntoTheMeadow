@@ -1,91 +1,101 @@
 # Known Gaps
 
-**Updated:** `2026-07-17T19-38-37-04-00`  
+**Updated:** `2026-07-18T07-40-23-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `dsk-dependency-closure-activation-truth-authority-audited`
+**Status:** `render-descriptor-mesh-expansion-budget-authority-audited`
 
 ## Summary
 
-The current DSK registry is declaration-complete but activation-incomplete. Active and planned descriptors share one installation snapshot without dependency closure or executable-capability settlement.
+The active render path is shape-validated but not work-admitted. Descriptor counts and topology identity are available, while limits, estimates, overflow settlement and budget-bound frame proof are absent.
 
-## Descriptor gaps
+## Plan-admission gaps
 
 ```txt
-stable descriptor schema version: absent
-implementation identity/revision: absent
-meaningful capability provides contracts: incomplete
-non-empty dependency requires contracts: absent
-provider version constraints: absent
-activation phase: absent
-failure policy: absent
+maximum terrain cells: absent
+maximum terrain segments by axis: absent
+maximum grass instances by LOD: absent
+maximum cards per admitted batch: absent
+maximum flower, cover, rock and distant-tree instances: absent
+maximum hero-tree segments and leaf cards: absent
+versioned render profile limits: absent
+viewport/device-class binding: absent
 ```
 
-## Graph gaps
+## Estimate gaps
 
 ```txt
-dependency graph builder: absent
-missing-provider classification: absent
-cycle detection: absent
-version compatibility resolution: absent
-deterministic topological order: absent
-external-provider dependency binding: absent
-DependencyClosureResult: absent
+predicted vertex count: absent
+predicted triangle count: absent
+predicted typed attribute bytes: absent
+per-contributor work ledger: absent
+shared estimator/build formulas: absent
+RenderWorkEstimateResult: absent
 ```
 
-## Activation gaps
+## Build-admission gaps
 
 ```txt
-runtime activation generation: absent
-implementation binding verification: absent
-planned-capability exclusion: absent
-per-capability settlement: absent
-partial failure propagation: absent
-stale activation rejection: absent
-DskActivationResult: absent
+accepted admission ID required by mesh builder: absent
+profile and provider revision binding: absent
+actual-versus-admitted count verification: absent
+actual typed-buffer byte readback: absent
+partial allocation rollback result: absent
+MeshBuildResult: absent
+```
+
+## Overflow and recovery gaps
+
+```txt
+overflow classification: absent
+deterministic degradation ordering: absent
+re-estimation after degradation: absent
+required landmark preservation policy: absent
+last-accepted generation retention: absent
+bounded fallback result: absent
+stale plan/profile/provider generation rejection: absent
+RenderOverflowSettlementResult: absent
 ```
 
 ## Projection gaps
 
 ```txt
-RuntimeCapabilityManifest: absent
-declared-versus-executable split: absent
-GameHost admitted capability projection: absent
-editor admitted capability projection: absent
-render capability generation digest: absent
-FirstActivationBoundFrameAck: absent
+admission ID in GameHost snapshot: absent
+admission ID in editor snapshot: absent
+admission ID in renderer snapshot: absent
+plan/mesh/profile/frame digest chain: absent
+FirstRenderBudgetBoundFrameAck: absent
 ```
 
 ## Current divergence
 
 ```txt
-registry: 43 local descriptors
-status: 15 active-v0.1, 28 planned
-requires: empty for every local descriptor
-validation: IDs, duplicates, service count and required presence only
-install snapshot: all local descriptors together
-external provider: loaded or deferred only
-runtime state: stores the declaration snapshot
+render plan: descriptor counts and topology key are published
+validation: schema, identity, required types and array presence only
+mesh builder: expands all accepted descriptors into JavaScript arrays
+renderer: creates five Float32Array attribute uploads after full expansion
+performance descriptor: carried on plan but not used for admission
+smoke tests: ordinary output and array parity, not bounded-work proof
 ```
 
 ## Proof gaps
 
 ```txt
-missing dependency fixture: absent
-planned-only dependency fixture: absent
-external provider deferred fixture: absent
-cycle fixture: absent
-version mismatch fixture: absent
-deterministic activation order fixture: absent
-partial activation rollback fixture: absent
-stale generation fixture: absent
-host/editor capability parity fixture: absent
-activation-bound frame fixture: absent
-source/artifact/Pages activation parity: absent
+exact-limit acceptance fixture: absent
+one-over-limit rejection fixture: absent
+extreme terrain-resolution fixture: absent
+extreme grass-instance fixture: absent
+deterministic degradation repeatability: absent
+estimated-versus-actual work parity: absent
+stale-generation fixture: absent
+last-good retention fixture: absent
+host/editor/renderer result parity: absent
+source/artifact/Pages budget parity: absent
 ```
 
 ## Preserved unresolved gaps
 
 ```txt
+DSK dependency closure and activation truth
 save capability and durable restore
 WebGL capture readback and frame correlation
 adaptive quality feedback and projection
@@ -115,4 +125,4 @@ grass visibility and LOD
 
 ## Completion boundary
 
-DSK activation is not truthful until dependencies and implementations are admitted under one runtime generation, planned declarations remain unavailable, failures settle explicitly, runtime surfaces publish the accepted capability manifest and the matching visible frame publishes `FirstActivationBoundFrameAck`.
+Render work is not bounded until one estimate is admitted under a versioned profile, overflow settles before allocation, the actual mesh remains within accepted limits, stale generations cannot commit and the matching visible frame publishes `FirstRenderBudgetBoundFrameAck`.

@@ -1,68 +1,77 @@
-# Current Audit: DSK Dependency Closure and Activation Truth
+# Current Audit: Render Descriptor and Mesh Expansion Budget
 
-**Updated:** `2026-07-17T19-38-37-04-00`  
+**Updated:** `2026-07-18T07-40-23-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `dsk-dependency-closure-activation-truth-authority-audited`  
-**Immediate predecessor:** `save-capability-admission-durable-commit-migration-authority-central-reconciled`
+**Status:** `render-descriptor-mesh-expansion-budget-authority-audited`  
+**Immediate predecessor:** `dsk-dependency-closure-activation-truth-authority-central-reconciled`
 
 ## Summary
 
-IntoTheMeadow declares 43 local DSK/kit descriptors and one external provider. Fifteen local descriptors are marked active and 28 planned, but every local `requires` list is empty and `installDsks()` returns all local descriptors in one installation snapshot. No dependency closure, executable implementation binding, activation order, activation result or runtime capability manifest exists.
+The active renderer receives `meadow-render-plan/v2`, verifies schema and required descriptor families, then synchronously expands all accepted terrain, grass, flower, cover, rock, tree and atmosphere descriptors into one mesh. The plan reports descriptor counts, but no count, resolution, predicted-vertex or attribute-byte budget is admitted before construction.
 
 ## Intent
 
-Separate declaration truth from executable runtime truth and prove which dependency-complete capability generation produced the active host/editor surface and visible frame.
+Make render work bounded and truthful before CPU allocation or WebGL upload, and prove that the visible frame uses the accepted plan, mesh and budget generation.
 
 ## Checklist
 
 - [x] Compare Publish inventory and central tracking.
 - [x] Select only IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Inspect DSK registry, descriptor construction, validation and installation snapshot behavior.
+- [x] Inspect render-plan contract, validation, mesh expansion, WebGL upload and smoke tests.
 - [x] Preserve all 44 declared kit surfaces and offered services.
-- [x] Add the timestamped DSK activation audit family.
+- [x] Add the timestamped render-budget audit family.
 - [x] Change documentation only on `main`.
-- [ ] Implement and prove dependency closure and activation later.
+- [ ] Implement and prove render-work admission later.
 
 ## Main finding
 
 ```txt
-local descriptors: 43
-active-v0.1: 15
-planned: 28
-external descriptors: 1
-non-empty local requires arrays: 0
-dependency graph: absent
-cycle detection: absent
-topological order: absent
-implementation binding: absent
-planned-capability exclusion: absent
-DskActivationResult: absent
-RuntimeCapabilityManifest: absent
-FirstActivationBoundFrameAck: absent
+descriptorCounts: present
+topologyKey: present
+required type/array validation: present
+terrain-resolution limit: absent
+field-instance limits: absent
+predicted vertex count: absent
+predicted attribute bytes: absent
+profile-bound admission: absent
+overflow settlement: absent
+deterministic degradation: absent
+FirstRenderBudgetBoundFrameAck: absent
 ```
 
 ## Source basis
 
-- `src/content/dsk-registry.js` separates all local IDs from the 15 required-v0.1 IDs.
-- `src/dsks/index.js` assigns status from that list, generic `provides`, empty `requires`, and shape-only validation.
-- `src/boot/install-dsks.js` returns all local descriptors and only loaded/deferred external status.
-- Initial game state stores the resulting snapshot.
-- `GameHost` and `NexusEditorEnvironment` do not expose an admitted executable capability manifest.
+- `src/render-contract/meadow-render-plan-v2.js` computes counts but validates only schema, IDs, required types, array presence and unknown source types.
+- `src/renderers/meadow-mesh-builder-v2.js` expands every accepted descriptor into five unbounded JavaScript attribute arrays.
+- `src/renderers/meadow-webgl-renderer-v2.js` converts the complete arrays into five `Float32Array` uploads and draws the mesh twice.
+- `performance` is carried on the render plan but is not consumed by contract validation, mesh construction or renderer admission.
+- Existing smoke tests assert ordinary output and array parity, not limits, overflow or estimated-versus-actual work.
+
+## Source arithmetic
+
+```txt
+12 floats per vertex = 48 typed-array bytes
+near grass instance = 28 cards × 15 vertices = 420 vertices
+mid grass instance = 16 cards × 15 vertices = 240 vertices
+far grass instance = 4 cards × 15 vertices = 60 vertices
+```
+
+This excludes JavaScript-array storage, temporary allocations, WebGL driver copies and command overhead.
 
 ## Required parent domain
 
-`meadow-dsk-dependency-closure-activation-truth-authority-domain`
+`meadow-render-descriptor-mesh-expansion-budget-authority-domain`
 
 ## Required transaction
 
 ```txt
-DskManifestAdmissionCommand -> DskManifestAdmissionResult
-DependencyClosureCommand -> DependencyClosureResult
-DskActivationCommand -> DskActivationResult
-RuntimeCapabilityProjectionCommand -> RuntimeCapabilityManifest
-ActivationFrameCommitCommand -> FirstActivationBoundFrameAck
+RenderWorkEstimateCommand -> RenderWorkEstimateResult
+RenderBudgetAdmissionCommand -> RenderBudgetAdmissionResult
+RenderOverflowSettlementCommand -> RenderOverflowSettlementResult
+MeshBuildCommitCommand -> MeshBuildResult
+RenderBudgetProjectionCommitCommand -> FirstRenderBudgetBoundFrameAck
 ```
 
 ## Boundary
 
-Documentation only. No runtime, DSK, provider, rendering, gameplay, test, workflow or deployment behavior changed.
+Documentation only. No runtime, renderer, DSK, provider, gameplay, test, workflow or deployment behavior changed.

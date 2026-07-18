@@ -1,76 +1,80 @@
 # Next Steps
 
-**Updated:** `2026-07-17T19-38-37-04-00`  
+**Updated:** `2026-07-18T07-40-23-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
-**Status:** `dsk-dependency-closure-activation-truth-authority-audited`
+**Status:** `render-descriptor-mesh-expansion-budget-authority-audited`
 
 ## Summary
 
-Replace declaration-only composition with one deterministic dependency and activation path that publishes only admitted executable capabilities.
+Add a pre-build render-work estimate and one versioned admission path before mesh arrays or WebGL buffers are allocated.
 
 ## Intent
 
-Prevent planned descriptors, unresolved dependencies or deferred providers from being mistaken for active runtime capability.
+Prevent a valid-shaped render plan from expanding beyond the accepted profile, device and synchronous-work envelope.
 
 ## Checklist
 
-### Descriptor schema
+### Estimation
 
-- [ ] Add explicit descriptor version, implementation ID and implementation revision.
-- [ ] Replace generic capability tokens with stable `provides[]` contracts.
-- [ ] Populate real `requires[]` edges for active DSKs and kits.
-- [ ] Preserve `planned` as declaration metadata, never availability.
+- [ ] Implement a pure estimator from terrain resolution and all descriptor families.
+- [ ] Share card, tube, quad and triangle expansion constants with the mesh builder.
+- [ ] Estimate vertices, triangles and 12-float attribute payload per vertex.
+- [ ] Publish contributor-level estimates for terrain, grass, flowers, cover, rocks, distant trees and hero tree.
+- [ ] Publish `RenderWorkEstimateResult`.
 
-### Dependency closure
+### Admission
 
-- [ ] Build the dependency graph before side effects begin.
-- [ ] Detect missing providers, cycles and incompatible revisions.
-- [ ] Resolve the external meadow provider under an explicit version policy.
-- [ ] Produce deterministic topological activation order.
-- [ ] Publish `DependencyClosureResult`.
+- [ ] Define versioned low, default and high render profiles.
+- [ ] Add hard limits for terrain cells, field instances, vertices and typed attribute bytes.
+- [ ] Bind admission to viewport/device class, provider revision and topology key.
+- [ ] Publish `RenderBudgetAdmissionResult` before construction.
+- [ ] Reject stale estimates after plan or profile changes.
 
-### Activation settlement
+### Overflow settlement
 
-- [ ] Bind activation to one runtime and provider generation.
-- [ ] Verify implementation bindings before activation.
-- [ ] Settle each capability exactly once.
-- [ ] Propagate failed dependencies without silently exposing dependents.
-- [ ] Reject stale results from retired generations.
-- [ ] Publish `DskActivationResult`.
+- [ ] Classify exact-limit, over-limit and invalid estimates.
+- [ ] Add deterministic reduction ordering.
+- [ ] Re-estimate after every reduction stage.
+- [ ] Preserve required path, focal-tree and atmosphere identity.
+- [ ] Retain the last accepted generation or bounded fallback on rejection.
+- [ ] Publish `RenderOverflowSettlementResult`.
 
-### Capability truth
+### Build and projection
 
-- [ ] Publish `RuntimeCapabilityManifest` containing admitted executable capabilities only.
-- [ ] Publish planned declarations in a separate inventory.
-- [ ] Derive `GameHost` and editor capability lists from the runtime manifest.
-- [ ] Bind render evidence to the accepted activation generation.
-- [ ] Publish `FirstActivationBoundFrameAck`.
+- [ ] Require an accepted admission ID in `buildMeadowMeshData()`.
+- [ ] Verify actual counts do not exceed admitted limits.
+- [ ] Publish `MeshBuildResult` with actual vertex, triangle and attribute-byte counts.
+- [ ] Add admission ID and mesh key to the renderer snapshot.
+- [ ] Expose identical results through `GameHost` and `NexusEditorEnvironment`.
+- [ ] Publish `FirstRenderBudgetBoundFrameAck`.
 
 ### Evidence
 
-- [ ] Add missing-provider, deferred-provider and planned-only fixtures.
-- [ ] Add cycle, version-mismatch and deterministic-order fixtures.
-- [ ] Add partial-failure and stale-generation fixtures.
-- [ ] Add browser host/editor capability-manifest parity fixtures.
-- [ ] Compare source, artifact and Pages activation digests.
+- [ ] Add exact-limit and one-over-limit fixtures.
+- [ ] Add extreme terrain and grass fixtures.
+- [ ] Add deterministic degradation repeatability.
+- [ ] Add estimate-versus-actual parity fixtures.
+- [ ] Add stale-generation and retained-last-good fixtures.
+- [ ] Compare source, browser, artifact and Pages digests.
 
 ## Required result
 
 ```txt
-DskActivationResult {
-  activationId
-  runtimeGeneration
-  providerRevision
-  manifestRevision
-  orderedCapabilityIds[]
-  admittedCapabilityIds[]
-  excludedDeclarationIds[]
-  degradedCapabilityIds[]
-  failedCapabilityIds[]
+RenderBudgetAdmissionResult {
+  admissionId
+  planDigest
+  topologyKey
+  profileRevision
+  predictedVertices
+  predictedTriangles
+  predictedAttributeBytes
+  limits
+  degradationPlan
   status
+  reasons[]
 }
 ```
 
 ## Preserved dependencies
 
-Persistence, capture correlation, adaptive quality, diagnostics, content integrity, release/cache coherence, accessibility, audio, shaders, editor settlement, startup readiness, reset/replay, viewport ownership, WebGL recovery, frame scheduling, progression and grass visibility remain separate bounded work.
+DSK activation, persistence, capture correlation, adaptive quality, diagnostics, content integrity, release/cache coherence, accessibility, audio, shader admission, editor settlement, startup readiness, reset/replay, viewport ownership, WebGL recovery, frame scheduling, progression and grass visibility remain separate bounded work.

@@ -1,59 +1,67 @@
 # Validation
 
-**Updated:** `2026-07-17T19-38-37-04-00`  
+**Updated:** `2026-07-18T07-40-23-04-00`  
 **Repository:** `LuminaryLabs-Publish/IntoTheMeadow`  
 **Audit type:** documentation and source analysis only
 
 ## Summary
 
-Source review confirms that IntoTheMeadow has a complete declaration inventory but no executable dependency-closure or activation-settlement layer.
+Source review confirms that IntoTheMeadow publishes render descriptor counts and topology identity but does not admit bounded descriptor, terrain-resolution, vertex or typed-buffer work before full synchronous mesh expansion and WebGL upload.
 
 ## Checklist
 
 - [x] Confirm default branch `main`.
 - [x] Compare all 11 Publish repositories and exclude Cavalry.
 - [x] Confirm ten eligible central ledgers and root `.agent` states.
-- [x] Confirm IntoTheMeadow matched its documented head before selection.
+- [x] Confirm all eligible repository heads matched their documented heads before selection.
 - [x] Select IntoTheMeadow by the oldest synchronized timestamp.
-- [x] Read DSK registration, descriptor construction, validation, installation, state and host/editor projection source.
+- [x] Read render-plan generation, contract validation, mesh construction, renderer upload and smoke-test source.
 - [x] Preserve all 44 declared kit surfaces and services.
-- [x] Add the timestamped DSK activation audit family and refresh root `.agent` state.
+- [x] Add the timestamped render-budget audit family and refresh root `.agent` state.
 - [x] Change documentation only and create no branch or pull request.
-- [ ] Execute dependency, activation and deployment fixtures later.
+- [ ] Execute render-budget, browser and deployment fixtures later.
 
 ## Confirmed by source review
 
 ```txt
-43 local descriptors exist
-15 are active-v0.1
-28 are planned
-one external meadow-area-kit is loaded or deferred
-all local requires arrays are empty
-all local provides arrays are generic single tokens
-validation checks shape, duplicates and required presence only
-installDsks returns every local descriptor together
-initial game state stores the DSK snapshot
-host/editor surfaces expose no admitted executable capability manifest
+render-plan v2 publishes descriptorCounts and topologyKey
+validation checks schema, version, identity, required types and array presence
+terrain resolution is accepted without a hard limit
+field, grass and tree descriptor counts are accepted without hard limits
+mesh builder expands all accepted descriptors into five JavaScript attribute arrays
+renderer creates five Float32Array uploads after full expansion
+mesh is submitted once for outline and once for main presentation
+performance data is not consumed by contract, builder or renderer admission
 ```
+
+## Source arithmetic
+
+```txt
+attribute payload per vertex: 12 floats = 48 typed-array bytes
+near grass instance maximum: 28 cards × 15 vertices = 420 vertices
+mid grass instance maximum: 16 cards × 15 vertices = 240 vertices
+far grass instance maximum: 4 cards × 15 vertices = 60 vertices
+```
+
+The byte figure excludes JavaScript-array storage, temporary arrays and objects, WebGL driver copies and implementation-specific overhead.
 
 ## Source-derived but not executed
 
 ```txt
-missing or circular dependencies cannot currently be diagnosed
-planned descriptors can be confused with available capability by careless consumers
-activation order is not proven deterministic
-implementation and provider revision compatibility is not proven
-partial activation and stale result settlement are not proven
-visible frames are not correlated with an activation generation
+valid-shaped provider or editor output can exceed an undeclared work envelope
+no pre-build estimate can currently reject or reduce overflow
+actual mesh work is not compared with an accepted profile
+partial construction or upload failure has no render-budget settlement result
+visible frames are not correlated with a budget admission generation
 ```
 
-These are architecture and proof findings, not claims of a reproduced startup or rendering failure.
+These are architecture and proof findings, not claims of a reproduced crash, frame-rate regression or memory failure.
 
 ## Documentation changed
 
 ```txt
 new timestamped project breakdown and turn ledger
-new architecture, render, gameplay, interaction, DSK-activation, deploy and central-sync audits
+new architecture, render, gameplay, interaction, render-budget, deploy and central-sync audits
 START_HERE, current audit, next steps, known gaps, validation and kit registry refreshed
 central ledger and internal change log synchronized separately
 ```
@@ -61,15 +69,15 @@ central ledger and internal change log synchronized separately
 ## Not executed
 
 ```txt
+local checkout
 npm install
 npm run check
-missing-provider fixture
-planned-only dependency fixture
-cycle and version-mismatch fixtures
-deterministic activation-order fixture
-partial failure and stale-generation fixtures
-browser capability-manifest fixture
-activation-bound frame fixture
+exact-limit fixture
+one-over-limit fixture
+extreme terrain or grass fixture
+deterministic degradation fixture
+estimated-versus-actual count fixture
+browser profile fixture
 production artifact smoke
 GitHub Pages smoke
 ```
@@ -92,4 +100,4 @@ pull request created: no
 
 ## Claim boundary
 
-This audit does not claim dependency correctness, deterministic activation, executable capability completeness, frame convergence, artifact parity, Pages parity or production readiness.
+This audit does not claim bounded render work, performance improvement, performance regression, memory usage, browser parity, artifact parity, Pages parity or production readiness.
